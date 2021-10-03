@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d9m0n4/TSChat.git"
+  },
+  "keywords": [
+    "chat"
+  ],
+  "author": "D9m0n <C2h8e9d4@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/d9m0n4/TSChat/issues"
+  },
+  "homepage": "https://github.com/d9m0n4/TSChat#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.8",
+    "nodemon": "^2.0.13"
+  }
+}
