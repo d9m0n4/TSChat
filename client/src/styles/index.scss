@@ -1,0 +1,37 @@
+@import './vars';
+
+@font-face {
+  font-family: 'Gilroy';
+  src: local('Gilroy'), url('../fonts/Gilroy-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gilroy-Bold';
+  src: local('Gilroy'), url('../fonts/Gilroy-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gilroy-Medium';
+  src: local('Gilroy'), url('../fonts/Gilroy-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gilroy-Light';
+  src: local('Gilroy'), url('../fonts/Gilroy-Light.ttf') format('truetype');
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Gilroy';
+}
+
+.app-logo {
+  position: absolute;
+  font-size: 24px;
+  font-family: 'Gilroy-Medium';
+  top: 48px;
+  left: 64px;
+  color: $darkenAccent;
+}
