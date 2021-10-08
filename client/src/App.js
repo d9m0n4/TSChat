@@ -1,9 +1,10 @@
 import Auth from './Pages/Auth/Auth';
+import Home from './Pages/Home/Home';
 
 function App() {
   return (
     <div className="App">
-      <Auth />
+      <Home />
     </div>
   );
 }
