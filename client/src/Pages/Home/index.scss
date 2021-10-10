@@ -27,23 +27,84 @@
     }
   }
   .main__content {
-    .top-bar {
-      padding: 26px 10px;
-      background-color: #fff;
-      &__search {
-        input {
-          border-radius: 8px;
-          border: none;
-          background-color: rgba(#f1f2f4, 0.85);
-          background-image: url('../../assets//img/icons/search.svg');
-          background-repeat: no-repeat;
-          background-position: 10px center;
-          padding: 6px 8px 6px 32px;
-          width: 250px;
-          &:focus {
-            box-shadow: none;
+    width: 100%;
+
+    &-body {
+      display: flex;
+      height: 100%;
+      &__leftbar {
+        width: 270px;
+        background-color: #f8f9ff;
+        .leftbar__header {
+          background-color: #fff;
+          padding: 24px 10px;
+        }
+
+        .leftbar__body {
+          .leftbar__chats {
+            &-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 16px 10px;
+              .chats__title {
+                font-size: 14px;
+                font-family: 'Gilroy-Medium';
+              }
+            }
+            &-body {
+              .chats__item {
+                margin-bottom: 4px;
+                padding: 8px;
+                background-color: #fff;
+                display: flex;
+                &-avatar {
+                  border: 2px solid #fff;
+                  margin-right: 8px;
+                }
+                &-body {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  .chats__item-top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .item-name {
+                      font-size: 14px;
+                      font-family: 'Gilroy-Bold';
+                      margin: 0;
+                    }
+                    .item-date {
+                      font-size: 9px;
+                    }
+                  }
+                  .chats__item-bottom {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 12px;
+                    .item__message {
+                    }
+                    .conv__sender {
+                      color: #276aa5;
+                      margin-right: 4px;
+                    }
+                  }
+                  .chats__item-bottom.conv {
+                    justify-content: start;
+                  }
+                }
+              }
+            }
           }
         }
+      }
+      &__rightbar {
+        width: 270px;
+        background-color: #fcfcfc;
+      }
+      &__messages {
       }
     }
   }
