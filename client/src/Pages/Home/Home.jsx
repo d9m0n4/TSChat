@@ -50,7 +50,7 @@ const Home = () => {
       <div className="main__content">
         <div className="main__content-body">
           <div className="main__content-body__leftbar">
-            <div className="leftbar__header">
+            <div className="leftbar__header chat__header">
               <div className="top-bar__search">
                 <Input placeholder="Поиск разговоров..." />
               </div>
@@ -229,9 +229,22 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="main__content-body__messages">qwe</div>
+          <div className="main__content-body__messages">
+            <div className="messages__header chat__header">
+              <div className="messages__header-chat__title">Сократ</div>
+              <div className="messages__header-chat__status online"></div>
+            </div>
+            <div className="messages__body"></div>
+          </div>
           <div className="main__content-body__rightbar">
-            <div className="rightbar__chat-info">123</div>
+            <div className="rightbar__chat-info">
+              <div className="rightbar__header chat__header">
+                <a href="#">
+                  <img src={controlsIcon} alt="" />
+                </a>
+              </div>
+              <div className="rightbar__body dialog__rightbar"></div>
+            </div>
           </div>
         </div>
       </div>

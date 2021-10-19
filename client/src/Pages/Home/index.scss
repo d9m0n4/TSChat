@@ -28,16 +28,20 @@
   }
   .main__content {
     width: 100%;
-
+    .chat__header {
+      background-color: #fff;
+      padding: 24px 10px;
+      height: 80px;
+      border-bottom: 1px solid rgba(229, 229, 229, 0.85);
+    }
     &-body {
       display: flex;
       height: 100%;
       &__leftbar {
+        overflow: auto;
         width: 270px;
         background-color: #f8f9ff;
         .leftbar__header {
-          background-color: #fff;
-          padding: 24px 10px;
         }
 
         .leftbar__body {
@@ -103,8 +107,34 @@
       &__rightbar {
         width: 270px;
         background-color: #fcfcfc;
+        .rightbar__header {
+          display: flex;
+          justify-content: flex-end;
+        }
       }
       &__messages {
+        flex: 1 1 50%;
+        .messages__header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &-chat__title {
+            font-family: 'Gilroy-Medium';
+            font-size: 18px;
+          }
+          &-chat__status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            display: block;
+            background-color: #dadada;
+            margin-left: 8px;
+            &.online {
+              background-color: #46be32;
+            }
+          }
+        }
       }
     }
   }
