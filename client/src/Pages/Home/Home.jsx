@@ -243,7 +243,7 @@ const Home = () => {
                   <img src={controlsIcon} alt="" />
                 </a>
               </div>
-              <div className="rightbar__body dialog__rightbar"></div>
+              <div className="rightbar__body dialog__rightbar">123</div>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 .home-page {
   height: 100vh;
-  padding: 0 44px;
+  padding: 0 284px;
   display: flex;
   .sidebar {
     height: 100%;
@@ -62,6 +62,10 @@
                 padding: 8px;
                 background-color: #fff;
                 display: flex;
+                &:hover {
+                  background-color: #f8f9ff;
+                  cursor: pointer;
+                }
                 &-avatar {
                   border: 2px solid #fff;
                   margin-right: 8px;
@@ -107,12 +111,18 @@
       &__rightbar {
         width: 270px;
         background-color: #fcfcfc;
+
         .rightbar__header {
           display: flex;
           justify-content: flex-end;
         }
+        .rightbar__body {
+          border-left: 1px solid rgba(229, 229, 229, 0.85);
+          padding: 32px 0;
+        }
       }
       &__messages {
+        background-color: #fff;
         flex: 1 1 50%;
         .messages__header {
           display: flex;
