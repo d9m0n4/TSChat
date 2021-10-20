@@ -12,6 +12,9 @@ import settingsIcon from '../../assets/img/icons/settings.svg';
 import logOutIcon from '../../assets/img/icons/log-out.svg';
 import controlsIcon from '../../assets/img/icons/controls.svg';
 import plusIcon from '../../assets/img/icons/plus.svg';
+import vkIcon from '../../assets/img/icons/vk.svg';
+import instIcon from '../../assets/img/icons/instagram.png';
+import tmIcon from '../../assets/img/icons/telegram.svg';
 
 const Home = () => {
   return (
@@ -237,13 +240,33 @@ const Home = () => {
             <div className="messages__body"></div>
           </div>
           <div className="main__content-body__rightbar">
-            <div className="rightbar__chat-info">
-              <div className="rightbar__header chat__header">
-                <a href="#">
-                  <img src={controlsIcon} alt="" />
-                </a>
+            <div className="rightbar__header chat__header">
+              <a href="#">
+                <img src={controlsIcon} alt="" />
+              </a>
+            </div>
+            <div className="rightbar__body rightbar__dialog">
+              <div className="rightbar__dialog-companion__info">
+                <div className="companion__avatar">
+                  <Avatar size={100} />
+                </div>
+                <div className="companion__pers-info">
+                  <div className="companion__name">Сократ</div>
+                  <span>в сети</span>
+                </div>
+                <div className="companion__social-links">
+                  <a href="#">
+                    <img src={vkIcon} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={instIcon} alt="" />
+                  </a>
+                  <a href="#">
+                    <img src={tmIcon} alt="" />
+                  </a>
+                </div>
               </div>
-              <div className="rightbar__body dialog__rightbar">123</div>
+              <div className="rightbar__dialog-companion__attachs"></div>
             </div>
           </div>
         </div>
