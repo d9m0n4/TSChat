@@ -15,6 +15,9 @@ import plusIcon from '../../assets/img/icons/plus.svg';
 import vkIcon from '../../assets/img/icons/vk.svg';
 import instIcon from '../../assets/img/icons/instagram.png';
 import tmIcon from '../../assets/img/icons/telegram.svg';
+import downloadIcon from '../../assets/img/icons/download.svg';
+import arrowIcon from '../../assets/img/icons/arrowDown.svg';
+import attach from '../../assets/img/word.png';
 
 const Home = () => {
   return (
@@ -252,7 +255,7 @@ const Home = () => {
                 </div>
                 <div className="companion__pers-info">
                   <div className="companion__name">Сократ</div>
-                  <span>в сети</span>
+                  <span className="online">в сети</span>
                 </div>
                 <div className="companion__social-links">
                   <a href="#">
@@ -266,7 +269,118 @@ const Home = () => {
                   </a>
                 </div>
               </div>
-              <div className="rightbar__dialog-companion__attachs"></div>
+              <div className="rightbar__dialog-companion__attachs">
+                <div className="attachs__header">
+                  <div className="attachs__header-title">Вложения</div>
+                  <span className="attachs__header-icon">
+                    <img src={arrowIcon} alt="" />
+                  </span>
+                </div>
+                <ul className="attachs__list">
+                  <li className="attachs__list-item">
+                    <div className="attachs__list-item__prevIcon">
+                      <img src={attach} alt="" />
+                    </div>
+                    <div className="attachs__list-item__body">
+                      <div className="item__body-top">
+                        <p className="attach__title">Акт сверки 502 02.05.2021</p>
+                      </div>
+                      <div className="item__body-bottom">
+                        <div className="attach__date">03.05.2021</div>
+                        <div className="attach__size">24MB</div>
+                      </div>
+                    </div>
+                    <div className="attachs__list-item__download">
+                      <img src={downloadIcon} alt="" />
+                    </div>
+                  </li>
+                  <li className="attachs__list-item">
+                    <div className="attachs__list-item__prevIcon">
+                      <img src={attach} alt="" />
+                    </div>
+                    <div className="attachs__list-item__body">
+                      <div className="item__body-top">
+                        <p className="attach__title">Акт сверки 502 02.05.2021</p>
+                      </div>
+                      <div className="item__body-bottom">
+                        <div className="attach__date">03.05.2021</div>
+                        <div className="attach__size">24MB</div>
+                      </div>
+                    </div>
+                    <div className="attachs__list-item__download">
+                      <img src={downloadIcon} alt="" />
+                    </div>
+                  </li>
+                  <li className="attachs__list-item">
+                    <div className="attachs__list-item__prevIcon">
+                      <img src={attach} alt="" />
+                    </div>
+                    <div className="attachs__list-item__body">
+                      <div className="item__body-top">
+                        <p className="attach__title">Акт сверки 502 02.05.2021</p>
+                      </div>
+                      <div className="item__body-bottom">
+                        <div className="attach__date">03.05.2021</div>
+                        <div className="attach__size">24MB</div>
+                      </div>
+                    </div>
+                    <div className="attachs__list-item__download">
+                      <img src={downloadIcon} alt="" />
+                    </div>
+                  </li>
+                  <li className="attachs__list-item">
+                    <div className="attachs__list-item__prevIcon">
+                      <img src={attach} alt="" />
+                    </div>
+                    <div className="attachs__list-item__body">
+                      <div className="item__body-top">
+                        <p className="attach__title">Акт сверки 502 02.05.2021</p>
+                      </div>
+                      <div className="item__body-bottom">
+                        <div className="attach__date">03.05.2021</div>
+                        <div className="attach__size">24MB</div>
+                      </div>
+                    </div>
+                    <div className="attachs__list-item__download">
+                      <img src={downloadIcon} alt="" />
+                    </div>
+                  </li>
+                  <li className="attachs__list-item">
+                    <div className="attachs__list-item__prevIcon">
+                      <img src={attach} alt="" />
+                    </div>
+                    <div className="attachs__list-item__body">
+                      <div className="item__body-top">
+                        <p className="attach__title">Акт сверки 502 02.05.2021</p>
+                      </div>
+                      <div className="item__body-bottom">
+                        <div className="attach__date">03.05.2021</div>
+                        <div className="attach__size">24MB</div>
+                      </div>
+                    </div>
+                    <div className="attachs__list-item__download">
+                      <img src={downloadIcon} alt="" />
+                    </div>
+                  </li>
+                  <li className="attachs__list-item">
+                    <div className="attachs__list-item__prevIcon">
+                      <img src={attach} alt="" />
+                    </div>
+                    <div className="attachs__list-item__body">
+                      <div className="item__body-top">
+                        <p className="attach__title">Акт сверки 502 02.05.2021</p>
+                      </div>
+                      <div className="item__body-bottom">
+                        <div className="attach__date">03.05.2021</div>
+                        <div className="attach__size">24MB</div>
+                      </div>
+                    </div>
+                    <div className="attachs__list-item__download">
+                      <img src={downloadIcon} alt="" />
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

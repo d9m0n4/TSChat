@@ -129,8 +129,78 @@
           flex: 1 1 auto;
           &.rightbar__dialog {
             display: flex;
-            &-companion__info {
+            flex-direction: column;
+            .rightbar__dialog-companion__info {
               display: flex;
+              flex-direction: column;
+              margin: 0 auto;
+              align-items: center;
+              padding: 0 48px;
+              padding-bottom: 32px;
+              border-bottom: 1px solid rgba(58, 69, 107, 0.5);
+              .companion__pers-info {
+                margin: 24px 0 16px 0;
+                font-size: 14px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .companion__name {
+                  font-family: 'Gilroy-Bold';
+                }
+                span {
+                  font-size: 12px;
+                  &.online {
+                    color: #46be32;
+                  }
+                }
+              }
+              .companion__social-links {
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
+              }
+            }
+            .rightbar__dialog-companion__attachs {
+              padding: 32px 0;
+              .attachs__header {
+                display: flex;
+                padding: 0 10px;
+                justify-content: space-between;
+                margin-bottom: 24px;
+                &-title {
+                  font-family: 'Gilroy-Bold';
+                  color: rgba(58, 69, 107, 0.5);
+                }
+                &-icon {
+                  cursor: pointer;
+                }
+              }
+              .attachs__list {
+                &-item {
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 8px 10px;
+                  align-items: center;
+                  &:hover {
+                    background-color: #f8f9ff;
+                    cursor: pointer;
+                  }
+                  &__prevIcon {
+                  }
+                  &__body {
+                    font-size: 12px;
+                    .item__body-top {
+                      p {
+                        margin: 0;
+                      }
+                    }
+                    .item__body-bottom {
+                      display: flex;
+                      justify-content: space-between;
+                    }
+                  }
+                }
+              }
             }
           }
         }
