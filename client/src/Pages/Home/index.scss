@@ -173,6 +173,10 @@
                 }
                 &-icon {
                   cursor: pointer;
+                  .icon {
+                    width: 16px;
+                    height: 16px;
+                  }
                 }
               }
               .attachs__list {
@@ -183,7 +187,6 @@
                   align-items: center;
                   &:hover {
                     background-color: #f8f9ff;
-                    cursor: pointer;
                   }
                   &__prevIcon {
                   }
@@ -197,6 +200,18 @@
                     .item__body-bottom {
                       display: flex;
                       justify-content: space-between;
+                    }
+                  }
+                  &__download {
+                    width: 24px;
+                    #rect {
+                      stroke: #979797;
+                    }
+                    &:hover {
+                      cursor: pointer;
+                      #rect {
+                        stroke: #276aa5;
+                      }
                     }
                   }
                 }
@@ -228,6 +243,9 @@
               background-color: #46be32;
             }
           }
+        }
+        .messages__body {
+          padding: 32px;
         }
       }
     }

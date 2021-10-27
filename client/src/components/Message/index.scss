@@ -1,0 +1,47 @@
+.message {
+  display: flex;
+  $self: &;
+  &--isme {
+    flex-direction: row-reverse;
+    #{$self}__avatar {
+      margin-left: 8px;
+    }
+    #{$self}__content {
+      &-bubble {
+        border-radius: 16px 16px 0px 16px;
+        background-color: rgba(229, 229, 229, 0.85);
+        box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
+        color: #0d1c2e;
+      }
+      &-date {
+        align-self: end;
+      }
+    }
+  }
+  &__avatar {
+    margin-right: 8px;
+    margin-bottom: 24px;
+    align-self: flex-end;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    &-bubble {
+      background-color: #4568e8;
+      max-width: 360px;
+      padding: 10px;
+      color: #ffffff;
+      font-size: 14px;
+      box-shadow: 1px 2px 4px rgba(69, 104, 232, 0.6);
+      border-radius: 16px 16px 16px 0px;
+      p {
+        margin: 0;
+      }
+    }
+    &-date {
+      margin-top: 8px;
+      font-size: 10px;
+      color: rgba(151, 151, 151, 1);
+    }
+  }
+}

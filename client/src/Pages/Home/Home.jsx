@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Avatar } from 'antd';
 
-import { Input } from 'antd';
+import { Input, Image } from 'antd';
 import './index.scss';
 
 import messageIcon from '../../assets/img/icons/message-circle.svg';
@@ -15,9 +15,9 @@ import plusIcon from '../../assets/img/icons/plus.svg';
 import vkIcon from '../../assets/img/icons/vk.svg';
 import instIcon from '../../assets/img/icons/instagram.png';
 import tmIcon from '../../assets/img/icons/telegram.svg';
-import downloadIcon from '../../assets/img/icons/download.svg';
-import arrowIcon from '../../assets/img/icons/arrowDown.svg';
 import attach from '../../assets/img/word.png';
+import Message from '../../components/Message';
+import ChatInput from '../../components/ChatInput';
 
 const Home = () => {
   return (
@@ -240,7 +240,15 @@ const Home = () => {
               <div className="messages__header-chat__title">Сократ</div>
               <div className="messages__header-chat__status online"></div>
             </div>
-            <div className="messages__body"></div>
+            <div className="messages__body">
+              <div className="messages">
+                <Message name="С" />
+                <Message isMe name="Д" />
+              </div>
+              <div className="messages__body-input">
+                <ChatInput />
+              </div>
+            </div>
           </div>
           <div className="main__content-body__rightbar">
             <div className="rightbar__header chat__header">
@@ -273,7 +281,19 @@ const Home = () => {
                 <div className="attachs__header">
                   <div className="attachs__header-title">Вложения</div>
                   <span className="attachs__header-icon">
-                    <img src={arrowIcon} alt="" />
+                    <svg
+                      className="icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M19 9L12 16L5 9"
+                        stroke="#111827"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
                   </span>
                 </div>
                 <ul className="attachs__list">
@@ -291,7 +311,16 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="attachs__list-item__download">
-                      <img src={downloadIcon} alt="" />
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          id="rect"
+                          d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 12L12 16M12 16L8 12M12 16L12 4"
+                          stroke="#111827"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </div>
                   </li>
                   <li className="attachs__list-item">
@@ -308,7 +337,16 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="attachs__list-item__download">
-                      <img src={downloadIcon} alt="" />
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          id="rect"
+                          d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 12L12 16M12 16L8 12M12 16L12 4"
+                          stroke="#111827"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </div>
                   </li>
                   <li className="attachs__list-item">
@@ -325,7 +363,16 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="attachs__list-item__download">
-                      <img src={downloadIcon} alt="" />
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          id="rect"
+                          d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 12L12 16M12 16L8 12M12 16L12 4"
+                          stroke="#111827"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </div>
                   </li>
                   <li className="attachs__list-item">
@@ -342,7 +389,16 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="attachs__list-item__download">
-                      <img src={downloadIcon} alt="" />
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          id="rect"
+                          d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 12L12 16M12 16L8 12M12 16L12 4"
+                          stroke="#111827"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </div>
                   </li>
                   <li className="attachs__list-item">
@@ -359,7 +415,16 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="attachs__list-item__download">
-                      <img src={downloadIcon} alt="" />
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          id="rect"
+                          d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 12L12 16M12 16L8 12M12 16L12 4"
+                          stroke="#111827"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </div>
                   </li>
                   <li className="attachs__list-item">
@@ -376,7 +441,16 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="attachs__list-item__download">
-                      <img src={downloadIcon} alt="" />
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          id="rect"
+                          d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 12L12 16M12 16L8 12M12 16L12 4"
+                          stroke="#111827"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </div>
                   </li>
                 </ul>
