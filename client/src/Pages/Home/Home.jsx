@@ -245,9 +245,8 @@ const Home = () => {
                 <Message name="С" />
                 <Message isMe name="Д" />
               </div>
-              <div className="messages__body-input">
-                <ChatInput />
-              </div>
+
+              <ChatInput />
             </div>
           </div>
           <div className="main__content-body__rightbar">

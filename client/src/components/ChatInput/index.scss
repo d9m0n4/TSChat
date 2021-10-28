@@ -1,0 +1,48 @@
+.messages__body-input {
+  padding: 16px 0 0 0;
+  border-top: 1px solid rgba(58, 69, 107, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &__buttons {
+    display: flex;
+
+    #icon {
+      stroke: #979797;
+    }
+    .button__icon {
+      padding: 0 4px;
+      margin: 0 -2px;
+      &:hover {
+        cursor: pointer;
+        #icon {
+          stroke: #276aa5;
+        }
+      }
+    }
+  }
+  &__textarea {
+    margin: 0 24px;
+    flex: 1;
+    textarea {
+      border: none;
+      outline: none;
+      padding: 0;
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    }
+  }
+  &__send {
+    #icon {
+      stroke: #979797;
+    }
+    &:hover {
+      cursor: pointer;
+      #icon {
+        stroke: #276aa5;
+      }
+    }
+  }
+}
