@@ -1,8 +1,8 @@
-.messages__body-input {
-  padding: 16px 0 0 0;
+.messages-input {
+  padding: 16px 0 16px 0;
   border-top: 1px solid rgba(58, 69, 107, 0.5);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   &__buttons {
     display: flex;
@@ -22,12 +22,14 @@
     }
   }
   &__textarea {
-    margin: 0 24px;
+    margin: 0 0 0 24px;
     flex: 1;
-    textarea {
+    padding: 8px 0;
+    .textfield {
       border: none;
       outline: none;
       padding: 0;
+      padding-right: 8px;
       &:focus {
         outline: none;
         box-shadow: none;

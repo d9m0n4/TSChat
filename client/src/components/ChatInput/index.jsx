@@ -7,8 +7,8 @@ const { TextArea } = Input;
 
 const ChatInput = () => {
   return (
-    <div className="messages__body-input">
-      <div className="messages__body-input__buttons">
+    <div className="messages-input">
+      <div className="messages-input__buttons">
         <div className="button__icon">
           <svg
             width="24"
@@ -44,10 +44,14 @@ const ChatInput = () => {
           </svg>
         </div>
       </div>
-      <div className="messages__body-input__textarea">
-        <TextArea placeholder="Введите сообщение... " autoSize={{ minRows: 1, maxRows: 5 }} />
+      <div className="messages-input__textarea">
+        <TextArea
+          className="textfield"
+          placeholder="Введите сообщение... "
+          autoSize={{ minRows: 1, maxRows: 5 }}
+        />
       </div>
-      <div className="messages__body-input__send">
+      <div className="messages-input__send">
         <svg
           width="24"
           height="24"

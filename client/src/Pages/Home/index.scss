@@ -22,6 +22,13 @@
         margin: 0;
         &__item {
           margin-bottom: 16px;
+          svg {
+            &:hover {
+              #rect {
+                stroke: #276aa5;
+              }
+            }
+          }
         }
       }
     }
@@ -44,6 +51,18 @@
         display: flex;
         flex-direction: column;
         .leftbar__header {
+          .top-bar__search {
+            input {
+              &:focus {
+                border-color: inherit;
+                box-shadow: none;
+                border-color: #979797;
+              }
+              &:hover {
+                border-color: #979797;
+              }
+            }
+          }
         }
 
         .leftbar__body {
@@ -135,7 +154,7 @@
               flex-direction: column;
               margin: 0 auto;
               align-items: center;
-              padding: 0 48px;
+              padding: 0 64px;
               padding-bottom: 32px;
               border-bottom: 1px solid rgba(58, 69, 107, 0.5);
               .companion__pers-info {
@@ -250,8 +269,22 @@
       }
       .messages__body {
         flex: 1;
+        overflow: auto;
         .messages {
           flex: 1;
+          padding: 0 32px 16px 32px;
+          .message {
+            margin-bottom: 16px;
+          }
+        }
+      }
+      .messages-input {
+        margin: 0 32px;
+        padding: 16px;
+        &__textarea {
+        }
+        &__send {
+          margin-left: 8px;
         }
       }
     }
