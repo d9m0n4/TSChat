@@ -1,0 +1,38 @@
+.main__content-body__leftbar {
+  overflow: auto;
+  width: 270px;
+  background-color: #f8f9ff;
+  display: flex;
+  flex-direction: column;
+  .leftbar__header {
+    .top-bar__search {
+      input {
+        &:focus {
+          border-color: inherit;
+          box-shadow: none;
+          border-color: #979797;
+        }
+        &:hover {
+          border-color: #979797;
+        }
+      }
+    }
+  }
+
+  .leftbar__body {
+    flex: 1 1 auto;
+    border-right: 1px solid rgba(229, 229, 229, 0.85);
+    .leftbar__chats {
+      &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 10px;
+        .chats__title {
+          font-size: 14px;
+          font-family: 'Gilroy-Medium';
+        }
+      }
+    }
+  }
+}

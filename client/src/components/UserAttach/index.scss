@@ -1,0 +1,57 @@
+.rightbar__dialog-companion__attachs {
+  padding: 32px 0;
+  .attachs__header {
+    display: flex;
+    padding: 0 10px;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    &-title {
+      font-family: 'Gilroy-Bold';
+      color: rgba(58, 69, 107, 0.5);
+    }
+    &-icon {
+      cursor: pointer;
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+  .attachs__list {
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10px;
+      align-items: center;
+      &:hover {
+        background-color: #f8f9ff;
+      }
+      &__prevIcon {
+      }
+      &__body {
+        font-size: 12px;
+        .item__body-top {
+          p {
+            margin: 0;
+          }
+        }
+        .item__body-bottom {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+      &__download {
+        width: 24px;
+        #rect {
+          stroke: #979797;
+        }
+        &:hover {
+          cursor: pointer;
+          #rect {
+            stroke: #276aa5;
+          }
+        }
+      }
+    }
+  }
+}
