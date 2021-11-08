@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.scss';
 import attach from '../../assets/img/word.png';
+import { Button } from 'antd';
 
 const UserAttach = () => {
   return (
@@ -17,18 +18,18 @@ const UserAttach = () => {
           <div className="attach__size">24MB</div>
         </div>
       </div>
-      <div className="attachs__list-item__download">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <Button type="text" className="attachs__list-item__download app-icon">
+        <svg className="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            id="rect"
+            className="rect"
             d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 12L12 16M12 16L8 12M12 16L12 4"
-            stroke="#111827"
+            stroke="#979797"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
         </svg>
-      </div>
+      </Button>
     </li>
   );
 };

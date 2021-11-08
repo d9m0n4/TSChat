@@ -1,6 +1,5 @@
 .main__content-body__leftbar {
-  overflow: auto;
-  width: 270px;
+  width: 290px;
   background-color: #f8f9ff;
   display: flex;
   flex-direction: column;
@@ -22,6 +21,7 @@
   .leftbar__body {
     flex: 1 1 auto;
     border-right: 1px solid rgba(229, 229, 229, 0.85);
+    overflow: auto;
     .leftbar__chats {
       &-header {
         display: flex;

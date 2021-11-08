@@ -36,15 +36,4 @@
       }
     }
   }
-  &__send {
-    #icon {
-      stroke: #979797;
-    }
-    &:hover {
-      cursor: pointer;
-      #icon {
-        stroke: #276aa5;
-      }
-    }
-  }
 }

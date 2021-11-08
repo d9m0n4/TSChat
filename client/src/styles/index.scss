@@ -36,6 +36,19 @@
   color: $darkenAccent;
 }
 
+button.app-icon {
+  background: none !important;
+  padding: 0;
+  .icon {
+    &:hover {
+      .rect {
+        stroke: #276aa5;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
 #root {
   background-color: #edfcfe;
 }

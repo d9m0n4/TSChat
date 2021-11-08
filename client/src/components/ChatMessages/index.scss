@@ -13,10 +13,10 @@
       font-size: 18px;
     }
     &-chat__status {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      border: 1px solid #fff;
+      box-shadow: 0 0 0 2px #fff;
       display: block;
       background-color: #dadada;
       margin-left: 8px;
@@ -28,6 +28,21 @@
   .messages__body {
     flex: 1;
     overflow: auto;
+
+    &::-webkit-scrollbar-track {
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 12px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background: #f0f2f5;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      background: #979797;
+    }
     .messages {
       flex: 1;
       padding: 0 32px 16px 32px;

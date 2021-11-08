@@ -10,12 +10,21 @@ const ChatMesaages = () => {
         <div className="messages__header-chat__title">Сократ</div>
         <div className="messages__header-chat__status online"></div>
       </div>
+
       <div className="messages__body">
         <div className="messages">
           <Message name="С" />
           <Message isMe name="Д" />
+          <Message name="С" />
+          <Message isMe name="Д" />
+          <Message isMe name="Д" />
+          <Message name="С" />
+          <Message isMe name="Д" />
+          <Message isMe name="Д" />
+          <Message name="С" />
         </div>
       </div>
+
       <ChatInput />
     </div>
   );
