@@ -34,7 +34,6 @@
     }
     &::-webkit-scrollbar {
       width: 6px;
-      height: 12px;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
@@ -54,8 +53,7 @@
   .messages-input {
     margin: 0 32px;
     padding: 16px;
-    &__textarea {
-    }
+
     &__send {
       margin-left: 8px;
     }

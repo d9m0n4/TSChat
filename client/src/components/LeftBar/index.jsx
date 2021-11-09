@@ -31,9 +31,9 @@ const Leftbar = () => {
                     className="rect"
                     d="M12 4V20M20 12L4 12"
                     stroke="#979797"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </Button>
@@ -64,9 +64,9 @@ const Leftbar = () => {
                     className="rect"
                     d="M12 4V20M20 12L4 12"
                     stroke="#979797"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </Button>

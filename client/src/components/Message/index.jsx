@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import './index.scss';
 
-const Message = ({ isMe, name }) => {
+const Message = ({ isMe, name, text }) => {
   return (
     <div className={classNames('message', { 'message--isme': isMe })}>
       <div className="message__avatar">
@@ -13,7 +13,7 @@ const Message = ({ isMe, name }) => {
       </div>
       <div className="message__content">
         <div className="message__content-bubble">
-          <p>А того, кто умеет ставить вопросы и давать ответы, мы называем диалектиком?</p>
+          <p>{text}</p>
         </div>
         <div className="message__content-date">Сегодня, в 13:46</div>
       </div>

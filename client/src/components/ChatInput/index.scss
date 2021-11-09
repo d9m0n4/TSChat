@@ -34,6 +34,21 @@
         outline: none;
         box-shadow: none;
       }
+      &::-webkit-scrollbar-track {
+        border-radius: 4px;
+      }
+      &::-webkit-scrollbar {
+        width: 6px;
+        height: 12px;
+        cursor: pointer;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #f0f2f5;
+      }
+      &:hover::-webkit-scrollbar-thumb {
+        background: #979797;
+      }
     }
   }
 }

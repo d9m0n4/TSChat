@@ -22,6 +22,21 @@
     flex: 1 1 auto;
     border-right: 1px solid rgba(229, 229, 229, 0.85);
     overflow: auto;
+    &::-webkit-scrollbar-track {
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 12px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background: #f0f2f5;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      background: #979797;
+    }
+
     .leftbar__chats {
       &-header {
         display: flex;
