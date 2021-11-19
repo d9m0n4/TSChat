@@ -8,11 +8,17 @@ const UserSchema = new Schema({
   },
   name: {
     type: String,
-    required: true,
   },
   password: {
     type: String,
     required: true,
+  },
+  isActivated: {
+    type: Boolean,
+    default: false,
+  },
+  ActivationLink: {
+    type: String,
   },
   userAvatar: {
     type: String,
