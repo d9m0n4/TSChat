@@ -1,14 +1,22 @@
 const UserModel = require('../Models/User');
+const bcrypt = require('bcrypt');
 
 class UserController {
   async registration(req, res) {
-    console.log(req.body);
-    res.json('asdasd');
-    // const candidate = await UserModel.findOne(req.body.email);
-    // if (candidate) {
-    //   throw new Error('пользователь с такии email уже существует!');
-    // }
+    const candidate = await UserModel.findOne({ email: req.body.email });
+    if (candidate) {
+      res.status(400).json('пользователь с такии email уже существует!');
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 3);
+    const user = new UserModel({ email: req.body.email, password: hashedPassword });
+
+    await user.save();
+
+    res.status(200).json(user);
   }
+
+  async login(req, res) {}
 }
 
 module.exports = new UserController();
