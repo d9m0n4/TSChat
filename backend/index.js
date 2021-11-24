@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./Routes/index');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 
@@ -11,11 +12,11 @@ app.use('/api', router);
 
 const start = () => {
   try {
-    app.listen(8000, () => {
-      console.log('server has been started');
+    app.listen(process.env.PORT, () => {
+      console.log(`server has been started on port ${process.env.PORT}`);
     });
     mongoose.connect(
-      'mongodb+srv://tschat:tschat1@cluster0.cxrur.mongodb.net/TSCHAT?retryWrites=true&w=majority',
+      process.env.DBURL,
       {
         bufferCommands: true,
         useNewUrlParser: true,

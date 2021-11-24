@@ -17,7 +17,7 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  ActivationLink: {
+  activationLink: {
     type: String,
   },
   userAvatar: {
