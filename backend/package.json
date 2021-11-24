@@ -21,6 +21,7 @@
   "homepage": "https://github.com/d9m0n4/TSChat#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

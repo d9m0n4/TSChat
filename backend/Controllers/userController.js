@@ -1,46 +1,102 @@
 const User = require('../Models/User');
+const SendMail = require('../Services/mail-service');
+const TokenService = require('../Services/token-service');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
-const mailService = require('../Services/mail-service');
+const UserDto = require('../DTOS/user-dto');
+const { validationResult } = require('express-validator');
+require('dotenv').config();
 
 class UserController {
   async registration(req, res) {
-    const { email, password } = req.body;
+    try {
+      const { email, password } = req.body;
 
-    const candidate = await User.findOne({ email });
-    if (candidate) {
-      res.status(400).json('пользователь с такии email уже существует!');
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        res.json('ошибка при валидации');
+        res.json(errors);
+        throw new Error('ошибка при валидации');
+      }
+
+      const candidate = await User.findOne({ email });
+
+      if (candidate) {
+        res.json('Пользователь с таким email уже существует');
+        throw new Error('Пользователь с таким email уже существует');
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 3);
+      const activationStr = uuid.v4();
+
+      const user = await User.create({
+        email,
+        password: hashedPassword,
+        activationLink: activationStr,
+      });
+      const userDTO = new UserDto(user);
+
+      await SendMail.sendActivationLink(email, activationStr);
+
+      const tokens = TokenService.generateTokens({ ...userDTO });
+
+      await TokenService.saveToken(userDTO.id, tokens.refreshToken);
+
+      await user.save();
+
+      res.cookie('refreshToken', tokens.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+
+      const userData = { tokens, user: userDTO };
+      res.status(200).json(userData);
+    } catch (error) {
+      console.log(error);
     }
-
-    const hashedPassword = await bcrypt.hash(password, 3);
-    const activationLink = uuid.v4();
-    const user = await User.create({
-      email,
-      password: hashedPassword,
-      activationLink,
-    });
-    await mailService.sendActivationLink(
-      email,
-      `http://localhost:8000/api/activate/${activationLink}`,
-    );
-    await user.save();
-
-    res.status(200).json(user);
   }
 
-  async activateAccaunt(req, res) {
-    const user = await User.findOne({ activationLink: req.params.link });
+  async activationAccaunt(req, res) {
+    const link = req.params.link;
+
+    const user = await User.findOne({ link });
+
     if (!user) {
-      throw new Error('Некорректная ссылка');
+      throw new Error('Некорректная ссылка активации');
     }
+
     user.isActivated = true;
 
     await user.save();
-
-    res.redirect('http://ya.ru/');
+    res.redirect(process.env.CLIENT_URL);
   }
 
-  async login(req, res) {}
+  async login(req, res) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.json('пользователя не существует');
+      throw new Error('пользователя не существует');
+    }
+
+    const identPass = await bcrypt.compare(password, user.password);
+    if (!identPass) {
+      res.json('Неверный пароль');
+    }
+
+    const userDTO = new UserDto(user);
+
+    const tokens = TokenService.generateTokens({ ...userDTO });
+
+    await TokenService.saveToken(userDTO.id, tokens.refreshToken);
+    res.cookie('refreshToken', tokens.refreshToken, {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
+
+    res.status(200).json('авторизован');
+  }
 }
 
 module.exports = new UserController();
