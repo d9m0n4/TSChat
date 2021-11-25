@@ -56,7 +56,6 @@ class UserController {
       console.log(error);
     }
   }
-
   async activationAccaunt(req, res) {
     const link = req.params.link;
 
@@ -71,7 +70,6 @@ class UserController {
     await user.save();
     res.redirect(process.env.CLIENT_URL);
   }
-
   async login(req, res) {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -83,6 +81,7 @@ class UserController {
     const identPass = await bcrypt.compare(password, user.password);
     if (!identPass) {
       res.json('Неверный пароль');
+      throw new Error('Неверный пароль');
     }
 
     const userDTO = new UserDto(user);
@@ -95,7 +94,50 @@ class UserController {
       httpOnly: true,
     });
 
-    res.status(200).json('авторизован');
+    const userData = { tokens, user: userDTO };
+
+    res.status(200).json(userData);
+  }
+  async logout(req, res) {
+    const { refreshToken } = req.cookies;
+    const token = await TokenService.deleteToken(refreshToken);
+    res.clearCookie('refreshToken');
+    res.json(token);
+  }
+  async refresh(req, res) {
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+      res.json('Пользователь не авторизован');
+      throw new Error('Пользователь не авторизован');
+    }
+
+    const userData = TokenService.validateRefreshToken(refreshToken);
+    const tokenFromDb = TokenService.findToken(refreshToken);
+
+    if (!userData || !tokenFromDb) {
+      res.json('Пользователь не авторизован');
+      throw new Error('Пользователь не авторизован');
+    }
+
+    const user = await User.findById(userData.id);
+
+    const userDTO = new UserDto(user);
+
+    const tokens = TokenService.generateTokens({ ...userDTO });
+
+    await TokenService.saveToken(userDTO.id, tokens.refreshToken);
+    res.cookie('refreshToken', tokens.refreshToken, {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
+
+    const data = { tokens, user: userDTO };
+
+    res.status(200).json(data);
+  }
+  async getAllUsers(req, res) {
+    const users = await User.find();
+    res.json(users);
   }
 }
 
