@@ -12,7 +12,7 @@ const Auth = () => {
       <div className="auth-page__content">
         <div className="auth-form__block">
           <Switch>
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/registration" component={Registration} />
           </Switch>
         </div>

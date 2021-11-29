@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
+import SignIn from '../../Services/Auth';
 
 const Login = () => {
+  const [email, SetEmail] = useState();
+  const [password, SetPassword] = useState();
+
+  const Auth = () => {
+    SignIn(email, password);
+  };
+
   return (
     <div className="auth-form__block-wrapper">
       <div className="form-title">
@@ -15,18 +23,30 @@ const Login = () => {
             hasFeedback
             name="email"
             rules={[{ required: true, message: 'Please input your Username!' }]}>
-            <Input size="large" placeholder="Электронная почта" />
+            <Input
+              onChange={(e) => SetEmail(e.target.value)}
+              value={email}
+              size="large"
+              placeholder="Электронная почта"
+            />
           </Form.Item>
 
           <Form.Item
             hasFeedback
             name="password"
             rules={[{ required: true, message: 'Please input your Password!' }]}>
-            <Input.Password size="large" type="password" placeholder="Введите пароль" />
+            <Input.Password
+              onChange={(e) => SetPassword(e.target.value)}
+              value={password}
+              size="large"
+              type="password"
+              placeholder="Введите пароль"
+            />
           </Form.Item>
 
           <Form.Item>
             <Button
+              onClick={Auth}
               size="large"
               type="primary"
               htmlType="submit"

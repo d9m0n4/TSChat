@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/">{Home}</Route>
+        <Route path="/">{Auth}</Route>
       </Switch>
     </div>
   );
