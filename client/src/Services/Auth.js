@@ -8,6 +8,10 @@ class Auth {
   Logout = () => {
     return API.post('/logout');
   };
+
+  checkToken = () => {
+    return API.post('/refresh');
+  };
 }
 
 export default new Auth();

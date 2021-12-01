@@ -5,7 +5,7 @@ import Login from '../../modules/LoginForm/Login';
 import Registration from '../../modules/RegistrationForm/Registration';
 import './index.scss';
 
-const Auth = () => {
+export const Auth = () => {
   return (
     <section className="auth-page">
       <div className="app-logo">TSChat</div>
@@ -23,5 +23,3 @@ const Auth = () => {
     </section>
   );
 };
-
-export default Auth;

@@ -1,11 +1,15 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Auth from './Pages/Auth/Auth';
+import { Auth as AuthPage } from './Pages/Auth/Auth';
 import Home from './Pages/Home/Home';
+import { useEffect } from 'react';
+import Auth from './Services/Auth';
 
 function App(props) {
   const { isAuth } = props;
   console.log(isAuth);
+
+  useEffect(() => {}, []);
 
   return (
     <div className="App">
@@ -13,7 +17,7 @@ function App(props) {
         <Route
           exact
           path={['/login', '/registration']}
-          render={() => (!isAuth ? <Auth /> : <Redirect to="/" />)}
+          render={() => (!isAuth ? <AuthPage /> : <Redirect to="/" />)}
         />
         <Route exact path="/" render={() => (isAuth ? <Home /> : <Redirect to="/login" />)} />
       </Switch>
