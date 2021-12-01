@@ -1,7 +1,13 @@
 import API from '../api/axios';
 
-const SignIn = (email, password) => {
-  API.post('/login', { email, password });
-};
+class Auth {
+  SignIn = (postData) => {
+    return API.post('/login', { ...postData });
+  };
 
-export default SignIn;
+  Logout = () => {
+    return API.post('/logout');
+  };
+}
+
+export default new Auth();

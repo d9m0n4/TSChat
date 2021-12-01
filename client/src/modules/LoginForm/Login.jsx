@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import SignIn from '../../Services/Auth';
+
+import store from '../../store';
+import authActions from '../../store/actions/authActions';
 
 const Login = () => {
-  const [email, SetEmail] = useState();
-  const [password, SetPassword] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-  const Auth = () => {
-    SignIn(email, password);
+  const handleSubmit = (values) => {
+    store.dispatch(authActions.login(values));
   };
 
   return (
@@ -18,15 +20,16 @@ const Login = () => {
         <span>Войдите в свой аккаунт</span>
       </div>
       <div className="form-content">
-        <Form name="normal_login" className="login-form">
+        <Form onFinish={handleSubmit} name="normal_login" className="login-form">
           <Form.Item
             hasFeedback
             name="email"
             rules={[{ required: true, message: 'Please input your Username!' }]}>
             <Input
-              onChange={(e) => SetEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
               size="large"
+              type="email"
               placeholder="Электронная почта"
             />
           </Form.Item>
@@ -36,7 +39,7 @@ const Login = () => {
             name="password"
             rules={[{ required: true, message: 'Please input your Password!' }]}>
             <Input.Password
-              onChange={(e) => SetPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               value={password}
               size="large"
               type="password"
@@ -46,10 +49,9 @@ const Login = () => {
 
           <Form.Item>
             <Button
-              onClick={Auth}
+              htmlType="submit"
               size="large"
               type="primary"
-              htmlType="submit"
               className="login-form-button auth-btn">
               Войти
             </Button>
