@@ -9,8 +9,6 @@ function App(props) {
   const { isAuth } = props;
   console.log(isAuth);
 
-  useEffect(() => {}, []);
-
   return (
     <div className="App">
       <Switch>

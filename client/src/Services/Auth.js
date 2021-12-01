@@ -10,7 +10,7 @@ class Auth {
   };
 
   checkToken = () => {
-    return API.post('/refresh');
+    return API.get('/refresh');
   };
 }
 

@@ -2,6 +2,8 @@ const UserController = require('../Controllers/userController');
 const Router = require('express').Router;
 const router = new Router();
 
+const CheckToken = require('../Middlewares/CheckToken');
+
 const { body } = require('express-validator');
 
 router.post(
@@ -12,8 +14,8 @@ router.post(
 );
 router.post('/login', UserController.login);
 router.post('/logout', UserController.logout);
-router.post('/refresh', UserController.refresh);
+router.get('/refresh', UserController.refresh);
 router.get('/activate/:link', UserController.activationAccaunt);
-router.get('/getAllUsers', UserController.getAllUsers);
+router.get('/getAllUsers', CheckToken, UserController.getAllUsers);
 
 module.exports = router;
