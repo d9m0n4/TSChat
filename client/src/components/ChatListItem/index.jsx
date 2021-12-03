@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './index.scss';
 
-import { Avatar, Badge } from 'antd';
+import { Avatar } from 'antd';
 
-const ChatListItem = ({ type, online }) => {
+const ChatListItem = ({ type, online, name, id, email }) => {
+  useEffect(() => {
+    console.log(423431241);
+  }, []);
   return (
     <div className="chats__item">
       <div className="chats__item-avatar">
@@ -13,11 +16,11 @@ const ChatListItem = ({ type, online }) => {
           size={40}
           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
         />
-        <sub className="messages-count">99</sub>
+        <sub className="messages-count">{id}</sub>
       </div>
       <div className="chats__item-body">
         <div className="chats__item-top">
-          <p className="item-name">Александр Пушкин</p>
+          <p className="item-name">{name}</p>
           <span className="item-date">21.04.2021</span>
         </div>
         {type === 'conv' ? (
@@ -27,7 +30,7 @@ const ChatListItem = ({ type, online }) => {
           </div>
         ) : (
           <div className="chats__item-bottom">
-            <div className="item__message">Шо как мужуки??? Есть че...</div>
+            <div className="item__message">{email}</div>
             <div className="item__status"></div>
           </div>
         )}

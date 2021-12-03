@@ -12,4 +12,15 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+API.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      console.log(error);
+    }
+  },
+);
+
 export default API;

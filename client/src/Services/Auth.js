@@ -1,4 +1,5 @@
-import API from '../api/axios';
+import axios from 'axios';
+import API, { BASE_URL } from '../api/axios';
 
 class Auth {
   SignIn = (postData) => {
@@ -9,8 +10,8 @@ class Auth {
     return API.post('/logout');
   };
 
-  checkToken = () => {
-    return API.get('/refresh');
+  checkToken = async () => {
+    return await axios.get(`${BASE_URL}/refresh`, { withCredentials: true });
   };
 }
 

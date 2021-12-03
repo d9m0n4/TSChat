@@ -7,6 +7,7 @@ import vkIcon from '../../assets/img/icons/vk.svg';
 import instIcon from '../../assets/img/icons/instagram.png';
 import tmIcon from '../../assets/img/icons/telegram.svg';
 import UserAttach from '../UserAttach';
+import { Link } from 'react-router-dom';
 
 const Rightbar = () => {
   return (
@@ -41,15 +42,15 @@ const Rightbar = () => {
             <span className="online">в сети</span>
           </div>
           <div className="companion__social-links">
-            <a href="#">
+            <Link to="#">
               <img src={vkIcon} alt="" />
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <img src={instIcon} alt="" />
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="#">
               <img src={tmIcon} alt="" />
-            </a>
+            </Link>
           </div>
         </div>
         <div className="rightbar__dialog-companion__attachs">

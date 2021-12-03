@@ -107,16 +107,20 @@ class UserController {
   async refresh(req, res) {
     const { refreshToken } = req.cookies;
     if (!refreshToken) {
-      res.status(401).json('Пользователь не авторизован');
-      throw new Error('Пользователь не авторизован');
+      return res.status(401).json({
+        status: 401,
+        message: 'token not found',
+      });
     }
 
     const userData = TokenService.validateRefreshToken(refreshToken);
-    const tokenFromDb = TokenService.findToken(refreshToken);
+    const tokenFromDb = await TokenService.findToken(refreshToken);
 
     if (!userData || !tokenFromDb) {
-      res.status(401).json('Пользователь не авторизован');
-      throw new Error('Пользователь не авторизован');
+      return res.status(401).json({
+        status: 401,
+        message: 'Пользователь не автризован',
+      });
     }
 
     const user = await User.findById(userData.id);

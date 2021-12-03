@@ -4,8 +4,13 @@ import './index.scss';
 
 import { Link } from 'react-router-dom';
 import { Avatar } from 'antd';
+import Auth from '../../Services/Auth';
 
-const Sidebar = () => {
+const Sidebar = (props) => {
+  const logout = () => {
+    Auth.Logout();
+    console.log(props);
+  };
   return (
     <div className="sidebar">
       <div className="user__profile-link">
@@ -81,7 +86,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="nav-group__item">
-            <Link to="#">
+            <Link to="/" onClick={logout}>
               <svg
                 width="32"
                 height="32"

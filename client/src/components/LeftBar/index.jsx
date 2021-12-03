@@ -9,9 +9,17 @@ import AddDialogModal from '../AddDialogModal';
 
 const Leftbar = () => {
   const [visible, setVisible] = useState(false);
+  const [users, setUsers] = useState([]);
 
   const showModal = () => {
     setVisible(true);
+  };
+
+  const fetchUsers = () => {
+    setUsers([]);
+    fetch('https://jsonplaceholder.typicode.com/users/')
+      .then((response) => response.json())
+      .then((json) => setUsers(json));
   };
 
   return (
@@ -48,13 +56,19 @@ const Leftbar = () => {
                 </Button>
               </div>
             </div>
+            <div>
+              <button onClick={fetchUsers}>Load</button>
+            </div>
             <div className="leftbar__chats-body">
-              <ChatListItem online />
-              <ChatListItem online />
-              <ChatListItem online />
-              <ChatListItem online />
-              <ChatListItem online />
-              <ChatListItem online />
+              {users.map((user) => (
+                <ChatListItem
+                  key={user.name}
+                  online
+                  name={user.name}
+                  email={user.email}
+                  id={user.id}
+                />
+              ))}
             </div>
           </div>
           <div className="leftbar__chats">

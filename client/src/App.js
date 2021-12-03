@@ -2,8 +2,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Auth as AuthPage } from './Pages/Auth/Auth';
 import Home from './Pages/Home/Home';
-import { useEffect } from 'react';
-import Auth from './Services/Auth';
 
 function App(props) {
   const { isAuth } = props;

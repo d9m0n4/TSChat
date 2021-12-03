@@ -4,7 +4,10 @@ module.exports = function (req, res, next) {
   const authHeaders = req.headers.authorization;
 
   if (!authHeaders) {
-    console.log('пользователь не авторизован');
+    res.status(401).json({
+      status: 401,
+      message: 'Нет доступа. Пользователь не авторизован',
+    });
     throw new Error('пользователь не авторизован');
   }
 
@@ -13,7 +16,10 @@ module.exports = function (req, res, next) {
   const userData = tokenService.validateAccessToken(accessToken);
 
   if (!userData) {
-    console.log('пользователь не авторизован');
+    res.status(401).json({
+      status: 401,
+      message: 'Нет доступа. Пользователь не авторизован',
+    });
     throw new Error('пользователь не авторизован');
   }
 
