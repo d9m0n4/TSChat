@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import { Provider } from 'react-redux';
 import './styles/index.scss';
 import 'antd/dist/antd.css';
-
 import store from './store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -15,6 +14,5 @@ ReactDOM.render(
       <App />
     </BrowserRouter>
   </Provider>,
-
   document.getElementById('root'),
 );

@@ -4,12 +4,13 @@ import './index.scss';
 
 import { Link } from 'react-router-dom';
 import { Avatar } from 'antd';
-import Auth from '../../Services/Auth';
+import authActions from '../../store/actions/authActions';
+
+import store from '../../store';
 
 const Sidebar = (props) => {
-  const logout = () => {
-    Auth.Logout();
-    console.log(props);
+  const logout = async () => {
+    await store.dispatch(authActions.logout());
   };
   return (
     <div className="sidebar">

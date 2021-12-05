@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import './index.scss';
 
 import ChatListItem from '../ChatListItem';
@@ -7,7 +6,7 @@ import ChatListItem from '../ChatListItem';
 import { Button, Input } from 'antd';
 import AddDialogModal from '../AddDialogModal';
 
-const Leftbar = () => {
+const Leftbar = (props) => {
   const [visible, setVisible] = useState(false);
   const [users, setUsers] = useState([]);
 

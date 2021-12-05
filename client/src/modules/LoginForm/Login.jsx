@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
-
-import store from '../../store';
+import { connect } from 'react-redux';
+import Auth from '../../Services/Auth';
 import authActions from '../../store/actions/authActions';
 
-const Login = () => {
+import store from '../../store/index';
+
+const Login = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const handleSubmit = (values) => {
-    store.dispatch(authActions.login(values));
+  const login = () => {
+    store.dispatch(authActions.login({ email, password }));
+    if (!props.user.isActivated) {
+      props.history.push('/verify');
+    }
+    // props.history.push('/');
   };
 
   return (
@@ -20,7 +26,7 @@ const Login = () => {
         <span>Войдите в свой аккаунт</span>
       </div>
       <div className="form-content">
-        <Form onFinish={handleSubmit} name="normal_login" className="login-form">
+        <Form onFinish={login} name="normal_login" className="login-form">
           <Form.Item
             hasFeedback
             name="email"
@@ -65,4 +71,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(({ auth }) => ({ user: auth.user }))(Login);

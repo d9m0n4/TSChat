@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import './index.scss';
 
 import { Avatar } from 'antd';
 
 const ChatListItem = ({ type, online, name, id, email }) => {
-  useEffect(() => {
-    console.log(423431241);
-  }, []);
   return (
     <div className="chats__item">
       <div className="chats__item-avatar">
