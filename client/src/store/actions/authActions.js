@@ -4,26 +4,28 @@ import Auth from '../../Services/Auth';
 
 const authActions = {
   setAuth: (payload) => ({
-    type: 'AUTH:CHECKAUTH',
+    type: 'AUTH:SET_AUTH',
     payload,
   }),
+
   setUser: (payload) => ({
     type: 'AUTH:SET_USER',
     payload,
   }),
+
   login: (payload) => (dispatch) => {
-    try {
-      Auth.Login(payload).then(({ data }) => {
-        console.log(data);
-        const token = data.tokens.accessToken;
-        localStorage.setItem('token', token);
-        dispatch(authActions.setAuth(true));
-        dispatch(authActions.setUser(data.user));
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    return Auth.Login(payload).then(({ data }) => {
+      const token = data.tokens.accessToken;
+      if (!data.user.isActivated) {
+        return data;
+      }
+      localStorage.setItem('token', token);
+      dispatch(authActions.setAuth(true));
+      dispatch(authActions.setUser(data.user));
+      return data;
+    });
   },
+
   logout: () => (dispatch) => {
     Auth.Logout();
     dispatch(authActions.setAuth(false));

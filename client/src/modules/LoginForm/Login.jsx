@@ -12,11 +12,12 @@ const Login = (props) => {
   const [password, setPassword] = useState();
 
   const login = () => {
-    store.dispatch(authActions.login({ email, password }));
-    if (!props.user.isActivated) {
-      props.history.push('/verify');
-    }
-    // props.history.push('/');
+    store.dispatch(authActions.login({ email, password })).then(({ user }) => {
+      if (!user.isActivated) {
+        return props.history.push('/verify');
+      }
+      props.history.push('/');
+    });
   };
 
   return (

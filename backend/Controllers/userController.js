@@ -10,7 +10,7 @@ require('dotenv').config();
 class UserController {
   async registration(req, res) {
     try {
-      const { email, password } = req.body;
+      const { email, name, password } = req.body;
 
       const errors = validationResult(req);
 
@@ -32,6 +32,7 @@ class UserController {
 
       const user = await User.create({
         email,
+        name,
         password: hashedPassword,
         activationLink: activationStr,
       });
