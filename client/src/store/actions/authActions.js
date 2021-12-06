@@ -12,17 +12,22 @@ const authActions = {
     payload,
   }),
   login: (payload) => (dispatch) => {
-    Auth.Login(payload).then(({ data }) => {
-      console.log(data);
-      const token = data.tokens.accessToken;
-      localStorage.setItem('token', token);
-      dispatch(authActions.setAuth(true));
-      dispatch(authActions.setUser(data.user));
-    });
+    try {
+      Auth.Login(payload).then(({ data }) => {
+        console.log(data);
+        const token = data.tokens.accessToken;
+        localStorage.setItem('token', token);
+        dispatch(authActions.setAuth(true));
+        dispatch(authActions.setUser(data.user));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
   logout: () => (dispatch) => {
     Auth.Logout();
     dispatch(authActions.setAuth(false));
+    dispatch(authActions.setUser({}));
     localStorage.removeItem('token');
   },
 };
