@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import InfoImg from '../../assets/img/Group.svg';
 import Login from '../../modules/LoginForm/Login';
-import Registration from '../../modules/RegistrationForm/Registration';
+import Registration from '../../modules/RegistrationForm/container/RegisterForm';
 import verify from './components/verify';
 import './index.scss';
 

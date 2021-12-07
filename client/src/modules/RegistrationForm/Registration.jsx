@@ -1,14 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 
-const Login = () => {
-  const [formData, SetFormData] = useState([]);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
+const Registration = ({
+  errors,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  touched,
+  values,
+  isSubmitting,
+}) => {
+  const checkField = (key, touched, errors) => {
+    if (touched[key]) {
+      if (errors[key]) {
+        return 'error';
+      } else {
+        return 'success';
+      }
+    } else {
+      return '';
+    }
+  };
   return (
     <div className="auth-form__block-wrapper">
       <div className="form-title">
@@ -16,47 +29,71 @@ const Login = () => {
         <span>Пройдите регистрацию, чтобы войти в чат</span>
       </div>
       <div className="form-content">
-        <Form onFinish={(values) => SetFormData(values)} name="normal_login" className="login-form">
-          <Form.Item
-            hasFeedback
-            name="email"
-            rules={[{ required: true, message: 'Please input your Username!' }]}>
-            <Input value="email" size="large" placeholder="Электронная почта" />
+        <Form onSubmit={handleSubmit} name="normal_login" className="login-form">
+          <Form.Item hasFeedback>
+            <Input
+              required={true}
+              touched={touched}
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+              size="large"
+              placeholder="Введите email"
+            />
           </Form.Item>
 
-          <Form.Item
-            hasFeedback
-            name="username"
-            rules={[{ required: true, message: 'Please input your Username!' }]}>
-            <Input value="name" size="large" placeholder="Введите имя" />
+          <Form.Item hasFeedback>
+            <Input
+              touched={touched}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              name="name"
+              value={values.name}
+              size="large"
+              placeholder="Введите имя"
+            />
           </Form.Item>
 
-          <Form.Item
-            hasFeedback
-            name="password"
-            rules={[{ required: true, message: 'Please input your Password!' }]}>
+          <Form.Item hasFeedback validateStatus={checkField('password', touched, errors)}>
             <Input.Password
-              value="password"
+              touched={touched}
+              style={{ position: 'relative' }}
+              required={true}
+              name="password"
+              onBlur={handleBlur}
+              value={values.password}
+              onChange={handleChange}
               size="large"
               type="password"
               placeholder="Введите пароль"
             />
+            {errors.password && (
+              <span style={{ position: 'absolute', bottom: -20, left: 0 }}>{errors.password}</span>
+            )}
           </Form.Item>
 
-          <Form.Item
-            hasFeedback
-            name="password2"
-            rules={[{ required: true, message: 'Please input your Password!' }]}>
+          <Form.Item hasFeedback>
             <Input.Password
-              value="password_2"
+              style={{ position: 'relative' }}
+              required={true}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              name="password2"
+              value={values.password2}
               size="large"
               type="password"
               placeholder="Повторите пароль"
             />
+            {errors.password2 && (
+              <span style={{ position: 'absolute', bottom: -20, left: 0 }}>{errors.password2}</span>
+            )}
           </Form.Item>
 
           <Form.Item>
             <Button
+              disabled={isSubmitting}
+              onClick={handleSubmit}
               size="large"
               type="primary"
               htmlType="submit"
@@ -73,4 +110,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;
