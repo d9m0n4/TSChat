@@ -19,6 +19,10 @@ export default withFormik({
       errors.email = 'Введен не корректный email';
     }
 
+    if (!values.name) {
+      errors.name = 'Укажите Ваше имя';
+    }
+
     if (!values.password) {
       errors.password = 'Введите пароль';
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(values.password)) {
@@ -31,9 +35,13 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: (values, { setSubmitting }) => {
-    console.log(values);
+  handleSubmit: (values, { setSubmitting, setErrors, props }) => {
+    console.log(values, props);
     setSubmitting(false);
+    props.history.push({
+      pathname: '/verify',
+      from: '/registration',
+    });
   },
 
   displayName: 'Registration',

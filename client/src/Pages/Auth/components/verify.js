@@ -1,6 +1,7 @@
 import React from 'react';
 
-const verify = () => {
+const verify = (props) => {
+  console.log(props);
   return (
     <div className="auth-form__block-wrapper">
       <div className="form-title">

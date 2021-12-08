@@ -22,6 +22,7 @@ const Registration = ({
       return '';
     }
   };
+
   return (
     <div className="auth-form__block-wrapper">
       <div className="form-title">
@@ -30,8 +31,9 @@ const Registration = ({
       </div>
       <div className="form-content">
         <Form onSubmit={handleSubmit} name="normal_login" className="login-form">
-          <Form.Item hasFeedback>
+          <Form.Item hasFeedback validateStatus={checkField('email', touched, errors)}>
             <Input
+              style={{ position: 'relative' }}
               required={true}
               touched={touched}
               name="email"
@@ -41,10 +43,12 @@ const Registration = ({
               size="large"
               placeholder="Введите email"
             />
+            {errors.email && <span className="error-message">{errors.email}</span>}
           </Form.Item>
 
-          <Form.Item hasFeedback>
+          <Form.Item hasFeedback validateStatus={checkField('name', touched, errors)}>
             <Input
+              style={{ position: 'relative' }}
               touched={touched}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -53,6 +57,7 @@ const Registration = ({
               size="large"
               placeholder="Введите имя"
             />
+            {errors.name && <span className="error-message">{errors.name}</span>}
           </Form.Item>
 
           <Form.Item hasFeedback validateStatus={checkField('password', touched, errors)}>
@@ -68,12 +73,10 @@ const Registration = ({
               type="password"
               placeholder="Введите пароль"
             />
-            {errors.password && (
-              <span style={{ position: 'absolute', bottom: -20, left: 0 }}>{errors.password}</span>
-            )}
+            {errors.password && <span className="error-message">{errors.password}</span>}
           </Form.Item>
 
-          <Form.Item hasFeedback>
+          <Form.Item hasFeedback validateStatus={checkField('password2', touched, errors)}>
             <Input.Password
               style={{ position: 'relative' }}
               required={true}
@@ -85,14 +88,11 @@ const Registration = ({
               type="password"
               placeholder="Повторите пароль"
             />
-            {errors.password2 && (
-              <span style={{ position: 'absolute', bottom: -20, left: 0 }}>{errors.password2}</span>
-            )}
+            {errors.password2 && <span className="error-message">{errors.password2}</span>}
           </Form.Item>
 
           <Form.Item>
             <Button
-              disabled={isSubmitting}
               onClick={handleSubmit}
               size="large"
               type="primary"
