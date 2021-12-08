@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Auth from '../../Services/Auth';
 import authActions from '../../store/actions/authActions';
 
 import store from '../../store/index';

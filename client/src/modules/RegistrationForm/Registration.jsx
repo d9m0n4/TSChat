@@ -78,6 +78,7 @@ const Registration = ({
 
           <Form.Item hasFeedback validateStatus={checkField('password2', touched, errors)}>
             <Input.Password
+              disabled={errors.password}
               style={{ position: 'relative' }}
               required={true}
               onBlur={handleBlur}
@@ -94,6 +95,7 @@ const Registration = ({
           <Form.Item>
             <Button
               onClick={handleSubmit}
+              disabled={isSubmitting}
               size="large"
               type="primary"
               htmlType="submit"

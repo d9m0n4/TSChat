@@ -13,17 +13,21 @@ const authActions = {
     payload,
   }),
 
-  login: (payload) => (dispatch) => {
-    return Auth.Login(payload).then(({ data }) => {
-      const token = data.tokens.accessToken;
-      if (!data.user.isActivated) {
-        return data;
-      }
-      localStorage.setItem('token', token);
-      dispatch(authActions.setAuth(true));
-      dispatch(authActions.setUser(data.user));
-      return data;
-    });
+  login: (payload) => async (dispatch) => {
+    try {
+      const { data } = await Auth.Login(payload);
+      console.log(data);
+      // if (!data.user.isActivated) {
+      //   return data;
+      // }
+      // const token = data.tokens.accessToken;
+      // localStorage.setItem('token', token);
+      // dispatch(authActions.setAuth(true));
+      // dispatch(authActions.setUser(data.user));
+      // return data;
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   logout: () => (dispatch) => {
@@ -31,6 +35,9 @@ const authActions = {
     dispatch(authActions.setAuth(false));
     dispatch(authActions.setUser({}));
     localStorage.removeItem('token');
+  },
+  registration: (payload) => async (dispatch) => {
+    await Auth.Registration(payload);
   },
 };
 

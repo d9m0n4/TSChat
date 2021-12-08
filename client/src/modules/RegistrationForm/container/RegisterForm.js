@@ -1,4 +1,6 @@
 import { withFormik } from 'formik';
+import store from '../../../store';
+import authActions from '../../../store/actions/authActions';
 import Registration from '../Registration';
 
 export default withFormik({
@@ -35,8 +37,8 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: (values, { setSubmitting, setErrors, props }) => {
-    console.log(values, props);
+  handleSubmit: (values, { setSubmitting, props }) => {
+    store.dispatch(authActions.registration(values));
     setSubmitting(false);
     props.history.push({
       pathname: '/verify',
