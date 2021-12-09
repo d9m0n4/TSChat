@@ -1,4 +1,5 @@
 import { withFormik } from 'formik';
+import openNotification from '../../../helpers/notifications/openNotification';
 import store from '../../../store';
 import authActions from '../../../store/actions/authActions';
 import Registration from '../Registration';
@@ -38,12 +39,9 @@ export default withFormik({
   },
 
   handleSubmit: (values, { setSubmitting, props }) => {
-    store.dispatch(authActions.registration(values));
+    const data = store.dispatch(authActions.registration(values));
     setSubmitting(false);
-    props.history.push({
-      pathname: '/verify',
-      from: '/registration',
-    });
+    return new Promise(data);
   },
 
   displayName: 'Registration',

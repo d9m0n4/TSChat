@@ -37,7 +37,7 @@ const authActions = {
     localStorage.removeItem('token');
   },
   registration: (payload) => async (dispatch) => {
-    await Auth.Registration(payload);
+    return await Auth.Registration(payload);
   },
 };
 

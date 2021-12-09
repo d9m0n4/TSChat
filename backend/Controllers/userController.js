@@ -17,14 +17,14 @@ class UserController {
       if (!errors.isEmpty()) {
         res.json('ошибка при валидации');
         res.json(errors);
-        throw new Error('ошибка при валидации');
       }
 
       const candidate = await User.findOne({ email });
 
       if (candidate) {
-        res.json('Пользователь с таким email уже существует');
-        throw new Error('Пользователь с таким email уже существует');
+        res.status(409).json({
+          message: 'Пользователь с таким email уже существует',
+        });
       }
 
       const hashedPassword = await bcrypt.hash(password, 3);

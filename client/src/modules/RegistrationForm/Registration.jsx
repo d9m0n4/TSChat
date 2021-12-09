@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
+import openNotification from '../../helpers/notifications/openNotification';
 
 const Registration = ({
   errors,
@@ -23,6 +24,11 @@ const Registration = ({
     }
   };
 
+  const onSubmit = () => {
+    handleSubmit();
+    openNotification('qwe,00qweqw', 'qwe', 5);
+  };
+
   return (
     <div className="auth-form__block-wrapper">
       <div className="form-title">
@@ -30,7 +36,7 @@ const Registration = ({
         <span>Пройдите регистрацию, чтобы войти в чат</span>
       </div>
       <div className="form-content">
-        <Form onSubmit={handleSubmit} name="normal_login" className="login-form">
+        <Form onSubmit={onSubmit} name="normal_login" className="login-form">
           <Form.Item hasFeedback validateStatus={checkField('email', touched, errors)}>
             <Input
               style={{ position: 'relative' }}
