@@ -1,24 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import authActions from '../../store/actions/authActions';
+import checkField from '../../helpers/fieldStatus/CheckField';
 
-import store from '../../store/index';
-
-const Login = (props) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-  const login = () => {
-    store.dispatch(authActions.login({ email, password })).then(({ user }) => {
-      if (!user.isActivated) {
-        return props.history.push('/verify');
-      }
-      props.history.push('/');
-    });
-  };
-
+const Login = ({
+  errors,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  touched,
+  values,
+  isSubmitting,
+}) => {
   return (
     <div className="auth-form__block-wrapper">
       <div className="form-title">
@@ -26,31 +19,33 @@ const Login = (props) => {
         <span>Войдите в свой аккаунт</span>
       </div>
       <div className="form-content">
-        <Form onFinish={login} name="normal_login" className="login-form">
-          <Form.Item
-            hasFeedback
-            name="email"
-            rules={[{ required: true, message: 'Please input your Username!' }]}>
+        <Form onFinish={handleSubmit} name="normal_login" className="login-form">
+          <Form.Item hasFeedback validateStatus={checkField('email', touched, errors)}>
             <Input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              required={true}
+              touched={touched}
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
               size="large"
-              type="email"
-              placeholder="Электронная почта"
+              placeholder="Введите email"
+              value={values.email}
             />
+            {errors.email && <span className="error-message">{errors.email}</span>}
           </Form.Item>
 
-          <Form.Item
-            hasFeedback
-            name="password"
-            rules={[{ required: true, message: 'Please input your Password!' }]}>
+          <Form.Item hasFeedback validateStatus={checkField('password', touched, errors)}>
             <Input.Password
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
+              required={true}
+              touched={touched}
+              name="password"
+              onChange={handleChange}
+              onBlur={handleBlur}
               size="large"
-              type="password"
               placeholder="Введите пароль"
+              value={values.password}
             />
+            {errors.password && <span className="error-message">{errors.password}</span>}
           </Form.Item>
 
           <Form.Item>
@@ -71,4 +66,4 @@ const Login = (props) => {
   );
 };
 
-export default connect(({ auth }) => ({ user: auth.user }))(Login);
+export default Login;

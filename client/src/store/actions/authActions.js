@@ -17,14 +17,14 @@ const authActions = {
     try {
       const { data } = await Auth.Login(payload);
       console.log(data);
-      // if (!data.user.isActivated) {
-      //   return data;
-      // }
-      // const token = data.tokens.accessToken;
-      // localStorage.setItem('token', token);
-      // dispatch(authActions.setAuth(true));
-      // dispatch(authActions.setUser(data.user));
-      // return data;
+      if (!data.user.isActivated) {
+        return data;
+      }
+      const token = data.tokens.accessToken;
+      localStorage.setItem('token', token);
+      dispatch(authActions.setAuth(true));
+      dispatch(authActions.setUser(data.user));
+      return data;
     } catch (error) {
       console.log(error);
     }

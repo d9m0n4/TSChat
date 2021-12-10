@@ -1,16 +1,16 @@
 import API from '../api/axios';
 
 class Auth {
-  Login = (postData) => {
-    return API.post('/login', { ...postData });
+  Login = async (postData) => {
+    return await API.post('/login', { ...postData });
   };
 
   Registration = (postData) => {
     return API.post('/registration', { ...postData });
   };
 
-  Logout = () => {
-    return API.post('/logout');
+  Logout = async () => {
+    return await API.post('/logout');
   };
 }
 

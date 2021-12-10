@@ -1,5 +1,6 @@
 import { withFormik } from 'formik';
 import openNotification from '../../../helpers/notifications/openNotification';
+import validateForm from '../../../helpers/validators/validateField';
 import store from '../../../store';
 import authActions from '../../../store/actions/authActions';
 import Registration from '../Registration';
@@ -15,33 +16,26 @@ export default withFormik({
 
   validate: (values) => {
     const errors = {};
-
-    if (!values.email) {
-      errors.email = 'Введите email';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = 'Введен не корректный email';
-    }
-
-    if (!values.name) {
-      errors.name = 'Укажите Ваше имя';
-    }
-
-    if (!values.password) {
-      errors.password = 'Введите пароль';
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(values.password)) {
-      errors.password = 'Слишком легкий пароль';
-    }
-
-    if (values.password2 !== values.password) {
-      errors.password2 = 'Пароли не совпадают';
-    }
+    validateForm(values, errors);
     return errors;
   },
 
   handleSubmit: (values, { setSubmitting, props }) => {
-    const data = store.dispatch(authActions.registration(values));
+    store
+      .dispatch(authActions.registration(values))
+      .then(({ data }) => {
+        openNotification(
+          'success',
+          'Успех',
+          `Пользователь ${data.user.name} успешно зарегистрирован`,
+          2,
+        );
+        setTimeout(() => {
+          props.history.push('/verify');
+        }, 3000);
+      })
+      .catch(({ response }) => openNotification('error', 'Ошибка', response.data.message, 5));
     setSubmitting(false);
-    return new Promise(data);
   },
 
   displayName: 'Registration',

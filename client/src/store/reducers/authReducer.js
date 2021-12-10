@@ -2,6 +2,10 @@ const initialState = {
   token: window.localStorage.token,
   isAuth: !!window.localStorage.token,
   user: {},
+  errors: {
+    message: '',
+    description: '',
+  },
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

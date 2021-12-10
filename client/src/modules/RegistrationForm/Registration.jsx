@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
-import openNotification from '../../helpers/notifications/openNotification';
+import checkField from '../../helpers/fieldStatus/CheckField';
 
 const Registration = ({
   errors,
@@ -12,23 +12,6 @@ const Registration = ({
   values,
   isSubmitting,
 }) => {
-  const checkField = (key, touched, errors) => {
-    if (touched[key]) {
-      if (errors[key]) {
-        return 'error';
-      } else {
-        return 'success';
-      }
-    } else {
-      return '';
-    }
-  };
-
-  const onSubmit = () => {
-    handleSubmit();
-    openNotification('qwe,00qweqw', 'qwe', 5);
-  };
-
   return (
     <div className="auth-form__block-wrapper">
       <div className="form-title">
@@ -36,10 +19,13 @@ const Registration = ({
         <span>Пройдите регистрацию, чтобы войти в чат</span>
       </div>
       <div className="form-content">
-        <Form onSubmit={onSubmit} name="normal_login" className="login-form">
+        <Form
+          onFinish={handleSubmit}
+          onFinishFailed={(e) => console.log(e)}
+          name="normal_login"
+          className="login-form">
           <Form.Item hasFeedback validateStatus={checkField('email', touched, errors)}>
             <Input
-              style={{ position: 'relative' }}
               required={true}
               touched={touched}
               name="email"
@@ -100,7 +86,6 @@ const Registration = ({
 
           <Form.Item>
             <Button
-              onClick={handleSubmit}
               disabled={isSubmitting}
               size="large"
               type="primary"

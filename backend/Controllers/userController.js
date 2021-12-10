@@ -75,13 +75,13 @@ class UserController {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      res.json('пользователя не существует');
+      res.status(400).json('Неверное имя пользователя или пароль');
       throw new Error('пользователя не существует');
     }
 
     const identPass = await bcrypt.compare(password, user.password);
     if (!identPass) {
-      res.json('Неверный пароль');
+      res.status(400).json('Неверное имя пользователя или пароль');
       throw new Error('Неверный пароль');
     }
 
