@@ -25,7 +25,7 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: async (values, { setSubmitting, props }) => {
+  handleSubmit: async (values, { resetForm, setSubmitting, props }) => {
     try {
       const data = await store.dispatch(authActions.login(values));
       if (data) {
@@ -36,6 +36,9 @@ export default withFormik({
       }
     } catch (error) {
       throw new Error(error);
+    } finally {
+      setSubmitting(false);
+      resetForm();
     }
   },
   displayName: 'Login',

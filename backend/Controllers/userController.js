@@ -143,13 +143,21 @@ class UserController {
     res.json(users);
   }
   async getCurrentUser(req, res) {
-    console.log(req.user);
-    if (req.user) {
-      const user = await User.findById(req.user.id);
-      const userDTO = new UserDto(user);
-      res.status(200).json(userDTO);
+    if (!req.user) {
+      res.status(403).json({ message: 'Пользователь не авторизован' });
     }
-    res.status(403).json({ message: 'Пользователь не авторизован' });
+    const user = await User.findById(req.user.id);
+    const userDTO = new UserDto(user);
+    res.status(200).json(userDTO);
+  }
+  async getUsers(req, res) {
+    const userId = req.query.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json('ПОльзователь не найден');
+    }
+    const userDTO = new UserDto(user);
+    res.status(200).json(userDTO);
   }
 }
 

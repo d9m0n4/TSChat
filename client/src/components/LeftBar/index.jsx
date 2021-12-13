@@ -14,6 +14,10 @@ const Leftbar = (props) => {
     setVisible(true);
   };
 
+  const hide = () => {
+    setVisible(false);
+  };
+
   const fetchUsers = () => {
     setUsers([]);
     fetch('https://jsonplaceholder.typicode.com/users/')
@@ -23,7 +27,7 @@ const Leftbar = (props) => {
 
   return (
     <>
-      <AddDialogModal visible={visible} />
+      <AddDialogModal visible={visible} close={hide} />
       <div className="main__content-body__leftbar">
         <div className="leftbar__header chat__header">
           <div className="top-bar__search">

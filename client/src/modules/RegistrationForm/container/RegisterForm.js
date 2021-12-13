@@ -30,16 +30,17 @@ export default withFormik({
           `Пользователь ${data.user.name} успешно зарегистрирован`,
           2,
         );
-        resetForm();
         setTimeout(() => {
           props.history.push('/verify');
         }, 3000);
       })
       .catch(({ response }) => {
         openNotification('error', 'Ошибка', response.data.message, 5);
+      })
+      .finally(() => {
+        setSubmitting(false);
         resetForm();
       });
-    setSubmitting(false);
   },
 
   displayName: 'Registration',
