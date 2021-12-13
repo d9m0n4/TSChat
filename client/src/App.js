@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import { Auth as AuthPage } from './Pages/Auth/Auth';
 import Home from './Pages/Home/Home';
 import { useEffect } from 'react';
+import store from './store';
+import authActions from './store/actions/authActions';
 
 function App(props) {
-  console.log(props);
   const { isAuth } = props;
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      console.log(123);
+      store.dispatch(authActions.getCurrentUser());
     }
-  });
+  }, []);
+
   return (
     <div className="App">
       <Switch>

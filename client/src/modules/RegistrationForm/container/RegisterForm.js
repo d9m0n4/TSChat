@@ -20,7 +20,7 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: (values, { setSubmitting, props }) => {
+  handleSubmit: (values, { setSubmitting, props, resetForm }) => {
     store
       .dispatch(authActions.registration(values))
       .then(({ data }) => {
@@ -30,11 +30,15 @@ export default withFormik({
           `Пользователь ${data.user.name} успешно зарегистрирован`,
           2,
         );
+        resetForm();
         setTimeout(() => {
           props.history.push('/verify');
         }, 3000);
       })
-      .catch(({ response }) => openNotification('error', 'Ошибка', response.data.message, 5));
+      .catch(({ response }) => {
+        openNotification('error', 'Ошибка', response.data.message, 5);
+        resetForm();
+      });
     setSubmitting(false);
   },
 

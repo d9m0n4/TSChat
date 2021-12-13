@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import checkField from '../../helpers/fieldStatus/CheckField';

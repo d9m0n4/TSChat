@@ -1,5 +1,4 @@
 import { withFormik } from 'formik';
-import openNotification from '../../../helpers/notifications/openNotification';
 import store from '../../../store';
 import authActions from '../../../store/actions/authActions';
 import Login from '../Login';
@@ -26,17 +25,18 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: (values, { setSubmitting, props }) => {
-    store
-      .dispatch(authActions.login(...values))
-      .then(({ user }) => {
-        if (!user.isActivated) {
-          setSubmitting(false);
+  handleSubmit: async (values, { setSubmitting, props }) => {
+    try {
+      const data = await store.dispatch(authActions.login(values));
+      if (data) {
+        if (!data.user.isActivated) {
           return props.history.push('/verify');
         }
         props.history.push('/');
-      })
-      .catch(({ response }) => openNotification('error', 'Ошибка', response.data.message, 2));
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
   },
   displayName: 'Login',
 })(Login);

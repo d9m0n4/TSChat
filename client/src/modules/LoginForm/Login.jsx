@@ -50,6 +50,7 @@ const Login = ({
 
           <Form.Item>
             <Button
+              disabled={isSubmitting}
               htmlType="submit"
               size="large"
               type="primary"

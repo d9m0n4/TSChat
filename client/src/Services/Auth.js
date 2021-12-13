@@ -12,6 +12,10 @@ class Auth {
   Logout = async () => {
     return await API.post('/logout');
   };
+
+  CheckUser = async () => {
+    return await API.get(`/getCurrentUser`);
+  };
 }
 
 export default new Auth();

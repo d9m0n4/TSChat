@@ -3,13 +3,22 @@ import './index.scss';
 
 import Sidebar from '../../components/SideBar';
 import Messanger from '../../layouts/Messanger';
-const Home = () => {
+import { connect } from 'react-redux';
+import Loader from '../../components/Loader';
+const Home = (props) => {
+  const { isLoading } = props;
   return (
-    <section className="home-page">
-      <Sidebar />
-      <Messanger />
-    </section>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <section className="home-page">
+          <Sidebar />
+          <Messanger />
+        </section>
+      )}
+    </>
   );
 };
 
-export default Home;
+export default connect(({ auth }) => ({ isLoading: auth.isLoading }))(Home);

@@ -2,10 +2,7 @@ const initialState = {
   token: window.localStorage.token,
   isAuth: !!window.localStorage.token,
   user: {},
-  errors: {
-    message: '',
-    description: '',
-  },
+  isLoading: false,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -20,6 +17,12 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         user: payload,
+      };
+
+    case 'AUTH:SET_LOADING':
+      return {
+        ...state,
+        isLoading: payload,
       };
 
     default:

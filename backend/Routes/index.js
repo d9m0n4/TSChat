@@ -17,5 +17,6 @@ router.post('/logout', UserController.logout);
 router.get('/refresh', UserController.refresh);
 router.get('/activate/:link', UserController.activationAccaunt);
 router.get('/getAllUsers', CheckToken, UserController.getAllUsers);
+router.get('/getCurrentUser', CheckToken, UserController.getCurrentUser);
 
 module.exports = router;

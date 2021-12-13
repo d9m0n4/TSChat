@@ -75,14 +75,12 @@ class UserController {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(400).json('Неверное имя пользователя или пароль');
-      throw new Error('пользователя не существует');
+      return res.status(403).json({ message: 'Неверное имя пользователя или пароль', status: 403 });
     }
 
     const identPass = await bcrypt.compare(password, user.password);
     if (!identPass) {
-      res.status(400).json('Неверное имя пользователя или пароль');
-      throw new Error('Неверный пароль');
+      return res.status(403).json({ message: 'Неверное имя пользователя или пароль', status: 403 });
     }
 
     const userDTO = new UserDto(user);
@@ -110,7 +108,7 @@ class UserController {
     if (!refreshToken) {
       return res.status(401).json({
         status: 401,
-        message: 'token not found',
+        message: 'Пожалуйста авторизуйтесь',
       });
     }
 
@@ -143,6 +141,15 @@ class UserController {
   async getAllUsers(req, res) {
     const users = await User.find();
     res.json(users);
+  }
+  async getCurrentUser(req, res) {
+    console.log(req.user);
+    if (req.user) {
+      const user = await User.findById(req.user.id);
+      const userDTO = new UserDto(user);
+      res.status(200).json(userDTO);
+    }
+    res.status(403).json({ message: 'Пользователь не авторизован' });
   }
 }
 

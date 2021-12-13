@@ -8,13 +8,14 @@ const API = axios.create({
 });
 
 API.interceptors.request.use((config) => {
-  console.log('inter');
-  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+  console.log('req inter');
+  config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
   return config;
 });
 
 API.interceptors.response.use(
   (config) => {
+    console.log('res inter');
     return config;
   },
   async (error) => {
@@ -22,19 +23,12 @@ API.interceptors.response.use(
     if (error.response.status === 401 && originalRequest && !error.config._isRetry) {
       originalRequest._isRetry = true;
       try {
-        await axios
-          .get(`${BASE_URL}/refresh`, { withCredentials: true })
-          .then(({ data }) => {
-            window.localStorage.setItem('token', data.tokens.accessToken);
-            console.log(data);
-          })
-          .catch(({ response }) => {
-            if (response.status === 401) {
-              console.log(response);
-            }
-          });
-      } catch (e) {
-        throw new Error();
+        const response = await axios.get(`${BASE_URL}/refresh`, { withCredentials: true });
+        localStorage.setItem('token', response.data.tokens.accessToken);
+        return API.request(originalRequest);
+      } catch (error) {
+        console.log('не авторизован');
+        return error;
       }
     }
     throw error;
