@@ -25,9 +25,9 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: async (values, { resetForm, setSubmitting, props }) => {
+  handleSubmit: (values, { resetForm, setSubmitting, props }) => {
     try {
-      const data = await store.dispatch(authActions.login(values));
+      const data = store.dispatch(authActions.login(values));
       if (data) {
         if (!data.user.isActivated) {
           return props.history.push('/verify');

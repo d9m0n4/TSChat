@@ -75,12 +75,12 @@ class UserController {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(403).json({ message: 'Неверное имя пользователя или пароль', status: 403 });
+      return res.json({ message: 'Неверное имя пользователя или пароль', status: 403 });
     }
 
     const identPass = await bcrypt.compare(password, user.password);
     if (!identPass) {
-      return res.status(403).json({ message: 'Неверное имя пользователя или пароль', status: 403 });
+      return res.json({ message: 'Неверное имя пользователя или пароль', status: 403 });
     }
 
     const userDTO = new UserDto(user);

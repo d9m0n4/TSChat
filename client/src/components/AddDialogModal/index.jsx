@@ -1,6 +1,8 @@
 import React from 'react';
-import { Modal } from 'antd';
+import { Divider, Input, Modal, Row, Select } from 'antd';
 import './index.scss';
+import TextArea from 'antd/lib/input/TextArea';
+import Form from 'antd/lib/form/Form';
 
 const AddDialogModal = ({ visible, close }) => {
   return (
@@ -10,7 +12,14 @@ const AddDialogModal = ({ visible, close }) => {
       visible={visible}
       footer={null}
       onCancel={close}>
-      <div className="search-result-list">Search Result List</div>
+      <div className="search-result-list"></div>
+      <Form className="add-dialog-form">
+        <Input placeholder="Поиск собеседника..." />
+        <Divider type="horizontal" orientation="left" plain>
+          Результат поиска
+        </Divider>
+      </Form>
+      <TextArea autosize={{ minRows: 3, maxRows: 10 }}></TextArea>
     </Modal>
   );
 };
