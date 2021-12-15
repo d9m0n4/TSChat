@@ -3,9 +3,10 @@ import ChatMesaages from '../components/ChatMessages';
 
 const Messages = () => {
   const scrollRef = useRef();
-  useEffect(() => {
-    scrollRef.current.scrollIntoView({ behaivor: 'smooth' });
-  }, []);
+  // useEffect(() => {
+  //   scrollRef.current.scrollIntoView({ behaivor: 'smooth' });
+  // }, []);
+
   return <ChatMesaages scrollRef={scrollRef} />;
 };
 

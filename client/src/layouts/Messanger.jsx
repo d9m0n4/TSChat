@@ -1,14 +1,14 @@
 import React from 'react';
-import ChatMesaages from '../components/ChatMessages';
-import Leftbar from '../components/LeftBar';
 import Rightbar from '../components/RightBar';
+import LeftBar from '../containers/LeftBar';
+import Messages from '../containers/Messages';
 
 const Messanger = () => {
   return (
     <div className="main__content">
       <div className="main__content-body">
-        <Leftbar />
-        <ChatMesaages />
+        <LeftBar />
+        <Messages />
         <Rightbar />
       </div>
     </div>

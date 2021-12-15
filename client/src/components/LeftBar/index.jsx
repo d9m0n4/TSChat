@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.scss';
 
 import ChatListItem from '../ChatListItem';
@@ -6,28 +6,15 @@ import ChatListItem from '../ChatListItem';
 import { Button, Input } from 'antd';
 import AddDialogModal from '../AddDialogModal';
 
-const Leftbar = (props) => {
-  const [visible, setVisible] = useState(false);
-  const [users, setUsers] = useState([]);
-
-  const showModal = () => {
-    setVisible(true);
-  };
-
-  const hide = () => {
-    setVisible(false);
-  };
-
-  const fetchUsers = () => {
-    setUsers([]);
-    fetch('https://jsonplaceholder.typicode.com/users/')
-      .then((response) => response.json())
-      .then((json) => setUsers(json));
-  };
-
+const Leftbar = ({ visible, showModal, hideModal, onSelect, selectedUserId, dialog }) => {
   return (
     <>
-      <AddDialogModal visible={visible} close={hide} />
+      <AddDialogModal
+        selectedUserId={selectedUserId}
+        onSelect={onSelect}
+        visible={visible}
+        close={hideModal}
+      />
       <div className="main__content-body__leftbar">
         <div className="leftbar__header chat__header">
           <div className="top-bar__search">
@@ -59,19 +46,9 @@ const Leftbar = (props) => {
                 </Button>
               </div>
             </div>
-            <div>
-              <button onClick={fetchUsers}>Load</button>
-            </div>
+            <div></div>
             <div className="leftbar__chats-body">
-              {users.map((user) => (
-                <ChatListItem
-                  key={user.name}
-                  online
-                  name={user.name}
-                  email={user.email}
-                  id={user.id}
-                />
-              ))}
+              <ChatListItem online dialog={dialog} />
             </div>
           </div>
           <div className="leftbar__chats">
@@ -99,12 +76,6 @@ const Leftbar = (props) => {
               </div>
             </div>
             <div className="leftbar__chats-body">
-              <ChatListItem type="conv" />
-              <ChatListItem type="conv" />
-              <ChatListItem type="conv" />
-              <ChatListItem type="conv" />
-              <ChatListItem type="conv" />
-              <ChatListItem type="conv" />
               <ChatListItem type="conv" />
             </div>
           </div>
