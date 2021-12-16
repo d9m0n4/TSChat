@@ -5,16 +5,12 @@ import Form from 'antd/lib/form/Form';
 import ChatInput from '../ChatInput';
 import Avatar from 'antd/lib/avatar/avatar';
 
-const AddDialogModal = ({ visible, close, onSelect, selectedUserId }) => {
+const AddDialogModal = ({ visible, close, onSelect, selectedUserId, onSearch }) => {
   const users = [
     { name: 'Александр Пушкин', id: 1 },
     { name: 'Сергей Есенин', id: 2 },
     { name: 'Федор Достаевский', id: 3 },
   ];
-
-  const onSearch = (value) => {
-    console.log(value);
-  };
 
   return (
     <Modal

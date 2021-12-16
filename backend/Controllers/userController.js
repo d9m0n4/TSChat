@@ -159,6 +159,26 @@ class UserController {
     const userDTO = new UserDto(user);
     res.status(200).json(userDTO);
   }
+
+  async findUer(req, res) {
+    const { query } = req.query;
+    console.log(query);
+    if (!query) {
+      res.status(404).json('not found');
+    }
+    try {
+      const user = await User.find({ name: new RegExp(query, 'i') });
+      console.log(user);
+      const userDTO = new UserDto({ ...user });
+      console.log(user);
+      res.status(200).json(user);
+    } catch (error) {
+      return res.status(404).json({
+        message: 'Error: User not found',
+        error,
+      });
+    }
+  }
 }
 
 module.exports = new UserController();

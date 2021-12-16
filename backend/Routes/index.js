@@ -18,5 +18,6 @@ router.get('/refresh', UserController.refresh);
 router.get('/activate/:link', UserController.activationAccaunt);
 router.get('/getAllUsers', CheckToken, UserController.getAllUsers);
 router.get('/getCurrentUser', CheckToken, UserController.getCurrentUser);
+router.get('/user/find', UserController.findUer);
 
 module.exports = router;

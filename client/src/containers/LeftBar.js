@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Leftbar from '../components/LeftBar';
+import fetchUser from '../Services/Users';
 
 const LeftBar = () => {
   const [visible, setVisible] = useState(false);
@@ -14,7 +15,10 @@ const LeftBar = () => {
     setVisible(false);
   };
 
-  const onSearch = () => {};
+  const onSearch = (value) => {
+    const data = fetchUser(value);
+    console.log(data);
+  };
 
   const onSelect = (value) => {
     setSelectedUserId(value);
@@ -22,10 +26,10 @@ const LeftBar = () => {
 
   useEffect(() => {
     setDialog(selectedUserId);
-    console.log(dialog);
   }, [selectedUserId, dialog]);
   return (
     <Leftbar
+      onSearch={onSearch}
       dialog={dialog}
       onSelect={onSelect}
       selectedUserId={selectedUserId}
