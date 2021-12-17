@@ -1,8 +1,9 @@
 import API from '../api/axios';
 
 class Users {
-  fetchUser = async (query) => {
-    API.get(`/user/find?query=${query}`);
+  findUsers = async (query) => {
+    const { data } = await API.get(`/user/find?query=${query}`);
+    return data;
   };
 }
 

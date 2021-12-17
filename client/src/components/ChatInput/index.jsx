@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Button, Input } from 'antd';
 import './index.scss';
 
 const { TextArea } = Input;
 
-const ChatInput = ({ send }) => {
+const ChatInput = ({ onSendMessage, onChange, value }) => {
   return (
     <div className="messages-input">
       <div className="messages-input__buttons">
@@ -48,12 +48,18 @@ const ChatInput = ({ send }) => {
       </div>
       <div className="messages-input__textarea">
         <TextArea
+          onChange={onChange}
           className="textfield"
           placeholder="Введите сообщение... "
           autoSize={{ minRows: 1, maxRows: 5 }}
+          value={value}
         />
       </div>
-      <Button type="text" className="messages-input__send app-icon">
+      <Button
+        disabled={!value}
+        onClick={onSendMessage}
+        type="text"
+        className="messages-input__send app-icon">
         <svg
           className="icon"
           width="24"

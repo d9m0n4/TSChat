@@ -1,4 +1,5 @@
 const UserController = require('../Controllers/userController');
+const DialogConroller = require('../Controllers/dialogController');
 const Router = require('express').Router;
 const router = new Router();
 
@@ -18,6 +19,8 @@ router.get('/refresh', UserController.refresh);
 router.get('/activate/:link', UserController.activationAccaunt);
 router.get('/getAllUsers', CheckToken, UserController.getAllUsers);
 router.get('/getCurrentUser', CheckToken, UserController.getCurrentUser);
-router.get('/user/find', UserController.findUer);
+router.get('/user/find', CheckToken, UserController.findUser);
+
+router.post('/dialogs', CheckToken, DialogConroller.createDialog);
 
 module.exports = router;

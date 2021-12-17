@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Leftbar from '../components/LeftBar';
-import fetchUser from '../Services/Users';
+import Dialogs from '../Services/Dialogs';
+import User from '../Services/Users';
 
 const LeftBar = () => {
   const [visible, setVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState();
-  const [dialog, setDialog] = useState();
+  const [users, setUsers] = useState([]);
+  const [messageValue, setMessageValue] = useState('');
 
   const showModal = () => {
     setVisible(true);
@@ -15,22 +17,37 @@ const LeftBar = () => {
     setVisible(false);
   };
 
-  const onSearch = (value) => {
-    const data = fetchUser(value);
-    console.log(data);
+  const onSearch = async (value) => {
+    await User.findUsers(value)
+      .then((data) => {
+        setUsers(data);
+        console.log('Users from find', data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const onSelect = (value) => {
-    setSelectedUserId(value);
+    setSelectedUserId(value.value);
   };
 
-  useEffect(() => {
-    setDialog(selectedUserId);
-  }, [selectedUserId, dialog]);
+  const onChangeValue = (e) => {
+    setMessageValue(e.target.value);
+  };
+
+  const onSendMessage = () => {
+    Dialogs.createDialog({
+      partner: selectedUserId,
+      text: messageValue,
+    });
+  };
+
   return (
     <Leftbar
+      messageValue={messageValue}
+      onSendMessage={onSendMessage}
+      onChangeValue={onChangeValue}
+      users={users}
       onSearch={onSearch}
-      dialog={dialog}
       onSelect={onSelect}
       selectedUserId={selectedUserId}
       visible={visible}

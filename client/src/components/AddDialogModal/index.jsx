@@ -5,12 +5,27 @@ import Form from 'antd/lib/form/Form';
 import ChatInput from '../ChatInput';
 import Avatar from 'antd/lib/avatar/avatar';
 
-const AddDialogModal = ({ visible, close, onSelect, selectedUserId, onSearch }) => {
-  const users = [
-    { name: 'Александр Пушкин', id: 1 },
-    { name: 'Сергей Есенин', id: 2 },
-    { name: 'Федор Достаевский', id: 3 },
-  ];
+const AddDialogModal = ({
+  messageValue,
+  onSendMessage,
+  visible,
+  close,
+  onSelect,
+  onChangeValue,
+  selectedUserId,
+  onSearch,
+  users,
+  textValue,
+}) => {
+  const options = users.map((u) => (
+    <Select.Option className="modal__result-col" key={u._id}>
+      <div className="modal__result-col__name">
+        <Avatar size={24}></Avatar>
+        <span className="modal__result-col__name">{u.name}</span>
+      </div>
+      <span className="modal__result-col__status">онлайн</span>
+    </Select.Option>
+  ));
 
   return (
     <Modal
@@ -30,16 +45,13 @@ const AddDialogModal = ({ visible, close, onSelect, selectedUserId, onSearch }) 
           onSelect={onSelect}
           showArrow={false}
           showSearch>
-          {users.map((u) => (
-            <Select.Option className="modal__result-col" key={u.id}>
-              <Avatar size={24}></Avatar>
-              <span className="modal__result-col__name">{u.name}</span>онлайн
-            </Select.Option>
-          ))}
+          {options}
         </Select>
       </Form>
 
-      {selectedUserId && <ChatInput />}
+      {selectedUserId && (
+        <ChatInput onSendMessage={onSendMessage} value={messageValue} onChange={onChangeValue} />
+      )}
     </Modal>
   );
 };

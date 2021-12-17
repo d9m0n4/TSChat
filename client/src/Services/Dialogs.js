@@ -1,8 +1,8 @@
 import API from '../api/axios';
 
 class Dialogs {
-  FetchDialogs = async () => {
-    API.get('/fetchDialogs');
+  createDialog = async (payload) => {
+    return await API.post('/dialogs', payload);
   };
 }
 

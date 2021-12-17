@@ -6,15 +6,32 @@ import ChatListItem from '../ChatListItem';
 import { Button, Input } from 'antd';
 import AddDialogModal from '../AddDialogModal';
 
-const Leftbar = ({ visible, showModal, hideModal, onSelect, selectedUserId, dialog, onSearch }) => {
+const Leftbar = ({
+  messageValue,
+  onSendMessage,
+  visible,
+  showModal,
+  hideModal,
+  onSelect,
+  onChangeValue,
+  selectedUserId,
+  onSearch,
+  users,
+  textValue,
+}) => {
   return (
     <>
       <AddDialogModal
+        messageValue={messageValue}
+        onSendMessage={onSendMessage}
+        textValue={textValue}
+        onChangeValue={onChangeValue}
         selectedUserId={selectedUserId}
         onSelect={onSelect}
         visible={visible}
         close={hideModal}
         onSearch={onSearch}
+        users={users}
       />
       <div className="main__content-body__leftbar">
         <div className="leftbar__header chat__header">
@@ -49,7 +66,7 @@ const Leftbar = ({ visible, showModal, hideModal, onSelect, selectedUserId, dial
             </div>
             <div></div>
             <div className="leftbar__chats-body">
-              <ChatListItem online dialog={dialog} />
+              <ChatListItem online />
             </div>
           </div>
           <div className="leftbar__chats">

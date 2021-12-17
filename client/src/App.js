@@ -5,12 +5,14 @@ import Home from './Pages/Home/Home';
 import { useEffect } from 'react';
 import store from './store';
 import authActions from './store/actions/authActions';
+import userActions from './store/actions/userActions';
 
 function App(props) {
   const { isAuth } = props;
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.dispatch(authActions.getCurrentUser());
+      store.dispatch(userActions.fetchUsers('Dima'));
     }
   }, []);
 

@@ -7,11 +7,13 @@
   align-items: center;
   padding: 8px 0;
   &-col {
+    display: flex;
+    justify-content: space-between;
     &__name {
       margin-left: 8px;
       font-weight: 600;
     }
-    &.status {
+    &__status {
       color: #46be32;
     }
   }
@@ -21,4 +23,9 @@
   .ant-select-selector
   .ant-select-selection-search-input {
   height: 100%;
+}
+
+.ant-select-item-option-content {
+  display: flex;
+  justify-content: space-between;
 }

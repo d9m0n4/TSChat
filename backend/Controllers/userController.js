@@ -140,6 +140,7 @@ class UserController {
   }
   async getAllUsers(req, res) {
     const users = await User.find();
+    console.log(users);
     res.json(users);
   }
   async getCurrentUser(req, res) {
@@ -150,6 +151,7 @@ class UserController {
     const userDTO = new UserDto(user);
     res.status(200).json(userDTO);
   }
+
   async getUsers(req, res) {
     const userId = req.query.id;
     const user = await User.findById(userId);
@@ -160,24 +162,20 @@ class UserController {
     res.status(200).json(userDTO);
   }
 
-  async findUer(req, res) {
-    const { query } = req.query;
-    console.log(query);
-    if (!query) {
-      res.status(404).json('not found');
-    }
-    try {
-      const user = await User.find({ name: new RegExp(query, 'i') });
-      console.log(user);
-      const userDTO = new UserDto({ ...user });
-      console.log(user);
-      res.status(200).json(user);
-    } catch (error) {
-      return res.status(404).json({
-        message: 'Error: User not found',
-        error,
+  async findUser(req, res) {
+    const query = req.query.query;
+
+    const users = await User.find({ name: new RegExp(query, 'i') });
+    if (!users) {
+      res.json({
+        status: 'error',
+        error: err,
       });
     }
+
+    console.log(users);
+
+    res.json(users);
   }
 }
 
