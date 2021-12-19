@@ -15,7 +15,6 @@ const AddDialogModal = ({
   selectedUserId,
   onSearch,
   users,
-  textValue,
 }) => {
   const options = users.map((u) => (
     <Select.Option className="modal__result-col" key={u._id}>

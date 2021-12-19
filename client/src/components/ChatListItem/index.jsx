@@ -1,13 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import './index.scss';
 
 import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 
-const ChatListItem = ({ online, dialog, type }) => {
+const ChatListItem = ({ online, dialogs, type }) => {
   return (
-    <Link to={`${dialog}`}>
+    <Link to={`${'/'}`}>
       <div className="chats__item">
         <div className="chats__item-avatar">
           {online && <sup className="status-dot"></sup>}
@@ -15,7 +16,7 @@ const ChatListItem = ({ online, dialog, type }) => {
             size={40}
             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
           />
-          <sub className="messages-count">{dialog && dialog.value}</sub>
+          <sub className="messages-count">{}</sub>
         </div>
         <div className="chats__item-body">
           <div className="chats__item-top">
@@ -29,7 +30,7 @@ const ChatListItem = ({ online, dialog, type }) => {
             </div>
           ) : (
             <div className="chats__item-bottom">
-              <div className="item__message">{dialog && dialog.value}</div>
+              <div className="item__message">{}</div>
               <div className="item__status"></div>
             </div>
           )}
@@ -39,4 +40,4 @@ const ChatListItem = ({ online, dialog, type }) => {
   );
 };
 
-export default ChatListItem;
+export default connect((dialogs) => dialogs)(ChatListItem);

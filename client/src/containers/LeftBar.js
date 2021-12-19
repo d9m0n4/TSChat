@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Leftbar from '../components/LeftBar';
 import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
+
+import store from '../store';
+import dialogActions from '../store/actions/dialogActions';
 
 const LeftBar = () => {
   const [visible, setVisible] = useState(false);
@@ -41,6 +44,8 @@ const LeftBar = () => {
     });
   };
 
+  useEffect(() => {}, []);
+  store.dispatch(dialogActions.fetchDialogs());
   return (
     <Leftbar
       messageValue={messageValue}

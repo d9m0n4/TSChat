@@ -22,5 +22,6 @@ router.get('/getCurrentUser', CheckToken, UserController.getCurrentUser);
 router.get('/user/find', CheckToken, UserController.findUser);
 
 router.post('/dialogs', CheckToken, DialogConroller.createDialog);
+router.get('/dialogs', CheckToken, DialogConroller.getDialogs);
 
 module.exports = router;

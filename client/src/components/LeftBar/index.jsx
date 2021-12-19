@@ -1,6 +1,5 @@
 import React from 'react';
 import './index.scss';
-
 import ChatListItem from '../ChatListItem';
 
 import { Button, Input } from 'antd';
@@ -65,9 +64,7 @@ const Leftbar = ({
               </div>
             </div>
             <div></div>
-            <div className="leftbar__chats-body">
-              <ChatListItem online />
-            </div>
+            <div className="leftbar__chats-body"></div>
           </div>
           <div className="leftbar__chats">
             <div className="leftbar__chats-header">

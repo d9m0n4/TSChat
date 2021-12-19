@@ -173,8 +173,6 @@ class UserController {
       });
     }
 
-    console.log(users);
-
     res.json(users);
   }
 }

@@ -22,4 +22,4 @@ const MessageSchema = new Schema(
   },
 );
 
-module.exports = model('MessageSchema', MessageSchema);
+module.exports = model('Message', MessageSchema);
