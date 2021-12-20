@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 const router = require('./Routes/index');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const { createServer } = require('http');
+const createSocket = require('./core/socket');
+
 require('dotenv').config();
 
 const app = express();
+const http = createServer(app);
 
 app.use(express.json());
 app.use(
@@ -17,9 +21,11 @@ app.use(
 app.use(cookieParser());
 app.use('/api', router);
 
+createSocket(http);
+
 const start = () => {
   try {
-    app.listen(process.env.PORT, () => {
+    http.listen(process.env.PORT, () => {
       console.log(`server has been started on port ${process.env.PORT}`);
     });
     mongoose.connect(

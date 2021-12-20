@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import ChatMesaages from '../components/ChatMessages';
-import store from '../store';
 import messagesActions from '../store/actions/messagesActions';
 
 const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs }) => {
@@ -11,15 +10,9 @@ const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs }) => {
   //   scrollRef.current.scrollIntoView({ behaivor: 'smooth' });
   // }, []);
 
-  useEffect(() => {
-    fetchMessages(currentDialogId);
-  }, [currentDialogId]);
-
-  useEffect(() => {
-    const dialogs = store.getState(dialogs);
-    const data = dialogs.find((d) => d._id === currentDialogId);
-    setCurrentPartner(data.partner.name);
-  });
+  // useEffect(() => {
+  //   fetchMessages(currentDialogId);
+  // }, [currentDialogId]);
 
   return (
     <ChatMesaages

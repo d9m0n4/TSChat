@@ -53,4 +53,4 @@ class DialogController {
   }
 }
 
-module.exports = new DialogController();
+module.exports = DialogController;

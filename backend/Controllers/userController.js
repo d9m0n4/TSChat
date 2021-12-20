@@ -8,6 +8,9 @@ const { validationResult } = require('express-validator');
 require('dotenv').config();
 
 class UserController {
+  constructor(io) {
+    this.io = io;
+  }
   async registration(req, res) {
     try {
       const { email, name, password } = req.body;
@@ -97,12 +100,12 @@ class UserController {
 
     res.status(200).json(userData);
   }
-  async logout(req, res) {
+  logout = async (req, res) => {
     const { refreshToken } = req.cookies;
     const token = await TokenService.deleteToken(refreshToken);
     res.clearCookie('refreshToken');
     res.json(token);
-  }
+  };
   async refresh(req, res) {
     const { refreshToken } = req.cookies;
     if (!refreshToken) {
@@ -177,4 +180,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+module.exports = UserController;

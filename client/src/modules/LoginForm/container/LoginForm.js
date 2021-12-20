@@ -25,7 +25,8 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: (values, { resetForm, setSubmitting, props }) => {
+  handleSubmit: (values, { setSubmitting, props }) => {
+    console.log(values);
     try {
       const data = store.dispatch(authActions.login(values));
       if (data) {
@@ -35,10 +36,9 @@ export default withFormik({
         props.history.push('/');
       }
     } catch (error) {
-      throw new Error(error);
+      return;
     } finally {
       setSubmitting(false);
-      resetForm();
     }
   },
   displayName: 'Login',

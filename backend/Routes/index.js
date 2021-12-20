@@ -1,30 +1,38 @@
 const UserController = require('../Controllers/userController');
 const DialogConroller = require('../Controllers/dialogController');
+const MessageController = require('../Controllers/messageController');
 const Router = require('express').Router;
 const router = new Router();
+
+const io = require('../core/socket');
+
+console.log(io.io);
 
 const CheckToken = require('../Middlewares/CheckToken');
 
 const { body } = require('express-validator');
-const MessageController = require('../Controllers/messageController');
+
+const UserCtrl = new UserController(io);
+const DialogCtrl = new DialogConroller(io);
+const MessageCtrl = new MessageController(io);
 
 router.post(
   '/registration',
   body('email').isEmail(),
   body('password').isLength({ min: 3, max: 24 }),
-  UserController.registration,
+  UserCtrl.registration,
 );
-router.post('/login', UserController.login);
-router.post('/logout', UserController.logout);
-router.get('/refresh', UserController.refresh);
-router.get('/activate/:link', UserController.activationAccaunt);
-router.get('/getAllUsers', CheckToken, UserController.getAllUsers);
-router.get('/getCurrentUser', CheckToken, UserController.getCurrentUser);
-router.get('/user/find', CheckToken, UserController.findUser);
+router.post('/login', UserCtrl.login);
+router.post('/logout', UserCtrl.logout);
+router.get('/refresh', UserCtrl.refresh);
+router.get('/activate/:link', UserCtrl.activationAccaunt);
+router.get('/getAllUsers', CheckToken, UserCtrl.getAllUsers);
+router.get('/getCurrentUser', CheckToken, UserCtrl.getCurrentUser);
+router.get('/user/find', CheckToken, UserCtrl.findUser);
 
-router.post('/dialogs', CheckToken, DialogConroller.createDialog);
-router.get('/dialogs', CheckToken, DialogConroller.getDialogs);
+router.post('/dialogs', CheckToken, DialogCtrl.createDialog);
+router.get('/dialogs', CheckToken, DialogCtrl.getDialogs);
 
-router.get('/messages', MessageController.getMessages);
+router.get('/messages', MessageCtrl.getMessages);
 
 module.exports = router;

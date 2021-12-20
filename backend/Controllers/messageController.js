@@ -6,9 +6,9 @@ class MessagesController {
     const id = req.query.dialog;
 
     await Message.find({ dialog: id })
-      .populate(['user'])
+      .populate(['user', 'dialog'])
       .then((m) => res.json(m));
   }
 }
 
-module.exports = new MessagesController();
+module.exports = MessagesController;
