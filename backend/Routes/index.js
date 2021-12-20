@@ -6,6 +6,7 @@ const router = new Router();
 const CheckToken = require('../Middlewares/CheckToken');
 
 const { body } = require('express-validator');
+const MessageController = require('../Controllers/messageController');
 
 router.post(
   '/registration',
@@ -23,5 +24,7 @@ router.get('/user/find', CheckToken, UserController.findUser);
 
 router.post('/dialogs', CheckToken, DialogConroller.createDialog);
 router.get('/dialogs', CheckToken, DialogConroller.getDialogs);
+
+router.get('/messages', MessageController.getMessages);
 
 module.exports = router;

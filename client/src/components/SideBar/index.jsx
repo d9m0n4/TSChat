@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './index.scss';
 
@@ -7,15 +7,17 @@ import { Avatar } from 'antd';
 import authActions from '../../store/actions/authActions';
 
 import store from '../../store';
+import { connect } from 'react-redux';
 
-const Sidebar = (props) => {
+const Sidebar = ({ user }) => {
   const logout = async () => {
     await store.dispatch(authActions.logout());
   };
+
   return (
     <div className="sidebar">
       <div className="user__profile-link">
-        <Avatar size={48}>Д </Avatar>
+        <Avatar size={48}>{user.name}</Avatar>
       </div>
       <nav className="sidebar__navigation">
         <ul className="nav-group">
@@ -111,4 +113,4 @@ const Sidebar = (props) => {
   );
 };
 
-export default Sidebar;
+export default connect(({ auth }) => ({ user: auth.user }))(Sidebar);

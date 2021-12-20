@@ -1,15 +1,14 @@
 const initialState = {
-  dialogs: [],
-  currentDialogId: window.location.pathname.split('dialog/')[1],
+  items: [],
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'DIALOGS:SET_DIALOGS':
+    case 'MESSAGES:SET_MESSAGES':
       return {
         ...state,
-        dialogs: payload,
+        items: payload,
       };
 
     default:

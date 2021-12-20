@@ -6,6 +6,8 @@ import { Button, Input } from 'antd';
 import AddDialogModal from '../AddDialogModal';
 
 const Leftbar = ({
+  inputValue,
+  dialogs,
   messageValue,
   onSendMessage,
   visible,
@@ -17,6 +19,7 @@ const Leftbar = ({
   onSearch,
   users,
   textValue,
+  onChangeInput,
 }) => {
   return (
     <>
@@ -35,7 +38,7 @@ const Leftbar = ({
       <div className="main__content-body__leftbar">
         <div className="leftbar__header chat__header">
           <div className="top-bar__search">
-            <Input placeholder="Поиск разговоров..." />
+            <Input value={inputValue} onChange={onChangeInput} placeholder="Поиск разговоров..." />
           </div>
         </div>
         <div className="leftbar__body">
@@ -64,7 +67,16 @@ const Leftbar = ({
               </div>
             </div>
             <div></div>
-            <div className="leftbar__chats-body"></div>
+            <div className="leftbar__chats-body">
+              {dialogs.map((dialog) => (
+                <ChatListItem
+                  key={dialog._id}
+                  id={dialog._id}
+                  name={dialog.partner.name}
+                  userId={dialog.partner._id}
+                />
+              ))}
+            </div>
           </div>
           <div className="leftbar__chats">
             <div className="leftbar__chats-header">

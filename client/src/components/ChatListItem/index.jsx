@@ -1,14 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import './index.scss';
 
 import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 
-const ChatListItem = ({ online, dialogs, type }) => {
+const ChatListItem = ({ online, id, name, userId, type }) => {
   return (
-    <Link to={`${'/'}`}>
+    <Link to={`/dialog/${id}`}>
       <div className="chats__item">
         <div className="chats__item-avatar">
           {online && <sup className="status-dot"></sup>}
@@ -16,11 +15,11 @@ const ChatListItem = ({ online, dialogs, type }) => {
             size={40}
             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
           />
-          <sub className="messages-count">{}</sub>
+          <sub className="messages-count">{1}</sub>
         </div>
         <div className="chats__item-body">
           <div className="chats__item-top">
-            <p className="item-name">qwe</p>
+            <p className="item-name">{name}</p>
             <span className="item-date">21.04.2021</span>
           </div>
           {type === 'conv' ? (
@@ -40,4 +39,4 @@ const ChatListItem = ({ online, dialogs, type }) => {
   );
 };
 
-export default connect((dialogs) => dialogs)(ChatListItem);
+export default ChatListItem;

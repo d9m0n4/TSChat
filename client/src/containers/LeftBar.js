@@ -2,15 +2,26 @@ import React, { useEffect, useState } from 'react';
 import Leftbar from '../components/LeftBar';
 import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
+import { connect } from 'react-redux';
 
-import store from '../store';
 import dialogActions from '../store/actions/dialogActions';
 
-const LeftBar = () => {
+const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
   const [visible, setVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState();
   const [users, setUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [filtredDialogs, setFiltredDialogs] = useState(Array.from(items));
+
+  const onChangeInput = (value = '') => {
+    // setFiltredDialogs(
+    //   dialogItems.filter(
+    //     (dialog) => dialog.partner.name.toLowerCase().indexOf(value.toLowerCase()) >= 0,
+    //   ),
+    // );
+    setInputValue(value);
+  };
 
   const showModal = () => {
     setVisible(true);
@@ -42,12 +53,18 @@ const LeftBar = () => {
       partner: selectedUserId,
       text: messageValue,
     });
+    hideModal();
   };
 
-  useEffect(() => {}, []);
-  store.dispatch(dialogActions.fetchDialogs());
+  useEffect(() => {
+    fetchDialogs();
+  }, [fetchDialogs, currentDialogId]);
+
   return (
     <Leftbar
+      inputValue={inputValue}
+      onChangeInput={onChangeInput}
+      dialogs={items}
       messageValue={messageValue}
       onSendMessage={onSendMessage}
       onChangeValue={onChangeValue}
@@ -62,4 +79,7 @@ const LeftBar = () => {
   );
 };
 
-export default LeftBar;
+export default connect(
+  ({ dialogs }) => ({ items: dialogs.dialogs, currentDialogId: dialogs.currentDialogId }),
+  { ...dialogActions },
+)(LeftBar);

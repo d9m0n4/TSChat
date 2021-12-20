@@ -39,9 +39,17 @@ class DialogController {
   async getDialogs(req, res) {
     const { id } = req.user;
 
-    await Dialog.find({ id })
-      .then((dialog) => res.json(dialog))
-      .catch((err) => res.json(err));
+    await Dialog.find()
+      .or([{ author: id }, { partner: id }])
+      .populate(['author', 'partner'])
+      .exec((err, dialogs) => {
+        if (err) {
+          res.json({
+            message: 'Dialogs not found',
+          });
+        }
+        return res.json(dialogs);
+      });
   }
 }
 
