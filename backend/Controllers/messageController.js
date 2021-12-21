@@ -6,8 +6,15 @@ class MessagesController {
     const id = req.query.dialog;
 
     await Message.find({ dialog: id })
-      .populate(['user', 'dialog'])
-      .then((m) => res.json(m));
+      .populate(['user'])
+      .exec((err, messages) => {
+        if (err) {
+          return res.status(404).json({
+            message: 'messages not found',
+          });
+        }
+        res.json(messages);
+      });
   }
 }
 

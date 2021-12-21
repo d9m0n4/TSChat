@@ -2,7 +2,11 @@ const Dialog = require('../Models/Dialog');
 const Message = require('../Models/Message');
 
 class DialogController {
-  async createDialog(req, res) {
+  constructor(io) {
+    this.io = io;
+  }
+
+  createDialog = async (req, res) => {
     try {
       const postData = {
         author: req.user.id,
@@ -21,6 +25,7 @@ class DialogController {
           } else {
             const dial = new Dialog({ author: postData.author, partner: postData.partner });
             dial.save();
+            this.io.emit('DIALOG:CREATED', { ...dial });
 
             const message = new Message({
               user: postData.author,
@@ -35,8 +40,8 @@ class DialogController {
     } catch (error) {
       res.json(error);
     }
-  }
-  async getDialogs(req, res) {
+  };
+  getDialogs = async (req, res) => {
     const { id } = req.user;
 
     await Dialog.find()
@@ -48,9 +53,10 @@ class DialogController {
             message: 'Dialogs not found',
           });
         }
+
         return res.json(dialogs);
       });
-  }
+  };
 }
 
 module.exports = DialogController;

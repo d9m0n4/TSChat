@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.scss';
 
 import Sidebar from '../../components/SideBar';
 import Messanger from '../../layouts/Messanger';
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
-const Home = (props) => {
-  const { isLoading } = props;
+import { withRouter } from 'react-router';
+import dialogActions from '../../store/actions/dialogActions';
+
+const Home = ({ setCurrentDialogId, isLoading, location }) => {
+  useEffect(() => {
+    const path = location.pathname;
+    const dialogId = path.split('/').pop();
+    setCurrentDialogId(dialogId);
+  }, [location.pathname, setCurrentDialogId]);
   return (
     <>
       {isLoading ? (
@@ -21,4 +28,6 @@ const Home = (props) => {
   );
 };
 
-export default connect(({ auth }) => ({ isLoading: auth.isLoading }))(Home);
+export default withRouter(
+  connect(({ auth }) => ({ isLoading: auth.isLoading }), dialogActions)(Home),
+);

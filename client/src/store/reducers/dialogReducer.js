@@ -12,6 +12,12 @@ export default (state = initialState, { type, payload }) => {
         dialogs: payload,
       };
 
+    case 'DIALOG:SET_CURRENT_DIALOG_ID':
+      return {
+        ...state,
+        currentDialogId: payload,
+      };
+
     default:
       return state;
   }

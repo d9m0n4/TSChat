@@ -5,6 +5,7 @@ import User from '../Services/Users';
 import { connect } from 'react-redux';
 
 import dialogActions from '../store/actions/dialogActions';
+import socket from '../core/socket';
 
 const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
   const [visible, setVisible] = useState(false);
@@ -12,7 +13,6 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
   const [users, setUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
-  const [filtredDialogs, setFiltredDialogs] = useState(Array.from(items));
 
   const onChangeInput = (value = '') => {
     // setFiltredDialogs(
@@ -58,6 +58,7 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
 
   useEffect(() => {
     fetchDialogs();
+    socket.on('DIALOG:CREATED', fetchDialogs);
   }, [fetchDialogs, currentDialogId]);
 
   return (

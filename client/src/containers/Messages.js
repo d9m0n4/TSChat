@@ -1,27 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import ChatMesaages from '../components/ChatMessages';
 import messagesActions from '../store/actions/messagesActions';
 
 const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs }) => {
-  const [currentPartner, setCurrentPartner] = useState();
   const scrollRef = useRef();
-  // useEffect(() => {
-  //   scrollRef.current.scrollIntoView({ behaivor: 'smooth' });
-  // }, []);
 
-  // useEffect(() => {
-  //   fetchMessages(currentDialogId);
-  // }, [currentDialogId]);
+  useEffect(() => {
+    scrollRef.current.scrollTo({ top: 9999, behavior: 'smooth' });
+  }, [items]);
 
-  return (
-    <ChatMesaages
-      currentPartner={currentPartner}
-      user={user}
-      messages={items}
-      scrollRef={scrollRef}
-    />
-  );
+  useEffect(() => {
+    fetchMessages(currentDialogId);
+  }, [fetchMessages, currentDialogId]);
+
+  return <ChatMesaages user={user} messages={items} scrollRef={scrollRef} />;
 };
 
 export default connect(

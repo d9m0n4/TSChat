@@ -5,7 +5,7 @@ import './index.scss';
 import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 
-const ChatListItem = ({ online, id, name, userId, type }) => {
+const ChatListItem = ({ online, id, name, userId, type, date }) => {
   return (
     <Link to={`/dialog/${id}`}>
       <div className="chats__item">
@@ -20,7 +20,7 @@ const ChatListItem = ({ online, id, name, userId, type }) => {
         <div className="chats__item-body">
           <div className="chats__item-top">
             <p className="item-name">{name}</p>
-            <span className="item-date">21.04.2021</span>
+            <span className="item-date">{date}</span>
           </div>
           {type === 'conv' ? (
             <div className="chats__item-bottom conv">

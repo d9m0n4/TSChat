@@ -18,10 +18,9 @@ app.use(
     origin: 'http://localhost:3000',
   }),
 );
+const io = createSocket(http);
 app.use(cookieParser());
-app.use('/api', router);
-
-createSocket(http);
+app.use('/api', router(io));
 
 const start = () => {
   try {

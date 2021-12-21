@@ -1,3 +1,4 @@
+import socket from '../../core/socket';
 import Dialogs from '../../Services/Dialogs';
 
 const dialogActions = {
@@ -5,6 +6,13 @@ const dialogActions = {
     type: 'DIALOGS:SET_DIALOGS',
     payload,
   }),
+  setCurrentDialogId: (id) => (dispatch) => {
+    dispatch({
+      type: 'DIALOG:SET_CURRENT_DIALOG_ID',
+      payload: id,
+    });
+    socket.emit('DIALOGS:SET_DIALOG_ID', id);
+  },
 
   fetchDialogs: () => async (dispatch) => {
     try {

@@ -3,6 +3,7 @@ import './index.scss';
 import ChatInput from '../ChatInput';
 import Message from '../Message';
 import { MailOutlined } from '@ant-design/icons';
+import ChatInputContainer from '../../containers/ChatInput';
 
 const ChatMesaages = ({ scrollRef, messages, user, currentPartner }) => {
   return (
@@ -12,16 +13,17 @@ const ChatMesaages = ({ scrollRef, messages, user, currentPartner }) => {
         <div className="messages__header-chat__status online"></div>
       </div>
 
-      <div className="messages__body">
+      <div className="messages__body" ref={scrollRef}>
         <div className="messages">
-          {messages ? (
+          {messages && messages ? (
             messages.map((m) => (
-              <div key={m._id} ref={scrollRef}>
+              <div key={m._id}>
                 <Message
                   isMe={user === m.user._id}
                   date={m.createdAt}
                   text={m.text}
-                  name={m.name}
+                  name={m.user.name}
+                  user={m.user}
                 />
               </div>
             ))
@@ -34,7 +36,7 @@ const ChatMesaages = ({ scrollRef, messages, user, currentPartner }) => {
         </div>
       </div>
 
-      {messages && <ChatInput />}
+      {messages && <ChatInputContainer />}
     </div>
   );
 };

@@ -74,6 +74,7 @@ const Leftbar = ({
                   id={dialog._id}
                   name={dialog.partner.name}
                   userId={dialog.partner._id}
+                  date={dialog.createdAt}
                 />
               ))}
             </div>

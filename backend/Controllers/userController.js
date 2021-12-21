@@ -74,7 +74,7 @@ class UserController {
     await user.save();
     res.redirect(process.env.CLIENT_URL);
   }
-  async login(req, res) {
+  login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
@@ -97,9 +97,9 @@ class UserController {
     });
 
     const userData = { tokens, user: userDTO };
-
+    this.io.emit('334', '343434');
     res.status(200).json(userData);
-  }
+  };
   logout = async (req, res) => {
     const { refreshToken } = req.cookies;
     const token = await TokenService.deleteToken(refreshToken);
