@@ -1,6 +1,5 @@
 import React from 'react';
 import './index.scss';
-import ChatInput from '../ChatInput';
 import Message from '../Message';
 import { MailOutlined } from '@ant-design/icons';
 import ChatInputContainer from '../../containers/ChatInput';

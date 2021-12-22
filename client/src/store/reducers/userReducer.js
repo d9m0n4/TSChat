@@ -8,7 +8,7 @@ export default (state = initialState, { type, payload }) => {
     case 'USERS:SET_USERS':
       return {
         ...state,
-        isAuth: payload,
+        users: payload,
       };
 
     default:

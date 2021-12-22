@@ -6,7 +6,7 @@ import messagesReducer from './messagesReducer';
 
 export default combineReducers({
   auth: AuthReducer,
-  user: UserReducer,
+  users: UserReducer,
   dialogs: dialogReducer,
   messages: messagesReducer,
 });

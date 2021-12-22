@@ -25,8 +25,8 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: (values, { setSubmitting, props }) => {
-    console.log(values);
+  handleSubmit: (values, { setSubmitting, props, event }) => {
+    console.log(event);
     try {
       const data = store.dispatch(authActions.login(values));
       if (data) {

@@ -4,11 +4,15 @@ const MessageController = require('../Controllers/messageController');
 const Router = require('express').Router;
 const router = new Router();
 
+const io = require('../core/socket');
+
+console.log(io);
+
 const CheckToken = require('../Middlewares/CheckToken');
 
 const { body } = require('express-validator');
 
-const routes = (io) => {
+const Routes = (io) => {
   const UserCtrl = new UserController(io);
   const DialogCtrl = new DialogConroller(io);
   const MessageCtrl = new MessageController(io);
@@ -31,8 +35,7 @@ const routes = (io) => {
   router.get('/dialogs', CheckToken, DialogCtrl.getDialogs);
 
   router.get('/messages', MessageCtrl.getMessages);
-
   return router;
 };
 
-module.exports = routes;
+module.exports = Routes;

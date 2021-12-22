@@ -8,8 +8,8 @@ const userActions = {
 
   fetchUsers: (payload) => async (dispatch) => {
     try {
-      const userData = await Users.findUsers(payload);
-      console.log(userData);
+      await Users.findUsers(payload);
+      dispatch(userActions.setUsers(payload));
     } catch (error) {
       console.log(error);
     }

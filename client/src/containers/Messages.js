@@ -11,7 +11,9 @@ const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs }) => {
   }, [items]);
 
   useEffect(() => {
-    fetchMessages(currentDialogId);
+    if (currentDialogId) {
+      fetchMessages(currentDialogId);
+    }
   }, [fetchMessages, currentDialogId]);
 
   return <ChatMesaages user={user} messages={items} scrollRef={scrollRef} />;
