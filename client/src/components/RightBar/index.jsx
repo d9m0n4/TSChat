@@ -9,7 +9,10 @@ import tmIcon from '../../assets/img/icons/telegram.svg';
 import UserAttach from '../UserAttach';
 import { Link } from 'react-router-dom';
 
-const Rightbar = () => {
+const Rightbar = ({ currentDialogId, partner }) => {
+  if (!currentDialogId && !partner) {
+    return null;
+  }
   return (
     <div className="main__content-body__rightbar">
       <div className="rightbar__header chat__header">
@@ -35,10 +38,10 @@ const Rightbar = () => {
       <div className="rightbar__body rightbar__dialog">
         <div className="rightbar__dialog-companion__info">
           <div className="companion__avatar">
-            <Avatar size={100}> C </Avatar>
+            <Avatar size={100}> {partner.name}</Avatar>
           </div>
           <div className="companion__pers-info">
-            <div className="companion__name">Сократ</div>
+            <div className="companion__name">{partner.name}</div>
             <span className="online">в сети</span>
           </div>
           <div className="companion__social-links">

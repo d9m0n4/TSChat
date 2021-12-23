@@ -21,6 +21,7 @@ const authActions = {
     dispatch(authActions.setLoading(true));
     try {
       const userData = await Auth.CheckUser();
+      console.log(userData);
       if (userData.response && userData.response.data.status === 401) {
         openNotification('error', 'Ошибка', userData.response.data.message, 3);
         dispatch(authActions.setAuth(false));
@@ -37,7 +38,6 @@ const authActions = {
   login: (payload) => async (dispatch) => {
     dispatch(authActions.setLoading(true));
     try {
-      console.log(payload);
       const { data } = await Auth.Login(payload);
       if (!data.user) {
         return openNotification('error', 'Ошибка', 'Неверный email или пароль', 3);

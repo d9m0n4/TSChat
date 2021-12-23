@@ -12,6 +12,7 @@ module.exports = function (req, res, next) {
   }
 
   const accessToken = authHeaders.split(' ')[1];
+  console.log(accessToken);
 
   const userData = tokenService.validateAccessToken(accessToken);
 

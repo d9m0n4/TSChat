@@ -63,7 +63,7 @@ class UserController {
   async activationAccaunt(req, res) {
     const link = req.params.link;
 
-    const user = await User.findOne({ link });
+    const user = await User.findOne({ activationLink: link });
 
     if (!user) {
       throw new Error('Некорректная ссылка активации');
@@ -147,6 +147,7 @@ class UserController {
     res.json(users);
   }
   async getCurrentUser(req, res) {
+    console.log(req.user);
     if (!req.user) {
       res.status(403).json({ message: 'Пользователь не авторизован' });
     }

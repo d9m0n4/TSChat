@@ -34,7 +34,8 @@ const Routes = (io) => {
   router.post('/dialogs', CheckToken, DialogCtrl.createDialog);
   router.get('/dialogs', CheckToken, DialogCtrl.getDialogs);
 
-  router.get('/messages', MessageCtrl.getMessages);
+  router.get('/messages', CheckToken, MessageCtrl.getMessages);
+  router.post('/messages', CheckToken, MessageCtrl.createMessage);
   return router;
 };
 

@@ -68,15 +68,16 @@ const Leftbar = ({
             </div>
             <div></div>
             <div className="leftbar__chats-body">
-              {dialogs.map((dialog) => (
-                <ChatListItem
-                  key={dialog._id}
-                  id={dialog._id}
-                  name={dialog.partner.name}
-                  userId={dialog.partner._id}
-                  date={dialog.createdAt}
-                />
-              ))}
+              {dialogs &&
+                dialogs.map((dialog) => (
+                  <ChatListItem
+                    key={dialog._id}
+                    id={dialog._id}
+                    name={dialog.partner.name}
+                    userId={dialog.partner._id}
+                    date={dialog.createdAt}
+                  />
+                ))}
             </div>
           </div>
           <div className="leftbar__chats">
