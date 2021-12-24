@@ -13,13 +13,18 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
   const [users, setUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [filtred, setFiltredDialogs] = useState(Array.from(items));
 
-  const onChangeInput = (value = '') => {
-    // setFiltredDialogs(
-    //   dialogItems.filter(
-    //     (dialog) => dialog.partner.name.toLowerCase().indexOf(value.toLowerCase()) >= 0,
-    //   ),
-    // );
+  const onChangeInput = (e) => {
+    const value = e.target.value;
+
+    setFiltredDialogs(
+      items.filter(
+        (dialog) =>
+          dialog.partner.name.toLowerCase().includes(value.toLowerCase()) ||
+          dialog.author.name.toLowerCase().includes(value.toLowerCase()),
+      ),
+    );
     setInputValue(value);
   };
 
@@ -57,15 +62,23 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
   };
 
   useEffect(() => {
+    setFiltredDialogs();
+  }, []);
+
+  useEffect(() => {
     fetchDialogs();
     socket.on('DIALOG:CREATED', fetchDialogs);
+
+    return () => {
+      socket.removeListener('DIALOG:CREATED');
+    };
   }, [fetchDialogs, currentDialogId]);
 
   return (
     <Leftbar
       inputValue={inputValue}
       onChangeInput={onChangeInput}
-      dialogs={items}
+      dialogs={filtred}
       messageValue={messageValue}
       onSendMessage={onSendMessage}
       onChangeValue={onChangeValue}

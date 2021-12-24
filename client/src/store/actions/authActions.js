@@ -44,6 +44,7 @@ const authActions = {
       }
       if (data.user.isActivated) {
         localStorage.setItem('token', data.tokens.accessToken);
+        dispatch(authActions.getCurrentUser());
         dispatch(authActions.setAuth(true));
       }
       return data;

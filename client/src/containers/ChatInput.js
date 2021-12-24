@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import ChatInput from '../components/ChatInput';
-import Messages from '../Services/Messages';
+import messagesActions from '../store/actions/messagesActions';
 
-const ChatInputContainer = ({ userId, dialogId }) => {
+const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
   const [messageValue, setMessageValue] = useState(null);
 
   const onChangeValue = (e) => {
@@ -13,17 +13,21 @@ const ChatInputContainer = ({ userId, dialogId }) => {
   const onSendMessage = () => {
     console.log(messageValue);
 
-    Messages.createMessge({
-      dialog: dialogId,
+    sendMessage({
+      dialogId: dialogId,
       text: messageValue,
     });
+
     setMessageValue(null);
   };
 
   return <ChatInput value={messageValue} onSendMessage={onSendMessage} onChange={onChangeValue} />;
 };
 
-export default connect(({ auth, dialogs }) => ({
-  userId: auth.user.id,
-  dialogId: dialogs.currentDialogId,
-}))(ChatInputContainer);
+export default connect(
+  ({ auth, dialogs }) => ({
+    userId: auth.user.id,
+    dialogId: dialogs.currentDialogId,
+  }),
+  messagesActions,
+)(ChatInputContainer);

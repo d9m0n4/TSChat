@@ -9,7 +9,7 @@ class MessagesController {
   createMessage = async (req, res) => {
     const postData = {
       user: req.user.id,
-      dialog: req.body.dialog,
+      dialog: req.body.dialogId,
       text: req.body.text,
     };
 
@@ -20,7 +20,7 @@ class MessagesController {
           if (err) {
             res.json('error');
           }
-          Dialog.findByIdAndUpdate({ _id: postData.dialog }, { upsert: true }, (err, dialog) => {
+          Dialog.findOneAndUpdate({ _id: postData.dialog }, { upsert: true }, (err) => {
             if (err) {
               return res.status(500).json({
                 message: 'ошибка обновления диалога при создании сообщения',

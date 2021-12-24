@@ -5,7 +5,7 @@ import ChatMesaages from '../components/ChatMessages';
 import socket from '../core/socket';
 import messagesActions from '../store/actions/messagesActions';
 
-const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs, loader }) => {
+const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs, loader, addMessage }) => {
   const scrollRef = useRef();
 
   const [currentDialog, setCurrentDialog] = useState({});
@@ -25,14 +25,14 @@ const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs, loader
 
   const id = useMemo(() => currentDialogId, [currentDialogId]);
 
-  //
+  const newMessage = (data) => {
+    addMessage(data);
+  };
 
   useEffect(() => {
     if (id) {
       fetchMessages(id);
-      socket.on('SERVER:CREATE_MESSAGE', () => {
-        fetchMessages(id);
-      });
+      socket.on('SERVER:CREATE_MESSAGE', newMessage);
     }
     return () => {
       socket.removeListener('SERVER:CREATE_MESSAGE');

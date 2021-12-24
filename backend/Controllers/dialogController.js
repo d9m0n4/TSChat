@@ -33,7 +33,6 @@ class DialogController {
               text: postData.text,
             });
             message.save();
-            console.log(dial);
           }
         },
       );
