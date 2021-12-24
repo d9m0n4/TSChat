@@ -17,7 +17,7 @@ const Sidebar = ({ user }) => {
   return (
     <div className="sidebar">
       <div className="user__profile-link">
-        <Avatar size={48}>{user.name}</Avatar>
+        <Avatar size={48}>{user && user.name}</Avatar>
       </div>
       <nav className="sidebar__navigation">
         <ul className="nav-group">

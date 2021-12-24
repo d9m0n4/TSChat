@@ -147,7 +147,6 @@ class UserController {
     res.json(users);
   }
   async getCurrentUser(req, res) {
-    console.log(req.user);
     if (!req.user) {
       res.status(403).json({ message: 'Пользователь не авторизован' });
     }

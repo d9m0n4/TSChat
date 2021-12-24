@@ -13,28 +13,12 @@ class DialogController {
         partner: req.body.partner,
         text: req.body.text,
       };
-      await Dialog.findOne({ author: postData.author, partner: postData.partner }).then(
-        (dialog) => {
-          if (dialog) {
-            const message = new Message({
-              user: postData.author,
-              dialog: dialog._id,
-              text: postData.text,
-            });
-            message.save();
-          } else {
-            const dial = new Dialog({ author: postData.author, partner: postData.partner });
-            dial.save();
-            this.io.emit('DIALOG:CREATED', { ...dial });
-
-            const message = new Message({
-              user: postData.author,
-              dialog: dial._id,
-              text: postData.text,
-            });
-            message.save();
-          }
+      await Dialog.findOne(
+        {
+          author: postData.author,
+          partner: postData.partner,
         },
+        (err, dialog) => {},
       );
     } catch (error) {
       res.json(error);

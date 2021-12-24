@@ -11,8 +11,6 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
   };
 
   const onSendMessage = () => {
-    console.log(messageValue);
-
     sendMessage({
       dialogId: dialogId,
       text: messageValue,

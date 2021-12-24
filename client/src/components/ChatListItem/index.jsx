@@ -3,11 +3,11 @@ import React from 'react';
 import './index.scss';
 
 import { Avatar } from 'antd';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const ChatListItem = ({ online, id, name, userId, type, date }) => {
   return (
-    <Link to={`/dialog/${id}`}>
+    <NavLink activeClassName="active" to={`/dialog/${id}`}>
       <div className="chats__item">
         <div className="chats__item-avatar">
           {online && <sup className="status-dot"></sup>}
@@ -20,7 +20,7 @@ const ChatListItem = ({ online, id, name, userId, type, date }) => {
         <div className="chats__item-body">
           <div className="chats__item-top">
             <p className="item-name">{name}</p>
-            <span className="item-date">{date}</span>
+            <span className="item-date">{new Date(date).toLocaleTimeString()}</span>
           </div>
           {type === 'conv' ? (
             <div className="chats__item-bottom conv">
@@ -29,13 +29,13 @@ const ChatListItem = ({ online, id, name, userId, type, date }) => {
             </div>
           ) : (
             <div className="chats__item-bottom">
-              <div className="item__message">{}</div>
+              <div className="item__message">Последнее сообщение</div>
               <div className="item__status"></div>
             </div>
           )}
         </div>
       </div>
-    </Link>
+    </NavLink>
   );
 };
 

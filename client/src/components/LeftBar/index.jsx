@@ -20,7 +20,9 @@ const Leftbar = ({
   users,
   textValue,
   onChangeInput,
+  userId,
 }) => {
+  console.log(dialogs);
   return (
     <>
       <AddDialogModal
@@ -73,7 +75,7 @@ const Leftbar = ({
                   <ChatListItem
                     key={dialog._id}
                     id={dialog._id}
-                    name={dialog.partner.name}
+                    name={dialog.author._id === userId ? dialog.partner.name : dialog.author.name}
                     userId={dialog.partner._id}
                     date={dialog.createdAt}
                   />

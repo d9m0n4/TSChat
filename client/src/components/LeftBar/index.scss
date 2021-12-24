@@ -48,6 +48,14 @@
           font-family: 'Gilroy-Medium';
         }
       }
+      &-body {
+        a.active {
+          .chats__item {
+            background-color: #276aa5e5;
+            color: #fafafa;
+          }
+        }
+      }
     }
   }
 }

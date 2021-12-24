@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import dialogActions from '../store/actions/dialogActions';
 import socket from '../core/socket';
 
-const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
+const LeftBar = ({ fetchDialogs, items, currentDialogId, userId }) => {
   const [visible, setVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState();
   const [users, setUsers] = useState([]);
@@ -62,7 +62,7 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
   };
 
   useEffect(() => {
-    setFiltredDialogs();
+    setFiltredDialogs(null);
   }, []);
 
   useEffect(() => {
@@ -89,11 +89,16 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId }) => {
       visible={visible}
       showModal={showModal}
       hideModal={hideModal}
+      userId={userId}
     />
   );
 };
 
 export default connect(
-  ({ dialogs }) => ({ items: dialogs.dialogs, currentDialogId: dialogs.currentDialogId }),
+  ({ dialogs, auth }) => ({
+    items: dialogs.dialogs,
+    currentDialogId: dialogs.currentDialogId,
+    userId: auth.user.id,
+  }),
   { ...dialogActions },
 )(LeftBar);
