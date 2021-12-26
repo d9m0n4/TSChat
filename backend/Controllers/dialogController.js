@@ -9,17 +9,32 @@ class DialogController {
   createDialog = async (req, res) => {
     try {
       const postData = {
-        author: req.user.id,
-        partner: req.body.partner,
+        members: [req.user.id, req.body.partner],
         text: req.body.text,
       };
-      await Dialog.findOne(
-        {
-          author: postData.author,
-          partner: postData.partner,
-        },
-        (err, dialog) => {},
-      );
+
+      await Dialog.find({ members: { $in: [req.user.id] } }).exec((err, dialog) => {
+        if (err) {
+          console.log('err', err);
+        }
+        if (dialog) {
+          console.log(dialog);
+          return res.status(500).json('ТАкой диалог уже есть');
+        }
+        const dialogObj = new Dialog({ members: postData.members });
+        dialogObj
+          .save()
+          .then((dialog) => {
+            const message = new Message({
+              user: req.user.id,
+              dialog: dialog._id,
+              text: postData.text,
+            });
+            message.save();
+          })
+          .catch((err) => res.status(500).json(err));
+        res.json(dialogObj);
+      });
     } catch (error) {
       res.json(error);
     }
@@ -28,17 +43,11 @@ class DialogController {
     const { id } = req.user;
 
     await Dialog.find()
-      .or([{ author: id }, { partner: id }])
-      .populate(['author', 'partner'])
-      .exec((err, dialogs) => {
-        if (err) {
-          res.json({
-            message: 'Dialogs not found',
-          });
-        }
-
-        return res.json(dialogs);
-      });
+      .populate({
+        path: 'members',
+        match: {},
+      })
+      .then((dialog) => console.log(dialog));
   };
 }
 
