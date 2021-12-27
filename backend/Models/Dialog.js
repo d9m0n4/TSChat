@@ -1,10 +1,9 @@
 const { Schema, model } = require('mongoose');
+const User = require('../Models/User');
 
 const DialogSchema = new Schema(
   {
-    members: {
-      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    },
+    members: [{ type: Schema.Types.ObjectId, ref: User }],
   },
   {
     timestamps: true,

@@ -13,27 +13,24 @@ class DialogController {
         text: req.body.text,
       };
 
-      await Dialog.find({ members: { $in: [req.user.id] } }).exec((err, dialog) => {
-        if (err) {
-          console.log('err', err);
+      Dialog.find({ members: { $in: [req.user.id] } }).then((dialogs) => {
+        if (dialogs.length === 0) {
+          const dialog = new Dialog({ members: postData.members });
+          dialog.save().then((dialog) => console.log('dialog created', dialog));
+        } else {
+          dialogs.forEach((dialog) => {
+            dialog.populate('members').then((populatedDialog) =>
+              populatedDialog.members.forEach((item) => {
+                console.log(item._id, req.user.id);
+                console.log(Object.is(item._id, req.user.id));
+                if (item._id === req.user.id) {
+                  console.log('dialog already ', item._id);
+                  return res.json('Такой диалог уже существует');
+                }
+              }),
+            );
+          });
         }
-        if (dialog) {
-          console.log(dialog);
-          return res.status(500).json('ТАкой диалог уже есть');
-        }
-        const dialogObj = new Dialog({ members: postData.members });
-        dialogObj
-          .save()
-          .then((dialog) => {
-            const message = new Message({
-              user: req.user.id,
-              dialog: dialog._id,
-              text: postData.text,
-            });
-            message.save();
-          })
-          .catch((err) => res.status(500).json(err));
-        res.json(dialogObj);
       });
     } catch (error) {
       res.json(error);
@@ -42,12 +39,7 @@ class DialogController {
   getDialogs = async (req, res) => {
     const { id } = req.user;
 
-    await Dialog.find()
-      .populate({
-        path: 'members',
-        match: {},
-      })
-      .then((dialog) => console.log(dialog));
+    await Dialog.find().then((dialog) => res.json(dialog));
   };
 }
 
