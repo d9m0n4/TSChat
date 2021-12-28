@@ -16,9 +16,13 @@ const dialogActions = {
 
   fetchDialogs: () => async (dispatch) => {
     try {
-      Dialogs.fetchDialogs()
-        .then(({ data }) => dispatch(dialogActions.setDialogs(data)))
-        .catch((err) => console.log(err));
+      const { data } = await Dialogs.fetchDialogs();
+
+      if (!data) {
+        console.log('error 123');
+      }
+
+      return dispatch(dialogActions.setDialogs(data));
     } catch (error) {
       console.log(error);
     }

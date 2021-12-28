@@ -21,13 +21,13 @@ const authActions = {
     dispatch(authActions.setLoading(true));
     try {
       const userData = await Auth.CheckUser();
-      console.log(userData);
+
       if (userData.response && userData.response.data.status === 401) {
         openNotification('error', 'Ошибка', userData.response.data.message, 3);
         dispatch(authActions.setAuth(false));
         delete window.localStorage.token;
       }
-      dispatch(authActions.setUser(userData.data));
+      return dispatch(authActions.setUser(userData.data));
     } catch (error) {
       console.log(error);
     } finally {

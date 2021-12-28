@@ -6,13 +6,11 @@ import { useEffect } from 'react';
 import authActions from './store/actions/authActions';
 
 function App({ isAuth, getCurrentUser }) {
-  const token = window.localStorage.token;
-
   useEffect(() => {
-    if (window.localStorage.token) {
+    if (localStorage.getItem('token')) {
       getCurrentUser();
     }
-  }, [getCurrentUser, token]);
+  }, [getCurrentUser]);
 
   return (
     <div className="App">

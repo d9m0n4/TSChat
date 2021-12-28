@@ -22,7 +22,6 @@ const Leftbar = ({
   onChangeInput,
   userId,
 }) => {
-  console.log(dialogs);
   return (
     <>
       <AddDialogModal

@@ -6,14 +6,14 @@ import Rightbar from '../components/RightBar';
 const RightBarContianer = ({ items, currentDialogId }) => {
   const [currentDialog, setCurrentDialog] = useState({});
 
-  useEffect(() => {
-    const data = Object.values(items.filter((item) => item._id === currentDialogId));
+  // useEffect(() => {
+  //   const data = Object.values(items.filter((item) => item._id === currentDialogId));
 
-    for (const key in data) {
-      const element = data[key];
-      setCurrentDialog(element.partner);
-    }
-  }, [currentDialogId, items]);
+  //   for (const key in data) {
+  //     const element = data[key];
+  //     setCurrentDialog(element.partner);
+  //   }
+  // }, [currentDialogId, items]);
 
   return <Rightbar currentDialogId={currentDialogId} partner={currentDialog} />;
 };

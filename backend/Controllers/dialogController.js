@@ -16,19 +16,36 @@ class DialogController {
       Dialog.find({ members: { $in: [req.user.id] } }).then((dialogs) => {
         if (dialogs.length === 0) {
           const dialog = new Dialog({ members: postData.members });
-          dialog.save().then((dialog) => console.log('dialog created', dialog));
+          dialog.save().then((dialog) => {
+            dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
+            const message = new Message({
+              user: req.user.id,
+              dialog: dialog._id,
+              text: postData.text,
+            });
+            message.save();
+          });
         } else {
           dialogs.forEach((dialog) => {
-            dialog.populate('members').then((populatedDialog) =>
-              populatedDialog.members.forEach((item) => {
-                console.log(item._id, req.user.id);
-                console.log(Object.is(item._id, req.user.id));
-                if (item._id === req.user.id) {
-                  console.log('dialog already ', item._id);
-                  return res.json('Такой диалог уже существует');
-                }
-              }),
-            );
+            if (dialog.members.includes(req.user.id)) {
+              return res.json({
+                message: 'Такой диалог уже существует',
+              });
+            }
+            const dialogObj = new Dialog({ members: postData.members });
+            dialogObj.save().then((dialog) => {
+              dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
+              const message = new Message({
+                user: req.user.id,
+                dialog: dialog._id,
+                text: postData.text,
+              });
+              message.save();
+            });
+
+            // dialog.populate('members').then((populatedDialog) => {
+            //   const popm = populatedDialog.members;
+            // });
           });
         }
       });
@@ -37,9 +54,27 @@ class DialogController {
     }
   };
   getDialogs = async (req, res) => {
-    const { id } = req.user;
+    const id = req.user.id;
 
-    await Dialog.find().then((dialog) => res.json(dialog));
+    Dialog.find({ members: { $in: [id] } })
+      .then((dialogs) => {
+        if (!dialogs) {
+          res.status(404).json({ message: 'диалоги не найдены' });
+        }
+        const data = [];
+
+        for (const dialog of dialogs) {
+          const a = dialog.populate('members').then((popd) => {
+            return popd;
+          });
+
+          data.push(a);
+        }
+
+        return Promise.all(data);
+      })
+      .then((d) => res.json(d))
+      .catch((err) => res.json(err));
   };
 }
 
