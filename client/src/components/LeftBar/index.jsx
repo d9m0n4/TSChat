@@ -22,6 +22,7 @@ const Leftbar = ({
   onChangeInput,
   userId,
 }) => {
+  console.log(dialogs);
   return (
     <>
       <AddDialogModal
@@ -71,7 +72,7 @@ const Leftbar = ({
             <div className="leftbar__chats-body">
               {dialogs &&
                 dialogs.map((dialog) => (
-                  <ChatListItem id={'d'} name={'dsd'} userId={'d'} date={'d'} />
+                  <ChatListItem key={dialog._id} id={dialog._id} name={dialog.name} date={'d'} />
                 ))}
             </div>
           </div>

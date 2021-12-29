@@ -17,6 +17,7 @@ class DialogController {
         if (dialogs.length === 0) {
           const dialog = new Dialog({ members: postData.members });
           dialog.save().then((dialog) => {
+            this.socket.emit('DIALOG:CREATED', dialog);
             dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
             const message = new Message({
               user: req.user.id,
@@ -34,6 +35,7 @@ class DialogController {
             }
             const dialogObj = new Dialog({ members: postData.members });
             dialogObj.save().then((dialog) => {
+              this.socket.emit('DIALOG:CREATED', dialog);
               dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
               const message = new Message({
                 user: req.user.id,
