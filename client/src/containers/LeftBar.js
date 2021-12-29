@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 
 import dialogActions from '../store/actions/dialogActions';
 import socket from '../core/socket';
+import { withRouter } from 'react-router';
 
-const LeftBar = ({ fetchDialogs, items, currentDialogId, userId }) => {
+const LeftBar = ({ fetchDialogs, items, currentDialogId, userId, history }) => {
   const [visible, setVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState();
   const [users, setUsers] = useState([]);
@@ -55,14 +56,18 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId, userId }) => {
       partner: selectedUserId,
       text: messageValue,
     });
+    socket.on('DIALOG:CREATED', (data) => {
+      history.push(data._id);
+    });
     hideModal();
   };
 
   useEffect(() => {
     const partners = [];
+
     items.forEach((item) => {
       const data = item.members.find((m) => m._id !== userId);
-      partners.push(data);
+      partners.push({ dialogId: item._id, ...data });
       setDialogPartners(partners);
     });
   }, [items, userId]);
@@ -102,11 +107,13 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId, userId }) => {
   );
 };
 
-export default connect(
-  ({ dialogs, auth }) => ({
-    items: dialogs.dialogs,
-    currentDialogId: dialogs.currentDialogId,
-    userId: auth.user.id,
-  }),
-  { ...dialogActions },
-)(LeftBar);
+export default withRouter(
+  connect(
+    ({ dialogs, auth }) => ({
+      items: dialogs.dialogs,
+      currentDialogId: dialogs.currentDialogId,
+      userId: auth.user.id,
+    }),
+    { ...dialogActions },
+  )(LeftBar),
+);

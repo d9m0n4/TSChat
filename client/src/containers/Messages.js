@@ -10,15 +10,6 @@ const Messages = ({ fetchMessages, currentDialogId, items, user, dialogs, loader
 
   const [currentDialog, setCurrentDialog] = useState({});
 
-  // useEffect(() => {
-  //   const data = Object.values(dialogs.filter((item) => item._id === currentDialogId));
-
-  //   for (const key in data) {
-  //     const element = data[key];
-  //     setCurrentDialog(element.partner);
-  //   }
-  // }, [currentDialogId, dialogs]);
-
   useEffect(() => {
     scrollRef.current.scrollTo({ top: 1000, behavior: 'smooth' });
   }, [items]);

@@ -14,8 +14,6 @@ const messagesActions = {
     const { dialogs } = getState();
     const { currentDialogId } = dialogs;
 
-    console.log(message.dialog._id === currentDialogId);
-
     if (message.dialog._id === currentDialogId) {
       dispatch({
         type: 'MESSAGES:ADD_MESSAGE',
