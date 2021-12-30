@@ -38,10 +38,10 @@ const Rightbar = ({ currentDialogId, partner }) => {
       <div className="rightbar__body rightbar__dialog">
         <div className="rightbar__dialog-companion__info">
           <div className="companion__avatar">
-            <Avatar size={100}> {partner.name}</Avatar>
+            <Avatar size={100}> {partner && partner.partner.name}</Avatar>
           </div>
           <div className="companion__pers-info">
-            <div className="companion__name">{partner.name}</div>
+            <div className="companion__name">{partner && partner.partner.name}</div>
             <span className="online">в сети</span>
           </div>
           <div className="companion__social-links">

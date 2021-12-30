@@ -2,7 +2,7 @@ import React from 'react';
 
 import './index.scss';
 
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Avatar } from 'antd';
 import authActions from '../../store/actions/authActions';
 
@@ -22,7 +22,7 @@ const Sidebar = ({ user }) => {
       <nav className="sidebar__navigation">
         <ul className="nav-group">
           <li className="nav-group__item">
-            <Link to="#">
+            <NavLink activeClassName="active" to="/">
               <svg
                 width="32"
                 height="32"
@@ -38,10 +38,10 @@ const Sidebar = ({ user }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-group__item">
-            <Link to="#">
+            <NavLink activeClassName="active" to="/">
               <svg
                 width="32"
                 height="32"
@@ -57,12 +57,12 @@ const Sidebar = ({ user }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-            </Link>
+            </NavLink>
           </li>
         </ul>
         <ul className="nav-group">
           <li className="nav-group__item">
-            <Link to="#">
+            <NavLink activeClassName="active" exact to="/settings">
               <svg
                 width="32"
                 height="32"
@@ -86,10 +86,10 @@ const Sidebar = ({ user }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-group__item">
-            <Link to="/" onClick={logout}>
+            <NavLink activeClassName="active" to="/logout" onClick={logout}>
               <svg
                 width="32"
                 height="32"
@@ -105,7 +105,7 @@ const Sidebar = ({ user }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

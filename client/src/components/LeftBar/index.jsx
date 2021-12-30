@@ -73,7 +73,7 @@ const Leftbar = ({
                   <ChatListItem
                     key={dialog.dialogId}
                     id={dialog.dialogId}
-                    name={dialog.name}
+                    name={dialog.partner.name}
                     date={'d'}
                   />
                 ))}

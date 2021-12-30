@@ -14,15 +14,14 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId, userId, history }) => {
   const [users, setUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
-  const [dialogPartners, setDialogPartners] = useState([]);
-  const [filtred, setFiltredDialogs] = useState(Array.from(dialogPartners));
+  const [filtred, setFiltredDialogs] = useState(Array.from(items));
 
   const onChangeInput = (e) => {
     const value = e.target.value;
 
     setFiltredDialogs(
-      dialogPartners &&
-        dialogPartners.filter((item) => item.name.toLowerCase().indexOf(value.toLowerCase()) >= 0),
+      items &&
+        items.filter((item) => item.partner.name.toLowerCase().indexOf(value.toLowerCase()) >= 0),
     );
     setInputValue(value);
   };
@@ -60,21 +59,15 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId, userId, history }) => {
       history.push(data._id);
     });
     hideModal();
+
+    return () => {
+      socket.removeListener('DIALOG:CREATED');
+    };
   };
 
   useEffect(() => {
-    const partners = [];
-
-    items.forEach((item) => {
-      const data = item.members.find((m) => m._id !== userId);
-      partners.push({ dialogId: item._id, ...data });
-      setDialogPartners(partners);
-    });
-  }, [items, userId]);
-
-  useEffect(() => {
-    setFiltredDialogs(dialogPartners);
-  }, [dialogPartners]);
+    setFiltredDialogs(items);
+  }, [items]);
 
   const fDialogs = useCallback(fetchDialogs, [fetchDialogs]);
 

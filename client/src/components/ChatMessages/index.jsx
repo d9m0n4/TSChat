@@ -9,16 +9,18 @@ const ChatMesaages = ({
   scrollRef,
   messages,
   user,
-  currentPartner,
+  dialogs,
   currentDialogId,
   loader,
-  currentDialog,
+  currentPartner,
 }) => {
   return (
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
-        <div className="messages__header-chat__title">{currentDialog.name}</div>
-        <div className="messages__header-chat__status online"></div>
+        <div className="messages__header-chat__title">
+          {currentPartner && currentPartner.partner.name}
+        </div>
+        {currentPartner && <div className="messages__header-chat__status online"></div>}
       </div>
 
       <div className="messages__body" ref={scrollRef}>

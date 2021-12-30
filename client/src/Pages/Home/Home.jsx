@@ -14,6 +14,7 @@ const Home = ({ setCurrentDialogId, isLoading, location }) => {
     const dialogId = path.split('/').pop();
     setCurrentDialogId(dialogId);
   }, [location.pathname, setCurrentDialogId]);
+
   return (
     <>
       {isLoading ? (

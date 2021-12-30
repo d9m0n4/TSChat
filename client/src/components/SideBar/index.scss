@@ -18,6 +18,13 @@
       margin: 0;
       &__item {
         margin-bottom: 16px;
+        a.active {
+          svg {
+            #rect {
+              stroke: #276aa5;
+            }
+          }
+        }
         svg {
           &:hover {
             #rect {

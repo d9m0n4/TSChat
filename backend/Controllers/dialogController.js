@@ -27,31 +27,27 @@ class DialogController {
             message.save();
           });
         } else {
+          const partners = [];
           dialogs.forEach((dialog) => {
-            console.log(dialogs);
+            JSON.parse(JSON.stringify(dialog.members)).forEach((item) => partners.push(item));
           });
-          //   if (dialog.members.includes(req.user.id)) {
-          //     return res.json({
-          //       message: 'Такой диалог уже существует',
-          //     });
-          //   }
-          //   const dialogObj = new Dialog({ members: postData.members });
-          //   dialogObj.save().then((dialog) => {
-          //     this.io.emit('DIALOG:CREATED', dialog);
-          //     dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
-          //     const message = new Message({
-          //       user: req.user.id,
-          //       dialog: dialog._id,
-          //       text: postData.text,
-          //     });
-          //     message.save();
-          //   });
-
-          //   // dialog.populate('members').then((populatedDialog) => {
-          //   //   const popm = populatedDialog.members;
-          //   // });
-          // }
-          // );
+          if (partners.includes(req.body.partner)) {
+            return res.json({
+              status: 403,
+              message: 'Такой диалог уже существует',
+            });
+          }
+          const dialog = new Dialog({ members: postData.members });
+          dialog.save().then((dialog) => {
+            this.io.emit('DIALOG:CREATED', dialog);
+            dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
+            const message = new Message({
+              user: req.user.id,
+              dialog: dialog._id,
+              text: postData.text,
+            });
+            message.save();
+          });
         }
       });
     } catch (error) {
@@ -78,7 +74,16 @@ class DialogController {
 
         return Promise.all(data);
       })
-      .then((d) => res.json(d))
+      .then((d) => {
+        const partners = [];
+
+        d.forEach((item) => {
+          const partner = item.members.find((m) => m._id.toString() !== id);
+          partners.push({ dialogId: item._id, partner });
+        });
+
+        res.json(partners);
+      })
       .catch((err) => res.json(err));
   };
 }
