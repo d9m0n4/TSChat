@@ -1,54 +1,64 @@
-.messages-input {
-  padding: 16px 0 16px 0;
-  border-top: 1px solid rgba(58, 69, 107, 0.5);
+.messages__input-group {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  &__buttons {
+  flex-wrap: wrap;
+  padding: 16px 0;
+  .messages-input {
+    padding: 16px 0 16px 0;
+    border-top: 1px solid rgba(58, 69, 107, 0.5);
     display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex: 1;
+    &__buttons {
+      display: flex;
 
-    #icon {
-      stroke: #979797;
+      #icon {
+        stroke: #979797;
+      }
+      .button__icon {
+        padding: 0 4px;
+        margin: 0 -2px;
+        &:hover {
+          cursor: pointer;
+          #icon {
+            stroke: #276aa5;
+          }
+        }
+      }
     }
-    .button__icon {
-      padding: 0 4px;
-      margin: 0 -2px;
-      &:hover {
-        cursor: pointer;
-        #icon {
-          stroke: #276aa5;
+    &__textarea {
+      margin: 0 0 0 24px;
+      flex: 1;
+      padding: 8px 0;
+      .textfield {
+        border: none;
+        outline: none;
+        padding: 0;
+        padding-right: 8px;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+        &::-webkit-scrollbar-track {
+          border-radius: 4px;
+        }
+        &::-webkit-scrollbar {
+          width: 6px;
+          height: 12px;
+          cursor: pointer;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 4px;
+          background: #f0f2f5;
+        }
+        &:hover::-webkit-scrollbar-thumb {
+          background: #979797;
         }
       }
     }
   }
-  &__textarea {
-    margin: 0 0 0 24px;
-    flex: 1;
-    padding: 8px 0;
-    .textfield {
-      border: none;
-      outline: none;
-      padding: 0;
-      padding-right: 8px;
-      &:focus {
-        outline: none;
-        box-shadow: none;
-      }
-      &::-webkit-scrollbar-track {
-        border-radius: 4px;
-      }
-      &::-webkit-scrollbar {
-        width: 6px;
-        height: 12px;
-        cursor: pointer;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 4px;
-        background: #f0f2f5;
-      }
-      &:hover::-webkit-scrollbar-thumb {
-        background: #979797;
-      }
-    }
+  .uploaded__files {
+    width: 100%;
+    padding: 0 32px;
   }
 }

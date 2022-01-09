@@ -11,12 +11,13 @@ class MessagesController {
       user: req.user.id,
       dialog: req.body.dialogId,
       text: req.body.text,
+      attachments: req.body.attachments,
     };
 
     await new Message(postData)
       .save()
       .then((messageObj) =>
-        messageObj.populate('dialog user', (err, message) => {
+        messageObj.populate('dialog user attachments', (err, message) => {
           if (err) {
             res.json('error');
           }
@@ -41,7 +42,7 @@ class MessagesController {
     const id = req.query.dialog;
 
     await Message.find({ dialog: id })
-      .populate(['user'])
+      .populate(['user', 'attachments'])
       .exec((err, messages) => {
         if (err) {
           return res.status(404).json({

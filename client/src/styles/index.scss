@@ -69,3 +69,12 @@ p {
 .ta-center {
   text-align: center;
 }
+
+.main__content-body__messages {
+  position: relative;
+  .emoji-picker {
+    position: absolute;
+    bottom: 74px;
+    left: 32px;
+  }
+}

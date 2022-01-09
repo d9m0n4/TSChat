@@ -1,12 +1,11 @@
 const UserController = require('../Controllers/userController');
 const DialogConroller = require('../Controllers/dialogController');
 const MessageController = require('../Controllers/messageController');
+const UploadController = require('../Controllers/uploadController');
 const Router = require('express').Router;
 const router = new Router();
 
-const io = require('../core/socket');
-
-console.log(io);
+const multer = require('../core/multer');
 
 const CheckToken = require('../Middlewares/CheckToken');
 
@@ -16,6 +15,7 @@ const Routes = (io) => {
   const UserCtrl = new UserController(io);
   const DialogCtrl = new DialogConroller(io);
   const MessageCtrl = new MessageController(io);
+  const UploadCtrl = new UploadController(io);
 
   router.post(
     '/registration',
@@ -36,6 +36,10 @@ const Routes = (io) => {
 
   router.get('/messages', CheckToken, MessageCtrl.getMessages);
   router.post('/messages', CheckToken, MessageCtrl.createMessage);
+
+  router.post('/files', CheckToken, multer.single('file'), UploadCtrl.create);
+  router.delete('/files', CheckToken, UploadCtrl.delete);
+
   return router;
 };
 

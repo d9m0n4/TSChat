@@ -32,6 +32,7 @@ const ChatMesaages = ({
               messages.map((m) => (
                 <div key={m._id}>
                   <Message
+                    attachments={m.attachments}
                     isMe={user === m.user._id}
                     date={m.createdAt}
                     text={m.text}
