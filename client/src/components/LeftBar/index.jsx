@@ -103,9 +103,7 @@ const Leftbar = ({
                 </Button>
               </div>
             </div>
-            <div className="leftbar__chats-body">
-              <ChatListItem type="conv" />
-            </div>
+            <div className="leftbar__chats-body">{/* <ChatListItem type="conv" /> */}</div>
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import './index.scss';
 
 import play from '../../assets/img/icons/play.svg';
 import pause from '../../assets/img/icons/pause.svg';
+import UserAvatar from '../Avatar';
 
 const Message = ({ isMe, name, text, date, attachments, audio }) => {
   // const audioElem = useRef(null);
@@ -58,7 +59,7 @@ const Message = ({ isMe, name, text, date, attachments, audio }) => {
   return (
     <div className={classNames('message', { 'message--isme': isMe })}>
       <div className="message__avatar">
-        <Avatar size={36}>{name} </Avatar>
+        <UserAvatar name={name} size={36} />
       </div>
       <div className="message__content">
         {text && attachments && (

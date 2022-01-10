@@ -2,12 +2,12 @@ import React from 'react';
 
 import './index.scss';
 
-import { Link, NavLink } from 'react-router-dom';
-import { Avatar } from 'antd';
+import { NavLink } from 'react-router-dom';
 import authActions from '../../store/actions/authActions';
 
 import store from '../../store';
 import { connect } from 'react-redux';
+import UserAvatar from '../Avatar';
 
 const Sidebar = ({ user }) => {
   const logout = async () => {
@@ -17,7 +17,7 @@ const Sidebar = ({ user }) => {
   return (
     <div className="sidebar">
       <div className="user__profile-link">
-        <Avatar size={48}>{user && user.name}</Avatar>
+        <UserAvatar size={48} name={user.name} />
       </div>
       <nav className="sidebar__navigation">
         <ul className="nav-group">

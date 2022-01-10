@@ -1,13 +1,14 @@
 import React from 'react';
 
 import './index.scss';
-import { Avatar, Button } from 'antd';
+import { Button } from 'antd';
 
 import vkIcon from '../../assets/img/icons/vk.svg';
 import instIcon from '../../assets/img/icons/instagram.png';
 import tmIcon from '../../assets/img/icons/telegram.svg';
 import UserAttach from '../UserAttach';
 import { Link } from 'react-router-dom';
+import UserAvatar from '../Avatar';
 
 const Rightbar = ({ currentDialogId, partner }) => {
   if (!currentDialogId && !partner) {
@@ -38,7 +39,7 @@ const Rightbar = ({ currentDialogId, partner }) => {
       <div className="rightbar__body rightbar__dialog">
         <div className="rightbar__dialog-companion__info">
           <div className="companion__avatar">
-            <Avatar size={100}> {partner && partner.partner.name}</Avatar>
+            <UserAvatar size={100} name={partner && partner.partner.name} />
           </div>
           <div className="companion__pers-info">
             <div className="companion__name">{partner && partner.partner.name}</div>
