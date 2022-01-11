@@ -10,6 +10,7 @@ import './index.scss';
 import play from '../../assets/img/icons/play.svg';
 import pause from '../../assets/img/icons/pause.svg';
 import UserAvatar from '../Avatar';
+import toDate from '../../helpers/ToDate';
 
 const Message = ({ isMe, name, text, date, attachments, audio, dateToNow }) => {
   // const audioElem = useRef(null);
@@ -118,7 +119,7 @@ const Message = ({ isMe, name, text, date, attachments, audio, dateToNow }) => {
           </div>
         )}
 
-        <div className="message__content-date">{date}</div>
+        <div className="message__content-date">{toDate(date)}</div>
       </div>
     </div>
   );

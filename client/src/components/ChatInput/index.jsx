@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
-
+import MicRecorder from 'mic-recorder-to-mp3';
 import { Button, Input } from 'antd';
 import { UploadField } from '@navjobs/upload';
 import './index.scss';
 import UploadedFile from '../UploadedFile';
+import { useState } from 'react';
 
 const { TextArea } = Input;
 
@@ -19,7 +20,61 @@ const ChatInput = ({
   attachments,
   toggleVisiblePicker,
   visiblePicker,
+  record,
 }) => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [blobUrl, setBlobUrl] = useState();
+  const [isBlocked, setIsBlocked] = useState(false);
+
+  navigator.getUserMedia =
+    navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia;
+
+  useEffect(() => {
+    navigator.getUserMedia(
+      { audio: true },
+      () => {
+        setIsBlocked(false);
+        console.log('збс все');
+      },
+      () => {
+        setIsBlocked(false);
+        console.log('не збс');
+      },
+    );
+  }, []);
+
+  const mp3Rec = new MicRecorder({ bitRate: 128 });
+
+  const start = () => {
+    if (isBlocked) {
+      return;
+    }
+    mp3Rec
+      .start()
+      .then(() => setIsRecording(true))
+      .catch((e) => console.log(e));
+  };
+
+  const stop = () => {
+    mp3Rec
+      .stop()
+      .getMp3()
+      .then(([buffer, blob]) => {
+        const blobURL = URL.createObjectURL(blob);
+        setBlobUrl(blobURL);
+        setIsRecording(false);
+        const file = new File(buffer, 'me-at-thevoice.mp3', {
+          type: blob.type,
+          lastModified: Date.now(),
+        });
+        console.log(file);
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <div className="messages__input-group">
       <div className="messages-input">
@@ -78,28 +133,54 @@ const ChatInput = ({
             value={value}
           />
         </div>
-        <Button
-          disabled={!value}
-          onClick={onSendMessage}
-          type="text"
-          className="messages-input__send app-icon">
-          <svg
-            className="icon"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              className="rect"
-              d="M5 12L3 21L21 12L3 3L5 12ZM5 12L13 12"
-              stroke="#979797"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+        {value ? (
+          <Button
+            disabled={!value}
+            onClick={onSendMessage}
+            type="text"
+            className="messages-input__send app-icon">
+            <svg
+              className="icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                className="rect"
+                d="M5 12L3 21L21 12L3 3L5 12ZM5 12L13 12"
+                stroke="#979797"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Button>
+        ) : (
+          <Button onClick={start} type="text" className="messages-input__send app-icon">
+            <svg
+              className="icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                className="rect"
+                d="M19 11C19 14.866 15.866 18 12 18M12 18C8.13401 18 5 14.866 5 11M12 18V22M12 22H8M12 22H16M12 14C10.3431 14 9 12.6569 9 11V5C9 3.34315 10.3431 2 12 2C13.6569 2 15 3.34315 15 5V11C15 12.6569 13.6569 14 12 14Z"
+                stroke="#979797"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Button>
+        )}
+
+        <Button onClick={stop} type="text" className="messages-input__send app-icon">
+          stop
         </Button>
+
         <div className="emoji-picker">
           {visiblePicker && (
             <Picker
@@ -120,4 +201,4 @@ const ChatInput = ({
   );
 };
 
-export default ChatInput;
+export default React.memo(ChatInput);

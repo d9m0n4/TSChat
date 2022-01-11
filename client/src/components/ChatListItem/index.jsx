@@ -5,6 +5,7 @@ import './index.scss';
 import { NavLink } from 'react-router-dom';
 import UserAvatar from '../Avatar';
 import { connect } from 'react-redux';
+import toDate from '../../helpers/ToDate';
 
 const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, currentUser }) => {
   const lastM = () => {
@@ -22,7 +23,7 @@ const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, curre
         <div className="chats__item-body">
           <div className="chats__item-top">
             <p className="item-name">{name}</p>
-            <span className="item-date">{date}</span>
+            <span className="item-date">{toDate(date)}</span>
           </div>
           {type === 'conv' ? (
             <div className="chats__item-bottom conv">
@@ -32,7 +33,7 @@ const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, curre
           ) : (
             <div className="chats__item-bottom">
               <div className="item__message">
-                <p>{lastM}</p>
+                <p>{lastM()}</p>
               </div>
               <div className="item__status"></div>
             </div>
@@ -43,4 +44,4 @@ const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, curre
   );
 };
 
-export default connect(({ auth }) => ({ currentUser: auth.user.id }))(ChatListItem);
+export default connect(({ auth }) => ({ currentUser: auth.user.id }))(React.memo(ChatListItem));

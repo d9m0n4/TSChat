@@ -117,4 +117,4 @@ const Leftbar = ({
   );
 };
 
-export default Leftbar;
+export default React.memo(Leftbar);

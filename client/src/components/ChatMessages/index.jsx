@@ -9,12 +9,12 @@ const ChatMesaages = ({
   scrollRef,
   messages,
   user,
-  dialogs,
   currentDialogId,
   loader,
   currentPartner,
   dateToNow,
 }) => {
+  console.log(123);
   return (
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
