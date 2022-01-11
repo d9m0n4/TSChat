@@ -13,6 +13,7 @@ const ChatMesaages = ({
   currentDialogId,
   loader,
   currentPartner,
+  dateToNow,
 }) => {
   return (
     <div className="main__content-body__messages">
@@ -38,6 +39,7 @@ const ChatMesaages = ({
                     text={m.text}
                     name={m.user.name}
                     user={m.user}
+                    dateToNow={dateToNow}
                   />
                 </div>
               ))

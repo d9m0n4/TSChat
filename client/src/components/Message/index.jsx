@@ -1,4 +1,4 @@
-import { Avatar, Image } from 'antd';
+import { Image } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { Emoji, getEmojiDataFromNative } from 'emoji-mart';
 import { EyeOutlined } from '@ant-design/icons';
@@ -11,7 +11,7 @@ import play from '../../assets/img/icons/play.svg';
 import pause from '../../assets/img/icons/pause.svg';
 import UserAvatar from '../Avatar';
 
-const Message = ({ isMe, name, text, date, attachments, audio }) => {
+const Message = ({ isMe, name, text, date, attachments, audio, dateToNow }) => {
   // const audioElem = useRef(null);
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [progress, setProgress] = useState(0);

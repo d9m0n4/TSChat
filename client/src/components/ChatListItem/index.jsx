@@ -2,11 +2,15 @@ import React from 'react';
 
 import './index.scss';
 
-import { Avatar } from 'antd';
 import { NavLink } from 'react-router-dom';
 import UserAvatar from '../Avatar';
+import { connect } from 'react-redux';
 
-const ChatListItem = ({ online, id, name, userId, type, date }) => {
+const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, currentUser }) => {
+  const lastM = () => {
+    return userId === currentUser ? `Вы: ${lastMessage}` : `${lastMessage}`;
+  };
+
   return (
     <NavLink activeClassName="active" to={`/dialog/${id}`}>
       <div className="chats__item">
@@ -18,7 +22,7 @@ const ChatListItem = ({ online, id, name, userId, type, date }) => {
         <div className="chats__item-body">
           <div className="chats__item-top">
             <p className="item-name">{name}</p>
-            <span className="item-date">{new Date(date).toLocaleTimeString()}</span>
+            <span className="item-date">{date}</span>
           </div>
           {type === 'conv' ? (
             <div className="chats__item-bottom conv">
@@ -27,7 +31,9 @@ const ChatListItem = ({ online, id, name, userId, type, date }) => {
             </div>
           ) : (
             <div className="chats__item-bottom">
-              <div className="item__message">Последнее сообщение</div>
+              <div className="item__message">
+                <p>{lastM}</p>
+              </div>
               <div className="item__status"></div>
             </div>
           )}
@@ -37,4 +43,4 @@ const ChatListItem = ({ online, id, name, userId, type, date }) => {
   );
 };
 
-export default ChatListItem;
+export default connect(({ auth }) => ({ currentUser: auth.user.id }))(ChatListItem);

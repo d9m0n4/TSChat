@@ -45,6 +45,8 @@
     flex-direction: column;
     justify-content: center;
     color: #3a456b;
+    overflow: hidden;
+    flex-wrap: wrap;
     .chats__item-top {
       display: flex;
       justify-content: space-between;
@@ -62,6 +64,19 @@
       display: flex;
       justify-content: space-between;
       font-size: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+      min-width: 0;
+      .item__message {
+        display: flex;
+        max-width: 100%;
+        p {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin: 0;
+        }
+      }
 
       .conv__sender {
         color: #276aa5;

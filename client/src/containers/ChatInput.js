@@ -1,5 +1,3 @@
-import { Emoji } from 'emoji-mart';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import ChatInput from '../components/ChatInput';
@@ -54,10 +52,6 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
     }
     setAttachments(uploadedFiles);
   };
-
-  useEffect(() => {
-    console.log(attachments);
-  }, [attachments]);
 
   return (
     <ChatInput

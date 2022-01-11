@@ -16,15 +16,20 @@ class DialogController {
       Dialog.find({ members: { $in: [req.user.id] } }).then((dialogs) => {
         if (dialogs.length === 0) {
           const dialog = new Dialog({ members: postData.members });
-          dialog.save().then((dialog) => {
-            this.io.emit('DIALOG:CREATED', dialog);
-            dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
+          dialog.save().then((d) => {
             const message = new Message({
               user: req.user.id,
-              dialog: dialog._id,
+              dialog: d._id,
               text: postData.text,
             });
-            message.save();
+            message.save().then((m) => {
+              d.lastMessage = m._id;
+              d.save().then((dlg) => {
+                dlg.populate('members lastMessage').then((d) => {
+                  this.io.emit('DIALOG:CREATED', d);
+                });
+              });
+            });
           });
         } else {
           const partners = [];
@@ -39,14 +44,19 @@ class DialogController {
           }
           const dialog = new Dialog({ members: postData.members });
           dialog.save().then((dialog) => {
-            this.io.emit('DIALOG:CREATED', dialog);
-            dialog.populate('members').then((populatedDialog) => res.json(populatedDialog));
             const message = new Message({
               user: req.user.id,
               dialog: dialog._id,
               text: postData.text,
             });
-            message.save();
+            message.save().then((m) => {
+              dialog.lastMessage = m._id;
+              dialog.save().then((d) =>
+                d.populate('members lastMessage').then((d) => {
+                  this.io.emit('DIALOG:CREATED', d);
+                }),
+              );
+            });
           });
         }
       });
@@ -65,7 +75,7 @@ class DialogController {
         const data = [];
 
         for (const dialog of dialogs) {
-          const a = dialog.populate('members').then((popd) => {
+          const a = dialog.populate('members lastMessage').then((popd) => {
             return popd;
           });
 
@@ -79,7 +89,7 @@ class DialogController {
 
         d.forEach((item) => {
           const partner = item.members.find((m) => m._id.toString() !== id);
-          partners.push({ dialogId: item._id, partner });
+          partners.push({ dialogId: item._id, lastMessage: item.lastMessage, partner });
         });
 
         res.json(partners);

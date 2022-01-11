@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Leftbar from '../components/LeftBar';
 import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
@@ -69,16 +69,17 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId, userId, history }) => {
     setFiltredDialogs(items);
   }, [items]);
 
-  const fDialogs = useCallback(fetchDialogs, [fetchDialogs]);
-
   useEffect(() => {
-    fDialogs();
-    socket.on('DIALOG:CREATED', fDialogs);
+    fetchDialogs();
+    socket.on('DIALOG:CREATED', fetchDialogs);
+    socket.on('SERVER:DIALOG_CHANGED', fetchDialogs);
+    console.log('Диалог обновлен');
 
     return () => {
-      socket.removeListener('DIALOG:CREATED', fDialogs);
+      socket.removeListener('DIALOG:CREATED');
+      socket.removeListener('SERVER:DIALOG_CHANGED');
     };
-  }, [fDialogs, currentDialogId]);
+  }, [fetchDialogs]);
 
   return (
     <Leftbar

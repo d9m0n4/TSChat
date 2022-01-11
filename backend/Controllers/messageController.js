@@ -21,12 +21,12 @@ class MessagesController {
           if (err) {
             res.json('error');
           }
-          Dialog.findOneAndUpdate({ _id: postData.dialog }, { upsert: true }, (err) => {
-            if (err) {
-              return res.status(500).json({
-                message: 'ошибка обновления диалога при создании сообщения',
-              });
-            }
+          Dialog.findOneAndUpdate(
+            { _id: postData.dialog },
+            { lastMessage: messageObj._id },
+            { upsert: true },
+          ).then(() => {
+            this.io.emit('SERVER:DIALOG_CHANGED');
           });
           res.json(message);
 

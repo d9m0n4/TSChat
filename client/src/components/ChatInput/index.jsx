@@ -79,7 +79,7 @@ const ChatInput = ({
           />
         </div>
         <Button
-          disabled={!value || !attachments}
+          disabled={!value}
           onClick={onSendMessage}
           type="text"
           className="messages-input__send app-icon">

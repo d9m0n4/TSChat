@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ChatMesaages from '../components/ChatMessages';
 import socket from '../core/socket';
 import messagesActions from '../store/actions/messagesActions';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const Messages = ({
   fetchMessages,
@@ -37,6 +38,10 @@ const Messages = ({
     };
   }, [id, fetchMessages]);
 
+  const dateToNow = (date) => {
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
+
   return (
     <ChatMesaages
       user={user}
@@ -46,6 +51,7 @@ const Messages = ({
       loader={loader}
       dialogs={dialogs}
       currentPartner={currentPartner}
+      dateToNow={dateToNow}
     />
   );
 };

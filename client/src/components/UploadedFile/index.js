@@ -23,7 +23,6 @@ const UploadedFile = ({ attachments }) => {
 
   useEffect(() => {
     setState({ ...state, fileList: attachments });
-    console.log(state.fileList);
   }, [attachments]);
 
   const { previewVisible, previewImage, fileList, previewTitle } = state;
