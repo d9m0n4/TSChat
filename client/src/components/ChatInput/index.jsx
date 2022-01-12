@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
-import MicRecorder from 'mic-recorder-to-mp3';
 import { Button, Input } from 'antd';
 import { UploadField } from '@navjobs/upload';
 import './index.scss';
 import UploadedFile from '../UploadedFile';
-import { useState } from 'react';
 
 const { TextArea } = Input;
 
@@ -21,60 +19,8 @@ const ChatInput = ({
   toggleVisiblePicker,
   visiblePicker,
   record,
+  handleStop,
 }) => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [blobUrl, setBlobUrl] = useState();
-  const [isBlocked, setIsBlocked] = useState(false);
-
-  navigator.getUserMedia =
-    navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia;
-
-  useEffect(() => {
-    navigator.getUserMedia(
-      { audio: true },
-      () => {
-        setIsBlocked(false);
-        console.log('збс все');
-      },
-      () => {
-        setIsBlocked(false);
-        console.log('не збс');
-      },
-    );
-  }, []);
-
-  const mp3Rec = new MicRecorder({ bitRate: 128 });
-
-  const start = () => {
-    if (isBlocked) {
-      return;
-    }
-    mp3Rec
-      .start()
-      .then(() => setIsRecording(true))
-      .catch((e) => console.log(e));
-  };
-
-  const stop = () => {
-    mp3Rec
-      .stop()
-      .getMp3()
-      .then(([buffer, blob]) => {
-        const blobURL = URL.createObjectURL(blob);
-        setBlobUrl(blobURL);
-        setIsRecording(false);
-        const file = new File(buffer, 'me-at-thevoice.mp3', {
-          type: blob.type,
-          lastModified: Date.now(),
-        });
-        console.log(file);
-      })
-      .catch((e) => console.log(e));
-  };
-
   return (
     <div className="messages__input-group">
       <div className="messages-input">
@@ -157,7 +103,7 @@ const ChatInput = ({
             </svg>
           </Button>
         ) : (
-          <Button onClick={start} type="text" className="messages-input__send app-icon">
+          <Button onClick={record} type="text" className="messages-input__send app-icon">
             <svg
               className="icon"
               width="24"
@@ -177,7 +123,7 @@ const ChatInput = ({
           </Button>
         )}
 
-        <Button onClick={stop} type="text" className="messages-input__send app-icon">
+        <Button onClick={handleStop} type="text" className="messages-input__send app-icon">
           stop
         </Button>
 

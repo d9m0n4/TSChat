@@ -10,6 +10,9 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
   const [attachments, setAttachments] = useState([]);
   const [visiblePicker, setVisiblePicker] = useState(false);
 
+  const [isRecording, setIsRecording] = useState(false);
+  const [recorder, setRecorder] = useState(null);
+
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
   };
@@ -54,6 +57,55 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
     setAttachments(uploadedFiles);
   };
 
+  window.navigator.getUserMedia =
+    window.navigator.getUserMedia ||
+    window.navigator.mozGetUserMedia ||
+    window.navigator.msGetUserMedia ||
+    window.navigator.webkitGetUserMedia;
+
+  const Recording = () => {
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia({ audio: true }, onRecording, (err) => {
+        console.log(err);
+      });
+    }
+  };
+
+  const onRecording = (stream) => {
+    const recorder = new MediaRecorder(stream);
+    setRecorder(recorder);
+
+    recorder.start();
+
+    recorder.onstart = () => {
+      setIsRecording(true);
+    };
+
+    recorder.onstop = () => {
+      setIsRecording(false);
+    };
+
+    recorder.ondataavailable = (e) => {
+      const file = new File([e.data], 'audio.webm');
+      console.log(file);
+      Files.upload(file).then(({ data }) => {
+        sendMessage({
+          dialogId: dialogId,
+          text: null,
+          attachments: data.file._id,
+        });
+      });
+    };
+  };
+
+  const handleStop = (e) => {
+    console.log(isRecording);
+
+    if (isRecording) {
+      recorder.stop();
+    }
+  };
+
   return (
     <ChatInput
       attachments={attachments}
@@ -64,6 +116,8 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
       setEmoji={setEmoji}
       toggleVisiblePicker={toggleVisiblePicker}
       visiblePicker={visiblePicker}
+      record={Recording}
+      handleStop={handleStop}
     />
   );
 };
