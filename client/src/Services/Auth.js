@@ -1,4 +1,5 @@
 import API from '../api/axios';
+import socket from '../core/socket';
 
 class Auth {
   Login = async (postData) => {

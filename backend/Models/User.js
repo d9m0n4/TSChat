@@ -23,6 +23,8 @@ const UserSchema = new Schema({
   userAvatar: {
     type: String,
   },
+  isOnline: { type: Boolean, default: false },
+  lastSeen: { type: Date, default: Date.now() },
 });
 
 module.exports = model('User', UserSchema);

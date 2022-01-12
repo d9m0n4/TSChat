@@ -73,13 +73,17 @@ const LeftBar = ({ fetchDialogs, items, currentDialogId, userId, history }) => {
     fetchDialogs();
     socket.on('DIALOG:CREATED', fetchDialogs);
     socket.on('SERVER:DIALOG_CHANGED', fetchDialogs);
+
     console.log('Диалог обновлен');
 
     return () => {
       socket.removeListener('DIALOG:CREATED');
+      socket.removeListener('status');
       socket.removeListener('SERVER:DIALOG_CHANGED');
     };
   }, [fetchDialogs]);
+
+  socket.on('statuss', (d) => console.log(d));
 
   return (
     <Leftbar

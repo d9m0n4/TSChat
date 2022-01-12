@@ -43,7 +43,9 @@ const Rightbar = ({ currentDialogId, partner }) => {
           </div>
           <div className="companion__pers-info">
             <div className="companion__name">{partner && partner.partner.name}</div>
-            <span className="online">в сети</span>
+            <span className="online">
+              {partner && partner.partner.isOnline ? 'в сети' : 'не в сети'}
+            </span>
           </div>
           <div className="companion__social-links">
             <Link to="#">

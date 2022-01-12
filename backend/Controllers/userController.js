@@ -97,7 +97,7 @@ class UserController {
     });
 
     const userData = { tokens, user: userDTO };
-    this.io.emit('334', '343434');
+
     res.status(200).json(userData);
   };
   logout = async (req, res) => {

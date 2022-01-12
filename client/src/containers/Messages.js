@@ -18,7 +18,7 @@ const Messages = ({
   const scrollRef = useRef();
 
   useEffect(() => {
-    scrollRef.current.scrollTo({ top: 1000, behavior: 'smooth' });
+    scrollRef.current.scrollTo({ top: 240, behavior: 'smooth' });
   }, [items]);
 
   const newMessage = (data) => {
