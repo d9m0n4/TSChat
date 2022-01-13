@@ -58,7 +58,11 @@
           }
         }
       }
+      .message__audio-info {
+        display: flex;
+      }
     }
+
     &-date {
       margin-top: 8px;
       font-size: 10px;

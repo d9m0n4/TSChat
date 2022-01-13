@@ -1,4 +1,4 @@
-import { Image } from 'antd';
+import { Button, Image } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { Emoji, getEmojiDataFromNative } from 'emoji-mart';
 import { EyeOutlined } from '@ant-design/icons';
@@ -12,8 +12,21 @@ import pause from '../../assets/img/icons/pause.svg';
 import UserAvatar from '../Avatar';
 import toDate from '../../helpers/ToDate';
 
-const Message = ({ isMe, name, text, date, attachments, audio, dateToNow }) => {
-  console.log(attachments);
+const Message = ({ isMe, name, text, date, attachments, dateToNow }) => {
+  const audioRef = useRef(null);
+
+  const togglePlay = () => {
+    audioRef.current.play();
+  };
+
+  console.log(audioRef.current);
+
+  useEffect(() => {
+    if (audioRef !== null) {
+      console.log(audioRef);
+    }
+  }, []);
+
   return (
     <div className={classNames('message', { 'message--isme': isMe })}>
       <div className="message__avatar">
@@ -39,42 +52,42 @@ const Message = ({ isMe, name, text, date, attachments, audio, dateToNow }) => {
             {attachments.length > 0 && (
               <div className="message__content-bubble__attachments">
                 {attachments &&
-                  attachments.map((item) =>
-                    item.ext !== 'webm' ? (
-                      console.log(item) || (
-                        <Image
-                          className="message__image"
-                          key={item._id}
-                          preview={{
-                            mask: <EyeOutlined />,
-                          }}
-                          src={item.url}
-                        />
-                      )
-                    ) : (
-                      <div className="message__audio">
-                        <audio src={item.src} preload="auto" />
-                        <div className="message__audio-progress" />
-                        <div className="message__audio-info">
-                          <div className="message__audio-btn">
-                            <button>
-                              <img src={pause} alt="Pause svg" />
-
-                              <img src={play} alt="Play svg" />
-                            </button>
-                          </div>
-                          <div className="message__audio-wave">
-                            {/* <img src={waveSvg} alt="Wave svg" /> */}
-                          </div>
-                          <span className="message__audio-duration"></span>
-                        </div>
-                      </div>
-                    ),
-                  )}
+                  attachments.map((item) => (
+                    <Image
+                      className="message__image"
+                      key={item._id}
+                      preview={{
+                        mask: <EyeOutlined />,
+                      }}
+                      src={item.url}
+                    />
+                  ))}
               </div>
             )}
           </div>
         )}
+        {attachments &&
+          attachments.map((item) =>
+            item.ext === 'webm' ? (
+              <div key={item._id} className="message__content-bubble">
+                <audio id="audio" ref={audioRef} src={item.url} preload="auto" />
+                <div className="message__audio-progress" />
+                <div className="message__audio-info">
+                  <div className="message__audio-btn">
+                    <Button type="link" onClick={togglePlay}>
+                      <img src={pause} alt="Pause svg" />
+
+                      <img src={play} alt="Play svg" />
+                    </Button>
+                  </div>
+                  <div className="message__audio-wave">
+                    {/* <img src={waveSvg} alt="Wave svg" /> */}
+                  </div>
+                  <span className="message__audio-duration">{0}</span>
+                </div>
+              </div>
+            ) : null,
+          )}
 
         <div className="message__content-date">{toDate(date)}</div>
       </div>

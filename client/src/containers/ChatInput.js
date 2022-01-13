@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { useReactMediaRecorder } from 'react-media-recorder';
 import ChatInput from '../components/ChatInput';
 import Files from '../Services/Files';
 import messagesActions from '../store/actions/messagesActions';
