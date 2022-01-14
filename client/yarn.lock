@@ -2659,6 +2659,11 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+audio-waveform-svg-path@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/audio-waveform-svg-path/-/audio-waveform-svg-path-1.0.2.tgz#8ae62cdb57f9537e1e186c7cfe1434692de9660c"
+  integrity sha1-iuYs21f5U34eGGx8/hQ0aS3pZgw=
+
 autoprefixer@^9.6.1:
   version "9.8.6"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.8.6.tgz#3b73594ca1bf9266320c5acf1588d74dea74210f"

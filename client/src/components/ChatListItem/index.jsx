@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import toDate from '../../helpers/ToDate';
 
 const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, currentUser }) => {
+  console.log(date && date);
   const lastM = () => {
     return userId === currentUser ? `Вы: ${lastMessage}` : `${lastMessage}`;
   };
@@ -23,7 +24,7 @@ const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, curre
         <div className="chats__item-body">
           <div className="chats__item-top">
             <p className="item-name">{name}</p>
-            <span className="item-date">{toDate(date)}</span>
+            <span className="item-date">{toDate(date && date)}</span>
           </div>
           {type === 'conv' ? (
             <div className="chats__item-bottom conv">

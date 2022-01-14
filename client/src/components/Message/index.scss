@@ -12,6 +12,10 @@
         background-color: rgba(229, 229, 229, 0.85);
         box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
         color: #0d1c2e;
+        .message__audio-progress {
+          border-radius: 16px 16px 0px 16px;
+          background-color: #039be5;
+        }
       }
       &-date {
         align-self: end;
@@ -36,6 +40,9 @@
       border-radius: 16px 16px 16px 0px;
       display: flex;
       flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+
       p {
         margin: 0;
         word-break: break-word;
@@ -60,6 +67,40 @@
       }
       .message__audio-info {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .message__audio-wave {
+          margin: 0 8px;
+        }
+        .message__audio-btn {
+          z-index: 9;
+          button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            svg {
+              #path {
+                stroke: #4568e8;
+              }
+            }
+          }
+        }
+        .message__audio-duration {
+          z-index: 9;
+        }
+        .ant-btn {
+          padding: 0;
+        }
+      }
+      .message__audio-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background-color: #3a456b;
+        border-radius: 16px 16px 16px 0px;
+        opacity: 0.3;
+        transition: all 0.1s ease;
       }
     }
 
@@ -70,3 +111,18 @@
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

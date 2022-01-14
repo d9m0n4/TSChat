@@ -140,9 +140,11 @@ const ChatInput = ({
         </div>
       </div>
 
-      <div className="uploaded__files">
-        <UploadedFile attachments={attachments} />
-      </div>
+      {attachments.length > 0 && (
+        <div className="uploaded__files">
+          <UploadedFile attachments={attachments} />
+        </div>
+      )}
     </div>
   );
 };

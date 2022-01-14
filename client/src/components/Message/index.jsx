@@ -7,25 +7,61 @@ import reactStringReplace from 'react-string-replace';
 import data from 'emoji-mart/data/all.json';
 import './index.scss';
 
-import play from '../../assets/img/icons/play.svg';
-import pause from '../../assets/img/icons/pause.svg';
 import UserAvatar from '../Avatar';
 import toDate from '../../helpers/ToDate';
+import toCurrentTime from '../../helpers/toCurrentTime';
 
 const Message = ({ isMe, name, text, date, attachments, dateToNow }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
   const audioRef = useRef(null);
 
   const togglePlay = () => {
-    audioRef.current.play();
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
   };
 
-  console.log(audioRef.current);
-
   useEffect(() => {
-    if (audioRef !== null) {
-      console.log(audioRef);
+    if (audioRef.current !== null) {
+      audioRef.current.addEventListener(
+        'playing',
+        () => {
+          console.log('playing');
+          setIsPlaying(true);
+        },
+        false,
+      );
+      audioRef.current.addEventListener(
+        'pause',
+        () => {
+          console.log('pause');
+          setIsPlaying(false);
+        },
+        false,
+      );
+      audioRef.current.addEventListener('ended', () => {
+        console.log('end');
+        setIsPlaying(false);
+        setDuration(0);
+        setCurrentTime(0);
+      });
+
+      audioRef.current.addEventListener('timeupdate', (e) => {
+        setCurrentTime(e.target.currentTime);
+        const duration = Math.floor((e.target.currentTime / e.target.duration) * 100);
+        setDuration(duration);
+      });
     }
-  }, []);
+
+    return () => {
+      console.log('clean');
+    };
+  }, [isPlaying]);
 
   return (
     <div className={classNames('message', { 'message--isme': isMe })}>
@@ -67,26 +103,61 @@ const Message = ({ isMe, name, text, date, attachments, dateToNow }) => {
           </div>
         )}
         {attachments &&
-          attachments.map((item) =>
-            item.ext === 'webm' ? (
-              <div key={item._id} className="message__content-bubble">
-                <audio id="audio" ref={audioRef} src={item.url} preload="auto" />
-                <div className="message__audio-progress" />
-                <div className="message__audio-info">
-                  <div className="message__audio-btn">
-                    <Button type="link" onClick={togglePlay}>
-                      <img src={pause} alt="Pause svg" />
-
-                      <img src={play} alt="Play svg" />
-                    </Button>
+          !text &&
+          attachments.map(
+            (item) =>
+              item.ext === 'webm' && (
+                <div key={item._id} className="message__content-bubble">
+                  <audio id="audio" ref={audioRef} src={item.url} preload="auto" />
+                  <div className="message__audio-progress" style={{ width: `${duration}%` }} />
+                  <div className="message__audio-info">
+                    <div className="message__audio-btn">
+                      <Button type="link" onClick={togglePlay}>
+                        {isPlaying ? (
+                          <svg
+                            width="30"
+                            height="30"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M10 9V15M14 9V15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                              stroke="#3A456B"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            width="30"
+                            height="30"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M14.7519 11.1679L11.5547 9.03647C10.8901 8.59343 10 9.06982 10 9.86852V14.1315C10 14.9302 10.8901 15.4066 11.5547 14.9635L14.7519 12.8321C15.3457 12.4362 15.3457 11.5638 14.7519 11.1679Z"
+                              stroke="#3A456B"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                              stroke="#3A456B"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        )}
+                      </Button>
+                    </div>
+                    <div className="message__audio-wave"></div>
+                    <span className="message__audio-duration">{toCurrentTime(currentTime)}</span>
                   </div>
-                  <div className="message__audio-wave">
-                    {/* <img src={waveSvg} alt="Wave svg" /> */}
-                  </div>
-                  <span className="message__audio-duration">{0}</span>
                 </div>
-              </div>
-            ) : null,
+              ),
           )}
 
         <div className="message__content-date">{toDate(date)}</div>

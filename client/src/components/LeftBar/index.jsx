@@ -73,13 +73,15 @@ const Leftbar = ({
                   <ChatListItem
                     key={dialog.dialogId}
                     id={dialog.dialogId}
-                    userId={dialog.lastMessage.user}
+                    userId={dialog.lastMessage && dialog.lastMessage.user}
                     name={dialog.partner.name}
-                    date={dialog.lastMessage.createdAt}
+                    date={dialog.partner.lastSeen}
                     lastMessage={
-                      dialog.lastMessage.text
+                      dialog.lastMessage
                         ? dialog.lastMessage.text
-                        : dialog.lastMessage.attachments.filename
+                          ? dialog.lastMessage.text
+                          : dialog.lastMessage.attachments.filename
+                        : ''
                     }
                   />
                 ))}

@@ -98,8 +98,6 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
   };
 
   const handleStop = (e) => {
-    console.log(isRecording);
-
     if (isRecording) {
       recorder.stop();
     }
