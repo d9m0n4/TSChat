@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import toDate from '../../helpers/ToDate';
 
 const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, currentUser }) => {
-  console.log(date && date);
   const lastM = () => {
     return userId === currentUser ? `Вы: ${lastMessage}` : `${lastMessage}`;
   };

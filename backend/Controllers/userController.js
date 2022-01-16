@@ -156,13 +156,12 @@ class UserController {
   }
 
   async getUsers(req, res) {
-    const userId = req.query.id;
-    const user = await User.findById(userId);
-    if (!user) {
-      res.status(404).json('ПОльзователь не найден');
+    const userId = req.user.id;
+    console.log(userId);
+    if (!userId) {
+      res.status(404).json('user not found');
     }
-    const userDTO = new UserDto(user);
-    res.status(200).json(userDTO);
+    res.status(200).json(userId);
   }
 
   async findUser(req, res) {

@@ -11,10 +11,30 @@
         border-radius: 16px 16px 0px 16px;
         background-color: rgba(229, 229, 229, 0.85);
         box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
-        color: #0d1c2e;
+        color: #3a456b;
         .message__audio-progress {
           border-radius: 16px 16px 0px 16px;
           background-color: #039be5;
+        }
+        .message__audio-btn {
+          z-index: 9;
+          button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            svg {
+              .path {
+                stroke: #3a456b;
+              }
+            }
+          }
+        }
+        .message__audio-wave {
+          .svg {
+            .path {
+              fill: #3a456b;
+            }
+          }
         }
       }
       &-date {
@@ -70,6 +90,7 @@
         justify-content: space-between;
         align-items: center;
         .message__audio-wave {
+          display: flex;
           margin: 0 8px;
         }
         .message__audio-btn {
@@ -78,11 +99,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            svg {
-              #path {
-                stroke: #4568e8;
-              }
-            }
+          }
+          .path {
+            stroke: #ffffff;
           }
         }
         .message__audio-duration {
@@ -111,18 +130,3 @@
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    

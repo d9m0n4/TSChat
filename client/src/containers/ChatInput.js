@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import ChatInput from '../components/ChatInput';
@@ -11,19 +12,29 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
 
   const [isRecording, setIsRecording] = useState(false);
   const [recorder, setRecorder] = useState(null);
+  const [sending, setSending] = useState(false);
+
+  const [uploading, setUploading] = useState(false);
+  const [fileList, setFileList] = useState([]);
 
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
   };
 
-  const onSendMessage = () => {
-    sendMessage({
-      dialogId: dialogId,
-      text: messageValue,
-      attachments: attachments.map((file) => file.uid),
-    });
+  const onSendMessage = async () => {
+    if (fileList) {
+      await handleUpload();
+    }
 
+    console.log(attachments);
+
+    // sendMessage({
+    //   dialogId: dialogId,
+    //   text: messageValue || null,
+    //   attachments: attachments.map((file) => file._id),
+    // });
     setMessageValue('');
+    setFileList([]);
     setAttachments([]);
   };
 
@@ -36,29 +47,37 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
     setVisiblePicker(!visiblePicker);
   };
 
-  const setFiles = async (files) => {
+  const handleUpload = async () => {
     let uploadedFiles = [];
-    for (let index = 0; index < files.length; index++) {
-      const element = files[index];
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
       await Files.upload(element)
         .then(({ data }) => {
-          console.log(data);
-          uploadedFiles.push({
-            status: 'done',
-            uid: data.file._id,
-            name: data.file.filename,
-            url: data.file.url,
-            public_id: data.file.pid,
-          });
+          uploadedFiles.push(data.file);
         })
         .catch((err) => console.log(err));
     }
-    setAttachments(uploadedFiles);
+
+    setAttachments([...attachments, ...uploadedFiles]);
+  };
+
+  const uploaderProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+      setAttachments([]);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+    },
+    fileList,
   };
 
   window.navigator.getUserMedia =
     window.navigator.getUserMedia ||
-    window.navigator.mozGetUserMedia ||
+    window.navigator.mediaDevices.getUserMedia ||
     window.navigator.msGetUserMedia ||
     window.navigator.webkitGetUserMedia;
 
@@ -76,24 +95,28 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
 
     recorder.start();
 
-    recorder.onstart = () => {
+    recorder.onstart = (e) => {
+      console.log(e);
       setIsRecording(true);
     };
 
     recorder.onstop = () => {
+      setSending(true);
       setIsRecording(false);
     };
 
-    recorder.ondataavailable = (e) => {
-      const file = new File([e.data], 'audio.webm');
-      console.log(file);
-      Files.upload(file).then(({ data }) => {
-        sendMessage({
+    recorder.ondataavailable = async (e) => {
+      if (sending) {
+        const file = new File([e.data], 'audio.webm');
+
+        const { data } = await Files.upload(file);
+        return sendMessage({
           dialogId: dialogId,
           text: null,
           attachments: data.file._id,
         });
-      });
+      }
+      console.log('not sent');
     };
   };
 
@@ -103,10 +126,24 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
     }
   };
 
+  // if (attachments) {
+  //   console.log(attachments);
+  // }
+
+  // useEffect(() => {
+  //   if (attachments) {
+  //     console.log('attachments', attachments);
+  //     // sendMessage({
+  //     //     dialogId: dialogId,
+  //     //     text: messageValue || null,
+  //     //     attachments: attachments.map((file) => file._id),
+  //     //   });
+  //   }
+  // }, [attachments]);
+
   return (
     <ChatInput
       attachments={attachments}
-      setFiles={setFiles}
       value={messageValue}
       onSendMessage={onSendMessage}
       onChange={onChangeValue}
@@ -115,6 +152,9 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
       visiblePicker={visiblePicker}
       record={Recording}
       handleStop={handleStop}
+      isRecording={isRecording}
+      setSending={setSending}
+      uploaderProps={uploaderProps}
     />
   );
 };

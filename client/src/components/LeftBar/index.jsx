@@ -75,12 +75,12 @@ const Leftbar = ({
                     id={dialog.dialogId}
                     userId={dialog.lastMessage && dialog.lastMessage.user}
                     name={dialog.partner.name}
-                    date={dialog.partner.lastSeen}
+                    date={dialog.lastMessage.createdAt}
                     lastMessage={
                       dialog.lastMessage
                         ? dialog.lastMessage.text
                           ? dialog.lastMessage.text
-                          : dialog.lastMessage.attachments.filename
+                          : 'Прикрепленный файл'
                         : ''
                     }
                   />
