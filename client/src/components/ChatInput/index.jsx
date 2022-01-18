@@ -82,7 +82,7 @@ const ChatInput = ({
           </div>
           {value || uploaderProps.fileList ? (
             <Button
-              disabled={!value || !uploaderProps.fileList.length}
+              disabled={!value}
               onClick={onSendMessage}
               type="text"
               className="messages-input__send app-icon">
@@ -142,10 +142,6 @@ const ChatInput = ({
           <Button onClick={handleStop}>send</Button>
         </>
       )}
-
-      {/* <div className="uploaded__files">
-        <UploadedFile showPreview={false} attachments={attachments} />
-      </div> */}
     </div>
   );
 };

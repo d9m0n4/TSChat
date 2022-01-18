@@ -11,39 +11,12 @@ class UploadFilesController {
 
   create = (req, res) => {
     const user = req.user.id;
-    const file = req.file;
+    const files = req.files;
 
-    cloudinary.uploader
-      .upload_stream({ resource_type: 'auto' }, (error, result) => {
-        if (error || !result) {
-          return res.status(500).json({
-            status: 'error',
-            message: error || 'upload error',
-          });
-        }
-
-        const fileData = {
-          filename: result.original_filename,
-          size: result.bytes,
-          ext: result.format,
-          url: result.url,
-          pid: result.public_id,
-          user: user,
-        };
-
-        const uploadedFile = new UploadedFile(fileData);
-
-        uploadedFile
-          .save()
-          .then((file) => {
-            res.json({ status: 200, file: file });
-          })
-          .catch((err) => ({
-            message: 'error',
-            error: err,
-          }));
-      })
-      .end(file.buffer);
+    let cp = files.map((file) => {
+      cloudinary.uploader.upload_stream();
+    });
+    console.log(cp);
   };
 
   delete = (req, res) => {

@@ -21,23 +21,6 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
     setMessageValue(e.target.value);
   };
 
-  const onSendMessage = async () => {
-    if (fileList) {
-      await handleUpload();
-    }
-
-    console.log(attachments);
-
-    // sendMessage({
-    //   dialogId: dialogId,
-    //   text: messageValue || null,
-    //   attachments: attachments.map((file) => file._id),
-    // });
-    setMessageValue('');
-    setFileList([]);
-    setAttachments([]);
-  };
-
   const setEmoji = (data) => {
     console.log(data);
     setMessageValue(messageValue + ' ' + data.native);
@@ -48,17 +31,42 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
   };
 
   const handleUpload = async () => {
-    let uploadedFiles = [];
-    for (let index = 0; index < fileList.length; index++) {
-      const element = fileList[index];
-      await Files.upload(element)
-        .then(({ data }) => {
-          uploadedFiles.push(data.file);
-        })
-        .catch((err) => console.log(err));
+    if (fileList.length) {
+      Files.upload(fileList);
+      // const files = [];
+      // for (let index = 0; index < fileList.length; index++) {
+      //   const element = fileList[index];
+      //   const data = await Files.upload(element)
+      //     .then(({ data }) => {
+      //       return files.push(data.file);
+      //     })
+      //     .catch((err) => console.log(err));
+
+      //   return [data];
+      // }
+    }
+  };
+
+  const onSendMessage = async () => {
+    if (fileList.length) {
+      return await handleUpload().then((d) => {
+        console.log(d);
+        // sendMessage({
+        //   dialogId: dialogId,
+        //   text: messageValue || null,
+        //   attachments: d.map((item) => item._id),
+        // });
+      });
     }
 
-    setAttachments([...attachments, ...uploadedFiles]);
+    sendMessage({
+      dialogId: dialogId,
+      text: messageValue || null,
+      attachments: [],
+    });
+    setMessageValue('');
+    setFileList([]);
+    setAttachments([]);
   };
 
   const uploaderProps = {
@@ -125,21 +133,6 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage }) => {
       recorder.stop();
     }
   };
-
-  // if (attachments) {
-  //   console.log(attachments);
-  // }
-
-  // useEffect(() => {
-  //   if (attachments) {
-  //     console.log('attachments', attachments);
-  //     // sendMessage({
-  //     //     dialogId: dialogId,
-  //     //     text: messageValue || null,
-  //     //     attachments: attachments.map((file) => file._id),
-  //     //   });
-  //   }
-  // }, [attachments]);
 
   return (
     <ChatInput

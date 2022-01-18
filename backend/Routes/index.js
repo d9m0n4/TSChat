@@ -5,7 +5,7 @@ const UploadController = require('../Controllers/uploadController');
 const Router = require('express').Router;
 const router = new Router();
 
-const multer = require('../core/multer');
+const uploader = require('../core/multer');
 
 const CheckToken = require('../Middlewares/CheckToken');
 
@@ -37,7 +37,7 @@ const Routes = (io) => {
   router.get('/messages', CheckToken, MessageCtrl.getMessages);
   router.post('/messages', CheckToken, MessageCtrl.createMessage);
 
-  router.post('/files', CheckToken, multer.single('file'), UploadCtrl.create);
+  router.post('/files', CheckToken, uploader.any('files'), UploadCtrl.create);
   router.delete('/files', CheckToken, UploadCtrl.delete);
 
   return router;
