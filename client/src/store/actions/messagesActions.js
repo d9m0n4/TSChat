@@ -10,6 +10,14 @@ const messagesActions = {
     payload,
   }),
 
+  addAttachments: (attachments) => (dispatch) => {
+    console.log(attachments);
+    dispatch({
+      type: 'MESSAGES:ADD_ATTACHMENTS',
+      payload: attachments,
+    });
+  },
+
   addMessage: (message) => (dispatch, getState) => {
     const { dialogs } = getState();
     const { currentDialogId } = dialogs;

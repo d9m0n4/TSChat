@@ -1,5 +1,6 @@
 const initialState = {
   items: [],
+  attachments: [],
   loader: false,
 };
 
@@ -20,6 +21,11 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         items: [...state.items, payload],
+      };
+    case 'MESSAGES:ADD_ATTACHMENTS':
+      return {
+        ...state,
+        attachments: payload,
       };
 
     default:

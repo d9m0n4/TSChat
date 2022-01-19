@@ -1,13 +1,11 @@
 import API from '../api/axios';
 
 class Files {
-  upload = (files) => {
+  upload = (file) => {
     const formData = new FormData();
-    for (let index = 0; index < files.length; index++) {
-      const element = files[index];
-      formData.append('file', element);
-    }
-    console.log(formData);
+
+    formData.append('file', file);
+
     return API.post('/files', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
