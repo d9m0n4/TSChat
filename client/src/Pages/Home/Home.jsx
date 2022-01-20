@@ -8,11 +8,12 @@ import Loader from '../../components/Loader';
 import { withRouter } from 'react-router';
 import dialogActions from '../../store/actions/dialogActions';
 
-const Home = ({ setCurrentDialogId, isLoading, location }) => {
+const Home = ({ setCurrentDialogId, setPartner, isLoading, location }) => {
   useEffect(() => {
     const path = location.pathname;
     const dialogId = path.split('/').pop();
     setCurrentDialogId(dialogId);
+    setPartner(dialogId);
   }, [location.pathname, setCurrentDialogId]);
 
   return (

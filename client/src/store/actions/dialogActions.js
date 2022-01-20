@@ -6,6 +6,11 @@ const dialogActions = {
     type: 'DIALOGS:SET_DIALOGS',
     payload,
   }),
+  setPartner: (payload) => ({
+    type: 'DIALOG:SET_CURRENT_PARTNER',
+    payload,
+  }),
+
   setCurrentDialogId: (id) => (dispatch) => {
     dispatch({
       type: 'DIALOG:SET_CURRENT_DIALOG_ID',

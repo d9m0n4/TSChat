@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import dialogActions from '../store/actions/dialogActions';
 import Rightbar from '../components/RightBar';
 
-const RightBarContianer = ({ items, currentDialogId, currentPartner }) => {
-  return <Rightbar currentDialogId={currentDialogId} partner={currentPartner} />;
+const RightBarContianer = ({ currentDialogId, partner }) => {
+  return <Rightbar currentDialogId={currentDialogId} partner={partner} />;
 };
 
 export default connect(
   ({ dialogs }) => ({
-    currentPartner: dialogs.dialogs.find((dialog) => dialog.dialogId === dialogs.currentDialogId),
-    items: dialogs.dialogs,
+    partner: dialogs.currentPartner,
     currentDialogId: dialogs.currentDialogId,
   }),
   { ...dialogActions },

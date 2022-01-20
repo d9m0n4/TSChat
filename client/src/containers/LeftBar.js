@@ -8,13 +8,13 @@ import dialogActions from '../store/actions/dialogActions';
 import socket from '../core/socket';
 import { withRouter } from 'react-router';
 
-const LeftBar = ({ fetchDialogs, items, currentDialogId, userId, history }) => {
+const LeftBar = ({ fetchDialogs, items, userId, history }) => {
   const [visible, setVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState();
   const [users, setUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
-  const [filtred, setFiltredDialogs] = useState(Array.from(items));
+  const [filtred, setFiltredDialogs] = useState(items && Array.from(items));
 
   const onChangeInput = (e) => {
     const value = e.target.value;

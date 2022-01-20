@@ -1,8 +1,8 @@
 import API from '../api/axios';
 
 class Files {
-  upload = (file) => {
-    const formData = new FormData();
+  upload = async (file) => {
+    let formData = new FormData();
 
     formData.append('file', file);
 

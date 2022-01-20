@@ -8,17 +8,19 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 const Messages = ({
   fetchMessages,
   currentDialogId,
+  currentPartner,
   items,
   user,
   dialogs,
   loader,
   addMessage,
-  currentPartner,
 }) => {
   const scrollRef = useRef();
 
   useEffect(() => {
-    scrollRef.current.scrollTo({ top: 240, behavior: 'smooth' });
+    if (!items.length) {
+      console.log(123123);
+    }
   }, [items]);
 
   const newMessage = (data) => {
@@ -47,7 +49,7 @@ const Messages = ({
       currentDialogId={currentDialogId}
       loader={loader}
       dialogs={dialogs}
-      currentPartner={currentPartner}
+      currentPartner={currentPartner && currentPartner}
       dateToNow={dateToNow}
     />
   );
@@ -55,9 +57,9 @@ const Messages = ({
 
 export default connect(
   ({ dialogs, messages, auth }) => ({
-    currentPartner: dialogs.dialogs.find((dialog) => dialog.dialogId === dialogs.currentDialogId),
     dialogs: dialogs.dialogs,
     currentDialogId: dialogs.currentDialogId,
+    currentPartner: dialogs.currentPartner,
     items: messages.items,
     loader: messages.loader,
     user: auth.user.id,

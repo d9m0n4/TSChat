@@ -11,7 +11,7 @@ import UserAvatar from '../Avatar';
 import toDate from '../../helpers/ToDate';
 import toCurrentTime from '../../helpers/toCurrentTime';
 
-const Message = ({ isMe, name, text, date, attachments, dateToNow }) => {
+const Message = ({ isMe, name, text, date, attachments }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);

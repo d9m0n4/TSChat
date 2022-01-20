@@ -1,6 +1,7 @@
 const initialState = {
   dialogs: [],
   currentDialogId: window.location.pathname.split('dialog/')[1],
+  currentPartner: null,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -16,6 +17,12 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         currentDialogId: payload,
+      };
+
+    case 'DIALOG:SET_CURRENT_PARTNER':
+      return {
+        ...state,
+        currentPartner: state.dialogs.filter((dialog) => dialog.dialogId === payload)[0],
       };
 
     default:

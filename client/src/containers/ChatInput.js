@@ -15,7 +15,7 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) =
   const [sending, setSending] = useState(false);
 
   const [uploading, setUploading] = useState(false);
-  const [fileList, setFileList] = useState([]);
+  const [files, setFiles] = useState([]);
 
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
@@ -31,8 +31,9 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) =
   };
 
   const onSendMessage = async () => {
-    if (fileList.length) {
-      console.log(fileList);
+    if (attachments.length) {
+      console.log(attachments);
+
       // .then((d) => {
       //   console.log(d);
       //   // sendMessage({
@@ -55,16 +56,26 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) =
 
   const uploaderProps = {
     onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
+      const index = files.indexOf(file);
+      const newFileList = files.slice();
       newFileList.splice(index, 1);
-      setFileList(newFileList);
+      setFiles(newFileList);
       setAttachments([]);
     },
-    beforeUpload: (file) => {
-      Files.upload(file).then((f) => setFileList([...fileList, f.data.file]));
+    beforeUpload: () => {
+      return false;
     },
-    fileList,
+    onChange: ({ fileList }) => {
+      setFiles(fileList);
+      let q = [];
+      // files.forEach(async (file) => {
+      //   await Files.upload(file.originFileObj).then((f) => {
+      //     q.push(f.data.file);
+      //   });
+      //   setAttachments(q);
+      // });
+    },
+    files,
   };
 
   window.navigator.getUserMedia =

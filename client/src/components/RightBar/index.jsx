@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import UserAvatar from '../Avatar';
 
 const Rightbar = ({ currentDialogId, partner }) => {
-  if (!currentDialogId && !partner) {
+  if (!currentDialogId || !partner) {
     return null;
   }
   return (
