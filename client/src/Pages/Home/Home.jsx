@@ -14,7 +14,7 @@ const Home = ({ setCurrentDialogId, setPartner, isLoading, location }) => {
     const dialogId = path.split('/').pop();
     setCurrentDialogId(dialogId);
     setPartner(dialogId);
-  }, [location.pathname, setCurrentDialogId]);
+  }, [location.pathname, setCurrentDialogId, setPartner]);
 
   return (
     <>
