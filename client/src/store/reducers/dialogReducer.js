@@ -22,7 +22,7 @@ export default (state = initialState, { type, payload }) => {
     case 'DIALOG:SET_CURRENT_PARTNER':
       return {
         ...state,
-        currentPartner: state.dialogs.filter((dialog) => dialog.dialogId === payload)[0],
+        currentPartner: payload,
       };
 
     default:

@@ -5,9 +5,8 @@ import ChatInput from '../components/ChatInput';
 import Files from '../Services/Files';
 import messagesActions from '../store/actions/messagesActions';
 
-const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) => {
+const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const [messageValue, setMessageValue] = useState('');
-  const [attachments, setAttachments] = useState([]);
   const [visiblePicker, setVisiblePicker] = useState(false);
 
   const [isRecording, setIsRecording] = useState(false);
@@ -15,7 +14,7 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) =
   const [sending, setSending] = useState(false);
 
   const [uploading, setUploading] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [fileList, setFileList] = useState([]);
 
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
@@ -31,64 +30,56 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) =
   };
 
   const onSendMessage = async () => {
-    if (attachments.length) {
-      console.log(attachments);
-
-      // .then((d) => {
-      //   console.log(d);
-      //   // sendMessage({
-      //   //   dialogId: dialogId,
-      //   //   text: messageValue || null,
-      //   //   attachments: d.map((item) => item._id),
-      //   // });
-      // });
+    if (fileList.length) {
+      setUploading(true);
+      let result = [];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i].originFileObj;
+        const f = await Files.upload(file);
+        result.push(f.data.file);
+      }
+      setMessageValue('');
+      setFileList([]);
+      setUploading(false);
+      sendMessage({
+        dialogId: dialogId,
+        text: messageValue || null,
+        attachments: result.map((item) => item._id),
+      });
     }
-
-    // sendMessage({
-    //   dialogId: dialogId,
-    //   text: messageValue || null,
-    //   attachments: [],
-    // });
-    // setMessageValue('');
-    // setFileList([]);
-    // setAttachments([]);
   };
 
   const uploaderProps = {
     onRemove: (file) => {
-      const index = files.indexOf(file);
-      const newFileList = files.slice();
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
       newFileList.splice(index, 1);
-      setFiles(newFileList);
-      setAttachments([]);
+      setFileList(newFileList);
     },
     beforeUpload: () => {
       return false;
     },
+
     onChange: ({ fileList }) => {
-      setFiles(fileList);
-      let q = [];
-      // files.forEach(async (file) => {
-      //   await Files.upload(file.originFileObj).then((f) => {
-      //     q.push(f.data.file);
-      //   });
-      //   setAttachments(q);
-      // });
+      setFileList(fileList);
+      console.log(fileList);
     },
-    files,
+    fileList,
   };
 
   window.navigator.getUserMedia =
     window.navigator.getUserMedia ||
     window.navigator.mediaDevices.getUserMedia ||
     window.navigator.msGetUserMedia ||
+    window.navigator.mozGetUserMedia ||
     window.navigator.webkitGetUserMedia;
 
   const Recording = () => {
     if (navigator.getUserMedia) {
-      navigator.getUserMedia({ audio: true }, onRecording, (err) => {
-        console.log(err);
-      });
+      console.log(navigator.getUserMedia());
+      // navigator.getUserMedia({ audio: true }, onRecording, (err) => {
+      //   console.log(err);
+      // });
     }
   };
 
@@ -129,9 +120,12 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) =
     }
   };
 
+  useEffect(() => {
+    console.log(uploading);
+  }, [uploading]);
+
   return (
     <ChatInput
-      attachments={attachments}
       value={messageValue}
       onSendMessage={onSendMessage}
       onChange={onChangeValue}
@@ -143,6 +137,7 @@ const ChatInputContainer = ({ userId, dialogId, sendMessage, addAttachments }) =
       isRecording={isRecording}
       setSending={setSending}
       uploaderProps={uploaderProps}
+      uploading={uploading}
     />
   );
 };

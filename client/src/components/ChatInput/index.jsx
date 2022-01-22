@@ -12,15 +12,13 @@ const ChatInput = ({
   onChange,
   value,
   setEmoji,
-  setFiles,
-  attachments,
   toggleVisiblePicker,
   visiblePicker,
   record,
   handleStop,
   isRecording,
-  setSending,
   uploaderProps,
+  uploading,
 }) => {
   return (
     <div className="messages__input-group">
@@ -80,7 +78,7 @@ const ChatInput = ({
               value={value}
             />
           </div>
-          {value || uploaderProps.fileList ? (
+          {value || uploaderProps.fileList.length ? (
             <Button
               disabled={!value}
               onClick={onSendMessage}

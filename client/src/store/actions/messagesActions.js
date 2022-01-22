@@ -10,14 +10,6 @@ const messagesActions = {
     payload,
   }),
 
-  addAttachments: (attachments) => (dispatch) => {
-    console.log(attachments);
-    dispatch({
-      type: 'MESSAGES:ADD_ATTACHMENTS',
-      payload: attachments,
-    });
-  },
-
   addMessage: (message) => (dispatch, getState) => {
     const { dialogs } = getState();
     const { currentDialogId } = dialogs;
@@ -42,7 +34,11 @@ const messagesActions = {
     }
   },
   sendMessage: (postData) => (dispatch) => {
-    return Messages.createMessge(postData);
+    try {
+      return Messages.createMessge(postData);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 
