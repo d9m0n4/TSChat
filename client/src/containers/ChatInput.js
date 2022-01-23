@@ -30,23 +30,21 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   };
 
   const onSendMessage = async () => {
-    if (fileList.length) {
-      setUploading(true);
-      let result = [];
-      for (let i = 0; i < fileList.length; i++) {
-        const file = fileList[i].originFileObj;
-        const f = await Files.upload(file);
-        result.push(f.data.file);
-      }
-      setMessageValue('');
-      setFileList([]);
-      setUploading(false);
-      sendMessage({
-        dialogId: dialogId,
-        text: messageValue || null,
-        attachments: result.map((item) => item._id),
-      });
+    setUploading(true);
+    let result = [];
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i].originFileObj;
+      const f = await Files.upload(file);
+      result.push(f.data.file);
     }
+    setMessageValue('');
+    setFileList([]);
+    setUploading(false);
+    sendMessage({
+      dialogId: dialogId,
+      text: messageValue || null,
+      attachments: result.map((item) => item._id),
+    });
   };
 
   const uploaderProps = {
@@ -75,11 +73,14 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     window.navigator.webkitGetUserMedia;
 
   const Recording = () => {
+    console.log(navigator);
     if (navigator.getUserMedia) {
-      console.log(navigator.getUserMedia());
-      // navigator.getUserMedia({ audio: true }, onRecording, (err) => {
-      //   console.log(err);
-      // });
+      navigator.mediaDevices.getUserMedia({ audio: true }, onRecording, (err) => {
+        console.log('err', err);
+        return;
+      });
+    } else {
+      console.log('userMedia not');
     }
   };
 
