@@ -74,9 +74,14 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
   const Recording = () => {
     if (navigator.getUserMedia) {
-      navigator.getUserMedia({ audio: true }, onRecording, (err) => {
-        console.log('err', err);
-      });
+      navigator.mediaDevices
+        .getUserMedia({ audio: true, video: false })
+        .then((d) => {
+          onRecording(d);
+        })
+        .catch((e) => {
+          console.dir(e);
+        });
     } else {
       console.log('userMedia not');
     }
@@ -86,43 +91,40 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     const recorder = new MediaRecorder(stream);
     setRecorder(recorder);
 
+    console.log(recorder);
+
     recorder.start();
 
-    recorder.onstart = (e) => {
-      console.log(e);
+    recorder.onstart = () => {
       setIsRecording(true);
     };
 
-    recorder.onstop = () => {
-      setSending(true);
-      setIsRecording(false);
+    recorder.onstop = (e) => {
+      console.log('e', e);
+
+      return setIsRecording(false);
     };
 
     recorder.ondataavailable = async (e) => {
-      console.log(e.data);
-      // if (sending) {
-      //   const file = new File([e.data], 'audio');
-      //   console.log(file);
-      //   const { data } = await Files.upload(file);
-      //   return sendMessage({
-      //     dialogId: dialogId,
-      //     text: null,
-      //     attachments: data.file._id,
-      //   });
-      // }
-      console.log('not sent');
+      const file = new File([e.data], 'audio');
+      // const { data } = await Files.upload(file);
+      // sendMessage({
+      //   dialogId: dialogId,
+      //   text: null,
+      //   attachments: data.file._id,
+      // });
     };
   };
 
-  const handleStop = (e) => {
+  const handleStop = () => {
     if (isRecording) {
       recorder.stop();
     }
   };
 
   useEffect(() => {
-    console.log(uploading);
-  }, [uploading]);
+    console.log(recorder);
+  }, [recorder]);
 
   return (
     <ChatInput
