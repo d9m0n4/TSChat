@@ -22,7 +22,7 @@ const Sidebar = ({ user }) => {
       <nav className="sidebar__navigation">
         <ul className="nav-group">
           <li className="nav-group__item">
-            <NavLink activeClassName="active" to="/">
+            <NavLink activeClassName="active" to="/dialogs">
               <svg
                 width="32"
                 height="32"

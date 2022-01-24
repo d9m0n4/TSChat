@@ -73,11 +73,9 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     window.navigator.webkitGetUserMedia;
 
   const Recording = () => {
-    console.log(navigator);
     if (navigator.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ audio: true }, onRecording, (err) => {
+      navigator.getUserMedia({ audio: true }, onRecording, (err) => {
         console.log('err', err);
-        return;
       });
     } else {
       console.log('userMedia not');
@@ -101,16 +99,17 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     };
 
     recorder.ondataavailable = async (e) => {
-      if (sending) {
-        const file = new File([e.data], 'audio.webm');
-
-        const { data } = await Files.upload(file);
-        return sendMessage({
-          dialogId: dialogId,
-          text: null,
-          attachments: data.file._id,
-        });
-      }
+      console.log(e.data);
+      // if (sending) {
+      //   const file = new File([e.data], 'audio');
+      //   console.log(file);
+      //   const { data } = await Files.upload(file);
+      //   return sendMessage({
+      //     dialogId: dialogId,
+      //     text: null,
+      //     attachments: data.file._id,
+      //   });
+      // }
       console.log('not sent');
     };
   };

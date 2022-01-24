@@ -11,17 +11,16 @@ const dialogActions = {
     payload,
   }),
 
-  setCurrentDialogId: (id) => (dispatch, getState) => {
-    const { dialogs } = getState();
-    let partner = dialogs.dialogs.filter((dialog) => dialog.dialogId === id)[0];
-    console.log(partner);
+  setCurrentDialogId: (id) => (dispatch) => {
     dispatch({
       type: 'DIALOG:SET_CURRENT_DIALOG_ID',
       payload: id,
     });
-
-    dispatch(dialogActions.setPartner(partner));
     socket.emit('DIALOGS:SET_DIALOG_ID', id);
+  },
+
+  setCurrentPartner: (partner) => (dispatch) => {
+    dispatch(dialogActions.setPartner(partner));
   },
 
   fetchDialogs: () => async (dispatch) => {

@@ -13,7 +13,7 @@ const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, curre
   };
 
   return (
-    <NavLink activeClassName="active" to={`/dialog/${id}`}>
+    <NavLink activeClassName="active" exact to={`/dialogs/${id}`}>
       <div className="chats__item">
         <div className="chats__item-avatar">
           {online && <sup className="status-dot"></sup>}

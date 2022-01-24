@@ -26,12 +26,19 @@ const Message = ({ isMe, name, text, date, attachments }) => {
     }
   };
 
-  const handleSetDuration = (e) => {
-    setCurrentTime(e.target.duration);
-  };
+  // const handleSetDuration = (e) => {
+  //   console.log(e.target.duration, e.target.currentTime);
+  //   // setCurrentTime(e.target.duration);
+  // };
 
   useEffect(() => {
     if (audioRef.current !== null) {
+      audioRef.current.addEventListener('canplay', (e) => {
+        console.log(e.target.duration);
+        if (e.target.duration === Infinity) {
+          console.log(e.target.duration, e.target);
+        }
+      });
       audioRef.current.addEventListener(
         'playing',
         () => {
@@ -48,16 +55,17 @@ const Message = ({ isMe, name, text, date, attachments }) => {
         },
         false,
       );
-      audioRef.current.addEventListener('ended', () => {
+      audioRef.current.addEventListener('ended', (e) => {
         console.log('end');
         setIsPlaying(false);
         setDuration(0);
-        setCurrentTime(0);
+        setCurrentTime(e.target.currentTime);
       });
 
       audioRef.current.addEventListener('timeupdate', (e) => {
         const duration = Math.floor((e.target.currentTime / e.target.duration) * 100);
         setDuration(duration);
+        setCurrentTime(e.target.currentTime);
       });
     }
   }, []);
@@ -107,13 +115,7 @@ const Message = ({ isMe, name, text, date, attachments }) => {
             (item) =>
               (item.ext === 'webm' || item.ext === 'ogg') && (
                 <div key={item._id} className="message__content-bubble">
-                  <audio
-                    id="audio"
-                    ref={audioRef}
-                    src={item.url}
-                    preload="auto"
-                    onLoadedMetadata={handleSetDuration}
-                  />
+                  <audio id="audio" ref={audioRef} src={item.url} preload="metadata" />
                   <div className="message__audio-progress" style={{ width: `${duration}%` }} />
                   <div className="message__audio-info">
                     <div className="message__audio-btn">

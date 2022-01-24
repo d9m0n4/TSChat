@@ -8,12 +8,16 @@ import Loader from '../../components/Loader';
 import { withRouter } from 'react-router';
 import dialogActions from '../../store/actions/dialogActions';
 
-const Home = ({ setCurrentDialogId, setPartner, isLoading, location }) => {
+const Home = ({ setCurrentDialogId, isLoading, location, setCurrentPartner, dialogsItems }) => {
   useEffect(() => {
     const path = location.pathname;
     const dialogId = path.split('/').pop();
     setCurrentDialogId(dialogId);
-  }, [location.pathname, setCurrentDialogId, setPartner]);
+    if (dialogsItems) {
+      let partner = dialogsItems.filter((dialog) => dialog.dialogId === dialogId)[0];
+      setCurrentPartner(partner);
+    }
+  }, [location.pathname, setCurrentDialogId, dialogsItems, setCurrentPartner]);
 
   return (
     <>
@@ -30,5 +34,11 @@ const Home = ({ setCurrentDialogId, setPartner, isLoading, location }) => {
 };
 
 export default withRouter(
-  connect(({ auth }) => ({ isLoading: auth.isLoading }), dialogActions)(Home),
+  connect(
+    ({ auth, dialogs }) => ({
+      isLoading: auth.isLoading,
+      dialogsItems: dialogs.dialogs,
+    }),
+    dialogActions,
+  )(Home),
 );
