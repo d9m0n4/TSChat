@@ -11,7 +11,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
   const [isRecording, setIsRecording] = useState(false);
   const [recorder, setRecorder] = useState(null);
-  const [sending, setSending] = useState(false);
 
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
@@ -60,7 +59,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
     onChange: ({ fileList }) => {
       setFileList(fileList);
-      console.log(fileList);
     },
     fileList,
   };
@@ -101,18 +99,17 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
     recorder.onstop = (e) => {
       console.log('e', e);
-
       return setIsRecording(false);
     };
 
     recorder.ondataavailable = async (e) => {
       const file = new File([e.data], 'audio');
-      // const { data } = await Files.upload(file);
-      // sendMessage({
-      //   dialogId: dialogId,
-      //   text: null,
-      //   attachments: data.file._id,
-      // });
+      const { data } = await Files.upload(file);
+      sendMessage({
+        dialogId: dialogId,
+        text: null,
+        attachments: data.file._id,
+      });
     };
   };
 
@@ -137,7 +134,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       record={Recording}
       handleStop={handleStop}
       isRecording={isRecording}
-      setSending={setSending}
       uploaderProps={uploaderProps}
       uploading={uploading}
     />

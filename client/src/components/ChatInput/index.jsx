@@ -3,6 +3,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import { Button, Input, Upload } from 'antd';
+import LoadingOutlined, { PoweroffOutlined } from '@ant-design/icons';
 import './index.scss';
 
 const { TextArea } = Input;
@@ -20,18 +21,22 @@ const ChatInput = ({
   uploaderProps,
   uploading,
 }) => {
+  const upload = true;
   return (
     <div className="messages__input-group">
       {!isRecording ? (
         <div className="messages-input">
           <div className="messages-input__buttons">
             <Upload
+              className="uploadInput"
+              name="Приложение"
               withCredentials={true}
               method="GET"
               {...uploaderProps}
               listType="picture"
+              maxCount={3}
               multiple>
-              <Button type="text" className="button__icon app-icon">
+              <Button disabled={uploading} type="text" className="button__icon app-icon">
                 <svg
                   className="icon"
                   width="24"
@@ -50,7 +55,11 @@ const ChatInput = ({
                 </svg>
               </Button>
             </Upload>
-            <Button type="text" className="button__icon app-icon" onClick={toggleVisiblePicker}>
+            <Button
+              disabled={uploading}
+              type="text"
+              className="button__icon app-icon"
+              onClick={toggleVisiblePicker}>
               <svg
                 className="icon"
                 width="24"
@@ -71,6 +80,7 @@ const ChatInput = ({
           </div>
           <div className="messages-input__textarea">
             <TextArea
+              disabled={uploading}
               onChange={onChange}
               className="textfield"
               placeholder="Введите сообщение... "
@@ -78,48 +88,54 @@ const ChatInput = ({
               value={value}
             />
           </div>
-          {value || uploaderProps.fileList.length ? (
-            <Button
-              disabled={!value}
-              onClick={onSendMessage}
-              type="text"
-              className="messages-input__send app-icon">
-              <svg
-                className="icon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  className="rect"
-                  d="M5 12L3 21L21 12L3 3L5 12ZM5 12L13 12"
-                  stroke="#979797"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Button>
+          {upload ? (
+            <Button size="large" type="text" loading />
           ) : (
-            <Button onClick={record} type="text" className="messages-input__send app-icon">
-              <svg
-                className="icon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  className="rect"
-                  d="M19 11C19 14.866 15.866 18 12 18M12 18C8.13401 18 5 14.866 5 11M12 18V22M12 22H8M12 22H16M12 14C10.3431 14 9 12.6569 9 11V5C9 3.34315 10.3431 2 12 2C13.6569 2 15 3.34315 15 5V11C15 12.6569 13.6569 14 12 14Z"
-                  stroke="#979797"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Button>
+            <>
+              {value || uploaderProps.fileList.length ? (
+                <Button
+                  disabled={!value}
+                  onClick={onSendMessage}
+                  type="text"
+                  className="messages-input__send app-icon">
+                  <svg
+                    className="icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      className="rect"
+                      d="M5 12L3 21L21 12L3 3L5 12ZM5 12L13 12"
+                      stroke="#979797"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Button>
+              ) : (
+                <Button onClick={record} type="text" className="messages-input__send app-icon">
+                  <svg
+                    className="icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      className="rect"
+                      d="M19 11C19 14.866 15.866 18 12 18M12 18C8.13401 18 5 14.866 5 11M12 18V22M12 22H8M12 22H16M12 14C10.3431 14 9 12.6569 9 11V5C9 3.34315 10.3431 2 12 2C13.6569 2 15 3.34315 15 5V11C15 12.6569 13.6569 14 12 14Z"
+                      stroke="#979797"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Button>
+              )}
+            </>
           )}
 
           <div className="emoji-picker">
