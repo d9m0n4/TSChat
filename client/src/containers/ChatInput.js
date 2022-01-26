@@ -60,6 +60,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     onChange: ({ fileList }) => {
       setFileList(fileList);
     },
+
     fileList,
   };
 

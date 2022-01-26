@@ -11,6 +11,20 @@
     flex: 1;
     &__buttons {
       display: flex;
+      .uploadInput {
+        .ant-upload-list {
+          position: absolute;
+          bottom: 80px;
+          display: flex;
+          .ant-upload-span {
+            max-width: 100px;
+            position: relative;
+            .ant-upload-list-item-card-actions {
+              position: absolute;
+            }
+          }
+        }
+      }
 
       #icon {
         stroke: #979797;
@@ -56,9 +70,20 @@
         }
       }
     }
+    &.pt-80 {
+      padding-top: 80px;
+    }
   }
   .uploaded__files {
     width: 100%;
     padding: 0 32px;
+  }
+  .ant-upload-list-picture .ant-upload-list-item,
+  .ant-upload-list-picture-card .ant-upload-list-item {
+    border: none;
+  }
+  .ant-upload-list-text .ant-upload-list-item-name,
+  .ant-upload-list-picture .ant-upload-list-item-name {
+    display: none;
   }
 }

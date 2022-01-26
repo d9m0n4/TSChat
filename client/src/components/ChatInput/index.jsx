@@ -3,7 +3,6 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import { Button, Input, Upload } from 'antd';
-import LoadingOutlined, { PoweroffOutlined } from '@ant-design/icons';
 import './index.scss';
 
 const { TextArea } = Input;
@@ -25,11 +24,10 @@ const ChatInput = ({
   return (
     <div className="messages__input-group">
       {!isRecording ? (
-        <div className="messages-input">
+        <div className={('messages-input', uploaderProps.fileList && 'messages-input pt-80')}>
           <div className="messages-input__buttons">
             <Upload
               className="uploadInput"
-              name="Приложение"
               withCredentials={true}
               method="GET"
               {...uploaderProps}
