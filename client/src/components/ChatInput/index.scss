@@ -8,19 +8,34 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    position: relative;
     flex: 1;
     &__buttons {
       display: flex;
       .uploadInput {
         .ant-upload-list {
           position: absolute;
-          bottom: 80px;
+          top: 70px;
           display: flex;
           .ant-upload-span {
             max-width: 100px;
             position: relative;
+            .ant-upload-list-item {
+              position: relative;
+            }
             .ant-upload-list-item-card-actions {
               position: absolute;
+              top: -10px;
+              left: 50%;
+              transform: translate(-25%);
+            }
+            .ant-upload-list-item-thumbnail {
+              width: 100px;
+              height: 100px;
+              img {
+                width: 100px;
+                height: 100px;
+              }
             }
           }
         }
@@ -71,7 +86,7 @@
       }
     }
     &.pt-80 {
-      padding-top: 80px;
+      padding-bottom: 80px;
     }
   }
   .uploaded__files {
@@ -81,6 +96,9 @@
   .ant-upload-list-picture .ant-upload-list-item,
   .ant-upload-list-picture-card .ant-upload-list-item {
     border: none;
+    margin: 0;
+
+    overflow: hidden;
   }
   .ant-upload-list-text .ant-upload-list-item-name,
   .ant-upload-list-picture .ant-upload-list-item-name {

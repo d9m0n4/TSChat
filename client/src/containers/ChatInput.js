@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ChatInput from '../components/ChatInput';
 import Files from '../Services/Files';
 import messagesActions from '../store/actions/messagesActions';
+import { CloseCircleTwoTone } from '@ant-design/icons';
 
 const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const [messageValue, setMessageValue] = useState('');
@@ -53,12 +54,38 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       newFileList.splice(index, 1);
       setFileList(newFileList);
     },
-    beforeUpload: () => {
-      return false;
+    beforeUpload: (file) => {
+      const fileSize = file.size / 1024 / 1024 < 2;
+      if (!fileSize) {
+        console.log('размер файла не должен превышать 10мб');
+      }
+
+      return null;
+    },
+    showUploadList: {
+      removeIcon: <CloseCircleTwoTone twoToneColor="#FA2424" />,
+      showPreviewIconL: false,
     },
 
     onChange: ({ fileList }) => {
       setFileList(fileList);
+    },
+
+    onPreview: async (file) => {
+      let src = file.url;
+      if (!src) {
+        src = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file.originFileObj);
+          reader.onload = () => resolve(reader.result);
+        });
+      }
+      const image = new Image();
+
+      image.width = '1000';
+      image.src = src;
+      const imgWindow = window.open(src);
+      imgWindow.document.write(image.outerHTML);
     },
 
     fileList,
@@ -119,10 +146,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       recorder.stop();
     }
   };
-
-  useEffect(() => {
-    console.log(recorder);
-  }, [recorder]);
 
   return (
     <ChatInput

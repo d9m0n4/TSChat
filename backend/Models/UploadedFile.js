@@ -7,6 +7,7 @@ const UploadFileSchema = new Schema({
   size: Number,
   ext: String,
   url: String,
+  thumb: String,
   pid: String,
   message: {
     type: Schema.Types.ObjectId,

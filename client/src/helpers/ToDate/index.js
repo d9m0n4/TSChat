@@ -1,9 +1,10 @@
-import { format, formatDistanceToNow, parseISO } from 'date-fns';
+import { format, formatDistanceToNow, isToday, parseISO } from 'date-fns';
 import ruLocale from 'date-fns/locale/ru';
 
 const toDate = (date) => {
   const parsedDate = parseISO(date);
-  return parsedDate > Date.now()
+
+  return isToday(parsedDate)
     ? formatDistanceToNow(parsedDate, { addSuffix: true, locale: ruLocale })
     : format(parsedDate, 'dd.MM.yyyy');
 };

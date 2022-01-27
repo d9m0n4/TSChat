@@ -10,6 +10,7 @@ import './index.scss';
 import UserAvatar from '../Avatar';
 import toDate from '../../helpers/ToDate';
 import toCurrentTime from '../../helpers/toCurrentTime';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 const Message = ({ isMe, name, text, date, attachments }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -96,14 +97,20 @@ const Message = ({ isMe, name, text, date, attachments }) => {
               <div className="message__content-bubble__attachments">
                 {attachments &&
                   attachments.map((item) => (
-                    <Image
-                      className="message__image"
-                      key={item._id}
-                      preview={{
-                        mask: <EyeOutlined />,
-                      }}
-                      src={item.url}
-                    />
+                    <LazyLoadComponent>
+                      <Image
+                        loading="lazy"
+                        className="message__image"
+                        key={item._id}
+                        preview={{
+                          src: `${item.url}`,
+                          mask: <EyeOutlined />,
+                        }}
+                        src={
+                          'https://demo-mo-docs.mo.cloudinary.net/custom/cld-docs-assets/assets/images/people-walking.jpg'
+                        }
+                      />
+                    </LazyLoadComponent>
                   ))}
               </div>
             )}

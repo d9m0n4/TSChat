@@ -24,7 +24,7 @@ const ChatInput = ({
   return (
     <div className="messages__input-group">
       {!isRecording ? (
-        <div className={('messages-input', uploaderProps.fileList && 'messages-input pt-80')}>
+        <div className={uploaderProps.fileList.length ? 'messages-input pt-80' : 'messages-input'}>
           <div className="messages-input__buttons">
             <Upload
               className="uploadInput"
@@ -86,7 +86,7 @@ const ChatInput = ({
               value={value}
             />
           </div>
-          {upload ? (
+          {uploading ? (
             <Button size="large" type="text" loading />
           ) : (
             <>

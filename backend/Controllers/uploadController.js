@@ -22,11 +22,19 @@ class UploadFilesController {
           });
         }
 
+        console.log(result);
+
         const fileData = {
           filename: result.original_filename,
           size: result.bytes,
           ext: result.format,
           url: result.url,
+          thumb: cloudinary.image(result.url, {
+            width: 300,
+            quality: 'auto',
+            fetch_format: 'auto',
+            crop: 'scale',
+          }),
           pid: result.public_id,
           user: user,
         };
