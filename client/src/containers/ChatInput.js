@@ -15,6 +15,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
+  const [fileType, setFileType] = useState('');
 
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
@@ -32,19 +33,22 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const onSendMessage = async () => {
     setUploading(true);
     let result = [];
-    for (let i = 0; i < fileList.length; i++) {
-      const file = fileList[i].originFileObj;
-      const f = await Files.upload(file);
-      result.push(f.data.file);
+    console.log(fileList);
+    if (fileList.length) {
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i].originFileObj || fileList[i];
+        const f = await Files.upload(file);
+        result.push(f.data.file);
+      }
+      setMessageValue('');
+      setFileList([]);
+      setUploading(false);
+      sendMessage({
+        dialogId: dialogId,
+        text: messageValue || null,
+        attachments: result.map((item) => item._id),
+      });
     }
-    setMessageValue('');
-    setFileList([]);
-    setUploading(false);
-    sendMessage({
-      dialogId: dialogId,
-      text: messageValue || null,
-      attachments: result.map((item) => item._id),
-    });
   };
 
   const uploaderProps = {
@@ -117,8 +121,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     const recorder = new MediaRecorder(stream);
     setRecorder(recorder);
 
-    console.log(recorder);
-
     recorder.start();
 
     recorder.onstart = () => {
@@ -131,13 +133,10 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     };
 
     recorder.ondataavailable = async (e) => {
-      const file = new File([e.data], 'audio');
-      const { data } = await Files.upload(file);
-      sendMessage({
-        dialogId: dialogId,
-        text: null,
-        attachments: data.file._id,
-      });
+      const file = new File([e.data], 'audio', { type: 'audio' });
+      console.log(file);
+      setFileList([file]);
+      setFileType(file.type);
     };
   };
 
@@ -147,8 +146,13 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     }
   };
 
+  useEffect(() => {
+    console.log(fileList);
+  }, [fileList]);
+
   return (
     <ChatInput
+      fileType={fileType}
       value={messageValue}
       onSendMessage={onSendMessage}
       onChange={onChangeValue}

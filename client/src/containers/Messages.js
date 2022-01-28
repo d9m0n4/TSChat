@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import ChatMesaages from '../components/ChatMessages';
+import ChatMessages from '../components/ChatMessages';
 import socket from '../core/socket';
 import messagesActions from '../store/actions/messagesActions';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
@@ -15,12 +15,13 @@ const Messages = ({
   loader,
   addMessage,
 }) => {
-  const scrollRef = useRef();
+  const scrollRef = useRef(null);
 
+  const scrollToBottom = () => {
+    scrollRef.current && scrollRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  };
   useEffect(() => {
-    if (!items.length) {
-      console.log(123123);
-    }
+    scrollToBottom();
   }, [items]);
 
   const newMessage = (data) => {
@@ -42,7 +43,7 @@ const Messages = ({
   };
 
   return (
-    <ChatMesaages
+    <ChatMessages
       user={user}
       messages={items}
       scrollRef={scrollRef}

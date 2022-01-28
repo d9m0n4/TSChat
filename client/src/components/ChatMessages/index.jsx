@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './index.scss';
 import Message from '../Message';
 import { MailOutlined } from '@ant-design/icons';
@@ -23,14 +23,14 @@ const ChatMesaages = ({
         {currentPartner && <div className="messages__header-chat__status online"></div>}
       </div>
 
-      <div className="messages__body" ref={scrollRef}>
+      <div className="messages__body">
         {loader ? (
           <Loader />
         ) : (
           <div className="messages">
             {currentDialogId && messages && messages ? (
               messages.map((m) => (
-                <div key={m._id}>
+                <div key={m._id} ref={scrollRef}>
                   <Message
                     attachments={m.attachments}
                     isMe={user === m.user._id}

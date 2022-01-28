@@ -35,10 +35,10 @@ const Message = ({ isMe, name, text, date, attachments }) => {
   useEffect(() => {
     if (audioRef.current !== null) {
       audioRef.current.addEventListener('canplay', (e) => {
-        console.log(e.target.duration);
-        if (e.target.duration === Infinity) {
-          console.log(e.target.duration, e.target);
-        }
+        // console.log(e.target.duration);
+        // if (e.target.duration === Infinity) {
+        //   console.log(e.target.duration, e.target);
+        // }
       });
       audioRef.current.addEventListener(
         'playing',
@@ -97,18 +97,17 @@ const Message = ({ isMe, name, text, date, attachments }) => {
               <div className="message__content-bubble__attachments">
                 {attachments &&
                   attachments.map((item) => (
-                    <LazyLoadComponent>
+                    <LazyLoadComponent key={item._id}>
                       <Image
                         loading="lazy"
                         className="message__image"
-                        key={item._id}
                         preview={{
+                          icons: [],
+                          destroyOnClose: true,
                           src: `${item.url}`,
                           mask: <EyeOutlined />,
                         }}
-                        src={
-                          'https://demo-mo-docs.mo.cloudinary.net/custom/cld-docs-assets/assets/images/people-walking.jpg'
-                        }
+                        src={item.thumb}
                       />
                     </LazyLoadComponent>
                   ))}
