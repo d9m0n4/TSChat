@@ -21,6 +21,7 @@ const ChatInput = ({
   uploaderProps,
   uploading,
   fileType,
+  canvas,
 }) => {
   return (
     <div className="messages__input-group">
@@ -159,12 +160,10 @@ const ChatInput = ({
         </div>
       ) : (
         <>
-          <div>
-            <img src={recording} alt="" />
-          </div>
           <Button onClick={handleStop}>stop</Button>
         </>
       )}
+      {<canvas ref={canvas}></canvas>}
     </div>
   );
 };

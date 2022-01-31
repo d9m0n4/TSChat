@@ -5,6 +5,7 @@ import ChatInput from '../components/ChatInput';
 import Files from '../Services/Files';
 import messagesActions from '../store/actions/messagesActions';
 import { CloseCircleTwoTone } from '@ant-design/icons';
+import { useRef } from 'react';
 
 const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const [messageValue, setMessageValue] = useState('');
@@ -16,6 +17,8 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [fileType, setFileType] = useState('');
+
+  const canvas = useRef();
 
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
@@ -118,23 +121,96 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   };
 
   const onRecording = (stream) => {
-    const recorder = new MediaRecorder(stream);
+    let recorder = new MediaRecorder(stream);
     setRecorder(recorder);
 
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioCtx.createAnalyser();
+    analyser.minDecibels = -90;
+    analyser.maxDecibels = -10;
+    analyser.smoothingTimeConstant = 0.9;
+
+    const audioSrc = audioCtx.createMediaStreamSource(stream);
+
+    const sourceNode = audioCtx.createBufferSource();
+    const splitter = audioCtx.createChannelSplitter();
+
+    sourceNode.connect(splitter);
+
+    splitter.connect(analyser, 0, 0);
+
+    audioSrc.connect(analyser);
+    sourceNode.connect(audioCtx.destination);
+
+    analyser.fftSize = 2048;
+    analyser.connect(audioCtx.destination);
+
+    const bufferLength = analyser.frequencyBinCount;
+
+    const data = new Uint8Array(bufferLength);
+
     recorder.start();
+    let reqId;
+    let cw = canvas.current.width;
+    let ch = canvas.current.height;
 
     recorder.onstart = () => {
       setIsRecording(true);
+
+      const ctx = canvas.current.getContext('2d');
+      ctx.clearRect(0, 0, cw, ch);
+      let barWidth = cw / bufferLength / 2;
+      let barHeight;
+      let x;
+
+      console.log(barWidth);
+
+      const draw = () => {
+        analyser.getByteFrequencyData(data);
+        ctx.fillStyle = 'rgb(200, 200, 200)';
+        ctx.fillRect(0, 0, cw, ch);
+        x = 0;
+
+        for (let i = 0; i < bufferLength; i++) {
+          barHeight = data[i] + 1;
+
+          const red = (i * barHeight) / 6;
+          const green = i * 4;
+          const blue = (barHeight / 3) * i;
+
+          ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+          ctx.fillRect(cw / 2 - x, ch / 2, barWidth, barHeight / 2);
+          ctx.fillRect(cw / 2 - x, ch / 2, barWidth, -barHeight / 2);
+
+          x += -barWidth;
+        }
+
+        for (let i = 0; i < bufferLength; i++) {
+          barHeight = data[i] - 1;
+
+          const red = (i * barHeight) / 6;
+          const green = i * 4;
+          const blue = barHeight / 3;
+
+          ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+          ctx.fillRect(-x, ch / 2, barWidth, barHeight / 2);
+          ctx.fillRect(-x, ch / 2, barWidth, -barHeight / 2);
+
+          x += barWidth;
+        }
+
+        reqId = requestAnimationFrame(draw);
+      };
+      draw();
     };
 
     recorder.onstop = (e) => {
-      console.log('e', e);
+      window.cancelAnimationFrame(reqId);
       return setIsRecording(false);
     };
 
     recorder.ondataavailable = async (e) => {
       const file = new File([e.data], 'audio', { type: 'audio' });
-      console.log(file);
       setFileList([file]);
       setFileType(file.type);
     };
@@ -146,12 +222,9 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(fileList);
-  }, [fileList]);
-
   return (
     <ChatInput
+      canvas={canvas}
       fileType={fileType}
       value={messageValue}
       onSendMessage={onSendMessage}
