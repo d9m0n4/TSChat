@@ -93,6 +93,22 @@
     width: 100%;
     padding: 0 32px;
   }
+  .message__audio {
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 16px;
+    background-color: #4568e8;
+    margin: 32px;
+    width: 100%;
+    overflow: hidden;
+    canvas {
+      height: 32px;
+      width: inherit;
+      background-color: transparent;
+      border-radius: 16px;
+    }
+  }
   .ant-upload-list-picture .ant-upload-list-item,
   .ant-upload-list-picture-card .ant-upload-list-item {
     border: none;
@@ -104,9 +120,4 @@
   .ant-upload-list-picture .ant-upload-list-item-name {
     display: none;
   }
-}
-
-canvas {
-  width: 100%;
-  height: 100px;
 }

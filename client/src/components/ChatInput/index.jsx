@@ -4,7 +4,6 @@ import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import { Button, Input, Upload } from 'antd';
 import './index.scss';
-import recording from '../../assets/img/icons/recording.svg';
 
 const { TextArea } = Input;
 
@@ -159,11 +158,14 @@ const ChatInput = ({
           </div>
         </div>
       ) : (
-        <>
-          <Button onClick={handleStop}>stop</Button>
-        </>
+        <div className="message__audio">
+          <Button className="message__audio-stop" type="text" onClick={handleStop}>
+            stop
+          </Button>
+          <canvas ref={canvas}></canvas>
+          //добавить продолжительность записи //кнопку отмены записи
+        </div>
       )}
-      {<canvas ref={canvas}></canvas>}
     </div>
   );
 };
