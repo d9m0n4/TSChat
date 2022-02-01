@@ -108,7 +108,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const Recording = () => {
     if (navigator.getUserMedia) {
       navigator.mediaDevices
-        .getUserMedia({ audio: true, video: false })
+        .getUserMedia({ audio: true })
         .then((d) => {
           onRecording(d);
         })
@@ -124,7 +124,10 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     let recorder = new MediaRecorder(stream);
     setRecorder(recorder);
 
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)({
+      latencyHint: 'interactive',
+      sampleRate: 44100,
+    });
     const analyser = audioCtx.createAnalyser();
     analyser.minDecibels = -90;
     analyser.maxDecibels = -10;
@@ -142,7 +145,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     audioSrc.connect(analyser);
     sourceNode.connect(audioCtx.destination);
 
-    analyser.fftSize = 2048;
+    analyser.fftSize = 1024;
     analyser.connect(audioCtx.destination);
 
     const bufferLength = analyser.frequencyBinCount;
@@ -159,31 +162,33 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
       const ctx = canvas.current.getContext('2d');
       ctx.clearRect(0, 0, cw, ch);
-      let barWidth = cw / bufferLength / 2;
+      let barWidth = bufferLength / 200;
       let barHeight;
       let x;
+      let a;
 
-      console.log(barWidth);
+      console.log(bufferLength);
 
       const draw = () => {
         analyser.getByteFrequencyData(data);
         ctx.fillStyle = 'rgb(200, 200, 200)';
         ctx.fillRect(0, 0, cw, ch);
         x = 0;
+        a = 0;
 
-        for (let i = 0; i < bufferLength; i++) {
-          barHeight = data[i] + 1;
+        // for (let i = 0; i < bufferLength; i++) {
+        //   barHeight = data[i] + 1;
 
-          const red = (i * barHeight) / 6;
-          const green = i * 4;
-          const blue = (barHeight / 3) * i;
+        //   const red = (i * barHeight) / 6;
+        //   const green = i * 4;
+        //   const blue = (barHeight / 3) * i;
 
-          ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
-          ctx.fillRect(cw / 2 - x, ch / 2, barWidth, barHeight / 2);
-          ctx.fillRect(cw / 2 - x, ch / 2, barWidth, -barHeight / 2);
+        //   ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+        //   // ctx.fillRect(cw - i + x, ch / 2, 4, 4);
+        //   ctx.fillRect(cw - i + x, ch / 2,  barWidth, -barHeight / 4);
 
-          x += -barWidth;
-        }
+        //   x += -barWidth;
+        // }
 
         for (let i = 0; i < bufferLength; i++) {
           barHeight = data[i] - 1;
@@ -193,10 +198,10 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
           const blue = barHeight / 3;
 
           ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
-          ctx.fillRect(-x, ch / 2, barWidth, barHeight / 2);
-          ctx.fillRect(-x, ch / 2, barWidth, -barHeight / 2);
+          ctx.fillRect(cw / 2 - a, ch / 2, barWidth, barHeight / 4);
+          ctx.fillRect(cw / 2 - a, ch / 2, barWidth, -barHeight / 4);
 
-          x += barWidth;
+          a += barWidth;
         }
 
         reqId = requestAnimationFrame(draw);
@@ -205,12 +210,15 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     };
 
     recorder.onstop = (e) => {
+      console.log(recorder);
       window.cancelAnimationFrame(reqId);
+      stream.getAudioTracks()[0].stop();
       return setIsRecording(false);
     };
 
     recorder.ondataavailable = async (e) => {
-      const file = new File([e.data], 'audio', { type: 'audio' });
+      const file = new File([e.data], 'audio', { type: 'audio/wav' });
+      console.log(file);
       setFileList([file]);
       setFileType(file.type);
     };
