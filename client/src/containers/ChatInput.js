@@ -165,7 +165,9 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       let ch = canvas.current.height;
 
       const ctx = canvas.current.getContext('2d');
+
       ctx.clearRect(0, 0, cw, ch);
+
       let barWidth = (bufferLength / cw) * 1.5;
       let barHeight;
       let x;
@@ -174,19 +176,19 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
       const draw = () => {
         analyser.getByteFrequencyData(data);
-        ctx.fillStyle = (255, 255, 255, 0);
+        ctx.fillStyle = '#FFFFFF';
         ctx.fillRect(0, 0, cw, ch);
 
         x = 0;
 
         for (let i = 0; i < bufferLength; i++) {
-          barHeight = data[i];
+          barHeight = data[i] + 5;
 
           const red = (i * barHeight) / 6;
           const green = i * 4;
           const blue = (barHeight / 3) * i;
 
-          ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
+          ctx.fillStyle = 'rgb(' + i + ',' + i * 2 + ',' + i * 5 + ')';
 
           ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, barHeight / 4);
           ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, -barHeight / 4);

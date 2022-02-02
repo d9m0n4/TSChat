@@ -163,7 +163,6 @@ const ChatInput = ({
             stop
           </Button>
           <canvas ref={canvas}></canvas>
-          //добавить продолжительность записи //кнопку отмены записи
         </div>
       )}
     </div>
