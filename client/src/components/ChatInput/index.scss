@@ -88,6 +88,20 @@
     &.pt-80 {
       padding-bottom: 80px;
     }
+    .message-input__audio {
+      background-color: #e5e5e5;
+      padding: 2px;
+      border-radius: 8px;
+      width: 100%;
+
+      display: flex;
+      .audio__message {
+        height: 32px;
+        width: 100%;
+        border-radius: 8px;
+        padding: 4px;
+      }
+    }
   }
   .uploaded__files {
     width: 100%;
@@ -97,15 +111,15 @@
     display: flex;
     justify-content: center;
     padding: 4px;
-    border-radius: 16px;
-    background-color: #4568e8;
+    border-radius: 8px 8px 8px 0;
+    background-color: #e5e5e5;
     margin: 32px;
     width: 100%;
     overflow: hidden;
     canvas {
       height: 32px;
       width: inherit;
-      border-radius: 16px;
+      margin: 0 16px;
     }
   }
   .ant-upload-list-picture .ant-upload-list-item,

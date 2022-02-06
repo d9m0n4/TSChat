@@ -16,10 +16,10 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const [fileType, setFileType] = useState('');
   const [stream, setStream] = useState(null);
 
   const canvas = useRef();
+  const audioResult = useRef();
 
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
@@ -37,7 +37,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const onSendMessage = async () => {
     setUploading(true);
     let result = [];
-    console.log(fileList);
     if (fileList.length) {
       for (let i = 0; i < fileList.length; i++) {
         const file = fileList[i].originFileObj || fileList[i];
@@ -142,13 +141,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
     const audioSrc = audioCtx.createMediaStreamSource(stream);
 
-    const sourceNode = audioCtx.createBufferSource();
-    const splitter = audioCtx.createChannelSplitter();
-
-    sourceNode.connect(splitter);
-
-    splitter.connect(analyser, 0, 0);
-
     audioSrc.connect(analyser);
     // sourceNode.connect(audioCtx.destination);
     analyser.fftSize = 1024;
@@ -168,15 +160,13 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
       ctx.clearRect(0, 0, cw, ch);
 
-      let barWidth = (bufferLength / cw) * 1.5;
+      let barWidth = (bufferLength / cw) * 2;
       let barHeight;
       let x;
 
-      console.log(bufferLength);
-
       const draw = () => {
         analyser.getByteFrequencyData(data);
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = '#E5E5E5';
         ctx.fillRect(0, 0, cw, ch);
 
         x = 0;
@@ -188,12 +178,12 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
           const green = i * 4;
           const blue = (barHeight / 3) * i;
 
-          ctx.fillStyle = 'rgb(' + i + ',' + i * 2 + ',' + i * 5 + ')';
+          ctx.fillStyle = '#3A456B';
 
-          ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, barHeight / 4);
-          ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, -barHeight / 4);
-          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, -barHeight / 4);
-          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, barHeight / 4);
+          ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, barHeight / 2.5);
+          ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, -barHeight / 2.5);
+          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, -barHeight / 2.5);
+          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, barHeight / 2.5);
 
           x += barWidth;
         }
@@ -227,8 +217,65 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       const file = new File([e.data], 'audio', { type: 'audio/wav' });
 
       setFileList([file]);
-      setFileType(file.type);
       setIsRecording(false);
+
+      const ctxResult = audioResult.current.getContext('2d');
+
+      const src = URL.createObjectURL(file);
+      const audio = new Audio();
+      audio.src = src;
+      let x;
+
+      const drawAudio = async (f) => {
+        const arrB = await f.arrayBuffer();
+        const a = await audioCtx.decodeAudioData(arrB);
+        const b = normalizeData(filterData(a));
+
+        audioResult.current.height = 32;
+        audioResult.current.width = window.innerWidth;
+
+        const cw = audioResult.current.width;
+        const ch = audioResult.current.height;
+
+        ctxResult.fillStyle = '#E5E5E5';
+        ctxResult.fillRect(0, 0, cw, ch);
+        let bh = 2;
+        let bw = 2;
+        x = 0;
+
+        for (let i = 0; i < b.length; i++) {
+          bh = b[i] * 100;
+          ctxResult.fillStyle = '#3A456B';
+
+          ctxResult.fillRect(cw / 2 + x, ch / 2, bw, bh / 2);
+          ctxResult.fillRect(cw / 2 + x, ch / 2, bw, -bh / 2); // считать количество бар в зависимости от ширины (cw)
+
+          x += bw;
+        }
+      };
+
+      const filterData = (audioBuffer) => {
+        const rawData = audioBuffer.getChannelData(0);
+        const samples = 70;
+        const blockSize = Math.floor(rawData.length / samples);
+        const filteredData = [];
+        for (let i = 0; i < samples; i++) {
+          let blockStart = blockSize * i;
+          let sum = 0;
+          for (let j = 0; j < blockSize; j++) {
+            sum = sum + Math.abs(rawData[blockStart + j]);
+          }
+          filteredData.push(sum / blockSize);
+        }
+        return filteredData;
+      };
+
+      const normalizeData = (filteredData) => {
+        const multiplier = Math.pow(Math.max(...filteredData), -1);
+        return filteredData.map((n) => n * multiplier);
+      };
+
+      drawAudio(file);
     };
   };
 
@@ -240,8 +287,8 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
   return (
     <ChatInput
+      audioResult={audioResult}
       canvas={canvas}
-      fileType={fileType}
       value={messageValue}
       onSendMessage={onSendMessage}
       onChange={onChangeValue}

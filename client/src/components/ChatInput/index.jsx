@@ -19,15 +19,17 @@ const ChatInput = ({
   isRecording,
   uploaderProps,
   uploading,
-  fileType,
   canvas,
+  audioResult,
 }) => {
   return (
     <div className="messages__input-group">
       {!isRecording ? (
         <div className={uploaderProps.fileList.length ? 'messages-input pt-80' : 'messages-input'}>
-          {fileType === 'audio' ? (
-            <div>{123}</div>
+          {uploaderProps.fileList[0] && uploaderProps.fileList[0].name === 'audio' ? (
+            <div className="message-input__audio">
+              <canvas className="audio__message" ref={audioResult} />
+            </div>
           ) : (
             <>
               <div className="messages-input__buttons">
@@ -160,9 +162,31 @@ const ChatInput = ({
       ) : (
         <div className="message__audio">
           <Button className="message__audio-stop" type="text" onClick={handleStop}>
-            stop
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
+                stroke="#CC4B4C"
+                strokeOpacity="1"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M7 8C7 7.44772 7.44772 7 8 7H12C12.5523 7 13 7.44772 13 8V12C13 12.5523 12.5523 13 12 13H8C7.44772 13 7 12.5523 7 12V8Z"
+                stroke="#CC4B4C"
+                strokeOpacity="1"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </Button>
-          <canvas ref={canvas}></canvas>
+          <canvas ref={canvas} />
         </div>
       )}
     </div>
