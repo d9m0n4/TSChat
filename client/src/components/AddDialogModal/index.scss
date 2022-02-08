@@ -2,6 +2,50 @@
   margin-bottom: 16px;
 }
 
+.add-dialog-form__input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0 16px 0;
+  border-top: 1px solid rgba(58, 69, 107, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex: 1;
+  padding: 8px 0;
+
+  .messages-input__send {
+    display: flex;
+    align-items: center;
+  }
+
+  .textfield {
+    border: none;
+    outline: none;
+    padding: 0 8px;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+    &::-webkit-scrollbar-track {
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 12px;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background: #f0f2f5;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      background: #979797;
+    }
+  }
+}
+
 .modal__result {
   margin-bottom: 16px;
   align-items: center;

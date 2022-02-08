@@ -35,6 +35,7 @@ class UploadFilesController {
           }),
           pid: result.public_id,
           user: user,
+          isAudio: result.is_audio || false,
         };
 
         const uploadedFile = new UploadedFile(fileData);

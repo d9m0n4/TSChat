@@ -9,6 +9,7 @@ const UploadFileSchema = new Schema({
   url: String,
   thumb: String,
   pid: String,
+  isAudio: { type: Boolean, default: false },
   message: {
     type: Schema.Types.ObjectId,
     ref: 'Message',

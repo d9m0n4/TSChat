@@ -3,7 +3,9 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import { Button, Input, Upload } from 'antd';
+import Icon from '@ant-design/icons';
 import './index.scss';
+import { CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
@@ -25,9 +27,20 @@ const ChatInput = ({
   return (
     <div className="messages__input-group">
       {!isRecording ? (
-        <div className={uploaderProps.fileList.length ? 'messages-input pt-80' : 'messages-input'}>
+        <div
+          className={
+            uploaderProps.fileList.length && uploaderProps.fileList[0].name !== 'audio'
+              ? 'messages-input pt-80'
+              : 'messages-input'
+          }>
           {uploaderProps.fileList[0] && uploaderProps.fileList[0].name === 'audio' ? (
             <div className="message-input__audio">
+              <Button
+                disabled={uploading}
+                type="text"
+                icon={<CloseCircleOutlined />}
+                onClick={uploaderProps.onRemove}
+              />
               <canvas className="audio__message" ref={audioResult} />
             </div>
           ) : (
@@ -99,7 +112,7 @@ const ChatInput = ({
           )}
 
           {uploading ? (
-            <Button size="large" type="text" loading />
+            <Icon className="loading__icon" style={{ fontSize: 24 }} component={LoadingOutlined} />
           ) : (
             <>
               {value || uploaderProps.fileList.length ? (

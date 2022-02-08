@@ -52,7 +52,7 @@ const ChatMesaages = ({
         )}
       </div>
 
-      {!loader && currentDialogId && messages && <ChatInputContainer />}
+      {!loader && currentDialogId && messages.length > 0 && <ChatInputContainer />}
     </div>
   );
 };

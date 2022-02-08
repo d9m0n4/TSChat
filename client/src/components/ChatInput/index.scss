@@ -133,4 +133,13 @@
   .ant-upload-list-picture .ant-upload-list-item-name {
     display: none;
   }
+  .loading__icon {
+    align-self: center;
+    margin-left: 8px;
+    .anticon-loading {
+      svg {
+        fill: #276aa5;
+      }
+    }
+  }
 }

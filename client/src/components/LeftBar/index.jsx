@@ -12,6 +12,7 @@ const Leftbar = ({
   onSendMessage,
   visible,
   showModal,
+  userId,
   hideModal,
   onSelect,
   onChangeValue,
@@ -34,6 +35,7 @@ const Leftbar = ({
         close={hideModal}
         onSearch={onSearch}
         users={users}
+        userId={userId}
       />
       <div className="main__content-body__leftbar">
         <div className="leftbar__header chat__header">

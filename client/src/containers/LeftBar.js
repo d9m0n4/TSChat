@@ -10,10 +10,11 @@ import { withRouter } from 'react-router';
 
 const LeftBar = ({ fetchDialogs, items, userId, history }) => {
   const [visible, setVisible] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState();
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [users, setUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [uploading, setUploading] = useState(false);
   const [filtred, setFiltredDialogs] = useState(items && Array.from(items));
 
   const onChangeInput = (e) => {
@@ -31,6 +32,9 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
   };
 
   const hideModal = () => {
+    setUsers([]);
+    setInputValue('');
+    setSelectedUserId(null);
     setVisible(false);
   };
 
@@ -51,6 +55,7 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
   };
 
   const onSendMessage = () => {
+    setUploading(true);
     Dialogs.createDialog({
       partner: selectedUserId,
       text: messageValue,
@@ -58,6 +63,7 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
     socket.on('DIALOG:CREATED', (data) => {
       history.push(data._id);
     });
+    setUploading(false);
     hideModal();
 
     return () => {
@@ -74,8 +80,6 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
     socket.on('DIALOG:CREATED', fetchDialogs);
     socket.on('SERVER:DIALOG_CHANGED', fetchDialogs);
 
-    console.log('Диалог обновлен');
-
     return () => {
       socket.removeListener('DIALOG:CREATED');
       socket.removeListener('status');
@@ -83,10 +87,11 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
     };
   }, [fetchDialogs]);
 
-  socket.on('statuss', (d) => console.log(d));
+  socket.on('status', (d) => console.log(d));
 
   return (
     <Leftbar
+      uploading={uploading}
       inputValue={inputValue}
       onChangeInput={onChangeInput}
       dialogs={filtred}

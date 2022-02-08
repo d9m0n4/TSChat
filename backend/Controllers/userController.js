@@ -154,7 +154,6 @@ class UserController {
     const userDTO = new UserDto(user);
     res.status(200).json(userDTO);
   }
-
   async getUsers(req, res) {
     const userId = req.user.id;
     console.log(userId);
@@ -163,9 +162,9 @@ class UserController {
     }
     res.status(200).json(userId);
   }
-
   async findUser(req, res) {
     const query = req.query.query;
+    const currentUser = req.user;
 
     const users = await User.find({ name: new RegExp(query, 'i') });
     if (!users) {
@@ -174,6 +173,9 @@ class UserController {
         error: err,
       });
     }
+
+    const d = users.filter((user) => user._id !== currentUser.id);
+    console.log(d);
 
     res.json(users);
   }

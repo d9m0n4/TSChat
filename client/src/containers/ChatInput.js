@@ -16,7 +16,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const [stream, setStream] = useState(null);
 
   const canvas = useRef();
   const audioResult = useRef();
@@ -26,7 +25,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   };
 
   const setEmoji = (data) => {
-    console.log(data);
     setMessageValue(messageValue + ' ' + data.native);
   };
 
@@ -37,11 +35,13 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const onSendMessage = async () => {
     setUploading(true);
     let result = [];
-    if (fileList.length) {
-      for (let i = 0; i < fileList.length; i++) {
-        const file = fileList[i].originFileObj || fileList[i];
-        const f = await Files.upload(file);
-        result.push(f.data.file);
+    if (fileList.length || messageValue) {
+      if (fileList.length) {
+        for (let i = 0; i < fileList.length; i++) {
+          const file = fileList[i].originFileObj || fileList[i];
+          const f = await Files.upload(file);
+          result.push(f.data.file);
+        }
       }
       setMessageValue('');
       setFileList([]);
@@ -125,7 +125,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   };
 
   const onRecording = (stream) => {
-    setStream(stream);
     let recorder = new MediaRecorder(stream);
     setRecorder(recorder);
     recorder.start();
@@ -174,10 +173,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
         for (let i = 0; i < bufferLength; i++) {
           barHeight = data[i] + 5;
 
-          const red = (i * barHeight) / 6;
-          const green = i * 4;
-          const blue = (barHeight / 3) * i;
-
           ctx.fillStyle = '#3A456B';
 
           ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, barHeight / 2.5);
@@ -187,20 +182,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
           x += barWidth;
         }
-
-        // for (let i = 0; i < bufferLength; i++) {
-        //   barHeight = data[i] - 1;
-
-        //   const red = (i * barHeight) / 6;
-        //   const green = i * 4;
-        //   const blue = barHeight / 3;
-
-        //   ctx.fillStyle = 'rgb(' + red + ',' + green + ',' + blue + ')';
-        //   ctx.fillRect(cw / 2 - a, ch / 2, barWidth, barHeight / 4);
-        //   ctx.fillRect(cw / 2 - a, ch / 2, barWidth, -barHeight / 4);
-
-        //   a += barWidth;
-        // }
 
         reqId = requestAnimationFrame(draw);
       };
@@ -225,38 +206,37 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       const audio = new Audio();
       audio.src = src;
       let x;
+      audioResult.current.height = 32;
+      audioResult.current.width = 530;
 
       const drawAudio = async (f) => {
         const arrB = await f.arrayBuffer();
         const a = await audioCtx.decodeAudioData(arrB);
         const b = normalizeData(filterData(a));
 
-        audioResult.current.height = 32;
-        audioResult.current.width = window.innerWidth;
-
         const cw = audioResult.current.width;
         const ch = audioResult.current.height;
 
         ctxResult.fillStyle = '#E5E5E5';
         ctxResult.fillRect(0, 0, cw, ch);
-        let bh = 2;
+
+        let bh = 0;
         let bw = 2;
         x = 0;
 
         for (let i = 0; i < b.length; i++) {
-          bh = b[i] * 100;
+          bh = b[i] * 100 + 1;
           ctxResult.fillStyle = '#3A456B';
 
-          ctxResult.fillRect(cw / 2 + x, ch / 2, bw, bh / 2);
-          ctxResult.fillRect(cw / 2 + x, ch / 2, bw, -bh / 2); // считать количество бар в зависимости от ширины (cw)
-
+          ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, bh * 2);
+          ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, -bh * 2);
           x += bw;
         }
       };
 
       const filterData = (audioBuffer) => {
-        const rawData = audioBuffer.getChannelData(0);
-        const samples = 70;
+        const rawData = audioBuffer.getChannelData(1);
+        const samples = 1024;
         const blockSize = Math.floor(rawData.length / samples);
         const filteredData = [];
         for (let i = 0; i < samples; i++) {
