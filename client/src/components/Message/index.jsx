@@ -74,7 +74,7 @@ const Message = ({ isMe, name, text, date, attachments }) => {
       <div className="message__content">
         {
           <div className="message__content-bubble">
-            {text && (
+            {
               <p>
                 {reactStringReplace(
                   text,
@@ -94,7 +94,7 @@ const Message = ({ isMe, name, text, date, attachments }) => {
                   },
                 )}
               </p>
-            )}
+            }
             {attachments.length > 0 && !attachments[0].isAudio && (
               <div className="message__content-bubble__attachments">
                 {attachments &&

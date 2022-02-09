@@ -164,7 +164,6 @@ class UserController {
   }
   async findUser(req, res) {
     const query = req.query.query;
-    const currentUser = req.user;
 
     const users = await User.find({ name: new RegExp(query, 'i') });
     if (!users) {
@@ -173,9 +172,6 @@ class UserController {
         error: err,
       });
     }
-
-    const d = users.filter((user) => user._id !== currentUser.id);
-    console.log(d);
 
     res.json(users);
   }

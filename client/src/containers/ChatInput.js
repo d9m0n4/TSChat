@@ -235,7 +235,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       };
 
       const filterData = (audioBuffer) => {
-        const rawData = audioBuffer.getChannelData(1);
+        const rawData = audioBuffer.getChannelData(0);
         const samples = 1024;
         const blockSize = Math.floor(rawData.length / samples);
         const filteredData = [];

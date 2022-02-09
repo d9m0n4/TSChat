@@ -38,6 +38,7 @@ const Routes = (io) => {
   router.post('/messages', CheckToken, MessageCtrl.createMessage);
 
   router.post('/files', CheckToken, uploader.single('file'), UploadCtrl.create);
+  router.get('/files', CheckToken, UploadCtrl.getAttachments);
   router.delete('/files', CheckToken, UploadCtrl.delete);
 
   return router;

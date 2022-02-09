@@ -13,8 +13,10 @@ class UploadFilesController {
     const user = req.user.id;
     const file = req.file;
 
+    console.log(file);
+
     cloudinary.uploader
-      .upload_stream({ resource_type: 'auto' }, (error, result) => {
+      .upload_stream({ resource_type: 'auto', use_filename: true }, (error, result) => {
         if (error || !result) {
           return res.status(500).json({
             status: 'error',
@@ -22,8 +24,10 @@ class UploadFilesController {
           });
         }
 
+        console.log(result);
+
         const fileData = {
-          filename: result.original_filename,
+          filename: file.originalname,
           size: result.bytes,
           ext: result.format,
           url: result.url,
@@ -74,6 +78,14 @@ class UploadFilesController {
         status: 'success',
       });
     });
+  };
+
+  getAttachments = async (req, res) => {
+    const userId = req.query.id;
+
+    await UploadedFile.find({ user: userId })
+      .then((attachs) => res.json(attachs))
+      .catch((e) => res.json(e));
   };
 }
 

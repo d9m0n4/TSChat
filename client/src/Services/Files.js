@@ -13,6 +13,10 @@ class Files {
     });
   };
 
+  get = (id) => {
+    return API.get(`/files/?id=${id}`);
+  };
+
   delete = (id) => {
     return API.delete(`/files/?id=${id}`);
   };

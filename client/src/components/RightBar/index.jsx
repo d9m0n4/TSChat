@@ -10,10 +10,11 @@ import UserAttach from '../UserAttach';
 import { Link } from 'react-router-dom';
 import UserAvatar from '../Avatar';
 
-const Rightbar = ({ currentDialogId, partner }) => {
+const Rightbar = ({ currentDialogId, partner, attachments }) => {
   if (!currentDialogId || !partner) {
     return null;
   }
+
   return (
     <div className="main__content-body__rightbar">
       <div className="rightbar__header chat__header">
@@ -81,7 +82,7 @@ const Rightbar = ({ currentDialogId, partner }) => {
             </span>
           </div>
           <ul className="attachs__list">
-            <UserAttach />
+            <UserAttach attachments={attachments} />
           </ul>
         </div>
       </div>

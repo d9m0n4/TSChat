@@ -87,7 +87,7 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
     };
   }, [fetchDialogs]);
 
-  socket.on('status', (d) => console.log(d));
+  // socket.on('status', (d) => console.log(d));
 
   return (
     <Leftbar
