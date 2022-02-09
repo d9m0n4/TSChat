@@ -3,15 +3,41 @@ import './index.scss';
 import attach from '../../assets/img/word.png';
 import { Button } from 'antd';
 import toDate from '../../helpers/ToDate';
+import formatDate from '../../helpers/formateDate';
 
 const UserAttach = ({ attachments }) => {
   return (
     <>
       {attachments &&
         attachments.map((file) => (
-          <li className="attachs__list-item">
+          <li className="attachs__list-item" key={file._id}>
             <div className="attachs__list-item__prevIcon">
-              <img src={file.thumb} alt="" />
+              {file.isAudio ? (
+                <svg
+                  id="svg"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    className="path"
+                    d="M14.7519 11.1679L11.5547 9.03647C10.8901 8.59343 10 9.06982 10 9.86852V14.1315C10 14.9302 10.8901 15.4066 11.5547 14.9635L14.7519 12.8321C15.3457 12.4362 15.3457 11.5638 14.7519 11.1679Z"
+                    stroke="#3A456B"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"></path>
+                  <path
+                    className="path"
+                    d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                    stroke="#3A456B"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"></path>
+                </svg>
+              ) : (
+                <img src={file.thumb} alt="" />
+              )}
             </div>
             <div className="attachs__list-item__body">
               <div className="item__body-top">
@@ -19,9 +45,9 @@ const UserAttach = ({ attachments }) => {
               </div>
               <div className="item__body-bottom">
                 <div className="attach__date">
-                  {file.createdAt ? toDate(file.createdAt) : new Date()}
+                  {file.createdAt ? formatDate(file.createdAt) : new Date()}
                 </div>
-                <div className="attach__size">{file.size / 1024}</div>
+                <div className="attach__size">{Math.floor(file.size / 1024)}MB</div>
               </div>
             </div>
             <Button type="text" className="attachs__list-item__download app-icon">

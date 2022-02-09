@@ -81,9 +81,11 @@ const Rightbar = ({ currentDialogId, partner, attachments }) => {
               </svg>
             </span>
           </div>
-          <ul className="attachs__list">
-            <UserAttach attachments={attachments} />
-          </ul>
+          <div className="attaches__group">
+            <ul className="attachs__group-list">
+              <UserAttach attachments={attachments} />
+            </ul>
+          </div>
         </div>
       </div>
     </div>
