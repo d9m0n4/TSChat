@@ -1,8 +1,6 @@
 import React from 'react';
 import './index.scss';
-import attach from '../../assets/img/word.png';
 import { Button } from 'antd';
-import toDate from '../../helpers/ToDate';
 import formatDate from '../../helpers/formateDate';
 
 const UserAttach = ({ attachments }) => {
@@ -40,14 +38,12 @@ const UserAttach = ({ attachments }) => {
               )}
             </div>
             <div className="attachs__list-item__body">
-              <div className="item__body-top">
-                <p className="attach__title">{file.filename}</p>
-              </div>
+              <div className="item__body-top">{file.filename}</div>
               <div className="item__body-bottom">
                 <div className="attach__date">
                   {file.createdAt ? formatDate(file.createdAt) : new Date()}
                 </div>
-                <div className="attach__size">{Math.floor(file.size / 1024)}MB</div>
+                <div className="attach__size">{Math.floor(file.size / 1024000)}MB</div>
               </div>
             </div>
             <Button type="text" className="attachs__list-item__download app-icon">

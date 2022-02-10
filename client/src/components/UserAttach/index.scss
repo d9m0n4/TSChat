@@ -27,17 +27,23 @@
         background-color: #f8f9ff;
       }
       &__prevIcon {
-        width: 24px;
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
         img {
           width: 100%;
         }
       }
       &__body {
         font-size: 12px;
+        flex: 1;
+        padding: 0 8px;
+        overflow: hidden;
         .item__body-top {
-          p {
-            margin: 0;
-          }
+          width: 100%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
         .item__body-bottom {
           display: flex;
