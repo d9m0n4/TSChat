@@ -39,7 +39,7 @@ class MessagesController {
   };
 
   getMessages = async (req, res) => {
-    const id = req.query.dialog;
+    const id = req.query.query;
 
     await Message.find({ dialog: id })
       .populate(['user', 'attachments'])

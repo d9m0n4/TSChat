@@ -19,3 +19,24 @@
     }
   }
 }
+
+.profile__page {
+  background-color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+  &-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__avatar {
+      margin-bottom: 16px;
+    }
+    &__info {
+      background: #fafafa;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+      padding: 8px;
+    }
+  }
+}

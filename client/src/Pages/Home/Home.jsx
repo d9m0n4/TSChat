@@ -5,8 +5,9 @@ import Sidebar from '../../components/SideBar';
 import Messanger from '../../layouts/Messanger';
 import { connect } from 'react-redux';
 import Loader from '../../components/Loader';
-import { withRouter } from 'react-router';
+import { Route, Switch, withRouter } from 'react-router';
 import dialogActions from '../../store/actions/dialogActions';
+import UserProfile from '../../layouts/UserProfile';
 
 const Home = ({ setCurrentDialogId, isLoading, location, setCurrentPartner, dialogsItems }) => {
   useEffect(() => {
@@ -26,7 +27,10 @@ const Home = ({ setCurrentDialogId, isLoading, location, setCurrentPartner, dial
       ) : (
         <section className="home-page">
           <Sidebar />
-          <Messanger />
+          <Switch>
+            <Route path={'/dialogs'} component={Messanger} />
+            <Route path={'/profile'} component={UserProfile} />
+          </Switch>
         </section>
       )}
     </>

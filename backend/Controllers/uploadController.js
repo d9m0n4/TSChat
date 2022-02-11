@@ -1,6 +1,3 @@
-const Dialog = require('../Models/Dialog');
-const Message = require('../Models/Message');
-
 const cloudinary = require('../core/cloudinary');
 const UploadedFile = require('../Models/UploadedFile');
 
@@ -23,8 +20,6 @@ class UploadFilesController {
             message: error || 'upload error',
           });
         }
-
-        console.log(result);
 
         const fileData = {
           filename: file.originalname,

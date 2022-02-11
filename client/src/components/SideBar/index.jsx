@@ -17,12 +17,14 @@ const Sidebar = ({ user }) => {
   return (
     <div className="sidebar">
       <div className="user__profile-link">
-        <UserAvatar size={48} name={user.name} />
+        <NavLink exact to="/profile">
+          <UserAvatar size={48} name={user.name} />
+        </NavLink>
       </div>
       <nav className="sidebar__navigation">
         <ul className="nav-group">
           <li className="nav-group__item">
-            <NavLink activeClassName="active" to="/dialogs">
+            <NavLink activeClassName="active" exact to="/dialogs">
               <svg
                 width="32"
                 height="32"
@@ -41,7 +43,7 @@ const Sidebar = ({ user }) => {
             </NavLink>
           </li>
           <li className="nav-group__item">
-            <NavLink activeClassName="active" to="/">
+            <NavLink activeClassName="active" exact to="/">
               <svg
                 width="32"
                 height="32"

@@ -5,7 +5,7 @@ class Dialogs {
     return await API.post('/dialogs', payload);
   };
   fetchDialogs = async () => {
-    return await API.get(`/dialogs`);
+    return await API.get(`/dialogs/`);
   };
 }
 

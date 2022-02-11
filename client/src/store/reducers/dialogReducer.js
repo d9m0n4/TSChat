@@ -1,6 +1,6 @@
 const initialState = {
   dialogs: [],
-  currentDialogId: window.location.pathname.split('dialog/')[1],
+  currentDialogId: window.location.pathname.split('dialogs/')[1],
   currentPartner: null,
 };
 

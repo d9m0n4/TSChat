@@ -6,7 +6,7 @@ class Messages {
   };
 
   fetchMessages = async (id) => {
-    return await API.get('/messages/?dialog=' + id);
+    return await API.get(`/messages/?query=${id}`);
   };
 }
 
