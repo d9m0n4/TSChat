@@ -24,9 +24,12 @@
   background-color: #fff;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   padding: 32px;
   &-user {
+    position: relative;
+    flex: 0 1 50%;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,6 +40,66 @@
       background: #fafafa;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
       padding: 8px;
+      width: 100%;
+      .user__info-item {
+        margin: 8px 0px;
+      }
+      .user__name {
+        font-size: 24px;
+      }
+      span {
+        margin: 0 8px;
+      }
+    }
+    .social__links-list {
+      display: flex;
+      margin: 16px 0;
+    }
+    .social__links-item {
+      margin: 0 8px;
+    }
+  }
+  &-edit__btn {
+    position: absolute;
+    right: 16px;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    border: none;
+  }
+}
+
+.ant-modal {
+  .modal__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .profile__info {
+    margin-top: 32px;
+    width: 100%;
+  }
+  .form__item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    .ant-input {
+      flex: 0 1 70%;
+    }
+    &-label {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+.upload {
+  img {
+    cursor: pointer;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
     }
   }
 }

@@ -5,7 +5,6 @@ import colorFromStr from '../../helpers/colorFromHash';
 
 const UserAvatar = ({ name, size, src }) => {
   const firstChar = name ? name[0].toUpperCase() : '';
-
   return (
     <Avatar
       src={src}

@@ -1,5 +1,4 @@
-import { format, formatDistanceToNow, isToday, parseISO } from 'date-fns';
-import ruLocale from 'date-fns/locale/ru';
+import { format, parseISO } from 'date-fns';
 
 const formatDate = (date) => {
   const parsedDate = parseISO(date);
