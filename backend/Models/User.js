@@ -23,6 +23,13 @@ const UserSchema = new Schema({
   userAvatar: {
     type: String,
   },
+  nickName: {
+    type: String,
+  },
+  info: {
+    type: String,
+  },
+  birthday: { type: Date },
   isOnline: { type: Boolean, default: false },
   lastSeen: { type: Date, default: Date.now() },
 });

@@ -10,13 +10,17 @@ import tgIcon from '../assets/img/icons/telegram.svg';
 import { EditOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Input, Upload } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import Form from 'antd/lib/form/Form';
+import Form, { useForm } from 'antd/lib/form/Form';
 import { useEffect } from 'react';
+import TextArea from 'antd/lib/input/TextArea';
+import { Formik } from 'formik';
 
 const UserProfile = () => {
   const [visible, setVisible] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [url, setUrl] = useState(null);
+
+  const { user } = useSelector((state) => state.auth);
 
   const openModal = () => {
     setVisible(true);
@@ -28,12 +32,13 @@ const UserProfile = () => {
     reader.readAsDataURL(img);
   }
 
-  const handleChange = (info) => {
+  const handleChangeAvatar = (info) => {
     if (info.file.status === 'uploading') {
       return;
     }
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj, (imageUrl) => setUrl(imageUrl));
+      setFileList([info.file.originFileObj]);
     }
   };
 
@@ -45,36 +50,20 @@ const UserProfile = () => {
         visible={visible}
         destroyOnClose={true}>
         <div className="modal__info">
-          <Upload
-            className="upload"
-            accept=".jpg, .png, .gif"
-            withCredentials={true}
-            method="GET"
-            maxCount={1}
-            onChange={handleChange}
-            showUploadList={false}>
-            <UserAvatar size={96} src={url} />
-          </Upload>
-          <Form className="profile__info">
-            <div className="form__item">
-              <span className="form__item-label">Имя</span> <Input value="sdasdasdasd" />
-            </div>
-            <div className="form__item">
-              <span className="form__item-label">Имя пользователя</span>
-              <Input value="sdasdasdasd" />
-            </div>
-            <div className="form__item">
-              <span className="form__item-label">Дата рождения</span> <DatePicker locale={locale} />
-            </div>
-          </Form>
+          <ModalForm
+            user={user}
+            avatar={fileList[0]}
+            url={url}
+            handleChangeAvatar={handleChangeAvatar}
+          />
         </div>
       </Modal>
       <div className="profile__page-user">
         <div className="profile__page-user__avatar">
           <UserAvatar
             className="upload__avatar"
-            src={'https://res.cloudinary.com/dxyprpult/image/upload/v1644482958/file_tsvx7j.jpg'}
-            name={'qwe'}
+            src={user.userAvatar && user.userAvatar}
+            name={user && user.name}
             size={128}
           />
         </div>
@@ -83,35 +72,25 @@ const UserProfile = () => {
         </div>
         <div className="profile__page-user__info">
           <div className="user__name user__info-item">
-            <span>Имя:</span>Дмитрий Чесноков
+            <span>Имя:</span>
+            {user && user.name}
           </div>
-          <div className="user__nickname user__info-item">
-            <span>Имя пользователя</span>D9m0n
+          <div className=" user__info-item">
+            <span>Имя пользователя</span>
+            {user.nickName ? user.nickName : '-'}
           </div>
-          <div className="user__birthday user__info-item">
-            <span>Дата рождения:</span>02.08.1994
+          <div className=" user__info-item">
+            <span>E-mail</span>
+            {user && user.email}
           </div>
-          <ul className="social__links-list">
-            <li className="social__links-item">
-              <a defaultValue="#" href="http://vk.com/chester0208" target="_blank" rel="noreferrer">
-                <img src={vkIcon} alt="vk" />
-              </a>
-            </li>
-            <li className="social__links-item">
-              <a
-                defaultValue="#"
-                href="https://www.instagram.com/d9m0n4ik/"
-                target="_blank"
-                rel="noreferrer">
-                <img src={instIcon} alt="inst" />
-              </a>
-            </li>
-            <li className="social__links-item">
-              <a defaultValue="#" href="https://t.me/D9m0n4ik" target="_blank" rel="noreferrer">
-                <img src={tgIcon} alt="tg" />
-              </a>
-            </li>
-          </ul>
+          <div className=" user__info-item">
+            <span>Дата рождения:</span>
+            {user.birthday ? user.birthday : '-'}
+          </div>
+          <div className=" user__info-item">
+            <span>Дополнительная информация:</span>
+            {user.info ? user.info : '-'}
+          </div>
         </div>
       </div>
       <div className="profile__page-attachments">123</div>
@@ -120,3 +99,73 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+const ModalForm = ({ user, avatar, url, handleChangeAvatar }) => (
+  <Formik
+    initialValues={{
+      name: user.name,
+      nickName: user.nickname ? user.nickName : '-',
+      email: user.email,
+      date: null,
+      info: '',
+      avatar,
+    }}
+    onSubmit={(values) => {
+      console.log(values);
+    }}>
+    {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+      <>
+        <Upload
+          className="upload"
+          accept=".jpg, .png, .gif"
+          withCredentials={true}
+          method="GET"
+          maxCount={1}
+          onChange={handleChangeAvatar}
+          showUploadList={false}>
+          <UserAvatar size={96} src={url} />
+        </Upload>
+        <Form onFinish={handleSubmit} className="profile__info">
+          <div className="form__item">
+            <span className="form__item-label">Имя</span>
+            <div className="form__item-input">
+              <Input value={values.name} name="name" onChange={handleChange} />
+            </div>
+          </div>
+          <div className="form__item">
+            <span className="form__item-label">Имя пользователя</span>
+            <div className="form__item-input">
+              <Input value={values.nickName} onChange={handleChange} name="nickName" />
+            </div>
+          </div>
+          <div className="form__item">
+            <span className="form__item-label">E-mail</span>
+            <div className="form__item-input">
+              <Input value={values.email} onChange={handleChange} name="email" />
+            </div>
+          </div>
+          <div className="form__item">
+            <span className="form__item-label">Дата рождения:</span>{' '}
+            <div className="form__item-input">
+              <DatePicker value={values.date} name="date" locale={locale} />
+            </div>
+          </div>
+          <div className="form__item info">
+            <span className="form__item-label">Дополнительная информация:</span>
+            <div className="form__item-input">
+              <TextArea
+                onChange={handleChange}
+                name="info"
+                autoSize={{ minRows: 2, maxRows: 5 }}
+                value={values.info}
+              />
+            </div>
+          </div>
+          <Button htmlType="submit" className="form__button" shape="round">
+            Сохранить
+          </Button>
+        </Form>
+      </>
+    )}
+  </Formik>
+);

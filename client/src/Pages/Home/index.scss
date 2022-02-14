@@ -77,16 +77,35 @@
   .profile__info {
     margin-top: 32px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    .form__button {
+      align-self: center;
+    }
   }
   .form__item {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
-    .ant-input {
-      flex: 0 1 70%;
+    &-input {
+      flex: 0 0 70%;
     }
+
     &-label {
       flex: 0 0 auto;
+    }
+
+    &.info {
+      margin-top: 16px;
+      flex-wrap: wrap;
+      flex-direction: column;
+      margin-bottom: 32px;
+      .form__item-label {
+        margin: 8px 0;
+      }
+      .form__item-input {
+        width: 100%;
+      }
     }
   }
 }
