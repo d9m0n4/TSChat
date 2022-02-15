@@ -4,23 +4,21 @@ import UserAvatar from '../components/Avatar';
 
 import locale from 'antd/es/date-picker/locale/ru_RU';
 
-import vkIcon from '../assets/img/icons/vk.svg';
-import instIcon from '../assets/img/icons/instagram.png';
-import tgIcon from '../assets/img/icons/telegram.svg';
 import { EditOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Input, Upload } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import Form, { useForm } from 'antd/lib/form/Form';
+import Form from 'antd/lib/form/Form';
 import { useEffect } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { Formik } from 'formik';
+import Files from '../Services/Files';
+import Users from '../Services/Users';
 
 const UserProfile = () => {
+  const { user } = useSelector((state) => state.auth);
   const [visible, setVisible] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const [url, setUrl] = useState(null);
-
-  const { user } = useSelector((state) => state.auth);
+  const [url, setUrl] = useState(user.avatar && user.avatar.thumb);
 
   const openModal = () => {
     setVisible(true);
@@ -38,8 +36,8 @@ const UserProfile = () => {
     }
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj, (imageUrl) => setUrl(imageUrl));
-      setFileList([info.file.originFileObj]);
     }
+    setFileList([info.file.originFileObj]);
   };
 
   return (
@@ -50,19 +48,84 @@ const UserProfile = () => {
         visible={visible}
         destroyOnClose={true}>
         <div className="modal__info">
-          <ModalForm
-            user={user}
-            avatar={fileList[0]}
-            url={url}
-            handleChangeAvatar={handleChangeAvatar}
-          />
+          <Formik
+            initialValues={{
+              name: user.name,
+              nickName: user.nickname ? user.nickName : '',
+              email: user.email,
+              date: null,
+              info: '',
+            }}
+            onSubmit={async (values) => {
+              if (fileList.length) {
+                const res = await Files.upload(fileList[0]);
+
+                console.log({ ...values, avatar: res.data.file._id });
+                await Users.updateUser({ ...values, avatar: res.data.file._id, user: user.id });
+              }
+            }}>
+            {({ values, handleChange, handleSubmit, isSubmitting }) => (
+              <>
+                <Upload
+                  className="upload"
+                  accept=".jpg, .png, .gif"
+                  withCredentials={true}
+                  method="GET"
+                  maxCount={1}
+                  onChange={handleChangeAvatar}
+                  showUploadList={false}>
+                  <UserAvatar size={96} name={user.name} src={url} />
+                </Upload>
+                <Form onFinish={handleSubmit} className="profile__info">
+                  <div className="form__item">
+                    <span className="form__item-label">Имя</span>
+                    <div className="form__item-input">
+                      <Input value={values.name} name="name" onChange={handleChange} />
+                    </div>
+                  </div>
+                  <div className="form__item">
+                    <span className="form__item-label">Имя пользователя</span>
+                    <div className="form__item-input">
+                      <Input value={values.nickName} onChange={handleChange} name="nickName" />
+                    </div>
+                  </div>
+                  <div className="form__item">
+                    <span className="form__item-label">E-mail</span>
+                    <div className="form__item-input">
+                      <Input value={values.email} onChange={handleChange} name="email" />
+                    </div>
+                  </div>
+                  <div className="form__item">
+                    <span className="form__item-label">Дата рождения:</span>{' '}
+                    <div className="form__item-input">
+                      <DatePicker value={values.date} name="date" locale={locale} />
+                    </div>
+                  </div>
+                  <div className="form__item info">
+                    <span className="form__item-label">Дополнительная информация:</span>
+                    <div className="form__item-input">
+                      <TextArea
+                        onChange={handleChange}
+                        name="info"
+                        autoSize={{ minRows: 2, maxRows: 5 }}
+                        value={values.info}
+                      />
+                    </div>
+                  </div>
+                  <Button htmlType="submit" className="form__button" shape="round">
+                    Сохранить
+                  </Button>
+                </Form>
+              </>
+            )}
+          </Formik>
         </div>
       </Modal>
       <div className="profile__page-user">
         <div className="profile__page-user__avatar">
           <UserAvatar
             className="upload__avatar"
-            src={user.userAvatar && user.userAvatar}
+            src={user.avatar && user.avatar.thumb}
             name={user && user.name}
             size={128}
           />
@@ -99,73 +162,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-
-const ModalForm = ({ user, avatar, url, handleChangeAvatar }) => (
-  <Formik
-    initialValues={{
-      name: user.name,
-      nickName: user.nickname ? user.nickName : '-',
-      email: user.email,
-      date: null,
-      info: '',
-      avatar,
-    }}
-    onSubmit={(values) => {
-      console.log(values);
-    }}>
-    {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-      <>
-        <Upload
-          className="upload"
-          accept=".jpg, .png, .gif"
-          withCredentials={true}
-          method="GET"
-          maxCount={1}
-          onChange={handleChangeAvatar}
-          showUploadList={false}>
-          <UserAvatar size={96} src={url} />
-        </Upload>
-        <Form onFinish={handleSubmit} className="profile__info">
-          <div className="form__item">
-            <span className="form__item-label">Имя</span>
-            <div className="form__item-input">
-              <Input value={values.name} name="name" onChange={handleChange} />
-            </div>
-          </div>
-          <div className="form__item">
-            <span className="form__item-label">Имя пользователя</span>
-            <div className="form__item-input">
-              <Input value={values.nickName} onChange={handleChange} name="nickName" />
-            </div>
-          </div>
-          <div className="form__item">
-            <span className="form__item-label">E-mail</span>
-            <div className="form__item-input">
-              <Input value={values.email} onChange={handleChange} name="email" />
-            </div>
-          </div>
-          <div className="form__item">
-            <span className="form__item-label">Дата рождения:</span>{' '}
-            <div className="form__item-input">
-              <DatePicker value={values.date} name="date" locale={locale} />
-            </div>
-          </div>
-          <div className="form__item info">
-            <span className="form__item-label">Дополнительная информация:</span>
-            <div className="form__item-input">
-              <TextArea
-                onChange={handleChange}
-                name="info"
-                autoSize={{ minRows: 2, maxRows: 5 }}
-                value={values.info}
-              />
-            </div>
-          </div>
-          <Button htmlType="submit" className="form__button" shape="round">
-            Сохранить
-          </Button>
-        </Form>
-      </>
-    )}
-  </Formik>
-);

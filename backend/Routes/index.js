@@ -30,6 +30,7 @@ const Routes = (io) => {
   router.get('/getAllUsers', CheckToken, UserCtrl.getAllUsers);
   router.get('/getCurrentUser', CheckToken, UserCtrl.getCurrentUser);
   router.get('/user/find', CheckToken, UserCtrl.findUser);
+  router.patch('/user', CheckToken, UserCtrl.updateUser);
 
   router.post('/dialogs', CheckToken, DialogCtrl.createDialog);
   router.get('/dialogs', CheckToken, DialogCtrl.getDialogs);

@@ -1,3 +1,4 @@
+const UserDto = require('../DTOS/user-dto');
 const Dialog = require('../Models/Dialog');
 const Message = require('../Models/Message');
 
@@ -42,13 +43,19 @@ class MessagesController {
     const id = req.query.query;
 
     await Message.find({ dialog: id })
-      .populate(['user', 'attachments'])
+      .populate('attachments')
+      .populate('user')
       .exec((err, messages) => {
         if (err) {
           return res.status(404).json({
             message: 'messages not found',
           });
         }
+        console.log(messages[0]);
+        // const userDto = new UserDto();
+        // // const mappedMessages = messages.map((item) => userDto(item.user));
+
+        // console.log(mappedMessages);
         res.json(messages);
       });
   };

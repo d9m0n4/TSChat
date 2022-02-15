@@ -20,9 +20,7 @@ const UserSchema = new Schema({
   activationLink: {
     type: String,
   },
-  userAvatar: {
-    type: String,
-  },
+  userAvatar: { type: String },
   nickName: {
     type: String,
   },

@@ -6,10 +6,11 @@ import { NavLink } from 'react-router-dom';
 import authActions from '../../store/actions/authActions';
 
 import store from '../../store';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import UserAvatar from '../Avatar';
 
-const Sidebar = ({ user }) => {
+const Sidebar = () => {
+  const { user } = useSelector((state) => state.auth);
   const logout = async () => {
     await store.dispatch(authActions.logout());
   };
@@ -18,7 +19,7 @@ const Sidebar = ({ user }) => {
     <div className="sidebar">
       <div className="user__profile-link">
         <NavLink exact to="/profile">
-          <UserAvatar size={48} name={user.name} />
+          <UserAvatar size={48} name={user.name} src={user.avatar && user.avatar.thumb} />
         </NavLink>
       </div>
       <nav className="sidebar__navigation">
@@ -115,4 +116,4 @@ const Sidebar = ({ user }) => {
   );
 };
 
-export default connect(({ auth }) => ({ user: auth.user }))(Sidebar);
+export default Sidebar;

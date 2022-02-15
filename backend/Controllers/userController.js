@@ -150,9 +150,16 @@ class UserController {
     if (!req.user) {
       res.status(403).json({ message: 'Пользователь не авторизован' });
     }
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).populate('userAvatar');
+
     const userDTO = new UserDto(user);
-    res.status(200).json(userDTO);
+    res.status(200).json({
+      ...userDTO,
+      avatar: {
+        url: user.userAvatar ? user.userAvatar.url : null,
+        thumb: user.userAvatar ? user.userAvatar.thumb : null,
+      },
+    });
   }
   async getUsers(req, res) {
     const userId = req.user.id;
@@ -174,6 +181,23 @@ class UserController {
     }
 
     res.json(users);
+  }
+  async updateUser(req, res) {
+    const data = req.body;
+    const postData = {
+      email: data.email,
+      name: data.name,
+      userAvatar: data.avatar,
+      nickName: data.nickName,
+      info: data.info,
+      birthday: data.date,
+    };
+    const doc = await User.findOneAndUpdate({ _id: data.user }, postData, { new: true });
+
+    if (!doc) {
+      res.status(404);
+    }
+    res.status(200);
   }
 }
 
