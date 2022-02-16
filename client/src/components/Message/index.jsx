@@ -13,7 +13,6 @@ import toCurrentTime from '../../helpers/toCurrentTime';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 const Message = ({ isMe, name, text, date, attachments, user }) => {
-  console.log(user);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -70,7 +69,7 @@ const Message = ({ isMe, name, text, date, attachments, user }) => {
   return (
     <div className={classNames('message', { 'message--isme': isMe })}>
       <div className="message__avatar">
-        <UserAvatar name={name} size={36} src={user.avatar && user.avatar.thumb} />
+        <UserAvatar name={name} size={36} src={user.userAvatar && user.userAvatar} />
       </div>
       <div className="message__content">
         {

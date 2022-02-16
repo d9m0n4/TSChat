@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, SchemaTypes } = require('mongoose');
 
 const UserSchema = new Schema({
   email: {
@@ -20,7 +20,7 @@ const UserSchema = new Schema({
   activationLink: {
     type: String,
   },
-  userAvatar: { type: String },
+  userAvatar: { type: String, default: null },
   nickName: {
     type: String,
   },

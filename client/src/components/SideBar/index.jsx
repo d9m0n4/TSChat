@@ -11,6 +11,7 @@ import UserAvatar from '../Avatar';
 
 const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
+
   const logout = async () => {
     await store.dispatch(authActions.logout());
   };
@@ -19,13 +20,13 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="user__profile-link">
         <NavLink exact to="/profile">
-          <UserAvatar size={48} name={user.name} src={user.avatar && user.avatar.thumb} />
+          <UserAvatar size={48} name={user.name} src={user.avatar && user.avatar} />
         </NavLink>
       </div>
       <nav className="sidebar__navigation">
         <ul className="nav-group">
           <li className="nav-group__item">
-            <NavLink activeClassName="active" exact to="/dialogs">
+            <NavLink activeClassName="active" to="/dialogs/">
               <svg
                 width="32"
                 height="32"

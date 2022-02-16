@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
 import { useState } from 'react';
-import { connect } from 'react-redux';
-import ChatInput from '../components/ChatInput';
-import Files from '../Services/Files';
-import messagesActions from '../store/actions/messagesActions';
-import { CloseCircleTwoTone } from '@ant-design/icons';
 import { useRef } from 'react';
+
+import { connect } from 'react-redux';
+
+import ChatInput from '../components/ChatInput';
+
+import Files from '../Services/Files';
+
+import messagesActions from '../store/actions/messagesActions';
+
+import { CloseCircleTwoTone } from '@ant-design/icons';
 
 const ChatInputContainer = ({ dialogId, sendMessage }) => {
   const [messageValue, setMessageValue] = useState('');
@@ -268,6 +272,9 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   return (
     <ChatInput
       audioResult={audioResult}
+      record={Recording}
+      handleStop={handleStop}
+      isRecording={isRecording}
       canvas={canvas}
       value={messageValue}
       onSendMessage={onSendMessage}
@@ -275,9 +282,6 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       setEmoji={setEmoji}
       toggleVisiblePicker={toggleVisiblePicker}
       visiblePicker={visiblePicker}
-      record={Recording}
-      handleStop={handleStop}
-      isRecording={isRecording}
       uploaderProps={uploaderProps}
       uploading={uploading}
     />

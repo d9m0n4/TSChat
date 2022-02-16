@@ -1,13 +1,14 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import './index.scss';
 
-import { NavLink } from 'react-router-dom';
 import UserAvatar from '../Avatar';
-import { connect } from 'react-redux';
 import toDate from '../../helpers/ToDate';
 
-const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, currentUser }) => {
+const ChatListItem = ({ online, id, name, type, date, lastMessage, currentUser }) => {
+  const { userId } = useSelector((state) => state.auth.user.id);
   const lastM = () => {
     return userId === currentUser ? `Вы: ${lastMessage}` : `${lastMessage}`;
   };
@@ -44,4 +45,4 @@ const ChatListItem = ({ online, id, name, type, date, lastMessage, userId, curre
   );
 };
 
-export default connect(({ auth }) => ({ currentUser: auth.user.id }))(React.memo(ChatListItem));
+export default React.memo(ChatListItem);

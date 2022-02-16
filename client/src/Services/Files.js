@@ -20,6 +20,9 @@ class Files {
   delete = (id) => {
     return API.delete(`/files/?id=${id}`);
   };
+  getAllOfUser = (id) => {
+    return API.get(`/files/user?id=${id}`);
+  };
 }
 
 export default new Files();

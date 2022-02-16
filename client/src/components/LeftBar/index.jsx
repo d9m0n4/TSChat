@@ -1,8 +1,9 @@
 import React from 'react';
 import './index.scss';
-import ChatListItem from '../ChatListItem';
 
 import { Button, Input } from 'antd';
+
+import ChatListItem from '../ChatListItem';
 import AddDialogModal from '../AddDialogModal';
 
 const Leftbar = ({

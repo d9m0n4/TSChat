@@ -13,12 +13,16 @@ import TextArea from 'antd/lib/input/TextArea';
 import { Formik } from 'formik';
 import Files from '../Services/Files';
 import Users from '../Services/Users';
+import socket from '../core/socket';
+
+import authActions from '../store/actions/authActions';
 
 const UserProfile = () => {
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const [url, setUrl] = useState(user.avatar && user.avatar.thumb);
+  const [url, setUrl] = useState(user.avatar);
 
   const openModal = () => {
     setVisible(true);
@@ -40,6 +44,22 @@ const UserProfile = () => {
     setFileList([info.file.originFileObj]);
   };
 
+  useEffect(() => {
+    socket.on('getCurrentUser', () => {
+      dispatch(authActions.getCurrentUser());
+    });
+    return () => {
+      socket.removeListener('getCurrentUser');
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const get = async (id) => {
+      await Files.get(id).then((data) => console.log(data));
+    };
+    get(user.id);
+  }, [user.id]);
+
   return (
     <div className="profile__page">
       <Modal
@@ -51,17 +71,15 @@ const UserProfile = () => {
           <Formik
             initialValues={{
               name: user.name,
-              nickName: user.nickname ? user.nickName : '',
+              nickName: user.nickName ? user.nickName : '',
               email: user.email,
               date: null,
-              info: '',
+              info: user.info,
             }}
             onSubmit={async (values) => {
               if (fileList.length) {
                 const res = await Files.upload(fileList[0]);
-
-                console.log({ ...values, avatar: res.data.file._id });
-                await Users.updateUser({ ...values, avatar: res.data.file._id, user: user.id });
+                await Users.updateUser({ ...values, avatar: res.data.file.thumb, user: user.id });
               }
             }}>
             {({ values, handleChange, handleSubmit, isSubmitting }) => (
@@ -112,7 +130,11 @@ const UserProfile = () => {
                       />
                     </div>
                   </div>
-                  <Button htmlType="submit" className="form__button" shape="round">
+                  <Button
+                    disabled={isSubmitting}
+                    htmlType="submit"
+                    className="form__button"
+                    shape="round">
                     Сохранить
                   </Button>
                 </Form>
@@ -125,7 +147,7 @@ const UserProfile = () => {
         <div className="profile__page-user__avatar">
           <UserAvatar
             className="upload__avatar"
-            src={user.avatar && user.avatar.thumb}
+            src={user.avatar && user.avatar}
             name={user && user.name}
             size={128}
           />

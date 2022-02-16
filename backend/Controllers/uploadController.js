@@ -80,6 +80,13 @@ class UploadFilesController {
       .then((attachs) => res.json(attachs))
       .catch((e) => res.json(e));
   };
+  // getFilesOfUser = async (req, res) => {
+  //   const id = req.query.id;
+  //   console.log('user', id);
+
+  //   const files = await UploadedFile.findById({ user: id });
+  //   res.json(files);
+  // };
 }
 
 module.exports = UploadFilesController;

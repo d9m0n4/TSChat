@@ -1,9 +1,7 @@
 import React from 'react';
-import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Rightbar from '../components/RightBar';
-import Files from '../Services/Files';
 
 import filesActions from '../store/actions/filesActions';
 

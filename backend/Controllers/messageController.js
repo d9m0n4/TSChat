@@ -44,14 +44,14 @@ class MessagesController {
 
     await Message.find({ dialog: id })
       .populate('attachments')
-      .populate('user')
+      .populate('user', ['userAvatar', 'name'])
       .exec((err, messages) => {
         if (err) {
           return res.status(404).json({
             message: 'messages not found',
           });
         }
-        console.log(messages[0]);
+
         // const userDto = new UserDto();
         // // const mappedMessages = messages.map((item) => userDto(item.user));
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './index.scss';
 import Message from '../Message';
 import { MailOutlined } from '@ant-design/icons';
@@ -38,7 +38,6 @@ const ChatMesaages = ({
                     text={m.text}
                     name={m.user.name}
                     user={m.user}
-                    dateToNow={dateToNow}
                   />
                 </div>
               ))
@@ -57,4 +56,4 @@ const ChatMesaages = ({
   );
 };
 
-export default ChatMesaages;
+export default React.memo(ChatMesaages);

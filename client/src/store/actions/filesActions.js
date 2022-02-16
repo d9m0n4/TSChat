@@ -14,6 +14,7 @@ const filesActions = {
       console.log(error);
     }
   },
+  getFilesOfUser: (payload) => {},
 };
 
 export default filesActions;

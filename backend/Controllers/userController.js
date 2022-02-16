@@ -146,21 +146,18 @@ class UserController {
     console.log(users);
     res.json(users);
   }
-  async getCurrentUser(req, res) {
+  getCurrentUser = async (req, res) => {
     if (!req.user) {
       res.status(403).json({ message: 'Пользователь не авторизован' });
     }
     const user = await User.findById(req.user.id).populate('userAvatar');
 
     const userDTO = new UserDto(user);
+
     res.status(200).json({
       ...userDTO,
-      avatar: {
-        url: user.userAvatar ? user.userAvatar.url : null,
-        thumb: user.userAvatar ? user.userAvatar.thumb : null,
-      },
     });
-  }
+  };
   async getUsers(req, res) {
     const userId = req.user.id;
     console.log(userId);
@@ -182,8 +179,9 @@ class UserController {
 
     res.json(users);
   }
-  async updateUser(req, res) {
+  updateUser = async (req, res) => {
     const data = req.body;
+
     const postData = {
       email: data.email,
       name: data.name,
@@ -192,13 +190,14 @@ class UserController {
       info: data.info,
       birthday: data.date,
     };
-    const doc = await User.findOneAndUpdate({ _id: data.user }, postData, { new: true });
+    const doc = await User.findOneAndUpdate({ _id: data.user }, postData);
 
     if (!doc) {
-      res.status(404);
+      res.status(404).json('error doc not found');
     }
-    res.status(200);
-  }
+    this.io.emit('getCurrentUser', doc);
+    res.status(200).json('success');
+  };
 }
 
 module.exports = UserController;
