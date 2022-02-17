@@ -35,6 +35,7 @@ const Messages = ({
     return () => {
       socket.removeListener('SERVER:CREATE_MESSAGE');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, fetchMessages]);
 
   return (
@@ -57,7 +58,7 @@ export default connect(
     currentPartner: dialogs.currentPartner,
     items: messages.items,
     loader: messages.loader,
-    user: auth.user.id,
+    user: auth.user && auth.user.id,
   }),
   { ...messagesActions },
 )(Messages);

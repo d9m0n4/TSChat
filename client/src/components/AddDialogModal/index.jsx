@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Modal, Select } from 'antd';
-import './index.scss';
 import Form from 'antd/lib/form/Form';
 import Avatar from 'antd/lib/avatar/avatar';
 import TextArea from 'antd/lib/input/TextArea';
+
+import './index.scss';
 
 const AddDialogModal = ({
   messageValue,
@@ -18,19 +19,21 @@ const AddDialogModal = ({
   uploading,
   userId,
 }) => {
-  const options = users
-    .filter((user) => {
-      return user._id !== userId;
-    })
-    .map((u) => (
-      <Select.Option className="modal__result-col" key={u._id}>
-        <div className="modal__result-col__name">
-          <Avatar size={24} />
-          <span className="modal__result-col__name">{u.name}</span>
-        </div>
-        <span className="modal__result-col__status">онлайн</span>
-      </Select.Option>
-    ));
+  const options =
+    users.length &&
+    users
+      .filter((user) => {
+        return user._id !== userId;
+      })
+      .map((u) => (
+        <Select.Option className="modal__result-col" key={u._id}>
+          <div className="modal__result-col__name">
+            <Avatar size={24} />
+            <span className="modal__result-col__name">{u.name}</span>
+          </div>
+          <span className="modal__result-col__status">онлайн</span>
+        </Select.Option>
+      ));
 
   return (
     <Modal

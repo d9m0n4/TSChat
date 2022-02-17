@@ -77,7 +77,7 @@ const Leftbar = ({
                     key={dialog.dialogId}
                     id={dialog.dialogId}
                     userId={dialog.lastMessage && dialog.lastMessage.user}
-                    name={dialog.partner.name}
+                    partner={dialog.partner}
                     date={dialog.lastMessage.createdAt}
                     lastMessage={
                       dialog.lastMessage

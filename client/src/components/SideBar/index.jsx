@@ -20,7 +20,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="user__profile-link">
         <NavLink exact to="/profile">
-          <UserAvatar size={48} name={user.name} src={user.avatar && user.avatar} />
+          <UserAvatar size={48} name={user && user.name} src={user && user.avatar} />
         </NavLink>
       </div>
       <nav className="sidebar__navigation">

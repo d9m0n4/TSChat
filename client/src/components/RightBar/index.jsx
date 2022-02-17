@@ -40,7 +40,11 @@ const Rightbar = ({ currentDialogId, partner, attachments }) => {
       <div className="rightbar__body rightbar__dialog">
         <div className="rightbar__dialog-companion__info">
           <div className="companion__avatar">
-            <UserAvatar size={100} name={partner && partner.partner.name} />
+            <UserAvatar
+              size={100}
+              name={partner && partner.partner.name}
+              src={partner && partner.partner.userAvatar}
+            />
           </div>
           <div className="companion__pers-info">
             <div className="companion__name">{partner && partner.partner.name}</div>

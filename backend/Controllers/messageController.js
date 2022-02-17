@@ -59,6 +59,24 @@ class MessagesController {
         res.json(messages);
       });
   };
+
+  getMessagesOfUser = async (req, res) => {
+    const id = req.query.id;
+
+    try {
+      Message.find({ user: id })
+        .select(['attachments'])
+        .populate('attachments', ['url', 'thumb', 'isAudio'])
+        .exec((err, messages) => {
+          if (err) {
+            console.log(err);
+          }
+          res.json(messages);
+        });
+    } catch (error) {
+      res.json(error);
+    }
+  };
 }
 
 module.exports = MessagesController;

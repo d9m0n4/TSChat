@@ -12,9 +12,9 @@ const RightBarContianer = () => {
 
   useEffect(() => {
     if (currentPartner) {
-      dispatch(filesActions.getFiles(currentPartner.partner._id));
+      dispatch(filesActions.getFiles(currentDialogId));
     }
-  }, [currentPartner]);
+  }, [currentDialogId, currentPartner, dispatch]);
 
   return (
     <Rightbar currentDialogId={currentDialogId} partner={currentPartner} attachments={files} />

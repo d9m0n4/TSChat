@@ -1,5 +1,6 @@
 const cloudinary = require('../core/cloudinary');
 const UploadedFile = require('../Models/UploadedFile');
+const Message = require('../Models/Message');
 
 class UploadFilesController {
   constructor(io) {
@@ -74,19 +75,11 @@ class UploadFilesController {
   };
 
   getAttachments = async (req, res) => {
-    const userId = req.query.id;
+    const dialogId = req.query.id;
 
-    await UploadedFile.find({ user: userId })
-      .then((attachs) => res.json(attachs))
-      .catch((e) => res.json(e));
+    await Message.find({ dialog: dialogId }, 'attachments')
+    .then((d) => console.log(d));
   };
-  // getFilesOfUser = async (req, res) => {
-  //   const id = req.query.id;
-  //   console.log('user', id);
-
-  //   const files = await UploadedFile.findById({ user: id });
-  //   res.json(files);
-  // };
 }
 
 module.exports = UploadFilesController;

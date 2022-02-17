@@ -40,7 +40,7 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
 
   const onSearch = async (value) => {
     await User.findUsers(value)
-      .then((data) => {
+      .then(({ data }) => {
         setUsers(data);
       })
       .catch((err) => console.log(err));
@@ -115,7 +115,7 @@ export default withRouter(
     ({ dialogs, auth }) => ({
       items: dialogs.dialogs,
       currentDialogId: dialogs.currentDialogId,
-      userId: auth.user.id,
+      userId: auth.user && auth.user.id,
     }),
     { ...dialogActions },
   )(LeftBar),

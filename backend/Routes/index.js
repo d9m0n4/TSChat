@@ -36,12 +36,13 @@ const Routes = (io) => {
   router.get('/dialogs', CheckToken, DialogCtrl.getDialogs);
 
   router.get('/messages', CheckToken, MessageCtrl.getMessages);
+  router.get('/messages/user', CheckToken, MessageCtrl.getMessagesOfUser);
   router.post('/messages', CheckToken, MessageCtrl.createMessage);
 
   router.post('/files', CheckToken, uploader.single('file'), UploadCtrl.create);
   router.get('/files', CheckToken, UploadCtrl.getAttachments);
   router.delete('/files', CheckToken, UploadCtrl.delete);
-  router.get('/files/user', CheckToken, UploadCtrl.getFilesOfUser);
+  // router.get('/files', CheckToken, UploadCtrl.getFilesOfUser);
 
   return router;
 };

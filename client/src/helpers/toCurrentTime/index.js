@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (number) => {
   const mins = Math.floor(number / 60);
   const secs = (number % 60).toFixed();

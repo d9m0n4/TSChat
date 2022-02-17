@@ -182,6 +182,8 @@ class UserController {
   updateUser = async (req, res) => {
     const data = req.body;
 
+    console.log(data);
+
     const postData = {
       email: data.email,
       name: data.name,
