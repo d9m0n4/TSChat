@@ -1,6 +1,7 @@
 const cloudinary = require('../core/cloudinary');
 const UploadedFile = require('../Models/UploadedFile');
 const Message = require('../Models/Message');
+const Dialog = require('../Models/Dialog');
 
 class UploadFilesController {
   constructor(io) {
@@ -76,9 +77,34 @@ class UploadFilesController {
 
   getAttachments = async (req, res) => {
     const dialogId = req.query.id;
+    const currentUserId = req.user.id;
 
-    await Message.find({ dialog: dialogId }, 'attachments')
-    .then((d) => console.log(d));
+    Dialog.findById(dialogId)
+      .populate('members')
+      .exec((err, result) => {
+        if (err) {
+          return res.json(err);
+        }
+        const partners = result.members;
+        const { _id } = partners.find((item) => item._id.toString() !== currentUserId);
+        const partnerId = _id.toString();
+        Message.find({ dialog: dialogId })
+          .select(['attachments', 'user'])
+          .populate('attachments')
+          .exec((err, result) => {
+            if (err) {
+              return res.json(err);
+            }
+
+            const partnerMessages = result
+              .filter((item) => item.attachments.length)
+              .filter((item) => item.user == partnerId)
+              .map((item) => item.attachments)
+              .flat();
+
+            res.status(200).json(partnerMessages);
+          });
+      });
   };
 }
 
