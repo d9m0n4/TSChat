@@ -5,15 +5,7 @@ import { MailOutlined } from '@ant-design/icons';
 import ChatInputContainer from '../../containers/ChatInput';
 import Loader from '../../components/Loader';
 
-const ChatMesaages = ({
-  scrollRef,
-  messages,
-  user,
-  currentDialogId,
-  loader,
-  currentPartner,
-  dateToNow,
-}) => {
+const ChatMesaages = ({ scrollRef, messages, user, currentDialogId, loader, currentPartner }) => {
   return (
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Modal, Select } from 'antd';
-import Form from 'antd/lib/form/Form';
-import Avatar from 'antd/lib/avatar/avatar';
+import { Button, Modal, Select, Form } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 
 import './index.scss';
+import UserAvatar from '../Avatar';
 
 const AddDialogModal = ({
   messageValue,
@@ -28,7 +27,7 @@ const AddDialogModal = ({
       .map((u) => (
         <Select.Option className="modal__result-col" key={u._id}>
           <div className="modal__result-col__name">
-            <Avatar size={24} />
+            <UserAvatar size={24} name={u.name} src={u.userAvatar} />
             <span className="modal__result-col__name">{u.name}</span>
           </div>
           <span className="modal__result-col__status">онлайн</span>

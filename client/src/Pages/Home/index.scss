@@ -35,20 +35,26 @@
     align-items: center;
     &__avatar {
       margin-bottom: 16px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+      border-radius: 50%;
     }
     &__info {
       background: #fafafa;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+      border-radius: 4px;
       padding: 16px;
       width: 100%;
       .user__info-item {
         margin: 8px 0px;
+        font-size: 18px;
+        display: flex;
       }
-      .user__name {
-        font-size: 24px;
-      }
+
       span {
         margin: 0 8px;
+        color: #3a456b;
+        font-size: 16px;
+        flex: 0 0 40%;
       }
     }
     .social__links-list {
@@ -66,15 +72,34 @@
   &-attachments {
     flex: 0 0 50%;
     padding: 16px;
+    border-radius: 4px;
 
     &__list {
       overflow: auto;
+      height: 100%;
       padding: 8px;
       display: flex;
       flex-wrap: wrap;
       background: #fafafa;
       justify-content: space-between;
+      border-radius: 4px;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+      scrollbar-color: #606060 transparent;
+      scroll-behavior: smooth;
+
+      &::-webkit-scrollbar-track {
+        border-radius: 4px;
+      }
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #f0f2f5;
+      }
+      &:hover::-webkit-scrollbar-thumb {
+        background: #979797;
+      }
       .attachments__list-item {
         display: flex;
         justify-content: center;

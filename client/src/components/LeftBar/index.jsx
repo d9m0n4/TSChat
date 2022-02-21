@@ -6,6 +6,8 @@ import { Button, Input } from 'antd';
 import ChatListItem from '../ChatListItem';
 import AddDialogModal from '../AddDialogModal';
 
+import Loader from '../../components/Loader';
+
 const Leftbar = ({
   inputValue,
   dialogs,
@@ -22,7 +24,9 @@ const Leftbar = ({
   users,
   textValue,
   onChangeInput,
+  isLoading,
 }) => {
+  console.log(isLoading);
   return (
     <>
       <AddDialogModal
@@ -69,9 +73,12 @@ const Leftbar = ({
                 </Button>
               </div>
             </div>
-            <div></div>
+
             <div className="leftbar__chats-body">
-              {dialogs &&
+              {isLoading ? (
+                <Loader />
+              ) : (
+                dialogs &&
                 dialogs.map((dialog) => (
                   <ChatListItem
                     key={dialog.dialogId}
@@ -87,7 +94,8 @@ const Leftbar = ({
                         : ''
                     }
                   />
-                ))}
+                ))
+              )}
             </div>
           </div>
           <div className="leftbar__chats">

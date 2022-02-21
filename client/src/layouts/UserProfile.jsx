@@ -239,7 +239,7 @@ const UserProfile = () => {
           <Button onClick={openModal} type="text" icon={<EditOutlined />} />
         </div>
         <div className="profile__page-user__info">
-          <div className="user__name user__info-item">
+          <div className=" user__info-item">
             <span>Имя:</span>
             {user && user.name}
           </div>

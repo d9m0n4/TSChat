@@ -1,14 +1,11 @@
 import React from 'react';
 
-import './index.scss';
 import { Button } from 'antd';
 
-import vkIcon from '../../assets/img/icons/vk.svg';
-import instIcon from '../../assets/img/icons/instagram.png';
-import tmIcon from '../../assets/img/icons/telegram.svg';
 import UserAttach from '../UserAttach';
-import { Link } from 'react-router-dom';
 import UserAvatar from '../Avatar';
+
+import './index.scss';
 
 const Rightbar = ({ currentDialogId, partner, attachments }) => {
   if (!currentDialogId || !partner) {
@@ -51,17 +48,6 @@ const Rightbar = ({ currentDialogId, partner, attachments }) => {
             <span className="online">
               {partner && partner.partner.isOnline ? 'в сети' : 'не в сети'}
             </span>
-          </div>
-          <div className="companion__social-links">
-            <Link to="#">
-              <img src={vkIcon} alt="" />
-            </Link>
-            <Link to="#">
-              <img src={instIcon} alt="" />
-            </Link>
-            <Link to="#">
-              <img src={tmIcon} alt="" />
-            </Link>
           </div>
         </div>
         <div className="rightbar__dialog-companion__attachs">

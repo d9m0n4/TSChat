@@ -8,7 +8,7 @@ import dialogActions from '../store/actions/dialogActions';
 import socket from '../core/socket';
 import { withRouter } from 'react-router';
 
-const LeftBar = ({ fetchDialogs, items, userId, history }) => {
+const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
   const [visible, setVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [users, setUsers] = useState([]);
@@ -91,6 +91,7 @@ const LeftBar = ({ fetchDialogs, items, userId, history }) => {
 
   return (
     <Leftbar
+      isLoading={isLoading}
       uploading={uploading}
       inputValue={inputValue}
       onChangeInput={onChangeInput}
@@ -116,6 +117,7 @@ export default withRouter(
       items: dialogs.dialogs,
       currentDialogId: dialogs.currentDialogId,
       userId: auth.user && auth.user.id,
+      isLoading: dialogs.isLoading,
     }),
     { ...dialogActions },
   )(LeftBar),

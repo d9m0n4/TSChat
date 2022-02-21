@@ -1,5 +1,6 @@
 const initialState = {
   dialogs: [],
+  isLoading: false,
   currentDialogId: window.location.pathname.split('dialogs/')[1],
   currentPartner: null,
 };
@@ -23,6 +24,11 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         currentPartner: payload,
+      };
+    case 'DIALOG:SET_LOADING':
+      return {
+        ...state,
+        isLoading: payload,
       };
 
     default:

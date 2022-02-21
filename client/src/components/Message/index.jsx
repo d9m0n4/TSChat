@@ -101,7 +101,6 @@ const Message = ({ isMe, name, text, date, attachments, user }) => {
                   attachments.map((item) => (
                     <LazyLoadComponent key={item._id}>
                       <Image
-                        loading="lazy"
                         className="message__image"
                         preview={{
                           icons: [],
