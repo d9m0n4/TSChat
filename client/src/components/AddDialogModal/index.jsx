@@ -1,24 +1,24 @@
 import React from 'react';
-import { Button, Modal, Select, Form } from 'antd';
-import TextArea from 'antd/lib/input/TextArea';
+import { Modal, Select, Form } from 'antd';
 
 import './index.scss';
 import UserAvatar from '../Avatar';
 
 const AddDialogModal = ({
-  messageValue,
-  onSendMessage,
+  children,
   visible,
   close,
   onSelect,
-  onChangeValue,
-  selectedUserId,
   onSearch,
   users,
-  uploading,
   userId,
+  title,
+  multiple,
+  handleChange,
+  footer,
 }) => {
   const options =
+    users &&
     users.length &&
     users
       .filter((user) => {
@@ -35,14 +35,10 @@ const AddDialogModal = ({
       ));
 
   return (
-    <Modal
-      destroyOnClose="true"
-      title="Поиск собеседника"
-      visible={visible}
-      footer={null}
-      onCancel={close}>
+    <Modal destroyOnClose="true" title={title} visible={visible} footer={null} onCancel={close}>
       <Form className="add-dialog-form">
         <Select
+          mode={multiple && 'multiple'}
           className="modal__result"
           style={{ width: '100%' }}
           labelInValue
@@ -50,48 +46,15 @@ const AddDialogModal = ({
           filterOption={false}
           onSearch={onSearch}
           onSelect={onSelect}
+          onChange={handleChange}
           showArrow={false}
+          notFoundContent={null}
+          defaultActiveFirstOption={false}
           showSearch>
           {options}
         </Select>
       </Form>
-
-      {selectedUserId && (
-        <>
-          <div className="add-dialog-form__input">
-            <TextArea
-              disabled={uploading}
-              onChange={onChangeValue}
-              className="textfield"
-              placeholder="Введите сообщение... "
-              autoSize={{ minRows: 1, maxRows: 5 }}
-              value={messageValue}
-            />
-            <Button
-              disabled={!messageValue}
-              onClick={onSendMessage}
-              type="text"
-              className="messages-input__send app-icon">
-              <svg
-                className="icon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  className="rect"
-                  d="M5 12L3 21L21 12L3 3L5 12ZM5 12L13 12"
-                  stroke="#979797"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Button>
-          </div>
-        </>
-      )}
+      {children}
     </Modal>
   );
 };

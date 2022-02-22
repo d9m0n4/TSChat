@@ -36,3 +36,9 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    border-right: 1px solid #e9e9ee;
+  }
+}

@@ -74,3 +74,39 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .info__block {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .App {
+    height: 100vh;
+  }
+  .auth-page {
+    .app-logo {
+      font-size: 18px;
+    }
+    .auth-page__content {
+      padding: 0 32px;
+      .auth-form__block-wrapper {
+        .form-title {
+          margin-top: 8px;
+          font-size: 18px;
+          margin-bottom: 16px;
+        }
+        .form-content {
+          padding: 32px;
+          .ant-form-item {
+            margin-bottom: 32px;
+          }
+          .auth-btn {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+}

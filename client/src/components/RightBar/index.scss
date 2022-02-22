@@ -44,3 +44,12 @@
     }
   }
 }
+
+@media screen and (max-width: 1025px) {
+  .main__content-body__rightbar {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    z-index: 9;
+  }
+}

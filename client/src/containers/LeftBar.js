@@ -9,9 +9,11 @@ import socket from '../core/socket';
 import { withRouter } from 'react-router';
 
 const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
-  const [visible, setVisible] = useState(false);
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [convVisible, setConvVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [users, setUsers] = useState([]);
+  const [convUsers, setConvUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -27,15 +29,24 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
     setInputValue(value);
   };
 
-  const showModal = () => {
-    setVisible(true);
+  const showDialogModal = () => {
+    setDialogVisible(true);
   };
 
-  const hideModal = () => {
+  const hideDialogModal = () => {
     setUsers([]);
     setInputValue('');
     setSelectedUserId(null);
-    setVisible(false);
+    setDialogVisible(false);
+  };
+
+  const onShowConvModal = () => {
+    setConvVisible(true);
+  };
+
+  const onHideConvModal = () => {
+    setConvVisible(false);
+    setUsers([]);
   };
 
   const onSearch = async (value) => {
@@ -46,7 +57,21 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
       .catch((err) => console.log(err));
   };
 
+  const handleChangeSelect = (v) => {
+    const a = [];
+    for (let i = 0; i < v.length; i++) {
+      a.push(v[i].value);
+    }
+    setConvUsers(a);
+  };
+
+  const onCreateConv = () => {
+    console.log(convUsers);
+    onHideConvModal();
+  };
+
   const onSelect = (value) => {
+    console.log(value);
     setSelectedUserId(value.value);
   };
 
@@ -64,7 +89,7 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
       history.push(data._id);
     });
     setUploading(false);
-    hideModal();
+    hideDialogModal();
 
     return () => {
       socket.removeListener('DIALOG:CREATED');
@@ -91,22 +116,27 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
 
   return (
     <Leftbar
+      handleChangeSelect={handleChangeSelect}
+      userId={userId}
       isLoading={isLoading}
       uploading={uploading}
       inputValue={inputValue}
-      onChangeInput={onChangeInput}
       dialogs={filtred}
       messageValue={messageValue}
+      visible={dialogVisible}
+      convVisible={convVisible}
+      users={users}
+      selectedUserId={selectedUserId}
       onSendMessage={onSendMessage}
       onChangeValue={onChangeValue}
-      users={users}
+      onChangeInput={onChangeInput}
+      onCreateConv={onCreateConv}
       onSearch={onSearch}
       onSelect={onSelect}
-      selectedUserId={selectedUserId}
-      visible={visible}
-      showModal={showModal}
-      hideModal={hideModal}
-      userId={userId}
+      showModal={showDialogModal}
+      hideModal={hideDialogModal}
+      showConvModal={onShowConvModal}
+      hideConvModal={onHideConvModal}
     />
   );
 };

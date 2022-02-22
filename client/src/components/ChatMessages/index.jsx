@@ -4,15 +4,26 @@ import Message from '../Message';
 import { MailOutlined } from '@ant-design/icons';
 import ChatInputContainer from '../../containers/ChatInput';
 import Loader from '../../components/Loader';
+import { useState } from 'react';
 
 const ChatMesaages = ({ scrollRef, messages, user, currentDialogId, loader, currentPartner }) => {
+  const [active, setActive] = useState(false);
+
+  const toggleClass = () => {
+    setActive(!active);
+  };
   return (
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
-        <div className="messages__header-chat__title">
-          {currentPartner && currentPartner.partner.name}
+        <div className="chat__header-title">
+          <div className="messages__header-chat__title">
+            {currentPartner && currentPartner.partner.name}
+          </div>
+          {currentPartner && <div className="messages__header-chat__status online"></div>}
         </div>
-        {currentPartner && <div className="messages__header-chat__status online"></div>}
+        <div className="chat__header-btn">
+          <span onClick={toggleClass} className={active ? 'active' : ''}></span>
+        </div>
       </div>
 
       <div className="messages__body">
@@ -43,7 +54,7 @@ const ChatMesaages = ({ scrollRef, messages, user, currentDialogId, loader, curr
         )}
       </div>
 
-      {!loader && currentDialogId && messages.length > 0 && <ChatInputContainer />}
+      {!loader && currentDialogId && messages && messages.length > 0 && <ChatInputContainer />}
     </div>
   );
 };

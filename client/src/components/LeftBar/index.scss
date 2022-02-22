@@ -65,3 +65,11 @@
     }
   }
 }
+
+@media screen and (max-width: 376px) {
+  .main__content-body__leftbar {
+    position: absolute;
+    z-index: 12;
+    height: 100vh;
+  }
+}
