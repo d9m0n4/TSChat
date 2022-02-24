@@ -2,6 +2,8 @@ const UserController = require('../Controllers/userController');
 const DialogConroller = require('../Controllers/dialogController');
 const MessageController = require('../Controllers/messageController');
 const UploadController = require('../Controllers/uploadController');
+const ConversationController = require('../Controllers/conversationController');
+
 const Router = require('express').Router;
 const router = new Router();
 
@@ -14,6 +16,7 @@ const { body } = require('express-validator');
 const Routes = (io) => {
   const UserCtrl = new UserController(io);
   const DialogCtrl = new DialogConroller(io);
+  const ConversationCtrl = new ConversationController(io);
   const MessageCtrl = new MessageController(io);
   const UploadCtrl = new UploadController(io);
 
@@ -35,6 +38,9 @@ const Routes = (io) => {
   router.post('/dialogs', CheckToken, DialogCtrl.createDialog);
   router.get('/dialogs', CheckToken, DialogCtrl.getDialogs);
 
+  router.post('/conversations', CheckToken, ConversationCtrl.createConversation);
+  router.get('/conversations', CheckToken, ConversationCtrl.getConversations);
+
   router.get('/messages', CheckToken, MessageCtrl.getMessages);
   router.get('/messages/user', CheckToken, MessageCtrl.getMessagesOfUser);
   router.post('/messages', CheckToken, MessageCtrl.createMessage);
@@ -42,7 +48,6 @@ const Routes = (io) => {
   router.post('/files', CheckToken, uploader.single('file'), UploadCtrl.create);
   router.get('/files', CheckToken, UploadCtrl.getAttachments);
   router.delete('/files', CheckToken, UploadCtrl.delete);
-  // router.get('/files', CheckToken, UploadCtrl.getFilesOfUser);
 
   return router;
 };

@@ -10,7 +10,10 @@ import Loader from '../../components/Loader';
 import TextArea from 'antd/lib/input/TextArea';
 
 const Leftbar = ({
+  convTitle,
+  setConvTitle,
   inputValue,
+  convUsers,
   dialogs,
   messageValue,
   visible,
@@ -30,7 +33,10 @@ const Leftbar = ({
   showConvModal,
   hideConvModal,
   handleChangeSelect,
+
+  conversations,
 }) => {
+  console.log(conversations); // в редакс
   return (
     <>
       <AddDialogModal
@@ -86,8 +92,14 @@ const Leftbar = ({
         close={hideConvModal}
         visible={convVisible}
         handleChange={handleChangeSelect}>
+        <Input
+          placeholder="Введите название беседы"
+          required={true}
+          value={convTitle}
+          onChange={setConvTitle}
+        />
         <div className="add-dialog-form-btn">
-          <Button shape="round" onClick={onCreateConv}>
+          <Button disabled={!convUsers.length || !convTitle} shape="round" onClick={onCreateConv}>
             Создать беседу
           </Button>
         </div>

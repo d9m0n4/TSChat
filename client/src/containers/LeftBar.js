@@ -7,17 +7,25 @@ import { connect } from 'react-redux';
 import dialogActions from '../store/actions/dialogActions';
 import socket from '../core/socket';
 import { withRouter } from 'react-router';
+import Conversations from '../Services/Conversations';
 
 const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [convTitle, setConvTitle] = useState(null);
   const [users, setUsers] = useState([]);
   const [convUsers, setConvUsers] = useState([]);
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [uploading, setUploading] = useState(false);
   const [filtred, setFiltredDialogs] = useState(items && Array.from(items));
+
+  const [conversations, setConversations] = useState(null);
+
+  const onChangeConvTitle = (e) => {
+    setConvTitle(e.target.value);
+  };
 
   const onChangeInput = (e) => {
     const value = e.target.value;
@@ -47,6 +55,7 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
   const onHideConvModal = () => {
     setConvVisible(false);
     setUsers([]);
+    setConvTitle('');
   };
 
   const onSearch = async (value) => {
@@ -66,7 +75,10 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
   };
 
   const onCreateConv = () => {
-    console.log(convUsers);
+    if (!convUsers.length) {
+      return console.log('выберите собеседника');
+    }
+    Conversations.createConversation({ title: convTitle, members: convUsers });
     onHideConvModal();
   };
 
@@ -112,11 +124,27 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
     };
   }, [fetchDialogs]);
 
+  const getConversations = async () => {
+    const { data } = await Conversations.getConversations();
+    setConversations(data);
+  };
+
+  useEffect(() => {
+    getConversations();
+    socket.on('CONVERSATION_SET_ITEM', getConversations);
+
+    return () => {
+      socket.removeListener('CONVERSATION_SET_ITEM');
+    };
+  }, []);
+
   // socket.on('status', (d) => console.log(d));
 
   return (
     <Leftbar
+      conversations={conversations}
       handleChangeSelect={handleChangeSelect}
+      convUsers={convUsers}
       userId={userId}
       isLoading={isLoading}
       uploading={uploading}
@@ -125,6 +153,7 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
       messageValue={messageValue}
       visible={dialogVisible}
       convVisible={convVisible}
+      convTitle={convTitle}
       users={users}
       selectedUserId={selectedUserId}
       onSendMessage={onSendMessage}
@@ -133,6 +162,7 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
       onCreateConv={onCreateConv}
       onSearch={onSearch}
       onSelect={onSelect}
+      setConvTitle={onChangeConvTitle}
       showModal={showDialogModal}
       hideModal={hideDialogModal}
       showConvModal={onShowConvModal}

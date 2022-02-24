@@ -3,13 +3,15 @@ const User = require('./User');
 
 const ConversationSchema = new Schema(
   {
+    title: {
+      type: String,
+    },
     creator: {
       type: Schema.Types.ObjectId,
       ref: User,
     },
-    members: {
-      type: Array,
-    },
+    members: [{ type: Schema.Types.ObjectId, ref: User }],
+    lastMessage: { type: Schema.Types.ObjectId, ref: 'Message' },
   },
   {
     timestamps: true,
