@@ -4,21 +4,19 @@ import './index.scss';
 import Sidebar from '../../components/SideBar';
 import Messanger from '../../layouts/Messanger';
 import { connect } from 'react-redux';
+import {Route, Switch, useLocation, useParams, useRouteMatch} from 'react-router';
 import Loader from '../../components/Loader';
-import { Route, Switch, withRouter } from 'react-router';
 import dialogActions from '../../store/actions/dialogActions';
 import UserProfile from '../../layouts/UserProfile';
 
-const Home = ({ setCurrentDialogId, isLoading, location, setCurrentPartner, dialogsItems }) => {
+const Home = ({ setCurrentDialogId, isLoading, setCurrentPartner, dialogsItems }) => {
+  let {pathname} = useLocation()
+  const c = useRouteMatch('/dialogs/')
   useEffect(() => {
-    const path = location.pathname;
-    const dialogId = path.split('/').pop();
-    setCurrentDialogId(dialogId);
-    if (dialogsItems) {
-      let partner = dialogsItems.filter((dialog) => dialog.dialogId === dialogId)[0];
-      setCurrentPartner(partner);
-    }
-  }, [location.pathname, setCurrentDialogId, dialogsItems, setCurrentPartner]);
+
+    console.log(c)
+
+  },  [pathname]);
 
   return (
     <>
@@ -28,7 +26,7 @@ const Home = ({ setCurrentDialogId, isLoading, location, setCurrentPartner, dial
         <section className="home-page">
           <Sidebar />
           <Switch>
-            <Route path={'/dialogs'} component={Messanger} />
+            <Route path={['/dialogs', '/conversation']} component={Messanger} />
             <Route path={'/profile'} component={UserProfile} />
           </Switch>
         </section>
@@ -37,12 +35,12 @@ const Home = ({ setCurrentDialogId, isLoading, location, setCurrentPartner, dial
   );
 };
 
-export default withRouter(
+export default
   connect(
     ({ auth, dialogs }) => ({
       isLoading: auth.isLoading,
       dialogsItems: dialogs.dialogs,
     }),
     dialogActions,
-  )(Home),
-);
+  )(Home)
+

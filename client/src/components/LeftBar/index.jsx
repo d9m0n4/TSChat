@@ -10,6 +10,7 @@ import Loader from '../../components/Loader';
 import TextArea from 'antd/lib/input/TextArea';
 
 const Leftbar = ({
+  conversations,
   convTitle,
   setConvTitle,
   inputValue,
@@ -34,9 +35,8 @@ const Leftbar = ({
   hideConvModal,
   handleChangeSelect,
 
-  conversations,
 }) => {
-  console.log(conversations); // в редакс
+
   return (
     <>
       <AddDialogModal
@@ -147,7 +147,8 @@ const Leftbar = ({
                     id={dialog.dialogId}
                     userId={dialog.lastMessage && dialog.lastMessage.user}
                     partner={dialog.partner}
-                    date={dialog.lastMessage.createdAt}
+                    date={dialog.lastMessage.createdAt || new Date()}
+                    path='dialogs'
                     lastMessage={
                       dialog.lastMessage
                         ? dialog.lastMessage.text
@@ -184,7 +185,16 @@ const Leftbar = ({
                 </Button>
               </div>
             </div>
-            <div className="leftbar__chats-body">{/* <ChatListItem type="conv" /> */}</div>
+            <div className="leftbar__chats-body">{
+              conversations && conversations.map(conversation => (
+              <ChatListItem
+                  type="conv"
+                  title={conversation.title}
+                  key={conversation.id}
+                  path='conversation'
+                  id={conversation.id}  />
+              ))
+            }</div>
           </div>
         </div>
       </div>

@@ -1,31 +1,24 @@
 const initialState = {
-  dialogs: [],
+  items: [],
   isLoading: false,
-  currentDialogId: null,
-  currentPartner: null,
+  currentConvId: window.location.pathname.split('/conversation/')[1],
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'DIALOGS:SET_DIALOGS':
+    case 'CONVERSATIONS:SET_CONVERSATIONS':
       return {
         ...state,
-        dialogs: payload,
+        items: payload,
       };
 
-    case 'DIALOG:SET_CURRENT_DIALOG_ID':
+    case 'CONVERSATIONS:SET_CURRENT_CONVERSATION_ID':
       return {
         ...state,
-        currentDialogId: payload,
+        currentConvId: payload,
       };
-
-    case 'DIALOG:SET_CURRENT_PARTNER':
-      return {
-        ...state,
-        currentPartner: payload,
-      };
-    case 'DIALOG:SET_LOADING':
+    case 'CONVERSATIONS:SET_LOADING':
       return {
         ...state,
         isLoading: payload,

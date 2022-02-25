@@ -6,7 +6,7 @@ import ChatInputContainer from '../../containers/ChatInput';
 import Loader from '../../components/Loader';
 import { useState } from 'react';
 
-const ChatMesaages = ({ scrollRef, messages, user, currentDialogId, loader, currentPartner }) => {
+const ChatMessages = ({ scrollRef, messages, user, currentDialogId, loader, currentPartner }) => {
   const [active, setActive] = useState(false);
 
   const toggleClass = () => {
@@ -59,4 +59,4 @@ const ChatMesaages = ({ scrollRef, messages, user, currentDialogId, loader, curr
   );
 };
 
-export default React.memo(ChatMesaages);
+export default React.memo(ChatMessages);

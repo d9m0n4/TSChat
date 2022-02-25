@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Leftbar from '../components/LeftBar';
 import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
-import { connect } from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 
 import dialogActions from '../store/actions/dialogActions';
 import socket from '../core/socket';
 import { withRouter } from 'react-router';
 import Conversations from '../Services/Conversations';
+import conversationsActions from "../store/actions/conversatiosActions";
 
-const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
+const LeftBarContainer = ({ fetchDialogs, isLoading, items, userId, history, fetchConversations }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -19,9 +20,9 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
   const [messageValue, setMessageValue] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [filtred, setFiltredDialogs] = useState(items && Array.from(items));
+  const [filtered, setFilteredDialogs] = useState(items && Array.from(items));
 
-  const [conversations, setConversations] = useState(null);
+  const {items: conversations} = useSelector(state => state.conversations)
 
   const onChangeConvTitle = (e) => {
     setConvTitle(e.target.value);
@@ -30,7 +31,7 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
   const onChangeInput = (e) => {
     const value = e.target.value;
 
-    setFiltredDialogs(
+    setFilteredDialogs(
       items &&
         items.filter((item) => item.partner.name.toLowerCase().indexOf(value.toLowerCase()) >= 0),
     );
@@ -109,7 +110,7 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
   };
 
   useEffect(() => {
-    setFiltredDialogs(items);
+    setFilteredDialogs(items);
   }, [items]);
 
   useEffect(() => {
@@ -124,14 +125,10 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
     };
   }, [fetchDialogs]);
 
-  const getConversations = async () => {
-    const { data } = await Conversations.getConversations();
-    setConversations(data);
-  };
 
   useEffect(() => {
-    getConversations();
-    socket.on('CONVERSATION_SET_ITEM', getConversations);
+    fetchConversations()
+    socket.on('CONVERSATION_SET_ITEM',fetchConversations );
 
     return () => {
       socket.removeListener('CONVERSATION_SET_ITEM');
@@ -142,14 +139,14 @@ const LeftBar = ({ fetchDialogs, isLoading, items, userId, history }) => {
 
   return (
     <Leftbar
-      conversations={conversations}
       handleChangeSelect={handleChangeSelect}
+      conversations={conversations}
       convUsers={convUsers}
       userId={userId}
       isLoading={isLoading}
       uploading={uploading}
       inputValue={inputValue}
-      dialogs={filtred}
+      dialogs={filtered}
       messageValue={messageValue}
       visible={dialogVisible}
       convVisible={convVisible}
@@ -179,6 +176,6 @@ export default withRouter(
       userId: auth.user && auth.user.id,
       isLoading: dialogs.isLoading,
     }),
-    { ...dialogActions },
-  )(LeftBar),
+    { ...dialogActions, ...conversationsActions },
+  )(LeftBarContainer),
 );

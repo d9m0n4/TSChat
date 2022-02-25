@@ -5,8 +5,8 @@ import UserAvatar from '../Avatar';
 
 import './index.scss';
 
-const Rightbar = ({ currentDialogId, partner, attachments }) => {
-  if (!currentDialogId || !partner) {
+const Rightbar = ({ currentDialogId, currentConvId, conversations, partner, attachments }) => {
+  if (!currentDialogId || !partner || !currentConvId) {
     return null;
   }
 
