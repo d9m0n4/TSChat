@@ -4,19 +4,38 @@ import './index.scss';
 import Sidebar from '../../components/SideBar';
 import Messanger from '../../layouts/Messanger';
 import { connect } from 'react-redux';
-import {Route, Switch, useLocation, useParams, useRouteMatch} from 'react-router';
+import { Route, Switch, useLocation } from 'react-router';
 import Loader from '../../components/Loader';
 import dialogActions from '../../store/actions/dialogActions';
+import conversationActions from '../../store/actions/conversatiosActions';
 import UserProfile from '../../layouts/UserProfile';
 
-const Home = ({ setCurrentDialogId, isLoading, setCurrentPartner, dialogsItems }) => {
-  let {pathname} = useLocation()
-  const c = useRouteMatch('/dialogs/')
+const Home = ({
+  setCurrentDialogId,
+  isLoading,
+  setCurrentPartner,
+  dialogsItems,
+  setCurrentConversationId,
+}) => {
+  let { pathname } = useLocation();
+  const path = 'dialogs';
+
   useEffect(() => {
-
-    console.log(c)
-
-  },  [pathname]);
+    if (pathname.includes(path)) {
+      const dialogId = pathname.split(`/${path}/`).pop();
+      setCurrentDialogId(dialogId);
+      setCurrentConversationId(null);
+      if (dialogsItems) {
+        let partner = dialogsItems.filter((dialog) => dialog.dialogId === dialogId)[0];
+        setCurrentPartner(partner);
+      }
+    } else {
+      const conversationId = pathname.split('/conversation/').pop();
+      setCurrentConversationId(conversationId);
+      setCurrentDialogId(null);
+      setCurrentPartner(null);
+    }
+  }, [pathname, setCurrentDialogId, setCurrentConversationId]);
 
   return (
     <>
@@ -35,12 +54,10 @@ const Home = ({ setCurrentDialogId, isLoading, setCurrentPartner, dialogsItems }
   );
 };
 
-export default
-  connect(
-    ({ auth, dialogs }) => ({
-      isLoading: auth.isLoading,
-      dialogsItems: dialogs.dialogs,
-    }),
-    dialogActions,
-  )(Home)
-
+export default connect(
+  ({ auth, dialogs }) => ({
+    isLoading: auth.isLoading,
+    dialogsItems: dialogs.dialogs,
+  }),
+  { ...dialogActions, ...conversationActions },
+)(Home);

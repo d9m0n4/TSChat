@@ -2,15 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Leftbar from '../components/LeftBar';
 import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
-import {connect, useSelector} from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 import dialogActions from '../store/actions/dialogActions';
 import socket from '../core/socket';
 import { withRouter } from 'react-router';
 import Conversations from '../Services/Conversations';
-import conversationsActions from "../store/actions/conversatiosActions";
+import conversationsActions from '../store/actions/conversatiosActions';
 
-const LeftBarContainer = ({ fetchDialogs, isLoading, items, userId, history, fetchConversations }) => {
+const LeftBarContainer = ({
+  fetchDialogs,
+  isLoading,
+  items,
+  userId,
+  history,
+  fetchConversations,
+}) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -22,7 +29,7 @@ const LeftBarContainer = ({ fetchDialogs, isLoading, items, userId, history, fet
   const [uploading, setUploading] = useState(false);
   const [filtered, setFilteredDialogs] = useState(items && Array.from(items));
 
-  const {items: conversations} = useSelector(state => state.conversations)
+  const { items: conversations } = useSelector((state) => state.conversations);
 
   const onChangeConvTitle = (e) => {
     setConvTitle(e.target.value);
@@ -125,15 +132,14 @@ const LeftBarContainer = ({ fetchDialogs, isLoading, items, userId, history, fet
     };
   }, [fetchDialogs]);
 
-
   useEffect(() => {
-    fetchConversations()
-    socket.on('CONVERSATION_SET_ITEM',fetchConversations );
+    fetchConversations();
+    socket.on('CONVERSATION_SET_ITEM', fetchConversations);
 
     return () => {
       socket.removeListener('CONVERSATION_SET_ITEM');
     };
-  }, []);
+  }, [fetchConversations]);
 
   // socket.on('status', (d) => console.log(d));
 

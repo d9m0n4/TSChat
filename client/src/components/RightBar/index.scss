@@ -42,7 +42,35 @@
         }
       }
     }
+    &.rightbar__conversation {
+      padding: 0 8px;
+      .rightbar__conversation-header {
+        padding: 8px;
+        h3 {
+          text-align: center;
+          font-family: Gilroy-Bold;
+        }
+    }
+      .rightbar__conversation-creator {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        &__name {
+          margin-left: 8px;
+          font-family: Gilroy-Bold;
+        }
+      }
+      .rightbar__conversation-members {
+
+        .conversation-member__item {
+          display: flex;
+          align-items: center;
+          padding: 8px;
+        }
+      }
+    }
   }
+
 }
 
 @media screen and (max-width: 1025px) {

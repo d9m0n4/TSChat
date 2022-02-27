@@ -2,22 +2,22 @@
 
 @font-face {
   font-family: 'Gilroy';
-  src: local('Gilroy'), url('../fonts/Gilroy-Regular.woff') format('woff');
+  src: local('Gilroy'), url('../assets/fonts/Gilroy-Regular.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Gilroy-Bold';
-  src: local('Gilroy'), url('../fonts/Gilroy-Bold.ttf') format('truetype');
+  src: local('Gilroy'), url('../assets/fonts/Gilroy-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Gilroy-Medium';
-  src: local('Gilroy'), url('../fonts/Gilroy-Medium.ttf') format('truetype');
+  src: local('Gilroy'), url('../assets/fonts/Gilroy-Medium.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Gilroy-Light';
-  src: local('Gilroy'), url('../fonts/Gilroy-Light.ttf') format('truetype');
+  src: local('Gilroy'), url('../assets/fonts/Gilroy-Light.ttf') format('truetype');
 }
 
 * {
