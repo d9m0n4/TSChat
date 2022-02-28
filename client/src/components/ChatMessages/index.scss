@@ -12,6 +12,13 @@
     &-chat__title {
       font-family: 'Gilroy-Medium';
       font-size: 18px;
+      .chat__title-conv {
+        display: flex;
+        align-items: center;
+        &__name {
+          margin-right: 8px;
+        }
+      }
     }
     &-chat__status {
       width: 7px;

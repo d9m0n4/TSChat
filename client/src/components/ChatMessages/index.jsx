@@ -5,19 +5,31 @@ import { MailOutlined } from '@ant-design/icons';
 import ChatInputContainer from '../../containers/ChatInput';
 import Loader from '../../components/Loader';
 import { useState } from 'react';
+import {Avatar} from "antd";
+import UserAvatar from "../Avatar";
 
-const ChatMessages = ({ scrollRef, messages, user, currentDialogId, loader, currentPartner }) => {
+const ChatMessages = ({ scrollRef, messages, user, currentDialogId, loader, currentPartner, currentConv }) => {
   const [active, setActive] = useState(false);
 
   const toggleClass = () => {
     setActive(!active);
   };
+
   return (
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
         <div className="chat__header-title">
           <div className="messages__header-chat__title">
-            {currentPartner && currentPartner.partner.name}
+            {currentPartner ? currentPartner.partner.name : currentConv && (
+                <div className='chat__title-conv'>
+                    <div className='chat__title-conv__name'>{currentConv && currentConv.title}</div>
+                    <Avatar.Group maxCount={2}>
+                        {currentConv && currentConv.members.map(item => (
+                            <UserAvatar key={item.id} src={item.avatar} size={36} name={item.name} />
+                        ))}
+                    </Avatar.Group>
+                </div>
+            )}
           </div>
           {currentPartner && <div className="messages__header-chat__status online"></div>}
         </div>

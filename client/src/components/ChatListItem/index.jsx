@@ -18,7 +18,10 @@ const ChatListItem = ({ online, id, partner, type, date, lastMessage, currentUse
       <div className="chats__item">
         <div className="chats__item-avatar">
           {online && <sup className="status-dot"></sup>}
-          {type === 'conv' ? '' :<UserAvatar name={partner.name} size={36} src={partner.userAvatar}/>}
+          {type === 'conv' ?
+              <UserAvatar name={title} size={36} />
+              : <UserAvatar name={partner.name} size={36} src={partner.userAvatar}/>
+          }
           <sub className="messages-count">{1}</sub>
         </div>
         <div className="chats__item-body">

@@ -62,11 +62,11 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
             <ul className='rightbar__conversation-members'>
             {conversation && conversation.members.map(item => (
 
-                        <li className='conversation-member__item'>
-                            <div className="rightbar__conversation-item__avatar">
-                                <UserAvatar size={48}/>
+                        <li key={item.id} className='conversation-members__item'>
+                            <div className="conversation-members__item-avatar">
+                                <UserAvatar  size={48} name={item.name} src={item.avatar}/>
                             </div>
-                            <div className="rightbar__conversation-item__name">GRACHIK</div>
+                            <div className="conversation-members__item-name">{item.name}</div>
                         </li>
 
                 ))}

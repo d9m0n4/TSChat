@@ -1,5 +1,5 @@
 const UserController = require('../Controllers/userController');
-const DialogConroller = require('../Controllers/dialogController');
+const DialogController = require('../Controllers/dialogController');
 const MessageController = require('../Controllers/messageController');
 const UploadController = require('../Controllers/uploadController');
 const ConversationController = require('../Controllers/conversationController');
@@ -15,7 +15,7 @@ const { body } = require('express-validator');
 
 const Routes = (io) => {
   const UserCtrl = new UserController(io);
-  const DialogCtrl = new DialogConroller(io);
+  const DialogCtrl = new DialogController(io);
   const ConversationCtrl = new ConversationController(io);
   const MessageCtrl = new MessageController(io);
   const UploadCtrl = new UploadController(io);

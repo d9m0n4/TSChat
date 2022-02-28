@@ -10,11 +10,21 @@ const conversationsActions = {
     payload,
   }),
 
+
   setCurrentConversationId: (id) => (dispatch) => {
     dispatch({
       type: 'CONVERSATIONS:SET_CURRENT_CONVERSATION_ID',
       payload: id,
     });
+  },
+
+  setCurrentConversation: (currentConversation) => (dispatch) => {
+
+    dispatch({
+      type: 'CONVERSATIONS:SET_CURRENT_CONVERSATION',
+      payload: currentConversation
+    })
+
   },
 
   fetchConversations: () => async (dispatch) => {

@@ -5,15 +5,16 @@ import socket from '../core/socket';
 import messagesActions from '../store/actions/messagesActions';
 
 const Messages = ({
-  fetchMessages,
-  currentDialogId,
-  currentPartner,
-  items,
-  user,
-  dialogs,
-  loader,
-  addMessage,
-}) => {
+                    fetchMessages,
+                    currentDialogId,
+                    currentPartner,
+                    currentConv,
+                    items,
+                    user,
+                    dialogs,
+                    loader,
+                    addMessage,
+                  }) => {
   const scrollRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -38,27 +39,32 @@ const Messages = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, fetchMessages]);
 
+
+
   return (
-    <ChatMessages
-      user={user}
-      messages={items}
-      scrollRef={scrollRef}
-      currentDialogId={currentDialogId}
-      loader={loader}
-      dialogs={dialogs}
-      currentPartner={currentPartner && currentPartner}
-    />
+      <ChatMessages
+          user={user}
+          messages={items}
+          scrollRef={scrollRef}
+          currentDialogId={currentDialogId}
+          loader={loader}
+          dialogs={dialogs}
+          currentPartner={currentPartner && currentPartner}
+          currentConv={currentConv}
+      />
   );
 };
 
 export default connect(
-  ({ dialogs, messages, auth }) => ({
-    dialogs: dialogs.dialogs,
-    currentDialogId: dialogs.currentDialogId,
-    currentPartner: dialogs.currentPartner,
-    items: messages.items,
-    loader: messages.loader,
-    user: auth.user && auth.user.id,
-  }),
-  { ...messagesActions },
+    ({ dialogs, messages, auth, conversations }) => ({
+      dialogs: dialogs.dialogs,
+      currentDialogId: dialogs.currentDialogId,
+      currentPartner: dialogs.currentPartner,
+      items: messages.items,
+      loader: messages.loader,
+      user: auth.user && auth.user.id,
+      currentConv: conversations.currentConversation
+
+    }),
+    { ...messagesActions },
 )(Messages);
