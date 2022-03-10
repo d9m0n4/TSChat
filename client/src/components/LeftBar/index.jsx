@@ -190,6 +190,7 @@ const Leftbar = ({
               <ChatListItem
                   type="conv"
                   title={conversation.title}
+                  lastConvMessage={conversation.lastMessage}
                   key={conversation.id}
                   path='conversation'
                   id={conversation.id}  />

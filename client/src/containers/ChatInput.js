@@ -1,18 +1,17 @@
-import { useState } from 'react';
-import { useRef } from 'react';
+import { useState } from "react";
+import { useRef } from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import ChatInput from '../components/ChatInput';
+import ChatInput from "../components/ChatInput";
 
-import Files from '../Services/Files';
+import Files from "../Services/Files";
+import messagesActions from "../store/actions/messagesActions";
 
-import messagesActions from '../store/actions/messagesActions';
+import { CloseCircleTwoTone } from "@ant-design/icons";
 
-import { CloseCircleTwoTone } from '@ant-design/icons';
-
-const ChatInputContainer = ({ dialogId, sendMessage }) => {
-  const [messageValue, setMessageValue] = useState('');
+const ChatInputContainer = ({ dialogId, sendMessage, currentConvId }) => {
+  const [messageValue, setMessageValue] = useState("");
   const [visiblePicker, setVisiblePicker] = useState(false);
 
   const [isRecording, setIsRecording] = useState(false);
@@ -29,7 +28,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
   };
 
   const setEmoji = (data) => {
-    setMessageValue(messageValue + ' ' + data.native);
+    setMessageValue(messageValue + " " + data.native);
   };
 
   const toggleVisiblePicker = () => {
@@ -47,11 +46,11 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
           result.push(f.data.file);
         }
       }
-      setMessageValue('');
+      setMessageValue("");
       setFileList([]);
       setUploading(false);
       sendMessage({
-        dialogId: dialogId,
+        dialogId: dialogId || currentConvId,
         text: messageValue || null,
         attachments: result.map((item) => item._id),
       });
@@ -68,7 +67,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     beforeUpload: (file) => {
       const fileSize = file.size / 1024 / 1024 < 2;
       if (!fileSize) {
-        console.log('размер файла не должен превышать 10мб');
+        console.log("размер файла не должен превышать 10мб");
       }
 
       return null;
@@ -93,7 +92,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       }
       const image = new Image();
 
-      image.width = '1000';
+      image.width = "1000";
       image.src = src;
       const imgWindow = window.open(src);
       imgWindow.document.write(image.outerHTML);
@@ -124,7 +123,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
           console.dir(e);
         });
     } else {
-      console.log('userMedia not');
+      console.log("userMedia not");
     }
   };
 
@@ -135,7 +134,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
     let reqId;
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-      latencyHint: 'interactive',
+      latencyHint: "interactive",
     });
     const analyser = audioCtx.createAnalyser();
     analyser.minDecibels = -90;
@@ -159,7 +158,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
       let cw = canvas.current.width;
       let ch = canvas.current.height;
 
-      const ctx = canvas.current.getContext('2d');
+      const ctx = canvas.current.getContext("2d");
 
       ctx.clearRect(0, 0, cw, ch);
 
@@ -169,7 +168,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
       const draw = () => {
         analyser.getByteFrequencyData(data);
-        ctx.fillStyle = '#E5E5E5';
+        ctx.fillStyle = "#E5E5E5";
         ctx.fillRect(0, 0, cw, ch);
 
         x = 0;
@@ -177,12 +176,22 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
         for (let i = 0; i < bufferLength; i++) {
           barHeight = data[i] + 5;
 
-          ctx.fillStyle = '#3A456B';
+          ctx.fillStyle = "#3A456B";
 
           ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, barHeight / 2.5);
           ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, -barHeight / 2.5);
-          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, -barHeight / 2.5);
-          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, barHeight / 2.5);
+          ctx.fillRect(
+            cw / 2 + (x - barWidth) * 1.5,
+            ch / 2,
+            barWidth,
+            -barHeight / 2.5
+          );
+          ctx.fillRect(
+            cw / 2 + (x - barWidth) * 1.5,
+            ch / 2,
+            barWidth,
+            barHeight / 2.5
+          );
 
           x += barWidth;
         }
@@ -199,12 +208,12 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
     };
 
     recorder.ondataavailable = async (e) => {
-      const file = new File([e.data], 'audio', { type: 'audio/wav' });
+      const file = new File([e.data], "audio", { type: "audio/wav" });
 
       setFileList([file]);
       setIsRecording(false);
 
-      const ctxResult = audioResult.current.getContext('2d');
+      const ctxResult = audioResult.current.getContext("2d");
 
       const src = URL.createObjectURL(file);
       const audio = new Audio();
@@ -221,7 +230,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
         const cw = audioResult.current.width;
         const ch = audioResult.current.height;
 
-        ctxResult.fillStyle = '#E5E5E5';
+        ctxResult.fillStyle = "#E5E5E5";
         ctxResult.fillRect(0, 0, cw, ch);
 
         let bh = 0;
@@ -230,7 +239,7 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 
         for (let i = 0; i < b.length; i++) {
           bh = b[i] * 100 + 1;
-          ctxResult.fillStyle = '#3A456B';
+          ctxResult.fillStyle = "#3A456B";
 
           ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, bh * 2);
           ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, -bh * 2);
@@ -289,9 +298,10 @@ const ChatInputContainer = ({ dialogId, sendMessage }) => {
 };
 
 export default connect(
-  ({ auth, dialogs }) => ({
+  ({ auth, dialogs, conversations }) => ({
     userId: auth.user.id,
     dialogId: dialogs.currentDialogId,
+    currentConvId: conversations.currentConvId,
   }),
-  messagesActions,
+  messagesActions
 )(ChatInputContainer);

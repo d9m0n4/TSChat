@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
-import ChatMessages from '../components/ChatMessages';
-import socket from '../core/socket';
-import messagesActions from '../store/actions/messagesActions';
+import { useEffect, useRef } from "react";
+import { connect } from "react-redux";
+import ChatMessages from "../components/ChatMessages";
+import socket from "../core/socket";
+import messagesActions from "../store/actions/messagesActions";
 
 const Messages = ({
-  fetchMessages,
+  getMessages,
   currentDialogId,
   currentPartner,
   items,
@@ -13,30 +13,34 @@ const Messages = ({
   dialogs,
   loader,
   addMessage,
+  currentConv,
+  currentConvId,
 }) => {
   const scrollRef = useRef(null);
 
   const scrollToBottom = () => {
-    scrollRef.current && scrollRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    scrollRef.current &&
+      scrollRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
   };
   useEffect(() => {
     scrollToBottom();
   }, [items]);
 
   const newMessage = (data) => {
+    console.log(data);
     addMessage(data);
   };
 
   useEffect(() => {
-    if (currentDialogId) {
-      fetchMessages(currentDialogId);
-      socket.on('SERVER:CREATE_MESSAGE', newMessage);
+    if (currentDialogId || currentConvId) {
+      getMessages(currentDialogId || currentConvId);
+      socket.on("SERVER:CREATE_MESSAGE", newMessage);
     }
     return () => {
-      socket.removeListener('SERVER:CREATE_MESSAGE');
+      socket.removeListener("SERVER:CREATE_MESSAGE");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentDialogId, fetchMessages]);
+  }, [currentDialogId, getMessages, currentConvId]);
 
   return (
     <ChatMessages
@@ -44,15 +48,23 @@ const Messages = ({
       messages={items}
       scrollRef={scrollRef}
       currentDialogId={currentDialogId}
+      currentConvId={currentConvId}
       loader={loader}
       dialogs={dialogs}
       currentPartner={currentPartner && currentPartner}
+      currentConv={currentConv}
     />
   );
 };
 
 export default connect(
-  ({ dialogs, messages, auth }) => ({
+  ({ dialogs, messages, auth, conversations }) => ({
+    currentConvId: conversations.currentConvId,
+    currentConv:
+      conversations &&
+      conversations.items.find(
+        (item) => item.id === conversations.currentConvId
+      ),
     dialogs: dialogs.dialogs,
     currentDialogId: dialogs.currentDialogId,
     currentPartner: dialogs.currentPartner,
@@ -60,5 +72,5 @@ export default connect(
     loader: messages.loader,
     user: auth.user && auth.user.id,
   }),
-  { ...messagesActions },
+  { ...messagesActions }
 )(Messages);

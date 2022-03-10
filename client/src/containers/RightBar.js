@@ -22,10 +22,12 @@ const RightBarContianer = () => {
   }, [currentDialogId, currentPartner, dispatch]);
 
   useEffect(() => {
+      if (currentConvId) {
+        const currentConv = conversations.find(item => item.id === currentConvId)
+        setCurrentConv(currentConv )
+      }
 
-       setCurrentConv( conversations.find(item => item.id === currentConvId))
-
-  }, [])
+  }, [currentConvId, conversations])
 
   return (
     <Rightbar
