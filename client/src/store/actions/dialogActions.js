@@ -28,7 +28,7 @@ const dialogActions = {
   },
 
   fetchDialogs: () => async (dispatch) => {
-    dispatch(dialogActions.setLoading(true));
+
     try {
       const { data } = await Dialogs.fetchDialogs();
 
@@ -39,8 +39,6 @@ const dialogActions = {
       return dispatch(dialogActions.setDialogs(data));
     } catch (error) {
       console.log(error);
-    } finally {
-      dispatch(dialogActions.setLoading(false));
     }
   },
 };

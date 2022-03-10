@@ -1,6 +1,8 @@
 const UserDto = require('../DTOS/user-dto');
 const Dialog = require('../Models/Dialog');
 const Message = require('../Models/Message');
+const Conversation = require('../Models/Conversation');
+
 
 class MessagesController {
   constructor(io) {
@@ -15,19 +17,31 @@ class MessagesController {
       attachments: req.body.attachments,
     };
 
+    //как определять какие сообщения приходят: из диалога или из беседы??? Для того что бы при отправке сообщения определять что обновлять через сокет (диалог или беседу)
+
     await new Message(postData)
       .save()
       .then((messageObj) =>
-        messageObj.populate('dialog user attachments', (err, message) => {
+        messageObj.populate('user attachments', (err, message) => {
           if (err) {
             res.json('error');
           }
           Dialog.findOneAndUpdate(
             { _id: postData.dialog },
             { lastMessage: messageObj._id },
-            { upsert: true },
-          ).then(() => {
-            this.io.emit('SERVER:DIALOG_CHANGED');
+
+          ).then(( dialog) => {
+            if (!dialog) {
+                Conversation.findOneAndUpdate(
+                    { _id: postData.dialog },
+                    { lastMessage: messageObj._id },
+
+                ).then(conv => {
+                    this.io.emit('SERVER:CONV_CHANGED', conv)
+                })
+            } else {
+                this.io.emit('SERVER:DIALOG_CHANGED', dialog);
+            }
           });
           res.json(message);
 

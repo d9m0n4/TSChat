@@ -1,42 +1,69 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import './index.scss';
+import "./index.scss";
 
-import UserAvatar from '../Avatar';
-import toDate from '../../helpers/ToDate';
+import UserAvatar from "../Avatar";
+import toDate from "../../helpers/ToDate";
 
-const ChatListItem = ({ online, id, partner, type, date, lastMessage, currentUser, path, title }) => {
-  const { userId } = useSelector((state) => state.auth.user.id);
-  const lastM = () => {
-    return userId === currentUser ? `Вы: ${lastMessage}` : `${lastMessage}`;
+const ChatListItem = ({
+  online,
+  userId,
+  id,
+  partner,
+  type,
+  date,
+  lastMessage,
+  path,
+  title,
+  lastConvMessage,
+}) => {
+  const currentUser = useSelector((state) => state.auth.user.id);
+  const lastM = (id, message) => {
+    return id === userId ? `Вы: ${message}` : `${message}`;
   };
 
   return (
-    <NavLink activeClassName="active" exact to={`/${path}/${id}`}>
+    <NavLink activeClassName="active" exact to={`/im/${path}/${id}`}>
       <div className="chats__item">
         <div className="chats__item-avatar">
-          {online && <sup className="status-dot"></sup>}
-          {type === 'conv' ? '' :<UserAvatar name={partner.name} size={36} src={partner.userAvatar}/>}
+          {online && <sup className="status-dot" />}
+          <UserAvatar
+            name={(partner && partner.name) || title}
+            size={36}
+            src={partner && partner.userAvatar}
+          />
           <sub className="messages-count">{1}</sub>
         </div>
         <div className="chats__item-body">
           <div className="chats__item-top">
-            <p className="item-name">{type === 'conv' ? title : partner.name}</p>
-            {type === 'conv' ? '' : <span className="item-date">{toDate(date)}</span>}
+            <p className="item-name">
+              {type === "conv" ? title : partner.name}
+            </p>
+            {type === "conv" ? (
+              ""
+            ) : (
+              <span className="item-date">{toDate(date)}</span>
+            )}
           </div>
-          {type === 'conv' ? (
+          {type === "conv" ? (
             <div className="chats__item-bottom conv">
-              <div className="conv__sender">Экономист:</div>
-              <div className="conv__message">Шо как мужуки???</div>
+              {lastConvMessage && (
+                <>
+                  <div className="conv__sender">
+                    {lastConvMessage.user.name}:{" "}
+                  </div>
+                  <div className="conv__message">{lastConvMessage.text}</div>
+                </>
+              )}
             </div>
           ) : (
             <div className="chats__item-bottom">
               <div className="item__message">
-                <p>{lastM()}</p>
+                <p>{lastM(currentUser, lastMessage)}</p>
               </div>
-              <div className="item__status"></div>
+              <div className="item__status" />
             </div>
           )}
         </div>

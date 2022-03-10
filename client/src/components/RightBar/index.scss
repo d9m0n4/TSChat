@@ -7,6 +7,7 @@
   .rightbar__header {
     display: flex;
     justify-content: flex-end;
+    flex: 0 0 auto;
   }
   .rightbar__body {
     border-left: 1px solid rgba(229, 229, 229, 0.85);
@@ -44,8 +45,13 @@
     }
     &.rightbar__conversation {
       padding: 0 8px;
+      display: flex;
+      flex-direction: column;
+     overflow: hidden;
       .rightbar__conversation-header {
-        padding: 8px;
+        padding: 16px;
+        font-family: Gilroy-Medium;
+        text-align: center;
         h3 {
           text-align: center;
           font-family: Gilroy-Bold;
@@ -61,11 +67,26 @@
         }
       }
       .rightbar__conversation-members {
-
+        height: 100%;
+        overflow: auto;
         .conversation-member__item {
           display: flex;
           align-items: center;
           padding: 8px;
+          height: 64px;
+          &__name {
+            margin-left: 8px;
+            flex: 1;
+            border-bottom: 1px solid #efefee;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-family: Gilroy-Medium;
+          }
+          &__avatar {
+            position: relative;
+
+          }
         }
       }
     }
@@ -76,7 +97,7 @@
 @media screen and (max-width: 1025px) {
   .main__content-body__rightbar {
     position: absolute;
-    right: 0;
+    right: -10000px;
     height: 100%;
     z-index: 9;
   }
