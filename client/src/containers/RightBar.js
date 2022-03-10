@@ -21,7 +21,17 @@ const RightBarContianer = () => {
     }
   }, [currentDialogId, currentPartner, dispatch]);
 
+<<<<<<< HEAD
 
+=======
+  useEffect(() => {
+      if (currentConvId) {
+        const currentConv = conversations.find(item => item.id === currentConvId)
+        setCurrentConv(currentConv )
+      }
+
+  }, [currentConvId, conversations])
+>>>>>>> e93a6b8 (добавление собеседников)
 
   return (
       <Rightbar

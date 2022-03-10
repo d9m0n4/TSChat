@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import './index.scss';
+import React, { useEffect } from "react";
+import "./index.scss";
 
+<<<<<<< HEAD
 import Sidebar from '../../components/SideBar';
 import Messenger from '../../layouts/Messanger';
 import { connect } from 'react-redux';
@@ -9,6 +10,17 @@ import Loader from '../../components/Loader';
 import dialogActions from '../../store/actions/dialogActions';
 import conversationActions from '../../store/actions/conversatiosActions';
 import UserProfile from '../../layouts/UserProfile';
+=======
+import Sidebar from "../../components/SideBar";
+import Messenger from "../../layouts/Messenger";
+import { connect } from "react-redux";
+import { Route, Switch, useLocation } from "react-router";
+import Loader from "../../components/Loader";
+import dialogActions from "../../store/actions/dialogActions";
+import conversationActions from "../../store/actions/conversatiosActions";
+import UserProfile from "../../layouts/UserProfile";
+import Settings from "../../layouts/Settings";
+>>>>>>> e93a6b8 (добавление собеседников)
 
 const Home = ({
                 conversations,
@@ -22,7 +34,7 @@ const Home = ({
 
 }) => {
   let { pathname } = useLocation();
-  const path = 'dialogs';
+  const path = "dialogs";
 
   useEffect(() => {
     if (pathname.includes(path)) {
@@ -31,11 +43,14 @@ const Home = ({
       setCurrentConversationId(null);
         console.log(dialogId)
       if (dialogsItems) {
-        let partner = dialogsItems.filter((dialog) => dialog.dialogId === dialogId)[0];
+        let partner = dialogsItems.filter(
+          (dialog) => dialog.dialogId === dialogId
+        )[0];
         setCurrentPartner(partner);
       }
-    } else {
-      const conversationId = pathname.split('/conversation/').pop();
+    }
+    if (pathname.includes("/im/conversation/")) {
+      const conversationId = pathname.split("/im/conversation/").pop();
       setCurrentConversationId(conversationId);
       setCurrentDialogId(null);
       setCurrentPartner(null);
@@ -53,8 +68,14 @@ const Home = ({
         <section className="home-page">
           <Sidebar />
           <Switch>
+<<<<<<< HEAD
             <Route path={['/dialogs', '/conversation']} component={Messenger} />
             <Route path={'/profile'} component={UserProfile} />
+=======
+            <Route path={["/im"]} component={Messenger} />
+            <Route path={"/profile"} component={UserProfile} />
+            <Route path={"/settings"} component={Settings} />
+>>>>>>> e93a6b8 (добавление собеседников)
           </Switch>
         </section>
       )}
@@ -69,5 +90,5 @@ export default connect(
     conversations: conversations.items,
     currentConvId: conversations.currentConvId
   }),
-  { ...dialogActions, ...conversationActions },
+  { ...dialogActions, ...conversationActions }
 )(Home);

@@ -1,28 +1,29 @@
-import Messages from '../../Services/Messages';
+import Messages from "../../Services/Messages";
 
 const messagesActions = {
   setMessages: (payload) => ({
-    type: 'MESSAGES:SET_MESSAGES',
+    type: "MESSAGES:SET_MESSAGES",
     payload,
   }),
   setLoader: (payload) => ({
-    type: 'MESSAGES:SET_LOADER',
+    type: "MESSAGES:SET_LOADER",
     payload,
   }),
 
   addMessage: (message) => (dispatch, getState) => {
-    const { dialogs } = getState();
+    const { dialogs, conversations } = getState();
     const { currentDialogId } = dialogs;
+    const { currentConvId } = conversations;
 
-    if (message.dialog._id === currentDialogId) {
+    if (message && message.dialog === (currentDialogId || currentConvId)) {
       dispatch({
-        type: 'MESSAGES:ADD_MESSAGE',
+        type: "MESSAGES:ADD_MESSAGE",
         payload: message,
       });
     }
   },
 
-  fetchMessages: (payload) => async (dispatch) => {
+  getMessages: (payload) => async (dispatch) => {
     dispatch(messagesActions.setLoader(true));
     try {
       const { data } = await Messages.fetchMessages(payload);

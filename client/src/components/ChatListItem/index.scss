@@ -27,7 +27,7 @@
     .messages-count {
       position: absolute;
       left: 0;
-      bottom: 0px;
+      bottom: 0;
       color: #fff;
       height: 16px;
       width: 16px;
@@ -53,7 +53,7 @@
       align-items: center;
       .item-name {
         font-size: 14px;
-        font-family: 'Gilroy-Bold';
+        font-family: 'Gilroy-Bold', serif;
         margin: 0;
       }
       .item-date {
@@ -79,7 +79,7 @@
       }
 
       .conv__sender {
-        color: #276aa5;
+        font-family: Gilroy-Medium;
         margin-right: 4px;
       }
     }
@@ -88,6 +88,6 @@
     }
   }
   .status {
-    top: 3;
+    top: 3px;
   }
 }

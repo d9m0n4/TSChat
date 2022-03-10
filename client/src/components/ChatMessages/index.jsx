@@ -5,20 +5,32 @@ import { MailOutlined } from '@ant-design/icons';
 import ChatInputContainer from '../../containers/ChatInput';
 import Loader from '../../components/Loader';
 import { useState } from 'react';
+<<<<<<< HEAD
 import {Avatar} from "antd";
 import UserAvatar from "../Avatar";
 
 const ChatMessages = ({ scrollRef, messages, user, currentDialogId, loader, currentPartner, currentConv }) => {
+=======
+import {Avatar, Tooltip} from "antd";
+import UserAvatar from "../Avatar";
+
+const ChatMessages = ({ scrollRef, messages, user, currentDialogId, currentConvId, loader, currentPartner, currentConv }) => {
+>>>>>>> e93a6b8 (добавление собеседников)
   const [active, setActive] = useState(false);
 
   const toggleClass = () => {
     setActive(!active);
   };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e93a6b8 (добавление собеседников)
   return (
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
         <div className="chat__header-title">
+<<<<<<< HEAD
           <div className="messages__header-chat__title">
             {currentPartner ? currentPartner.partner.name : currentConv && (
                 <div className='chat__title-conv'>
@@ -32,9 +44,27 @@ const ChatMessages = ({ scrollRef, messages, user, currentDialogId, loader, curr
             )}
           </div>
           {currentPartner && <div className="messages__header-chat__status online"></div>}
+=======
+            {currentPartner ? <>
+                <div className="messages__header-chat__title">
+                    {currentPartner.partner.name}
+                </div>
+                <div className="messages__header-chat__status online" />
+            </> :
+                  (
+                      <Avatar.Group  maxCount={2}>
+                          {currentConv && currentConv.members.map(item => (
+                              <Tooltip key={item.id} title={item.name} placement='top'>
+                                  <UserAvatar size={32} src={item.avatar} name={item.name}/>
+                              </Tooltip>
+                          ))}
+                      </Avatar.Group>
+                )
+            }
+>>>>>>> e93a6b8 (добавление собеседников)
         </div>
         <div className="chat__header-btn">
-          <span onClick={toggleClass} className={active ? 'active' : ''}></span>
+          <span onClick={toggleClass} className={active ? 'active' : ''} />
         </div>
       </div>
 
@@ -43,7 +73,7 @@ const ChatMessages = ({ scrollRef, messages, user, currentDialogId, loader, curr
           <Loader />
         ) : (
           <div className="messages">
-            {currentDialogId && messages && messages ? (
+            {(currentDialogId || currentConvId)  && messages ? (
               messages.map((m) => (
                 <div key={m._id} ref={scrollRef}>
                   <Message
@@ -66,7 +96,7 @@ const ChatMessages = ({ scrollRef, messages, user, currentDialogId, loader, curr
         )}
       </div>
 
-      {!loader && currentDialogId && messages && messages.length > 0 && <ChatInputContainer />}
+      {!loader && (currentDialogId || currentConvId) && messages && messages.length > 0 && <ChatInputContainer />}
     </div>
   );
 };

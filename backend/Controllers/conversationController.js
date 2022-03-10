@@ -1,5 +1,7 @@
 const Conversation = require('../Models/Conversation');
 const Message = require('../Models/Message');
+const User = require('../Models/User');
+
 
 const UserDto = require('../DTOS/user-dto');
 
@@ -14,17 +16,35 @@ class ConversationController {
 
     Conversation.find({ creator: currentUser, title: req.body.title }).then((conv) => {
       if (conv.length) {
-        return console.log(conv, 'уже существует');
+        return res.status(200).json({
+          message: 'Такая беседа уже существует'
+        })
       } else {
-        const conversation = new Conversation({
-          creator: currentUser,
-          members: [...members, currentUser],
-          title,
-        });
-        conversation.save().then((conv) => {
-          this.io.emit('CONVERSATION_SET_ITEM', conv);
-          res.status(200);
-        });
+        User.findOne({_id: currentUser}).then(user => {
+          const conversation = new Conversation({
+            creator: currentUser,
+            members: [...members, currentUser],
+            title,
+
+          });
+          conversation.save().then((conv) => {
+
+            const message = new Message({
+              user: currentUser,
+              dialog: conv._id,
+              text: `Пользователь ${user.name} (${user.nickName}) создал беседу ${title}`})
+
+            message.save().then(m => {
+              this.io.emit('CONVERSATION_SET_ITEM', conv);
+            })
+
+
+
+            res.status(200);
+          });
+        })
+
+
       }
     });
   };
@@ -33,6 +53,9 @@ class ConversationController {
     const user = req.user.id;
     await Conversation.find({ members: { $in: [user] } })
       .populate(['creator', 'members'])
+        .populate({path: 'lastMessage', populate: {
+          path: 'user'
+          }})
       .then((userConversations) => {
         const userConv = userConversations.map((item) => {
           const userDto = new UserDto(item.creator);
@@ -43,6 +66,7 @@ class ConversationController {
             title: item.title,
             creator: userDto,
             members: convMembers,
+            lastMessage: item.lastMessage
           };
         });
         res.status(200).json(userConv);
