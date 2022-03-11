@@ -47,15 +47,8 @@
       padding: 0 8px;
       display: flex;
       flex-direction: column;
-     overflow: hidden;
+      overflow: hidden;
       .rightbar__conversation-header {
-<<<<<<< HEAD
-        padding: 8px;
-        font-size: 1.3em;
-        text-align: center;
-        color: #3a456b;
-
-=======
         padding: 16px;
         font-family: Gilroy-Medium;
         text-align: center;
@@ -63,33 +56,16 @@
           text-align: center;
           font-family: Gilroy-Bold;
         }
->>>>>>> e93a6b8 (добавление собеседников)
-    }
+      }
 
       .rightbar__conversation-members {
-<<<<<<< HEAD
-
-        .conversation-members__item {
-=======
         height: 100%;
         overflow: auto;
         .conversation-member__item {
->>>>>>> e93a6b8 (добавление собеседников)
           display: flex;
           align-items: center;
           padding: 8px;
           height: 64px;
-<<<<<<< HEAD
-          &-name {
-            margin-left: 8px;
-            font-family: Gilroy-Medium;
-            display: flex;
-            padding:  10px 0;
-            width: 100%;
-            height: 100%;
-            border-bottom: 1px solid #ececee;
-            align-items: center;
-=======
           &__name {
             margin-left: 8px;
             flex: 1;
@@ -101,14 +77,11 @@
           }
           &__avatar {
             position: relative;
-
->>>>>>> e93a6b8 (добавление собеседников)
           }
         }
       }
     }
   }
-
 }
 
 @media screen and (max-width: 1025px) {
