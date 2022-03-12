@@ -1,13 +1,17 @@
 import React from 'react';
+import UserAvatar from '../Avatar';
 
 import './index.scss'
 
-const Typing = () => {
+const Typing = ({user}) => {
     return (
         <div className="typing__message">
-            <span />
-            <span />
-            <span />
+            <div className="typing__message-user">
+                <UserAvatar size={36} name={user.name} src={user.avatar}/>
+            </div>
+            <span className='typing__message-dot' />
+            <span  className='typing__message-dot'/>
+            <span className='typing__message-dot' />
         </div>
     );
 };

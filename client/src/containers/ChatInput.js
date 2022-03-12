@@ -12,7 +12,7 @@ import messagesActions from "../store/actions/messagesActions";
 import { CloseCircleTwoTone } from "@ant-design/icons";
 
 const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
-  const [messageValue, setMessageValue] = useState("");
+  const [messageValue, setMessageValue] = useState(null);
   const [visiblePicker, setVisiblePicker] = useState(false);
 
   const [isRecording, setIsRecording] = useState(false);
@@ -51,19 +51,37 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       setFileList([]);
       setUploading(false);
       setVisiblePicker(false)
-      sendMessage({
-        dialogId: dialogId || currentConvId,
-        text: messageValue || null,
-        attachments: result.map((item) => item._id),
-      });
+
+      if (messageValue.trim() || fileList.length > 0) {
+        sendMessage({
+          dialogId: dialogId || currentConvId,
+          text: messageValue,
+          attachments: result.map((item) => item._id),
+        });
+      }
     }
   };
 
+  let timeout = null
+  const [isTyping, setIsTyping] = useState(false)
+
+  function timeoutFunction() {
+    socket.emit("TYPING", false);
+    setIsTyping(false)
+  }
+
   const handleTyping = (e) => {
-    socket.emit('TYPING', {dialog: dialogId || currentConvId, user})
+    if (!isTyping) {
+      setIsTyping(true)
+      socket.emit('TYPING', {dialog: dialogId || currentConvId, user})
+      clearTimeout(timeout)
+      timeout = setTimeout(timeoutFunction, 3000)
+    }
+
 
     if (e.keyCode === 13) {
       e.preventDefault()
+      timeoutFunction()
       onSendMessage()
     }
   }

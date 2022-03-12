@@ -4,11 +4,14 @@ import Message from '../Message';
 import { MailOutlined } from '@ant-design/icons';
 import ChatInputContainer from '../../containers/ChatInput';
 import Loader from '../../components/Loader';
+import Typing from '../../components/Typing';
 import { useState } from 'react';
 import { Avatar, Tooltip } from 'antd';
 import UserAvatar from '../Avatar';
 
 const ChatMessages = ({
+                        isTyping,
+    typingUser,
   scrollRef,
   messages,
   user,
@@ -26,7 +29,7 @@ const ChatMessages = ({
   };
 
   return (
-  Typing
+
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
         <div className="chat__header-title">
@@ -51,14 +54,14 @@ const ChatMessages = ({
         </div>
       </div>
 
-      <div className="messages__body">
+      <div className="messages__body" ref={scrollRef}>
         {loader ? (
           <Loader />
         ) : (
-          <div className="messages">
+          <div className="messages" >
             {(currentDialogId || currentConvId) && messages ? (
               messages.map((m) => (
-                <div key={m._id} ref={scrollRef}>
+                <div key={m._id} >
                   <Message
                     attachments={m.attachments}
                     isMe={user === m.user._id}
@@ -69,7 +72,9 @@ const ChatMessages = ({
                     serverMessage={m.server}
                   />
                 </div>
+
               ))
+
             ) : (
 
               <div className="messages__empty-block">
@@ -77,6 +82,7 @@ const ChatMessages = ({
                 <p>Здесь будут отображаться сообщения Ваших диалогов</p>
               </div>
             )}
+            {isTyping && typingUser && <Typing user={typingUser}/>}
           </div>
         )}
       </div>

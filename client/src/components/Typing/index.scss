@@ -1,11 +1,16 @@
 .typing__message {
-  span {
+  display: flex;
+  align-items: center;
+  &-user {
+    margin-right: 8px;
+  }
+  &-dot {
     height: 8px;
     width: 8px;
     border-radius: 50%;
-    background: #ef8933;
+    background: #276AA5;
     display: inline-block;
-    margin-right: 8px;
+    margin-right: 4px;
     animation: 0.8s typingAnimation infinite ease-out 0.1s;
 
     &:nth-of-type(2) {

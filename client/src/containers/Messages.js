@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import ChatMessages from '../components/ChatMessages';
 import socket from '../core/socket';
@@ -17,16 +17,14 @@ const Messages = ({
   currentConvId,
 }) => {
   const scrollRef = useRef(null);
+  const [isTyping, setIsTyping] = useState(false)
+  const [typingUser, setTypingUser] = useState()
 
-  const scrollToBottom = () => {
-    scrollRef.current && scrollRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
-  };
   useEffect(() => {
-    scrollToBottom();
-  }, [items]);
+    scrollRef.current.scrollTo(0, 999999);
+  }, [items, isTyping]);
 
   const newMessage = (data) => {
-    console.log(data);
     addMessage(data);
   };
 
@@ -41,14 +39,25 @@ const Messages = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, getMessages, currentConvId]);
 
+
   useEffect(() => {
     socket.on('TYPING', (o) => {
-      console.log(o)
+      if (!o) {
+        setIsTyping(false)
+        setTypingUser(null)
+      } else {
+        setIsTyping(true)
+        setTypingUser(o.user)
+      }
     })
+    return () => {
+      socket.removeListener("TYPING");
+    };
   }, [])
 
   return (
     <ChatMessages
+        isTyping={isTyping}
       user={user}
       messages={items}
       scrollRef={scrollRef}
@@ -58,6 +67,7 @@ const Messages = ({
       dialogs={dialogs}
       currentPartner={currentPartner && currentPartner}
       currentConv={currentConv}
+        typingUser={typingUser}
     />
   );
 };

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="анимация набора сообщение собеседником">
+      <change beforePath="$PROJECT_DIR$/client/src/components/ChatMessages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChatMessages/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Typing/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Typing/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Typing/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Typing/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/ChatInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/ChatInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Messages.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="e93a6b8fc12399d9345b18996da37f82f61acf0f" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="25hFCFYhd8NAJO6bFXiTpKnM7ES" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\VDCH\Documents\projects\TSChat\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\VDCH\Documents\projects\TSChat\client\src\assets" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="" />
+      <created>1645971284454</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645971284454</updated>
+      <workItem from="1645971286161" duration="4402000" />
+      <workItem from="1646507131650" duration="818000" />
+      <workItem from="1646558261302" duration="16825000" />
+      <workItem from="1646653698118" duration="16070000" />
+      <workItem from="1646683418340" duration="633000" />
+      <workItem from="1646938941477" duration="815000" />
+      <workItem from="1647071498551" duration="604000" />
+      <workItem from="1647072118091" duration="8893000" />
+      <workItem from="1647097115836" duration="2226000" />
+      <workItem from="1647100400815" duration="7389000" />
+    </task>
+    <task id="LOCAL-00001" summary="анимация набора сообщение собеседником">
+      <created>1647100563894</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1647100563894</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="добаление собеседников" />
+    <MESSAGE value="анимация набора сообщение собеседником" />
+    <option name="LAST_COMMIT_MESSAGE" value="анимация набора сообщение собеседником" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
