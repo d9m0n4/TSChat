@@ -47,7 +47,7 @@
       padding: 0 8px;
       display: flex;
       flex-direction: column;
-     overflow: hidden;
+      overflow: hidden;
       .rightbar__conversation-header {
         padding: 16px;
         font-family: Gilroy-Medium;
@@ -56,16 +56,8 @@
           text-align: center;
           font-family: Gilroy-Bold;
         }
-    }
-      .rightbar__conversation-creator {
-        display: flex;
-        align-items: center;
-        padding: 8px;
-        &__name {
-          margin-left: 8px;
-          font-family: Gilroy-Bold;
-        }
       }
+
       .rightbar__conversation-members {
         height: 100%;
         overflow: auto;
@@ -85,13 +77,11 @@
           }
           &__avatar {
             position: relative;
-
           }
         }
       }
     }
   }
-
 }
 
 @media screen and (max-width: 1025px) {

@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import { connect } from "react-redux";
-import ChatMessages from "../components/ChatMessages";
-import socket from "../core/socket";
-import messagesActions from "../store/actions/messagesActions";
+import { useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
+import ChatMessages from '../components/ChatMessages';
+import socket from '../core/socket';
+import messagesActions from '../store/actions/messagesActions';
 
 const Messages = ({
   getMessages,
@@ -19,8 +19,7 @@ const Messages = ({
   const scrollRef = useRef(null);
 
   const scrollToBottom = () => {
-    scrollRef.current &&
-      scrollRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
+    scrollRef.current && scrollRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
   };
   useEffect(() => {
     scrollToBottom();
@@ -34,10 +33,10 @@ const Messages = ({
   useEffect(() => {
     if (currentDialogId || currentConvId) {
       getMessages(currentDialogId || currentConvId);
-      socket.on("SERVER:CREATE_MESSAGE", newMessage);
+      socket.on('SERVER:CREATE_MESSAGE', newMessage);
     }
     return () => {
-      socket.removeListener("SERVER:CREATE_MESSAGE");
+      socket.removeListener('SERVER:CREATE_MESSAGE');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, getMessages, currentConvId]);
@@ -61,10 +60,7 @@ export default connect(
   ({ dialogs, messages, auth, conversations }) => ({
     currentConvId: conversations.currentConvId,
     currentConv:
-      conversations &&
-      conversations.items.find(
-        (item) => item.id === conversations.currentConvId
-      ),
+      conversations && conversations.items.find((item) => item.id === conversations.currentConvId),
     dialogs: dialogs.dialogs,
     currentDialogId: dialogs.currentDialogId,
     currentPartner: dialogs.currentPartner,
@@ -72,5 +68,5 @@ export default connect(
     loader: messages.loader,
     user: auth.user && auth.user.id,
   }),
-  { ...messagesActions }
+  { ...messagesActions },
 )(Messages);

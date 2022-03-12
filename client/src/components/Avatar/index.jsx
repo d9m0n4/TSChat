@@ -7,6 +7,7 @@ const UserAvatar = ({ name, size, src }) => {
   const firstChar = name ? name[0].toUpperCase() : '';
   return (
     <Avatar
+
       src={src}
       style={{
         fontWeight: '600',

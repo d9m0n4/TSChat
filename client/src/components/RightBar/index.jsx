@@ -56,22 +56,19 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
         </div>
       ) : (
         <div className="rightbar__body rightbar__conversation">
-            <div className="rightbar__conversation-header">
-                Участиники беседы
-            </div>
-            <ul className='rightbar__conversation-members'>
-            {conversation && conversation.members.map(item => (
-
-                        <li key={item.id} className='conversation-member__item'>
-                            <div className="conversation-member__item__avatar">
-                                {<sup className="status-dot"></sup>}
-                                <UserAvatar size={36} name={item.name} src={item.avatar}/>
-                            </div>
-                            <div className="conversation-member__item__name">{item.name}</div>
-                        </li>
-
-                ))}
-            </ul>
+          <div className="rightbar__conversation-header">Участиники беседы</div>
+          <ul className="rightbar__conversation-members">
+            {conversation &&
+              conversation.members.map((item) => (
+                <li key={item.id} className="conversation-member__item">
+                  <div className="conversation-member__item__avatar">
+                    {<sup className="status-dot"></sup>}
+                    <UserAvatar size={36} name={item.name} src={item.avatar} />
+                  </div>
+                  <div className="conversation-member__item__name">{item.name}</div>
+                </li>
+              ))}
+          </ul>
         </div>
       )}
     </div>

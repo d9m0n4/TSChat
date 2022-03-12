@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Rightbar from '../components/RightBar';
@@ -6,7 +6,7 @@ import Rightbar from '../components/RightBar';
 import filesActions from '../store/actions/filesActions';
 
 const RightBarContianer = () => {
-  const [currentConv, setCurrentConv] = useState()
+  const [currentConv, setCurrentConv] = useState();
   const dispatch = useDispatch();
   const { currentDialogId, currentPartner } = useSelector((state) => state.dialogs, shallowEqual);
   const { currentConvId, items: conversations } = useSelector(
@@ -22,12 +22,11 @@ const RightBarContianer = () => {
   }, [currentDialogId, currentPartner, dispatch]);
 
   useEffect(() => {
-      if (currentConvId) {
-        const currentConv = conversations.find(item => item.id === currentConvId)
-        setCurrentConv(currentConv )
-      }
-
-  }, [currentConvId, conversations])
+    if (currentConvId) {
+      const currentConv = conversations.find((item) => item.id === currentConvId);
+      setCurrentConv(currentConv);
+    }
+  }, [currentConvId, conversations]);
 
   return (
     <Rightbar

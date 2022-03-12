@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import "./index.scss";
+import './index.scss';
 
-import UserAvatar from "../Avatar";
-import toDate from "../../helpers/ToDate";
+import UserAvatar from '../Avatar';
+import toDate from '../../helpers/ToDate';
 
 const ChatListItem = ({
   online,
@@ -38,22 +38,14 @@ const ChatListItem = ({
         </div>
         <div className="chats__item-body">
           <div className="chats__item-top">
-            <p className="item-name">
-              {type === "conv" ? title : partner.name}
-            </p>
-            {type === "conv" ? (
-              ""
-            ) : (
-              <span className="item-date">{toDate(date)}</span>
-            )}
+            <p className="item-name">{type === 'conv' ? title : partner.name}</p>
+            {type === 'conv' ? '' : <span className="item-date">{toDate(date)}</span>}
           </div>
-          {type === "conv" ? (
+          {type === 'conv' ? (
             <div className="chats__item-bottom conv">
               {lastConvMessage && (
                 <>
-                  <div className="conv__sender">
-                    {lastConvMessage.user.name}:{" "}
-                  </div>
+                  <div className="conv__sender">{lastConvMessage.user.name}: </div>
                   <div className="conv__message">{lastConvMessage.text}</div>
                 </>
               )}
