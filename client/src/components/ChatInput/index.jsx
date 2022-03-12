@@ -23,6 +23,7 @@ const ChatInput = ({
   uploading,
   canvas,
   audioResult,
+                     handleTyping
 }) => {
   return (
     <div className="messages__input-group">
@@ -106,6 +107,7 @@ const ChatInput = ({
                   placeholder="Введите сообщение... "
                   autoSize={{ minRows: 1, maxRows: 5 }}
                   value={value}
+                  onKeyUp={handleTyping}
                 />
               </div>
             </>

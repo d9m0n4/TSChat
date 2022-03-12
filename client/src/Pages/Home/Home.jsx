@@ -29,7 +29,6 @@ const Home = ({
       const dialogId = pathname.split(`/${path}/`).pop();
       setCurrentDialogId(dialogId);
       setCurrentConversationId(null);
-      console.log(dialogId);
       if (dialogsItems) {
         let partner = dialogsItems.filter((dialog) => dialog.dialogId === dialogId)[0];
         setCurrentPartner(partner);
@@ -40,10 +39,10 @@ const Home = ({
       setCurrentConversationId(conversationId);
       setCurrentDialogId(null);
       setCurrentPartner(null);
-      if (conversations) {
-        console.log(currentConvId);
-      }
+
     }
+
+
   }, [
     pathname,
     setCurrentDialogId,
@@ -51,6 +50,7 @@ const Home = ({
     dialogsItems,
     setCurrentPartner,
     conversations,
+      currentConvId
   ]);
 
   return (

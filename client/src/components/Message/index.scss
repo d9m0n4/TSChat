@@ -8,12 +8,12 @@
     }
     #{$self}__content {
       &-bubble {
-        border-radius: 16px 16px 0px 16px;
+        border-radius: 16px 16px 0 16px;
         background-color: rgba(229, 229, 229, 0.85);
         box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
         color: #3a456b;
         .message__audio-progress {
-          border-radius: 16px 16px 0px 16px;
+          border-radius: 16px 16px 0 16px;
           background-color: #039be5;
         }
         .message__audio-btn {
@@ -57,7 +57,7 @@
       color: #ffffff;
       font-size: 14px;
       box-shadow: 1px 2px 4px rgba(69, 104, 232, 0.6);
-      border-radius: 16px 16px 16px 0px;
+      border-radius: 16px 16px 16px 0;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
@@ -118,7 +118,7 @@
         left: 0;
         bottom: 0;
         background-color: #3a456b;
-        border-radius: 16px 16px 16px 0px;
+        border-radius: 16px 16px 16px 0;
         opacity: 0.3;
         transition: all 0.1s ease;
       }
@@ -129,5 +129,23 @@
       font-size: 10px;
       color: rgba(151, 151, 151, 1);
     }
+  }
+}
+.server__message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+  font-family: Gilroy-Medium, serif;
+  color: #a4a4a4;
+  p {
+    margin: 0 8px;
+    flex: 0 0 auto;
+
+  }
+  span {
+    height: 1px;
+    background-color: #a4a4a4;
+    width: 100%;
   }
 }

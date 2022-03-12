@@ -41,6 +41,12 @@ const Messages = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, getMessages, currentConvId]);
 
+  useEffect(() => {
+    socket.on('TYPING', (o) => {
+      console.log(o)
+    })
+  }, [])
+
   return (
     <ChatMessages
       user={user}

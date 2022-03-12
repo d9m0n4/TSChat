@@ -49,26 +49,7 @@ const Sidebar = () => {
               </svg>
             </NavLink>
           </li>
-          <li className="nav-group__item">
-            <NavLink activeClassName="active" exact to="/links">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  id="rect"
-                  d="M5 5C5 3.89543 5.89543 3 7 3H17C18.1046 3 19 3.89543 19 5V21L12 17.5L5 21V5Z"
-                  stroke="#979797"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </NavLink>
-          </li>
+
         </ul>
         <ul className="nav-group">
           <li className="nav-group__item">

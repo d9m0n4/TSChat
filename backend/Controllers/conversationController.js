@@ -32,7 +32,10 @@ class ConversationController {
             const message = new Message({
               user: currentUser,
               dialog: conv._id,
-              text: `Пользователь ${user.name} (${user.nickName}) создал беседу ${title}`})
+              text: `Пользователь ${user.name} (${user.nickName}) создал беседу ${title}`,
+              server: true
+            })
+
 
             message.save().then(m => {
               this.io.emit('CONVERSATION_SET_ITEM', conv);

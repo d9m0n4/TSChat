@@ -4,13 +4,14 @@ import { useRef } from "react";
 import { connect } from "react-redux";
 
 import ChatInput from "../components/ChatInput";
+import socket from "../core/socket";
 
 import Files from "../Services/Files";
 import messagesActions from "../store/actions/messagesActions";
 
 import { CloseCircleTwoTone } from "@ant-design/icons";
 
-const ChatInputContainer = ({ dialogId, sendMessage, currentConvId }) => {
+const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
   const [messageValue, setMessageValue] = useState("");
   const [visiblePicker, setVisiblePicker] = useState(false);
 
@@ -49,6 +50,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId }) => {
       setMessageValue("");
       setFileList([]);
       setUploading(false);
+      setVisiblePicker(false)
       sendMessage({
         dialogId: dialogId || currentConvId,
         text: messageValue || null,
@@ -56,6 +58,15 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId }) => {
       });
     }
   };
+
+  const handleTyping = (e) => {
+    socket.emit('TYPING', {dialog: dialogId || currentConvId, user})
+
+    if (e.keyCode === 13) {
+      e.preventDefault()
+      onSendMessage()
+    }
+  }
 
   const uploaderProps = {
     onRemove: (file) => {
@@ -293,13 +304,14 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId }) => {
       visiblePicker={visiblePicker}
       uploaderProps={uploaderProps}
       uploading={uploading}
+      handleTyping={handleTyping}
     />
   );
 };
 
 export default connect(
   ({ auth, dialogs, conversations }) => ({
-    userId: auth.user.id,
+    user: auth.user,
     dialogId: dialogs.currentDialogId,
     currentConvId: conversations.currentConvId,
   }),

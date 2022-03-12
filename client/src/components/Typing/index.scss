@@ -1,0 +1,36 @@
+.typing__message {
+  span {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: #ef8933;
+    display: inline-block;
+    margin-right: 8px;
+    animation: 0.8s typingAnimation infinite ease-out 0.1s;
+
+    &:nth-of-type(2) {
+      animation: 0.8s typingAnimation infinite ease-out 0.2s;
+    }
+    &:nth-of-type(3) {
+      animation: 0.8s typingAnimation infinite ease-out 0.3s;
+      margin-right: 0;
+    }
+  }
+}
+
+
+
+@keyframes typingAnimation {
+  from {
+    opacity: 0.2;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-1.5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+}

@@ -17,6 +17,7 @@ const ChatMessages = ({
   loader,
   currentPartner,
   currentConv,
+    type
 }) => {
   const [active, setActive] = useState(false);
 
@@ -25,6 +26,7 @@ const ChatMessages = ({
   };
 
   return (
+  Typing
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
         <div className="chat__header-title">
@@ -64,10 +66,12 @@ const ChatMessages = ({
                     text={m.text}
                     name={m.user.name}
                     user={m.user}
+                    serverMessage={m.server}
                   />
                 </div>
               ))
             ) : (
+
               <div className="messages__empty-block">
                 <MailOutlined className="empty__icon" />
                 <p>Здесь будут отображаться сообщения Ваших диалогов</p>

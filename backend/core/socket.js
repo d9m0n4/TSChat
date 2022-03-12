@@ -16,6 +16,10 @@ module.exports = (http) => {
       user[socket.id] = id;
     });
 
+    socket.on('TYPING', (obj) => {
+      socket.broadcast.emit('TYPING', obj)
+    })
+
     socket.on('disconnect', async () => {});
   });
 
