@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="анимация набора сообщение собеседником">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Controllers/conversationController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Controllers/conversationController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Controllers/dialogController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Controllers/dialogController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Messages.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/core/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ChatListItem/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChatListItem/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/core/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/socket.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +67,8 @@
       <workItem from="1647097115836" duration="2226000" />
       <workItem from="1647100400815" duration="7881000" />
       <workItem from="1647171001632" duration="297000" />
-      <workItem from="1647177642609" duration="4195000" />
+      <workItem from="1647177642609" duration="4226000" />
+      <workItem from="1647198825580" duration="3627000" />
     </task>
     <task id="LOCAL-00001" summary="анимация набора сообщение собеседником">
       <created>1647100563894</created>
