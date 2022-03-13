@@ -151,7 +151,7 @@ const UserProfile = () => {
                 await Users.updateUser({
                   ...values,
                   date: date ? date : user.birthday,
-                  avatar: res.data.file.thumb,
+                  avatar: res.data.file.thumb, // нет возможности обновить данные о пользователе если не сменена аватарка...
                   user: user.id,
                 });
               }
@@ -262,7 +262,7 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="profile__page-attachments">
-        {userFiles ? (
+        {userFiles && userFiles.length > 0 ? (
           <>
             <div className="profile__page-attachments__title">Матриалы Ваших сообщений</div>
             <ul className="profile__page-attachments__list">

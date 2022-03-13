@@ -53,7 +53,7 @@ const Messages = ({
     return () => {
       socket.removeListener("TYPING");
     };
-  }, [])
+  }, [isTyping])
 
   return (
     <ChatMessages

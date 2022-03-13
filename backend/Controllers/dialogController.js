@@ -52,8 +52,8 @@ class DialogController {
             message.save().then((m) => {
               dialog.lastMessage = m._id;
               dialog.save().then((d) =>
-                d.populate('members lastMessage').then((d) => {
-                  this.io.emit('DIALOG:CREATED', d);
+                d.populate('members lastMessage').then((populatedDialog) => {
+                  this.io.emit('DIALOG:CREATED', populatedDialog);
                 }),
               );
             });
