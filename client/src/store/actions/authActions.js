@@ -1,6 +1,6 @@
 import openNotification from '../../helpers/notifications/openNotification';
 import Auth from '../../Services/Auth';
-import socket from '../../core/socket';
+import socket from '../../api/socket';
 
 const authActions = {
   setAuth: (payload) => ({
@@ -27,7 +27,8 @@ const authActions = {
         dispatch(authActions.setAuth(false));
         delete window.localStorage.token;
       }
-      socket.emit('login', userData.data.id);
+
+
       return dispatch(authActions.setUser(userData.data));
     } catch (error) {
       console.log(error);

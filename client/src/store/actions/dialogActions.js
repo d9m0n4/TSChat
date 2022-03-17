@@ -1,4 +1,4 @@
-import socket from '../../core/socket';
+import socket from '../../api/socket';
 import Dialogs from '../../Services/Dialogs';
 
 const dialogActions = {

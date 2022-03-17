@@ -3,8 +3,13 @@ const socket = io('http://localhost:8000');
 
 
 socket.on('connection', () => {
-    socket.emit('login', userData.data.id)
-});
+    socket.emit('userConnected')
+})
+
+if (socket.disconnect) {
+    socket.emit('userDisconnected')
+}
+
 
 
 export default socket;

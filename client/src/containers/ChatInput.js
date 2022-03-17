@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { connect } from "react-redux";
 
 import ChatInput from "../components/ChatInput";
-import socket from "../core/socket";
+import socket from "../api/socket";
 
 import Files from "../Services/Files";
 import messagesActions from "../store/actions/messagesActions";

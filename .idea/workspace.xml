@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="анимация набора сообщение собеседником">
+    <list default="true" id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/api/socket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/core/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ChatListItem/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChatListItem/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Pages/Auth/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Auth/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ChatMessages/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChatMessages/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Message/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Message/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/ChatInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/ChatInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/LeftBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/LeftBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/containers/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Messages.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/core/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/actions/authActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/actions/dialogActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/actions/dialogActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/_vars.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/_vars.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/index.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,14 +48,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/core" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\VDCH\Documents\projects\TSChat\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Иван\WebstormProjects\TSChat\client\src\core" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Иван\WebstormProjects\TSChat\client\src\api" />
       <recent name="C:\Users\VDCH\Documents\projects\TSChat\client\src\assets" />
     </key>
   </component>

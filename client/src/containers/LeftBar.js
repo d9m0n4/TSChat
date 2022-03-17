@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Leftbar from "../components/LeftBar";
-import Dialogs from "../Services/Dialogs";
-import User from "../Services/Users";
-import { connect, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import Leftbar from '../components/LeftBar';
+import Dialogs from '../Services/Dialogs';
+import User from '../Services/Users';
+import { connect, useSelector } from 'react-redux';
 
-import dialogActions from "../store/actions/dialogActions";
-import socket from "../core/socket";
-import { withRouter } from "react-router";
-import Conversations from "../Services/Conversations";
-import conversationsActions from "../store/actions/conversatiosActions";
+import dialogActions from '../store/actions/dialogActions';
+import socket from '../api/socket';
+import { withRouter } from 'react-router';
+import Conversations from '../Services/Conversations';
+import conversationsActions from '../store/actions/conversatiosActions';
 
 const LeftBarContainer = ({
   fetchDialogs,
@@ -24,8 +24,8 @@ const LeftBarContainer = ({
   const [convTitle, setConvTitle] = useState(null);
   const [users, setUsers] = useState([]);
   const [convUsers, setConvUsers] = useState([]);
-  const [messageValue, setMessageValue] = useState("");
-  const [inputValue, setInputValue] = useState("");
+  const [messageValue, setMessageValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [uploading, setUploading] = useState(false);
   const [filtered, setFilteredDialogs] = useState(items && Array.from(items));
 
@@ -40,10 +40,7 @@ const LeftBarContainer = ({
 
     setFilteredDialogs(
       items &&
-        items.filter(
-          (item) =>
-            item.partner.name.toLowerCase().indexOf(value.toLowerCase()) >= 0
-        )
+        items.filter((item) => item.partner.name.toLowerCase().indexOf(value.toLowerCase()) >= 0),
     );
     setInputValue(value);
   };
@@ -54,7 +51,7 @@ const LeftBarContainer = ({
 
   const hideDialogModal = () => {
     setUsers([]);
-    setInputValue("");
+    setInputValue('');
     setSelectedUserId(null);
     setDialogVisible(false);
   };
@@ -66,7 +63,7 @@ const LeftBarContainer = ({
   const onHideConvModal = () => {
     setConvVisible(false);
     setUsers([]);
-    setConvTitle("");
+    setConvTitle('');
   };
 
   const onSearch = async (value) => {
@@ -87,7 +84,7 @@ const LeftBarContainer = ({
 
   const onCreateConv = () => {
     if (!convUsers.length) {
-      return console.log("выберите собеседника");
+      return console.log('выберите собеседника');
     }
     Conversations.createConversation({ title: convTitle, members: convUsers });
     onHideConvModal();
@@ -108,14 +105,14 @@ const LeftBarContainer = ({
       partner: selectedUserId,
       text: messageValue,
     });
-    socket.on("DIALOG:CREATED", (data) => {
+    socket.on('DIALOG:CREATED', (data) => {
       history.push(data._id);
     });
     setUploading(false);
     hideDialogModal();
 
     return () => {
-      socket.removeListener("DIALOG:CREATED");
+      socket.removeListener('DIALOG:CREATED');
     };
   };
 
@@ -125,24 +122,24 @@ const LeftBarContainer = ({
 
   useEffect(() => {
     fetchDialogs();
-    socket.on("SERVER:DIALOG_CHANGED", fetchDialogs);
-    socket.on("CONVERSATION_SET_ITEM", fetchDialogs);
-    socket.on("DIALOG:CREATED", fetchDialogs);
+    socket.on('DIALOG:CREATED', fetchDialogs);
+    socket.on('SERVER:DIALOG_CHANGED', fetchDialogs);
 
     return () => {
-      socket.removeListener("DIALOG:CREATED");
-      socket.removeListener("status");
-      socket.removeListener("SERVER:DIALOG_CHANGED");
+      socket.removeListener('DIALOG:CREATED');
+      socket.removeListener('status');
+      socket.removeListener('SERVER:DIALOG_CHANGED');
     };
   }, [fetchDialogs]);
 
   useEffect(() => {
     fetchConversations();
-    socket.on("CONVERSATION_SET_ITEM", fetchConversations);
-    socket.on("SERVER:CONV_CHANGED", fetchConversations);
+    socket.on('CONVERSATION_SET_ITEM', fetchConversations);
+    socket.on('SERVER:CONV_CHANGED', fetchConversations);
+
     return () => {
-      socket.removeListener("CONVERSATION_SET_ITEM");
-      socket.removeListener("SERVER:CONV_CHANGED");
+      socket.removeListener('CONVERSATION_SET_ITEM');
+      socket.removeListener('SERVER:CONV_CHANGED');
     };
   }, [fetchConversations]);
 
@@ -150,6 +147,7 @@ const LeftBarContainer = ({
 
   return (
     <Leftbar
+      handleChangeSelect={handleChangeSelect}
       conversations={conversations}
       convUsers={convUsers}
       userId={userId}
@@ -174,7 +172,6 @@ const LeftBarContainer = ({
       hideModal={hideDialogModal}
       showConvModal={onShowConvModal}
       hideConvModal={onHideConvModal}
-      handleChangeSelect={handleChangeSelect}
     />
   );
 };
@@ -187,6 +184,6 @@ export default withRouter(
       userId: auth.user && auth.user.id,
       isLoading: dialogs.isLoading,
     }),
-    { ...dialogActions, ...conversationsActions }
-  )(LeftBarContainer)
+    { ...dialogActions, ...conversationsActions },
+  )(LeftBarContainer),
 );

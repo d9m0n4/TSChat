@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .message {
   display: flex;
   $self: &;
@@ -9,7 +11,7 @@
     #{$self}__content {
       &-bubble {
         border-radius: 16px 16px 0 16px;
-        background-color: rgba(229, 229, 229, 0.85);
+        background: $lightMessageBubble;
         box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
         color: #3a456b;
         .message__audio-progress {
@@ -51,7 +53,7 @@
     display: flex;
     flex-direction: column;
     &-bubble {
-      background-color: #4568e8;
+      background: $accentMessageBubble;
       max-width: 360px;
       padding: 10px;
       color: #ffffff;

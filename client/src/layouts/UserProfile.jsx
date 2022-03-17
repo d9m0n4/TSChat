@@ -11,7 +11,7 @@ import Form from 'antd/lib/form/Form';
 import { useEffect } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { Formik } from 'formik';
-import socket from '../core/socket';
+import socket from '../api/socket';
 
 import authActions from '../store/actions/authActions';
 import Messages from '../Services/Messages';

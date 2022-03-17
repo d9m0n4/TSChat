@@ -5,15 +5,19 @@ module.exports = (http) => {
   const io = socket(http, {
     cors: { origin: 'http://localhost:3000', credentials: true },
   });
-  const user = {};
+
+  const users = []
+
   io.on('connection', (socket) => {
     console.log('socket connected');
 
     socket.on('userConnected', () => {
-      console.log('connected user la la la ')
+      console.log(123123)
     })
-    socket.on('userDisconnected', () => {
-      console.log('dis')
+
+
+    socket.on('disconnect', () => {
+      console.log('disconnect')
     })
 
     socket.on('TYPING', (obj) => {

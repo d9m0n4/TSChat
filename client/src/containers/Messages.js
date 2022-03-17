@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import ChatMessages from '../components/ChatMessages';
-import socket from '../core/socket';
+import socket from '../api/socket';
 import messagesActions from '../store/actions/messagesActions';
 
 const Messages = ({
