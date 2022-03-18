@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { useRef } from "react";
+import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import ChatInput from "../components/ChatInput";
-import socket from "../api/socket";
+import ChatInput from '../components/ChatInput';
+import socket from '../api/socket';
 
-import Files from "../Services/Files";
-import messagesActions from "../store/actions/messagesActions";
+import Files from '../Services/Files';
+import messagesActions from '../store/actions/messagesActions';
 
-import { CloseCircleTwoTone } from "@ant-design/icons";
+import { CloseCircleTwoTone } from '@ant-design/icons';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
   const [messageValue, setMessageValue] = useState(null);
-  const [visiblePicker, setVisiblePicker] = useState(false);
 
   const [isRecording, setIsRecording] = useState(false);
   const [recorder, setRecorder] = useState(null);
@@ -23,17 +23,16 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
   const canvas = useRef();
   const audioResult = useRef();
+  const emojiPicker = useRef();
+
+  const { visible, toggleVisiblePicker } = useOutsideClick(emojiPicker);
 
   const onChangeValue = (e) => {
     setMessageValue(e.target.value);
   };
 
   const setEmoji = (data) => {
-    setMessageValue(messageValue + " " + data.native);
-  };
-
-  const toggleVisiblePicker = () => {
-    setVisiblePicker(!visiblePicker);
+    setMessageValue(messageValue + ' ' + data.native);
   };
 
   const onSendMessage = async () => {
@@ -47,12 +46,11 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
           result.push(f.data.file);
         }
       }
-      setMessageValue("");
+      setMessageValue('');
       setFileList([]);
       setUploading(false);
-      setVisiblePicker(false)
 
-      if (messageValue.trim() || fileList.length > 0) {
+      if (messageValue || fileList.length > 0) {
         sendMessage({
           dialogId: dialogId || currentConvId,
           text: messageValue,
@@ -62,29 +60,32 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
     }
   };
 
-  let timeout = null
-  const [isTyping, setIsTyping] = useState(false)
+  let timeout = null;
+  const [isTyping, setIsTyping] = useState(false);
 
   function timeoutFunction() {
-    socket.emit("TYPING", false);
-    setIsTyping(false)
+    socket.emit('TYPING', false);
+    setIsTyping(false);
   }
 
   const handleTyping = (e) => {
     if (!isTyping) {
-      setIsTyping(true)
-      socket.emit('TYPING', {dialog: dialogId || currentConvId, user})
-      clearTimeout(timeout)
-      timeout = setTimeout(timeoutFunction, 3000)
+      setIsTyping(true);
+      socket.emit('TYPING', { dialog: dialogId || currentConvId, user });
+      clearTimeout(timeout);
+      timeout = setTimeout(timeoutFunction, 3000);
     }
-
 
     if (e.keyCode === 13) {
-      e.preventDefault()
-      timeoutFunction()
-      onSendMessage()
+      e.preventDefault();
+      timeoutFunction();
+      onSendMessage();
     }
-  }
+  };
+
+  useEffect(() => {
+    console.log(fileList);
+  }, [fileList]);
 
   const uploaderProps = {
     onRemove: (file) => {
@@ -93,21 +94,22 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       newFileList.splice(index, 1);
       setFileList(newFileList);
     },
-    beforeUpload: (file) => {
-      const fileSize = file.size / 1024 / 1024 < 2;
-      if (!fileSize) {
-        console.log("размер файла не должен превышать 10мб");
-      }
 
-      return null;
-    },
     showUploadList: {
       removeIcon: <CloseCircleTwoTone twoToneColor="#FA2424" />,
       showPreviewIconL: false,
     },
 
     onChange: ({ fileList }) => {
-      setFileList(fileList);
+      let files = [];
+      fileList.forEach((file) => {
+        if (!(file.size / 1024 / 1024 > 2)) {
+          files.push(file);
+          setFileList(files);
+        } else {
+          console.log('file size is > 5mb');
+        }
+      });
     },
 
     onPreview: async (file) => {
@@ -121,7 +123,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       }
       const image = new Image();
 
-      image.width = "1000";
+      image.width = '1000';
       image.src = src;
       const imgWindow = window.open(src);
       imgWindow.document.write(image.outerHTML);
@@ -152,7 +154,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
           console.dir(e);
         });
     } else {
-      console.log("userMedia not");
+      console.log('userMedia not');
     }
   };
 
@@ -163,7 +165,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
     let reqId;
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-      latencyHint: "interactive",
+      latencyHint: 'interactive',
     });
     const analyser = audioCtx.createAnalyser();
     analyser.minDecibels = -90;
@@ -187,7 +189,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       let cw = canvas.current.width;
       let ch = canvas.current.height;
 
-      const ctx = canvas.current.getContext("2d");
+      const ctx = canvas.current.getContext('2d');
 
       ctx.clearRect(0, 0, cw, ch);
 
@@ -197,7 +199,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
       const draw = () => {
         analyser.getByteFrequencyData(data);
-        ctx.fillStyle = "#E5E5E5";
+        ctx.fillStyle = '#E5E5E5';
         ctx.fillRect(0, 0, cw, ch);
 
         x = 0;
@@ -205,22 +207,12 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
         for (let i = 0; i < bufferLength; i++) {
           barHeight = data[i] + 5;
 
-          ctx.fillStyle = "#3A456B";
+          ctx.fillStyle = '#3A456B';
 
           ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, barHeight / 2.5);
           ctx.fillRect(cw / 2 - x * 1.5, ch / 2, barWidth, -barHeight / 2.5);
-          ctx.fillRect(
-            cw / 2 + (x - barWidth) * 1.5,
-            ch / 2,
-            barWidth,
-            -barHeight / 2.5
-          );
-          ctx.fillRect(
-            cw / 2 + (x - barWidth) * 1.5,
-            ch / 2,
-            barWidth,
-            barHeight / 2.5
-          );
+          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, -barHeight / 2.5);
+          ctx.fillRect(cw / 2 + (x - barWidth) * 1.5, ch / 2, barWidth, barHeight / 2.5);
 
           x += barWidth;
         }
@@ -237,12 +229,12 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
     };
 
     recorder.ondataavailable = async (e) => {
-      const file = new File([e.data], "audio", { type: "audio/wav" });
+      const file = new File([e.data], 'audio', { type: 'audio/wav' });
 
       setFileList([file]);
       setIsRecording(false);
 
-      const ctxResult = audioResult.current.getContext("2d");
+      const ctxResult = audioResult.current.getContext('2d');
 
       const src = URL.createObjectURL(file);
       const audio = new Audio();
@@ -259,7 +251,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
         const cw = audioResult.current.width;
         const ch = audioResult.current.height;
 
-        ctxResult.fillStyle = "#E5E5E5";
+        ctxResult.fillStyle = '#E5E5E5';
         ctxResult.fillRect(0, 0, cw, ch);
 
         let bh = 0;
@@ -268,7 +260,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
         for (let i = 0; i < b.length; i++) {
           bh = b[i] * 100 + 1;
-          ctxResult.fillStyle = "#3A456B";
+          ctxResult.fillStyle = '#3A456B';
 
           ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, bh * 2);
           ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, -bh * 2);
@@ -309,6 +301,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
   return (
     <ChatInput
+      emojiPicker={emojiPicker}
       audioResult={audioResult}
       record={Recording}
       handleStop={handleStop}
@@ -319,7 +312,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       onChange={onChangeValue}
       setEmoji={setEmoji}
       toggleVisiblePicker={toggleVisiblePicker}
-      visiblePicker={visiblePicker}
+      visiblePicker={visible}
       uploaderProps={uploaderProps}
       uploading={uploading}
       handleTyping={handleTyping}
@@ -333,5 +326,5 @@ export default connect(
     dialogId: dialogs.currentDialogId,
     currentConvId: conversations.currentConvId,
   }),
-  messagesActions
+  messagesActions,
 )(ChatInputContainer);

@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './index.scss';
 
 import Sidebar from '../../components/SideBar';
 import Messenger from '../../layouts/Messenger';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Route, Switch, useLocation } from 'react-router';
 import Loader from '../../components/Loader';
 import dialogActions from '../../store/actions/dialogActions';
 import conversationActions from '../../store/actions/conversatiosActions';
 import UserProfile from '../../layouts/UserProfile';
 import Settings from '../../layouts/Settings';
+import socket from '../../api/socket';
 
 const Home = ({
   conversations,
@@ -18,8 +19,8 @@ const Home = ({
   setCurrentPartner,
   dialogsItems,
   setCurrentConversationId,
-  setCurrentConversation,
   currentConvId,
+  userId,
 }) => {
   let { pathname } = useLocation();
   const path = 'dialogs';
@@ -39,10 +40,7 @@ const Home = ({
       setCurrentConversationId(conversationId);
       setCurrentDialogId(null);
       setCurrentPartner(null);
-
     }
-
-
   }, [
     pathname,
     setCurrentDialogId,
@@ -50,8 +48,18 @@ const Home = ({
     dialogsItems,
     setCurrentPartner,
     conversations,
-      currentConvId
+    currentConvId,
   ]);
+
+  const socketRef = useRef(socket);
+
+  const id = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (id) {
+      socketRef.current.emit('user:add', id);
+    }
+  }, [id]);
 
   return (
     <>

@@ -23,7 +23,8 @@ const ChatInput = ({
   uploading,
   canvas,
   audioResult,
-                     handleTyping
+  handleTyping,
+  emojiPicker,
 }) => {
   return (
     <div className="messages__input-group">
@@ -162,9 +163,10 @@ const ChatInput = ({
             </>
           )}
 
-          <div className="emoji-picker">
+          <div className="emoji-picker" ref={emojiPicker}>
             {visiblePicker && (
               <Picker
+                enableFrequentEmojiSort={true}
                 perLine={6}
                 set="apple"
                 showSkinTones={false}
