@@ -8,10 +8,13 @@ import Typing from '../../components/Typing';
 import { useState } from 'react';
 import { Avatar, Tooltip } from 'antd';
 import UserAvatar from '../Avatar';
+import { useSelector } from 'react-redux';
+
+import rightBarActions from '../../store/actions/rightbar';
 
 const ChatMessages = ({
-                        isTyping,
-    typingUser,
+  isTyping,
+  typingUser,
   scrollRef,
   messages,
   user,
@@ -20,16 +23,9 @@ const ChatMessages = ({
   loader,
   currentPartner,
   currentConv,
-    type
+  type,
 }) => {
-  const [active, setActive] = useState(false);
-
-  const toggleClass = () => {
-    setActive(!active);
-  };
-
   return (
-
     <div className="main__content-body__messages">
       <div className="messages__header chat__header">
         <div className="chat__header-title">
@@ -50,18 +46,18 @@ const ChatMessages = ({
           )}
         </div>
         <div className="chat__header-btn">
-          <span onClick={toggleClass} className={active ? 'active' : ''} />
+          <span className="active" />
         </div>
       </div>
 
-      <div className="messages__body" ref={scrollRef}>
+      <div className="messages__body">
         {loader ? (
           <Loader />
         ) : (
-          <div className="messages" >
+          <div className="messages">
             {(currentDialogId || currentConvId) && messages ? (
               messages.map((m) => (
-                <div key={m._id} >
+                <div key={m._id} ref={scrollRef}>
                   <Message
                     attachments={m.attachments}
                     isMe={user === m.user._id}
@@ -72,17 +68,14 @@ const ChatMessages = ({
                     serverMessage={m.server}
                   />
                 </div>
-
               ))
-
             ) : (
-
               <div className="messages__empty-block">
                 <MailOutlined className="empty__icon" />
                 <p>Здесь будут отображаться сообщения Ваших диалогов</p>
               </div>
             )}
-            {isTyping && typingUser && <Typing user={typingUser}/>}
+            {isTyping && typingUser && <Typing user={typingUser} />}
           </div>
         )}
       </div>

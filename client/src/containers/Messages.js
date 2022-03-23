@@ -17,16 +17,20 @@ const Messages = ({
   currentConvId,
 }) => {
   const scrollRef = useRef(null);
-  const [isTyping, setIsTyping] = useState(false)
-  const [typingUser, setTypingUser] = useState()
-
-  useEffect(() => {
-    scrollRef.current.scrollTo(0, 999999);
-  }, [items, isTyping]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingUser, setTypingUser] = useState();
 
   const newMessage = (data) => {
     addMessage(data);
   };
+
+  const scrollToBottom = () => scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollToBottom();
+    }
+  }, [items, isTyping]);
 
   useEffect(() => {
     if (currentDialogId || currentConvId) {
@@ -39,25 +43,24 @@ const Messages = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, getMessages, currentConvId]);
 
-
   useEffect(() => {
     socket.on('TYPING', (o) => {
       if (!o) {
-        setIsTyping(false)
-        setTypingUser(null)
+        setIsTyping(false);
+        setTypingUser(null);
       } else {
-        setIsTyping(true)
-        setTypingUser(o.user)
+        setIsTyping(true);
+        setTypingUser(o.user);
       }
-    })
+    });
     return () => {
-      socket.removeListener("TYPING");
+      socket.removeListener('TYPING');
     };
-  }, [isTyping])
+  }, [isTyping]);
 
   return (
     <ChatMessages
-        isTyping={isTyping}
+      isTyping={isTyping}
       user={user}
       messages={items}
       scrollRef={scrollRef}
@@ -67,7 +70,7 @@ const Messages = ({
       dialogs={dialogs}
       currentPartner={currentPartner && currentPartner}
       currentConv={currentConv}
-        typingUser={typingUser}
+      typingUser={typingUser}
     />
   );
 };

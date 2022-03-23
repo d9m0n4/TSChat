@@ -51,16 +51,6 @@ const Home = ({
     currentConvId,
   ]);
 
-  const socketRef = useRef(socket);
-
-  const id = useSelector((state) => state.auth.user);
-
-  useEffect(() => {
-    if (id) {
-      socketRef.current.emit('user:add', id);
-    }
-  }, [id]);
-
   return (
     <>
       {isLoading ? (

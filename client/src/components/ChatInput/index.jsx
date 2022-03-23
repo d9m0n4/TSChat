@@ -172,6 +172,23 @@ const ChatInput = ({
                 showSkinTones={false}
                 showPreview={false}
                 onSelect={(emojiTag) => setEmoji(emojiTag)}
+                i18n={{
+                  search: 'Поиск',
+                  categories: {
+                    search: 'Результаты поиска',
+                    recent: 'Часто используемые',
+                    smileys: 'Смайлы',
+                    people: 'Люди',
+                    nature: 'Животные и природа',
+                    foods: 'Еда и напитки',
+                    activity: 'Activity',
+                    places: 'Места и путешествия',
+                    objects: 'Objects',
+                    symbols: 'Символы',
+                    flags: 'Флаги',
+                    custom: 'Кастом',
+                  },
+                }}
               />
             )}
           </div>

@@ -78,6 +78,17 @@
           &__avatar {
             position: relative;
           }
+          &__control {
+            .icon {
+              cursor: pointer;
+              &:hover {
+                .rect {
+                  stroke: #276aa5;
+                  transition: all 0.3s ease-in-out;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -87,8 +98,12 @@
 @media screen and (max-width: 1025px) {
   .main__content-body__rightbar {
     position: absolute;
-    right: -10000px;
+    right: -1000px;
     height: 100%;
     z-index: 9;
+    transition: all 0.5s ease;
+    &.active {
+      right: 0;
+    }
   }
 }

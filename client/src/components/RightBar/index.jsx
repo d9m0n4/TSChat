@@ -4,11 +4,13 @@ import UserAttach from '../UserAttach';
 import UserAvatar from '../Avatar';
 
 import './index.scss';
+import { CloseOutlined } from '@ant-design/icons';
+import { Popconfirm, Tooltip } from 'antd';
 
 const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attachments }) => {
   return (
     <div className="main__content-body__rightbar">
-      <div className="rightbar__header chat__header">123</div>
+      <div className="rightbar__header chat__header"></div>
       {partner ? (
         <div className="rightbar__body rightbar__dialog">
           <div className="rightbar__dialog-companion__info">
@@ -66,6 +68,26 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
                     <UserAvatar size={36} name={item.name} src={item.avatar} />
                   </div>
                   <div className="conversation-member__item__name">{item.name}</div>
+                  <div className="conversation-member__item__control">
+                    <Popconfirm placement="left" title="Покинуть беседу?">
+                      <svg
+                        className="icon"
+                        width="10"
+                        height="10"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          className="rect"
+                          d="M1 13L13 1M1 1L13 13"
+                          stroke="#979797"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </Popconfirm>
+                  </div>
                 </li>
               ))}
           </ul>
