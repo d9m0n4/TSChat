@@ -5,12 +5,8 @@ import { MailOutlined } from '@ant-design/icons';
 import ChatInputContainer from '../../containers/ChatInput';
 import Loader from '../../components/Loader';
 import Typing from '../../components/Typing';
-import { useState } from 'react';
 import { Avatar, Tooltip } from 'antd';
 import UserAvatar from '../Avatar';
-import { useSelector } from 'react-redux';
-
-import rightBarActions from '../../store/actions/rightbar';
 
 const ChatMessages = ({
   isTyping,
@@ -66,6 +62,7 @@ const ChatMessages = ({
                     name={m.user.name}
                     user={m.user}
                     serverMessage={m.server}
+                    readStatus={m.readStatus}
                   />
                 </div>
               ))

@@ -34,9 +34,7 @@ const Leftbar = ({
   showConvModal,
   hideConvModal,
   handleChangeSelect,
-
 }) => {
-
   return (
     <>
       <AddDialogModal
@@ -148,14 +146,8 @@ const Leftbar = ({
                     userId={dialog.lastMessage && dialog.lastMessage.user}
                     partner={dialog.partner}
                     date={dialog.lastMessage.createdAt || new Date()}
-                    path='dialogs'
-                    lastMessage={
-                      dialog.lastMessage
-                        ? dialog.lastMessage.text
-                          ? dialog.lastMessage.text
-                          : 'Прикрепленный файл'
-                        : ''
-                    }
+                    path="dialogs"
+                    lastMessage={dialog.lastMessage}
                   />
                 ))
               )}
@@ -185,17 +177,19 @@ const Leftbar = ({
                 </Button>
               </div>
             </div>
-            <div className="leftbar__chats-body">{
-              conversations && conversations.map(conversation => (
-              <ChatListItem
-                  type="conv"
-                  title={conversation.title}
-                  lastConvMessage={conversation.lastMessage}
-                  key={conversation.id}
-                  path='conversation'
-                  id={conversation.id}  />
-              ))
-            }</div>
+            <div className="leftbar__chats-body">
+              {conversations &&
+                conversations.map((conversation) => (
+                  <ChatListItem
+                    type="conv"
+                    title={conversation.title}
+                    lastConvMessage={conversation.lastMessage}
+                    key={conversation.id}
+                    path="conversation"
+                    id={conversation.id}
+                  />
+                ))}
+            </div>
           </div>
         </div>
       </div>

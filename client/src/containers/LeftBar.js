@@ -136,6 +136,9 @@ const LeftBarContainer = ({
     fetchConversations();
     socket.on('CONVERSATION_SET_ITEM', fetchConversations);
     socket.on('SERVER:CONV_CHANGED', fetchConversations);
+    socket.on('SERVER:UPDATE_READSTATUS', () => {
+      console.log(12123);
+    });
 
     return () => {
       socket.removeListener('CONVERSATION_SET_ITEM');

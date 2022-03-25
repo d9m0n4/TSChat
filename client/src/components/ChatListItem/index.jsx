@@ -19,7 +19,8 @@ const ChatListItem = ({
   title,
   lastConvMessage,
 }) => {
-  const {id: currentUser} = useSelector((state) => state.auth.user);
+  console.log(lastMessage);
+  const { id: currentUser } = useSelector((state) => state.auth.user);
   const lastM = (id, message) => {
     return id === userId ? `Вы: ${message}` : `${message}`;
   };
@@ -53,9 +54,9 @@ const ChatListItem = ({
           ) : (
             <div className="chats__item-bottom">
               <div className="item__message">
-                <p>{lastM(currentUser, lastMessage)}</p>
+                <p>{lastM(currentUser, lastMessage.text)}</p>
               </div>
-              <div className="item__status" />
+              {!lastMessage.readStatus && <span className="item__status"></span>}
             </div>
           )}
         </div>

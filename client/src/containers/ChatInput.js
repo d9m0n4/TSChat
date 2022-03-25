@@ -13,7 +13,7 @@ import { CloseCircleTwoTone } from '@ant-design/icons';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
-  const [messageValue, setMessageValue] = useState(null);
+  const [messageValue, setMessageValue] = useState('');
 
   const [isRecording, setIsRecording] = useState(false);
   const [recorder, setRecorder] = useState(null);
@@ -103,11 +103,11 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
     onChange: ({ fileList }) => {
       let files = [];
       fileList.forEach((file) => {
-        if (!(file.size / 1024 / 1024 > 2)) {
+        if (!(file.size / 1024 / 1024 > 5)) {
           files.push(file);
           setFileList(files);
         } else {
-          console.log('file size is > 5mb');
+          alert('файл больше 5мб');
         }
       });
     },

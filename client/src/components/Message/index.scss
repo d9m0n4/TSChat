@@ -52,6 +52,7 @@
   &__content {
     display: flex;
     flex-direction: column;
+    position: relative;
     &-bubble {
       background: $accentMessageBubble;
       max-width: 360px;
@@ -131,6 +132,16 @@
       font-size: 10px;
       color: rgba(151, 151, 151, 1);
     }
+    &-read__status {
+      width: 6px;
+      height: 6px;
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 9;
+    }
   }
 }
 .server__message {
@@ -143,7 +154,6 @@
   p {
     margin: 0 8px;
     flex: 0 0 auto;
-
   }
   span {
     height: 1px;

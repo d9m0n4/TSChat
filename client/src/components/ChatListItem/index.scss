@@ -67,6 +67,7 @@
       flex-wrap: wrap;
       width: 100%;
       min-width: 0;
+      position: relative;
       .item__message {
         display: flex;
         max-width: 100%;
@@ -82,12 +83,19 @@
         font-family: Gilroy-Medium;
         margin-right: 4px;
       }
+      .item__status {
+        right: 2px;
+        width: 6px;
+        height: 6px;
+        background-color: #979797;
+        position: absolute;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
     .chats__item-bottom.conv {
       justify-content: start;
     }
-  }
-  .status {
-    top: 3px;
   }
 }

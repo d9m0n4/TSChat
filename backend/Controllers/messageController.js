@@ -3,11 +3,27 @@ const Dialog = require('../Models/Dialog');
 const Message = require('../Models/Message');
 const Conversation = require('../Models/Conversation');
 
-
 class MessagesController {
   constructor(io) {
     this.io = io;
   }
+
+  updateReadStatus = (dialogId, userId, res) => {
+    Message.updateMany(
+      { dialog: dialogId, user: { $ne: userId } },
+      { $set: { readStatus: true } },
+      (err) => {
+        if (err) {
+          res.status(500).json({
+            status: 'error',
+            message: err,
+          });
+        } else {
+          this.io.emit('SERVER:UPDATE_READSTATUS', { dialogId, userId });
+        }
+      },
+    );
+  };
 
   createMessage = async (req, res) => {
     const postData = {
@@ -17,8 +33,6 @@ class MessagesController {
       attachments: req.body.attachments,
     };
 
-    //как определять какие сообщения приходят: из диалога или из беседы??? Для того что бы при отправке сообщения определять что обновлять через сокет (диалог или беседу)
-
     await new Message(postData)
       .save()
       .then((messageObj) =>
@@ -26,23 +40,20 @@ class MessagesController {
           if (err) {
             res.json('error');
           }
-          Dialog.findOneAndUpdate(
-            { _id: postData.dialog },
-            { lastMessage: messageObj._id },
-
-          ).then(( dialog) => {
-            if (!dialog) {
+          Dialog.findOneAndUpdate({ _id: postData.dialog }, { lastMessage: messageObj._id }).then(
+            (dialog) => {
+              if (!dialog) {
                 Conversation.findOneAndUpdate(
-                    { _id: postData.dialog },
-                    { lastMessage: messageObj._id },
-
-                ).then(conv => {
-                    this.io.emit('SERVER:CONV_CHANGED', conv)
-                })
-            } else {
+                  { _id: postData.dialog },
+                  { lastMessage: messageObj._id },
+                ).then((conv) => {
+                  this.io.emit('SERVER:CONV_CHANGED', conv);
+                });
+              } else {
                 this.io.emit('SERVER:DIALOG_CHANGED', dialog);
-            }
-          });
+              }
+            },
+          );
           res.json(message);
 
           this.io.emit('SERVER:CREATE_MESSAGE', message);
@@ -55,6 +66,7 @@ class MessagesController {
 
   getMessages = async (req, res) => {
     const id = req.query.query;
+    const user = req.user;
 
     await Message.find({ dialog: id })
       .populate('attachments')
@@ -71,6 +83,7 @@ class MessagesController {
 
         // console.log(mappedMessages);
         res.json(messages);
+        this.updateReadStatus(id, user.id, res);
       });
   };
 
