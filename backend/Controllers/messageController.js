@@ -19,7 +19,7 @@ class MessagesController {
             message: err,
           });
         } else {
-          this.io.emit('SERVER:UPDATE_READSTATUS', { dialogId, userId });
+          this.io.emit('SERVER:UPDATE_READSTATUS', dialogId);
         }
       },
     );
@@ -57,6 +57,7 @@ class MessagesController {
           res.json(message);
 
           this.io.emit('SERVER:CREATE_MESSAGE', message);
+          this.updateReadStatus(postData.dialog, postData.user, res);
         }),
       )
       .catch((e) => {

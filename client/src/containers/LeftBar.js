@@ -136,21 +136,12 @@ const LeftBarContainer = ({
     fetchConversations();
     socket.on('CONVERSATION_SET_ITEM', fetchConversations);
     socket.on('SERVER:CONV_CHANGED', fetchConversations);
-    socket.on('SERVER:UPDATE_READSTATUS', () => {
-      console.log(12123);
-    });
 
     return () => {
       socket.removeListener('CONVERSATION_SET_ITEM');
       socket.removeListener('SERVER:CONV_CHANGED');
     };
   }, [fetchConversations]);
-
-  useEffect(() => {
-    socket.emit('USER:CONNECTED', userId);
-  }, [userId]);
-
-  // socket.on('status', (d) => console.log(d));
 
   return (
     <Leftbar

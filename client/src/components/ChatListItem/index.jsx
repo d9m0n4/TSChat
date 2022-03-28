@@ -19,7 +19,6 @@ const ChatListItem = ({
   title,
   lastConvMessage,
 }) => {
-  console.log(lastMessage);
   const { id: currentUser } = useSelector((state) => state.auth.user);
   const lastM = (id, message) => {
     return id === userId ? `Вы: ${message}` : `${message}`;

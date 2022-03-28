@@ -15,6 +15,7 @@ const Messages = ({
   addMessage,
   currentConv,
   currentConvId,
+  updateReadStatus,
 }) => {
   const scrollRef = useRef(null);
   const [isTyping, setIsTyping] = useState(false);

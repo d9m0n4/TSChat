@@ -72,7 +72,7 @@ const ChatMessages = ({
                 <p>Здесь будут отображаться сообщения Ваших диалогов</p>
               </div>
             )}
-            {isTyping && typingUser && <Typing user={typingUser} />}
+            {messages.length > 0 && isTyping && typingUser && <Typing user={typingUser} />}
           </div>
         )}
       </div>
