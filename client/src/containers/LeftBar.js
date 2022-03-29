@@ -145,12 +145,6 @@ const LeftBarContainer = ({
     };
   }, [fetchConversations]);
 
-  useEffect(() => {
-    socket.emit('USER:CONNECTED', userId);
-  }, [userId]);
-
-  // socket.on('status', (d) => console.log(d));
-
   return (
     <Leftbar
       handleChangeSelect={handleChangeSelect}

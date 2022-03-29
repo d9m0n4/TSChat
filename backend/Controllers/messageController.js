@@ -57,6 +57,7 @@ class MessagesController {
           res.json(message);
 
           this.io.emit('SERVER:CREATE_MESSAGE', message);
+          this.updateReadStatus(postData.dialog, postData.user, res);
         }),
       )
       .catch((e) => {
