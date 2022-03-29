@@ -15,6 +15,7 @@ const Messages = ({
   addMessage,
   currentConv,
   currentConvId,
+  updateMessages,
 }) => {
   const scrollRef = useRef(null);
   const [isTyping, setIsTyping] = useState(false);
@@ -57,6 +58,14 @@ const Messages = ({
       socket.removeListener('TYPING');
     };
   }, [isTyping]);
+
+  useEffect(() => {
+    socket.on('SERVER:UPDATE_READSTATUS', updateMessages);
+
+    return () => {
+      socket.removeListener('SERVER:UPDATE_READSTATUS');
+    };
+  }, [updateMessages]);
 
   return (
     <ChatMessages

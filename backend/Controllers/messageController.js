@@ -19,7 +19,7 @@ class MessagesController {
             message: err,
           });
         } else {
-          this.io.emit('SERVER:UPDATE_READSTATUS', { dialogId, userId });
+          this.io.emit('SERVER:UPDATE_READSTATUS', dialogId);
         }
       },
     );

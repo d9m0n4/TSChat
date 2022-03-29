@@ -9,6 +9,7 @@ import socket from '../api/socket';
 import { withRouter } from 'react-router';
 import Conversations from '../Services/Conversations';
 import conversationsActions from '../store/actions/conversatiosActions';
+import messagesActions from '../store/actions/messagesActions';
 
 const LeftBarContainer = ({
   fetchDialogs,
@@ -17,6 +18,7 @@ const LeftBarContainer = ({
   userId,
   history,
   fetchConversations,
+  updateMessages,
 }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
@@ -130,15 +132,12 @@ const LeftBarContainer = ({
       socket.removeListener('status');
       socket.removeListener('SERVER:DIALOG_CHANGED');
     };
-  }, [fetchDialogs]);
+  }, [fetchDialogs, updateMessages]);
 
   useEffect(() => {
     fetchConversations();
     socket.on('CONVERSATION_SET_ITEM', fetchConversations);
     socket.on('SERVER:CONV_CHANGED', fetchConversations);
-    socket.on('SERVER:UPDATE_READSTATUS', () => {
-      console.log(12123);
-    });
 
     return () => {
       socket.removeListener('CONVERSATION_SET_ITEM');
@@ -191,6 +190,6 @@ export default withRouter(
       userId: auth.user && auth.user.id,
       isLoading: dialogs.isLoading,
     }),
-    { ...dialogActions, ...conversationsActions },
+    { ...dialogActions, ...conversationsActions, ...messagesActions },
   )(LeftBarContainer),
 );

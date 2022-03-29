@@ -70,6 +70,35 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .main__content-body__leftbar {
+    width: 64px;
+    .leftbar__body {
+      .leftbar__chats {
+        &-header {
+          display: flex;
+          justify-content: center;
+          .chats__title {
+            display: none;
+          }
+        }
+        &-body {
+          .chats__item {
+            display: flex;
+            justify-content: center;
+            &-body {
+              display: none;
+            }
+            &-avatar {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 376px) {
   .main__content-body__leftbar {
     position: absolute;
