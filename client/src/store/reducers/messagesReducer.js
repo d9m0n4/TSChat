@@ -24,7 +24,10 @@ export default (state = initialState, { type, payload }) => {
     case 'MESSAGES:UPDATE_READSTATUS':
       return {
         ...state,
-        items: [...state.items.map((item) => item.readStatus === payload)],
+        items: state.items.map((item) => {
+          item.readStatus = payload;
+          return item;
+        }),
       };
 
     default:

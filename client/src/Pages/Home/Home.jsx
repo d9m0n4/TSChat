@@ -1,16 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import './index.scss';
 
 import Sidebar from '../../components/SideBar';
 import Messenger from '../../layouts/Messenger';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { Route, Switch, useLocation } from 'react-router';
 import Loader from '../../components/Loader';
 import dialogActions from '../../store/actions/dialogActions';
 import conversationActions from '../../store/actions/conversatiosActions';
 import UserProfile from '../../layouts/UserProfile';
 import Settings from '../../layouts/Settings';
-import socket from '../../api/socket';
 
 const Home = ({
   conversations,

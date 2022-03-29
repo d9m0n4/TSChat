@@ -10,15 +10,17 @@ const messagesActions = {
     payload,
   }),
 
-  updateReadStatus:
-    ({ dialogId }) =>
-    (dispatch) => {
+  updateReadStatus: (id) => (dispatch, getState) => {
+    const { auth } = getState();
+    const { user } = auth;
+    if (user.id === id) {
       dispatch({
         type: 'MESSAGES:UPDATE_READSTATUS',
         payload: true,
       });
-      console.log(dialogId);
-    },
+      console.log(user.id === id);
+    }
+  },
 
   addMessage: (message) => (dispatch, getState) => {
     const { dialogs, conversations } = getState();

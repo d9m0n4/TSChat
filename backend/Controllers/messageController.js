@@ -19,7 +19,7 @@ class MessagesController {
             message: err,
           });
         } else {
-          this.io.emit('SERVER:UPDATE_READSTATUS', dialogId);
+          this.io.emit('SERVER:UPDATE_READSTATUS', userId);
         }
       },
     );
@@ -33,13 +33,18 @@ class MessagesController {
       attachments: req.body.attachments,
     };
 
-    await new Message(postData)
+    const message = new Message(postData);
+
+    this.updateReadStatus(postData.dialog, postData.user, res);
+
+    message
       .save()
-      .then((messageObj) =>
+      .then((messageObj) => {
         messageObj.populate('user attachments', (err, message) => {
           if (err) {
             res.json('error');
           }
+
           Dialog.findOneAndUpdate({ _id: postData.dialog }, { lastMessage: messageObj._id }).then(
             (dialog) => {
               if (!dialog) {
@@ -54,12 +59,12 @@ class MessagesController {
               }
             },
           );
-          res.json(message);
+
+          res.status(200).json(message);
 
           this.io.emit('SERVER:CREATE_MESSAGE', message);
-          this.updateReadStatus(postData.dialog, postData.user, res);
-        }),
-      )
+        });
+      })
       .catch((e) => {
         res.json(e);
       });
@@ -68,6 +73,8 @@ class MessagesController {
   getMessages = async (req, res) => {
     const id = req.query.query;
     const user = req.user;
+
+    this.updateReadStatus(id, user.id, res);
 
     await Message.find({ dialog: id })
       .populate('attachments')
@@ -84,7 +91,6 @@ class MessagesController {
 
         // console.log(mappedMessages);
         res.json(messages);
-        this.updateReadStatus(id, user.id, res);
       });
   };
 

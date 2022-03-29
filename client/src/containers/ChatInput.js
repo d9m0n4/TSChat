@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRef } from 'react';
 
 import { connect } from 'react-redux';
@@ -82,10 +82,6 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       onSendMessage();
     }
   };
-
-  useEffect(() => {
-    console.log(fileList);
-  }, [fileList]);
 
   const uploaderProps = {
     onRemove: (file) => {

@@ -4,8 +4,7 @@ import UserAttach from '../UserAttach';
 import UserAvatar from '../Avatar';
 
 import './index.scss';
-import { CloseOutlined } from '@ant-design/icons';
-import { Popconfirm, Tooltip } from 'antd';
+import { Popconfirm } from 'antd';
 
 const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attachments }) => {
   return (
