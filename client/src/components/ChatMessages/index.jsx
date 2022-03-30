@@ -20,6 +20,7 @@ const ChatMessages = ({
   currentPartner,
   currentConv,
   type,
+  anchor,
 }) => {
   return (
     <div className="main__content-body__messages">
@@ -51,6 +52,7 @@ const ChatMessages = ({
           <Loader />
         ) : (
           <div className="messages">
+            <div className="anchor" ref={anchor}></div>
             {(currentDialogId || currentConvId) && messages ? (
               messages.map((m) => (
                 <div key={m._id} ref={scrollRef}>

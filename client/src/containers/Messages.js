@@ -18,6 +18,7 @@ const Messages = ({
   updateReadStatus,
 }) => {
   const scrollRef = useRef(null);
+  const anchor = useRef(null);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState();
 
@@ -67,7 +68,11 @@ const Messages = ({
     };
   }, [items, currentDialogId, updateReadStatus]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (anchor) {
+      console.log(anchor.current.getBoundingClientRect());
+    }
+  });
 
   return (
     <ChatMessages
@@ -82,6 +87,7 @@ const Messages = ({
       currentPartner={currentPartner && currentPartner}
       currentConv={currentConv}
       typingUser={typingUser}
+      anchor={anchor}
     />
   );
 };
