@@ -9,20 +9,9 @@ class MessagesController {
   }
 
   updateReadStatus = (dialogId, userId, res) => {
-    Message.updateMany(
-      { dialog: dialogId, user: { $ne: userId } },
-      { $set: { readStatus: true } },
-      (err) => {
-        if (err) {
-          res.status(500).json({
-            status: 'error',
-            message: err,
-          });
-        } else {
-          this.io.emit('SERVER:UPDATE_READSTATUS', userId);
-        }
-      },
-    );
+    Message.updateMany({ dialog: dialogId, user: { $ne: userId } }, { $set: { readStatus: true } })
+      .then(() => this.io.emit('SERVER:UPDATE_READSTATUS', userId))
+      .catch((err) => console.log('err', err));
   };
 
   createMessage = async (req, res) => {
@@ -76,9 +65,12 @@ class MessagesController {
 
     this.updateReadStatus(id, user.id, res);
 
-    await Message.find({ dialog: id })
+    Message.find({ dialog: id })
       .populate('attachments')
       .populate('user', ['userAvatar', 'name'])
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .lean()
       .exec((err, messages) => {
         if (err) {
           return res.status(404).json({
@@ -90,6 +82,7 @@ class MessagesController {
         // // const mappedMessages = messages.map((item) => userDto(item.user));
 
         // console.log(mappedMessages);
+
         res.json(messages);
       });
   };

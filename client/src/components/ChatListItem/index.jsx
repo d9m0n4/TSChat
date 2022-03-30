@@ -34,7 +34,7 @@ const ChatListItem = ({
             size={36}
             src={partner && partner.userAvatar}
           />
-          <sub className="messages-count">{1}</sub>
+          <sub className="messages-count">{0}</sub>
         </div>
         <div className="chats__item-body">
           <div className="chats__item-top">

@@ -19,6 +19,8 @@ const LeftBarContainer = ({
   history,
   fetchConversations,
   updateMessages,
+  messagesItems,
+  getMessagesCount,
 }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
@@ -30,6 +32,8 @@ const LeftBarContainer = ({
   const [inputValue, setInputValue] = useState('');
   const [uploading, setUploading] = useState(false);
   const [filtered, setFilteredDialogs] = useState(items && Array.from(items));
+
+  const [messagesCount, setMessagesCount] = useState(0);
 
   const { items: conversations } = useSelector((state) => state.conversations);
 
@@ -172,17 +176,19 @@ const LeftBarContainer = ({
       hideModal={hideDialogModal}
       showConvModal={onShowConvModal}
       hideConvModal={onHideConvModal}
+      messagesCount={messagesCount}
     />
   );
 };
 
 export default withRouter(
   connect(
-    ({ dialogs, auth }) => ({
+    ({ dialogs, auth, messages }) => ({
       items: dialogs.dialogs,
       currentDialogId: dialogs.currentDialogId,
       userId: auth.user && auth.user.id,
       isLoading: dialogs.isLoading,
+      messagesItems: messages.items,
     }),
     { ...dialogActions, ...conversationsActions, ...messagesActions },
   )(LeftBarContainer),

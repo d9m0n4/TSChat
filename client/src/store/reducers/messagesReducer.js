@@ -25,7 +25,10 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         items: state.items.map((item) => {
-          item.readStatus = payload;
+          if (item.user._id !== payload) {
+            item.readStatus = true;
+          }
+
           return item;
         }),
       };

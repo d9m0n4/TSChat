@@ -34,6 +34,7 @@ const Leftbar = ({
   showConvModal,
   hideConvModal,
   handleChangeSelect,
+  messagesCount,
 }) => {
   return (
     <>

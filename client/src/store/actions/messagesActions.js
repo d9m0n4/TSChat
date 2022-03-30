@@ -10,27 +10,36 @@ const messagesActions = {
     payload,
   }),
 
+  getMessagesCount: (id) => (dispatch) => {
+    dispatch({
+      type: 'MESSAGES:GET_UNREAD_COUNT',
+      payload: id,
+    });
+  },
+
   updateReadStatus: (id) => (dispatch, getState) => {
-    const { auth } = getState();
-    const { user } = auth;
-    if (user.id === id) {
-      dispatch({
-        type: 'MESSAGES:UPDATE_READSTATUS',
-        payload: true,
-      });
-      console.log(user.id === id);
-    }
+    dispatch({
+      type: 'MESSAGES:UPDATE_READSTATUS',
+      payload: id,
+    });
   },
 
   addMessage: (message) => (dispatch, getState) => {
-    const { dialogs, conversations } = getState();
+    const { dialogs, conversations, auth } = getState();
     const { currentDialogId } = dialogs;
     const { currentConvId } = conversations;
+    const { user } = auth;
+
+    let currentMessage = message;
+
+    if (message.user._id !== user.id) {
+      currentMessage = { ...message, readStatus: true };
+    }
 
     if (message && message.dialog === (currentDialogId || currentConvId)) {
       dispatch({
         type: 'MESSAGES:ADD_MESSAGE',
-        payload: message,
+        payload: currentMessage,
       });
     }
   },
@@ -39,7 +48,7 @@ const messagesActions = {
     dispatch(messagesActions.setLoader(true));
     try {
       const { data } = await Messages.fetchMessages(payload);
-      dispatch(messagesActions.setMessages(data));
+      dispatch(messagesActions.setMessages(data.reverse()));
     } catch (error) {
       console.log(error);
     } finally {

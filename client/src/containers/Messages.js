@@ -29,9 +29,9 @@ const Messages = ({
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollToBottom();
+      setTimeout(scrollToBottom(), 500);
     }
-  }, [items, isTyping]);
+  }, [items, isTyping, currentDialogId]);
 
   useEffect(() => {
     if (currentDialogId || currentConvId) {
@@ -59,17 +59,15 @@ const Messages = ({
     };
   }, [isTyping]);
 
-  const update = (id) => {
-    return getMessages(currentDialogId || currentConvId);
-  };
-
   useEffect(() => {
     socket.on('SERVER:UPDATE_READSTATUS', updateReadStatus);
 
     return () => {
       socket.removeListener('SERVER:UPDATE_READSTATUS');
     };
-  }, [items, updateReadStatus]);
+  }, [items, currentDialogId, updateReadStatus]);
+
+  useEffect(() => {});
 
   return (
     <ChatMessages

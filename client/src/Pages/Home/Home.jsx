@@ -40,6 +40,9 @@ const Home = ({
       setCurrentDialogId(null);
       setCurrentPartner(null);
     }
+    if (!pathname.includes(path)) {
+      setCurrentDialogId(null);
+    }
   }, [
     pathname,
     setCurrentDialogId,
