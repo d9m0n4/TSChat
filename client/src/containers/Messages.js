@@ -68,11 +68,11 @@ const Messages = ({
     };
   }, [items, currentDialogId, updateReadStatus]);
 
-  useEffect(() => {
-    if (anchor) {
-      console.log(anchor.current.getBoundingClientRect());
-    }
-  });
+  // useEffect(() => {
+  //   if (anchor) {
+  //     console.log(anchor.current.getBoundingClientRect());
+  //   }
+  // });
 
   return (
     <ChatMessages
