@@ -1,6 +1,7 @@
 .typing__message {
   display: flex;
   align-items: center;
+
   &-user {
     margin-right: 8px;
   }
@@ -8,7 +9,7 @@
     height: 8px;
     width: 8px;
     border-radius: 50%;
-    background: #276AA5;
+    background: #276aa5;
     display: inline-block;
     margin-right: 4px;
     animation: 0.8s typingAnimation infinite ease-out 0.1s;
@@ -22,8 +23,6 @@
     }
   }
 }
-
-
 
 @keyframes typingAnimation {
   from {

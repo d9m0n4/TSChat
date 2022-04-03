@@ -42,6 +42,7 @@ const Routes = (io) => {
   router.get('/conversations', CheckToken, ConversationCtrl.getConversations);
 
   router.get('/messages', CheckToken, MessageCtrl.getMessages);
+  router.get('/messages/history', CheckToken, MessageCtrl.getMessagesHistory);
   router.get('/messages/user', CheckToken, MessageCtrl.getMessagesOfUser);
   router.post('/messages', CheckToken, MessageCtrl.createMessage);
 

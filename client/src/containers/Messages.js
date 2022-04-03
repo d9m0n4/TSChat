@@ -16,23 +16,39 @@ const Messages = ({
   currentConv,
   currentConvId,
   updateReadStatus,
+  getMessagesHistory,
 }) => {
   const scrollRef = useRef(null);
-  const anchor = useRef(null);
+
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState();
+  const [offset, setOffset] = useState(10);
+  const [messagesCount, setMessagesCount] = useState(0);
 
   const newMessage = (data) => {
     addMessage(data);
   };
 
-  const scrollToBottom = () => scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (to) =>
+    scrollRef.current.scrollBy({
+      top: to,
+      behavior: 'smooth',
+    });
 
   useEffect(() => {
     if (scrollRef.current) {
-      setTimeout(scrollToBottom(), 500);
+      scrollToBottom(scrollRef.current.getBoundingClientRect().bottom);
+      if (isTyping) {
+        scrollRef.current.addEventListener('scroll', (e) => {
+          e.preventDefault();
+        });
+      }
     }
-  }, [items, isTyping, currentDialogId]);
+  }, [isTyping, currentDialogId]);
+
+  useEffect(() => {
+    setOffset(Array.from(items).length);
+  }, [items]);
 
   useEffect(() => {
     if (currentDialogId || currentConvId) {
@@ -62,17 +78,25 @@ const Messages = ({
 
   useEffect(() => {
     socket.on('SERVER:UPDATE_READSTATUS', updateReadStatus);
-
     return () => {
       socket.removeListener('SERVER:UPDATE_READSTATUS');
     };
   }, [items, currentDialogId, updateReadStatus]);
 
-  // useEffect(() => {
-  //   if (anchor) {
-  //     console.log(anchor.current.getBoundingClientRect());
-  //   }
-  // });
+  useEffect(() => {
+    socket.on('MESSAGES_GET_COUNT', setMessagesCount);
+    return () => {
+      socket.removeListener('MESSAGES_GET_COUNT');
+    };
+  }, [messagesCount]);
+
+  const scrollHandler = (e) => {
+    if (e.target.scrollTop === 0 && messagesCount > offset) {
+      setTimeout(() => {
+        getMessagesHistory(currentDialogId || currentConvId, offset);
+      });
+    }
+  };
 
   return (
     <ChatMessages
@@ -87,7 +111,7 @@ const Messages = ({
       currentPartner={currentPartner && currentPartner}
       currentConv={currentConv}
       typingUser={typingUser}
-      anchor={anchor}
+      scrollHandler={scrollHandler}
     />
   );
 };

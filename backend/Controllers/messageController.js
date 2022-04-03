@@ -13,6 +13,10 @@ class MessagesController {
       .then(() => this.io.emit('SERVER:UPDATE_READSTATUS', userId))
       .catch((err) => console.log('err', err));
   };
+  getMessagesCount = async (id) => {
+    const count = await Message.find({ dialog: id }).count();
+    this.io.emit('MESSAGES_GET_COUNT', count);
+  };
 
   createMessage = async (req, res) => {
     const postData = {
@@ -33,6 +37,8 @@ class MessagesController {
           if (err) {
             res.json('error');
           }
+
+          this.getMessagesCount(postData.dialog);
 
           Dialog.findOneAndUpdate({ _id: postData.dialog }, { lastMessage: messageObj._id }).then(
             (dialog) => {
@@ -82,7 +88,7 @@ class MessagesController {
         // // const mappedMessages = messages.map((item) => userDto(item.user));
 
         // console.log(mappedMessages);
-
+        this.getMessagesCount(id);
         res.json(messages);
       });
   };
@@ -103,6 +109,38 @@ class MessagesController {
     } catch (error) {
       res.json(error);
     }
+  };
+
+  getMessagesHistory = async (req, res) => {
+    const id = req.query.id;
+    const offset = req.query.offset;
+    const user = req.user;
+
+    console.log(offset);
+
+    this.updateReadStatus(id, user.id, res);
+
+    Message.find({ dialog: id })
+      .populate('attachments')
+      .populate('user', ['userAvatar', 'name'])
+      .sort({ createdAt: -1 })
+      .skip(Math.floor(offset))
+      .limit(10)
+      .lean()
+      .exec((err, messages) => {
+        if (err) {
+          return res.status(404).json({
+            message: 'messages not found',
+          });
+        }
+
+        // const userDto = new UserDto();
+        // // const mappedMessages = messages.map((item) => userDto(item.user));
+
+        // console.log(mappedMessages);
+        this.getMessagesCount(id);
+        res.json(messages);
+      });
   };
 }
 

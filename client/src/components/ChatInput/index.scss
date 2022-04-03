@@ -4,7 +4,7 @@
   padding: 16px 0;
   .messages-input {
     padding: 16px 0 16px 0;
-    border-top: 1px solid rgba(58, 69, 107, 0.5);
+    border-top: 1px solid var(--app-input-border);
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -42,7 +42,7 @@
       }
 
       #icon {
-        stroke: #979797;
+        stroke: var(--app-button);
       }
       .button__icon {
         padding: 0 4px;
@@ -50,7 +50,7 @@
         &:hover {
           cursor: pointer;
           #icon {
-            stroke: #276aa5;
+            stroke: var(--app-button-hover);
           }
         }
       }
@@ -138,7 +138,7 @@
     margin-left: 8px;
     .anticon-loading {
       svg {
-        fill: #276aa5;
+        fill: var(--app-button-hover);
       }
     }
   }

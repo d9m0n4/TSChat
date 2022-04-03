@@ -1,6 +1,6 @@
 .sidebar {
   height: 100%;
-  background-color: #fff;
+  background-color: var(--app-sidebar);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +10,7 @@
     margin-bottom: 32px;
     .active {
       span {
-        box-shadow: 0px 0px 8px #276aa5;
+        box-shadow: 0px 0px 8px var(--app-button-hover);
       }
     }
   }
@@ -26,7 +26,7 @@
         a.active {
           svg {
             #rect {
-              stroke: #276aa5;
+              stroke: var(--app-button-hover);
             }
           }
         }
@@ -34,7 +34,7 @@
         svg {
           &:hover {
             #rect {
-              stroke: #276aa5;
+              stroke: var(--app-button-hover);
             }
           }
         }

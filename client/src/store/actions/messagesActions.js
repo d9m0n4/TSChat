@@ -10,6 +10,23 @@ const messagesActions = {
     payload,
   }),
 
+  setMessagesHistory: (payload) => ({
+    type: 'MESSAGES:SET_HISTORY',
+    payload,
+  }),
+
+  getMessagesHistory: (id, offset) => async (dispatch) => {
+    dispatch(messagesActions.setLoader(true));
+    try {
+      const { data } = await Messages.getHistory(id, offset);
+      dispatch(messagesActions.setMessagesHistory(data.reverse()));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch(messagesActions.setLoader(false));
+    }
+  },
+
   getMessagesCount: (id) => (dispatch) => {
     dispatch({
       type: 'MESSAGES:GET_UNREAD_COUNT',

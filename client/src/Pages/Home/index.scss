@@ -1,3 +1,5 @@
+@import '../../styles/theme.scss';
+
 .home-page {
   height: 100vh;
   margin: 0 auto;
@@ -8,10 +10,10 @@
   .main__content {
     width: 100%;
     .chat__header {
-      background-color: #fff;
+      background-color: var(--app-sidebar);
       padding: 24px 10px;
       height: 80px;
-      border-bottom: 1px solid rgba(229, 229, 229, 0.85);
+      border-bottom: 1px solid var(--app-border);
     }
     &-body {
       display: flex;
@@ -21,7 +23,7 @@
 }
 
 .profile__page {
-  background-color: #f8f9ff;
+  background-color: var(--app-background);
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -52,7 +54,7 @@
 
       span {
         margin: 0 8px;
-        color: #3a456b;
+        color: var(--app-message-text);
         font-size: 16px;
         flex: 0 0 40%;
       }
@@ -80,7 +82,7 @@
       padding: 8px;
       display: flex;
       flex-wrap: wrap;
-      background: #fafafa;
+      background: var(--app-background);
       justify-content: space-between;
       border-radius: 4px;
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
@@ -122,7 +124,7 @@
         }
       }
       .attachments__audio {
-        background-color: #4568e8;
+        background-color: var(--app-message-bubble);
         max-width: 360px;
         padding: 10px;
         color: #ffffff;
@@ -179,6 +181,43 @@
   }
   .ant-upload.ant-upload-select-picture-card {
     border: none;
+  }
+}
+
+.settings__page {
+  width: 100%;
+  padding: 32px 48px;
+  &-title {
+    text-align: center;
+    font-family: 'Gilroy-Medium', serif;
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  &-themes {
+    background: linear-gradient(
+      95.47deg,
+      rgba(241, 242, 244, 0.85) 0%,
+      rgba(245, 245, 247, 0.85) 100%
+    );
+    border-radius: 8px;
+    padding: 16px;
+    &__title {
+      text-align: center;
+      font-size: 18px;
+      font-family: 'Gilroy-Medium', serif;
+    }
+    .ant-radio-group {
+      display: flex;
+    }
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      .ant-radio-wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+    }
   }
 }
 

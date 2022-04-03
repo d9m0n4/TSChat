@@ -1,4 +1,5 @@
 @import './vars';
+@import './theme.scss';
 
 @font-face {
   font-family: 'Gilroy';
@@ -50,8 +51,8 @@ button.app-icon {
 }
 
 #root {
-  background-color: #fafafa;
-  color: #001424;
+  background-color: var(--app-background);
+  color: var(--app-accent-text);
 }
 
 li {

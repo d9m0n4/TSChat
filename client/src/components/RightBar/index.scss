@@ -1,6 +1,6 @@
 .main__content-body__rightbar {
   width: 270px;
-  background-color: #fcfcfc;
+  background-color: var(--app-sidebar);
   display: flex;
   flex-direction: column;
 
@@ -10,7 +10,7 @@
     flex: 0 0 auto;
   }
   .rightbar__body {
-    border-left: 1px solid rgba(229, 229, 229, 0.85);
+    border-left: 1px solid var(--app-border);
     padding: 32px 0;
     flex: 1 1 auto;
     &.rightbar__dialog {
@@ -24,7 +24,7 @@
         align-items: center;
         padding: 0 64px;
         padding-bottom: 32px;
-        border-bottom: 1px solid rgba(58, 69, 107, 0.5);
+        border-bottom: 1px solid var(--app-input-border);
         .companion__pers-info {
           margin: 24px 0 16px 0;
           font-size: 14px;
@@ -83,7 +83,7 @@
               cursor: pointer;
               &:hover {
                 .rect {
-                  stroke: #276aa5;
+                  stroke: var(--app-button-hover);
                   transition: all 0.3s ease-in-out;
                 }
               }

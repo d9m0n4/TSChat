@@ -21,6 +21,11 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         items: [...state.items, payload],
       };
+    case 'MESSAGES:SET_HISTORY':
+      return {
+        ...state,
+        items: [...payload, ...state.items],
+      };
     case 'MESSAGES:UPDATE_READSTATUS':
       return {
         ...state,

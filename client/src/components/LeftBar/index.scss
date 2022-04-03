@@ -1,6 +1,6 @@
 .main__content-body__leftbar {
   width: 290px;
-  background-color: #f8f9ff;
+  background-color: var(--app-leftbar);
   display: flex;
   flex-direction: column;
   .leftbar__header {
@@ -8,10 +8,10 @@
       input {
         &:focus {
           box-shadow: none;
-          border-color: #979797;
+          border-color: var(--app-button);
         }
         &:hover {
-          border-color: #979797;
+          border-color: var(--app-button);
         }
       }
     }
@@ -19,7 +19,7 @@
 
   .leftbar__body {
     flex: 1 1 auto;
-    border-right: 1px solid rgba(229, 229, 229, 0.85);
+    border-right: 1px solid var(--app-border);
     overflow: auto;
     &::-webkit-scrollbar-track {
       border-radius: 4px;
@@ -55,7 +55,7 @@
       &-body {
         a.active {
           .chats__item {
-            background-color: #276aa5e5;
+            background-color: var(--app-dialog-active-color);
 
             &-body {
               color: #fafafa;

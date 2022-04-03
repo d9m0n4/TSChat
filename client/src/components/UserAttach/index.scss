@@ -25,7 +25,7 @@
       padding: 8px 10px;
       align-items: center;
       &:hover {
-        background-color: #f8f9ff;
+        background-color: var(--app-leftbar);
       }
       &__prevIcon {
         width: 32px;
@@ -54,12 +54,12 @@
       &__download {
         width: 24px;
         #rect {
-          stroke: #979797;
+          stroke: var(--app-button);
         }
         &:hover {
           cursor: pointer;
           #rect {
-            stroke: #276aa5;
+            stroke: var(--app-button-hover);
           }
         }
       }
