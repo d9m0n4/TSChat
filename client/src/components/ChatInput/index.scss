@@ -64,6 +64,8 @@
         outline: none;
         padding: 0;
         padding-right: 8px;
+        background-color: var(--app-background);
+        color: var(--app-accent-text);
         &:focus {
           outline: none;
           box-shadow: none;

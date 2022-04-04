@@ -35,7 +35,13 @@ const AddDialogModal = ({
       ));
 
   return (
-    <Modal destroyOnClose="true" title={title} visible={visible} footer={null} onCancel={close}>
+    <Modal
+      className="dialog__modal"
+      destroyOnClose="true"
+      title={title}
+      visible={visible}
+      footer={null}
+      onCancel={close}>
       <Form className="add-dialog-form">
         <Select
           mode={multiple && 'multiple'}

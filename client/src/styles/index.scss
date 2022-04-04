@@ -53,6 +53,8 @@ button.app-icon {
 #root {
   background-color: var(--app-background);
   color: var(--app-accent-text);
+  transition: background-color 200ms linear;
+  transition: color 500ms linear;
 }
 
 li {

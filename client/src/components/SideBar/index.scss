@@ -6,6 +6,7 @@
   align-items: center;
   padding: 16px 0 0px 0;
   width: 64px;
+  transition: background-color 200ms linear;
   .user__profile-link {
     margin-bottom: 32px;
     .active {

@@ -236,7 +236,7 @@ const UserProfile = () => {
           />
         </div>
         <div className="profile__page-edit__btn">
-          <Button onClick={openModal} type="text" icon={<EditOutlined />} />
+          <Button onClick={openModal} type="text" icon={<EditOutlined className="edit-btn" />} />
         </div>
         <div className="profile__page-user__info">
           <div className=" user__info-item">

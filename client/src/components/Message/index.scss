@@ -12,7 +12,7 @@
       &-bubble {
         border-radius: 16px 16px 0 16px;
         background: var(--app-message-bubble);
-        box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: -1px 2px 4px var(--app-message-shadow);
         color: var(--app-accent-text);
         .message__audio-progress {
           border-radius: 16px 16px 0 16px;
@@ -59,7 +59,7 @@
       padding: 10px;
       color: var(--app-partner-text);
       font-size: 14px;
-      box-shadow: 1px 2px 4px rgba(69, 104, 232, 0.6);
+      box-shadow: 1px 2px 4px var(--app-message-shadow);
       border-radius: 16px 16px 16px 0;
       display: flex;
       flex-direction: column;

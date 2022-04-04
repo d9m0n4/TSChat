@@ -14,6 +14,7 @@
       padding: 24px 10px;
       height: 80px;
       border-bottom: 1px solid var(--app-border);
+      transition: background-color 200ms linear;
     }
     &-body {
       display: flex;
@@ -23,11 +24,12 @@
 }
 
 .profile__page {
-  background-color: var(--app-background);
+  background: var(--app-block);
   width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 32px;
+
   &-user {
     position: relative;
     flex: 0 1 50%;
@@ -41,7 +43,7 @@
       border-radius: 50%;
     }
     &__info {
-      background: #fafafa;
+      background: var(--app-leftbar);
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
       border-radius: 4px;
       padding: 16px;
@@ -70,12 +72,17 @@
   &-edit__btn {
     position: absolute;
     right: 16px;
+    .edit-btn {
+      svg {
+        fill: var(--app-accent-text);
+      }
+    }
   }
   &-attachments {
     flex: 0 0 50%;
     padding: 16px;
     border-radius: 4px;
-
+    margin-bottom: 32px;
     &__list {
       overflow: auto;
       height: 100%;
@@ -187,6 +194,8 @@
 .settings__page {
   width: 100%;
   padding: 32px 48px;
+  background-color: var(--app-leftbar);
+  transition: background-color 200ms linear;
   &-title {
     text-align: center;
     font-family: 'Gilroy-Medium', serif;
@@ -194,11 +203,7 @@
     margin-bottom: 24px;
   }
   &-themes {
-    background: linear-gradient(
-      95.47deg,
-      rgba(241, 242, 244, 0.85) 0%,
-      rgba(245, 245, 247, 0.85) 100%
-    );
+    background: var(--app-block);
     border-radius: 8px;
     padding: 16px;
     &__title {
@@ -221,7 +226,91 @@
   }
 }
 
+.ant-picker-panel-container {
+  background-color: var(--app-background) !important;
+  color: var(--app-accent-text) !important;
+}
+
 .ant-modal {
+  .ant-modal-content {
+    color: var(--app-accent-text);
+    background-color: var(--app-background);
+    .ant-modal-header {
+      background-color: var(--app-background);
+      color: var(--app-sidebar);
+      border-bottom: 1px solid var(--app-leftbar);
+      .ant-modal-title {
+        color: var(--app-accent-text);
+      }
+    }
+    .ant-modal-body {
+      .add-dialog-form-btn {
+        button {
+          background: var(--app-leftbar);
+          border: var(--app-sidebar);
+          color: var(--app-accent-text);
+        }
+      }
+      .ant-input {
+        background-color: var(--app-leftbar);
+        border: none;
+        color: var(--app-accent-text);
+      }
+      .add-dialog-form {
+        margin-bottom: 16px;
+        .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+          .ant-select-selector {
+          box-shadow: none;
+        }
+
+        .ant-select {
+          .ant-select-selector {
+            border: none;
+            .ant-select-selection-overflow {
+              width: 100%;
+              &-item {
+                width: 100%;
+                .ant-select-selection-item {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 8px;
+                  height: 100%;
+                  &-content {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    margin-right: 8px;
+                    align-items: center;
+                  }
+                }
+              }
+            }
+          }
+          &-focused {
+            .ant-select-selector {
+              border: none !important;
+              box-shadow: none;
+            }
+          }
+        }
+        &-btn {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 16px;
+        }
+      }
+      .ant-select-selector {
+        background-color: var(--app-sidebar);
+        color: var(--app-accent-text);
+        .ant-select-selection-item {
+          background-color: var(--app-background);
+          border: var(--app-leftbar);
+          color: var(--app-accent-text);
+        }
+      }
+    }
+  }
   .modal__info {
     display: flex;
     flex-direction: column;
@@ -232,8 +321,12 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    color: var(--app-accent-text);
     .form__button {
       align-self: center;
+      background-color: var(--app-sidebar);
+      border-color: var(--app-background);
+      color: var(--app-accent-text);
     }
   }
   .form__item {
@@ -242,6 +335,15 @@
     margin-bottom: 8px;
     &-input {
       flex: 0 0 70%;
+      .ant-picker {
+        background-color: var(--app-background);
+        border: none;
+        &-input {
+          input {
+            color: var(--app-accent-text);
+          }
+        }
+      }
     }
 
     &-label {

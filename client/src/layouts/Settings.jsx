@@ -1,17 +1,26 @@
 import React from 'react';
 import { Radio } from 'antd';
+import { useTheme } from '../hooks/useTheme';
 
 const Settings = () => {
+  const { theme, setTheme } = useTheme();
+
+  const changeTheme = (v) => {
+    setTheme(v.target.value);
+  };
+
+  console.log(theme);
+
   return (
     <div className="settings__page">
       <div className="settings__page-title">Настройки</div>
       <div className="settings__page-themes">
         <div className="settings__page-themes__title">Темы</div>
         <Radio.Group
-          onChange={(e) => console.log(e.target.value)}
+          onChange={changeTheme}
           className="settings__page-themes__list"
           name="radiogroup"
-          defaultValue={1}>
+          defaultValue={theme}>
           <Radio value={1}>
             <div className="settings__page-themes__card">
               <svg
@@ -45,8 +54,8 @@ const Settings = () => {
                     x2="131"
                     y2="59"
                     gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#E5E5E5" stop-opacity="0.85" />
-                    <stop offset="1" stop-color="#E0E0E0" />
+                    <stop stopColor="#E5E5E5" stopOpacity="0.85" />
+                    <stop offset="1" stopColor="#E0E0E0" />
                   </linearGradient>
                   <linearGradient
                     id="paint1_linear_606_759"
@@ -55,8 +64,8 @@ const Settings = () => {
                     x2="89"
                     y2="31"
                     gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#4568E8" />
-                    <stop offset="1" stop-color="#7428F0" />
+                    <stop stopColor="#4568E8" />
+                    <stop offset="1" stopColor="#7428F0" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -83,4 +92,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default React.memo(Settings);

@@ -6,6 +6,9 @@
   .leftbar__header {
     .top-bar__search {
       input {
+        background-color: var(--app-background);
+        border-color: var(--app-leftbar);
+        color: var(--app-accent-color);
         &:focus {
           box-shadow: none;
           border-color: var(--app-button);
