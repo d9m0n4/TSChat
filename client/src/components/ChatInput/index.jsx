@@ -10,6 +10,7 @@ import { CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
 const ChatInput = ({
+  currentFileList,
   onSendMessage,
   onChange,
   value,
@@ -25,17 +26,18 @@ const ChatInput = ({
   audioResult,
   handleTyping,
   emojiPicker,
+  theme,
 }) => {
   return (
     <div className="messages__input-group">
       {!isRecording ? (
         <div
           className={
-            uploaderProps.fileList.length && uploaderProps.fileList[0].name !== 'audio'
+            currentFileList.length && currentFileList[0].name !== 'audio'
               ? 'messages-input pt-80'
               : 'messages-input'
           }>
-          {uploaderProps.fileList[0] && uploaderProps.fileList[0].name === 'audio' ? (
+          {currentFileList[0] && currentFileList[0].name === 'audio' ? (
             <div className="message-input__audio">
               <Button
                 disabled={uploading}
@@ -55,6 +57,7 @@ const ChatInput = ({
                   withCredentials={true}
                   method="GET"
                   {...uploaderProps}
+                  fileList={currentFileList}
                   listType="picture"
                   maxCount={3}
                   multiple>
@@ -118,7 +121,7 @@ const ChatInput = ({
             <Icon className="loading__icon" style={{ fontSize: 24 }} component={LoadingOutlined} />
           ) : (
             <>
-              {value || uploaderProps.fileList.length ? (
+              {value || currentFileList.length ? (
                 <Button
                   onClick={onSendMessage}
                   type="text"
@@ -166,6 +169,7 @@ const ChatInput = ({
           <div className="emoji-picker" ref={emojiPicker}>
             {visiblePicker && (
               <Picker
+                theme={theme == 2 ? 'dark' : 'light'}
                 enableFrequentEmojiSort={true}
                 perLine={6}
                 set="apple"

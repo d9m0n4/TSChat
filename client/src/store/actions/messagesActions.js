@@ -34,10 +34,10 @@ const messagesActions = {
     });
   },
 
-  updateReadStatus: (id) => (dispatch, getState) => {
+  updateReadStatus: (obj) => (dispatch, getState) => {
     dispatch({
       type: 'MESSAGES:UPDATE_READSTATUS',
-      payload: id,
+      payload: obj,
     });
   },
 

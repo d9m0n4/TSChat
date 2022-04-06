@@ -10,7 +10,7 @@ class MessagesController {
 
   updateReadStatus = (dialogId, userId, res) => {
     Message.updateMany({ dialog: dialogId, user: { $ne: userId } }, { $set: { readStatus: true } })
-      .then(() => this.io.emit('SERVER:UPDATE_READSTATUS', userId))
+      .then(() => this.io.emit('SERVER:UPDATE_READSTATUS', { userId, dialogId }))
       .catch((err) => console.log('err', err));
   };
   getMessagesCount = async (id) => {

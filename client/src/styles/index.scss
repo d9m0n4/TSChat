@@ -28,6 +28,10 @@
   font-family: 'Gilroy', serif;
 }
 
+body {
+  line-height: 1.5;
+}
+
 .app-logo {
   position: absolute;
   font-size: 24px;
@@ -55,6 +59,7 @@ button.app-icon {
   color: var(--app-accent-text);
   transition: background-color 200ms linear;
   transition: color 500ms linear;
+  line-height: 1.5;
 }
 
 li {
@@ -80,18 +85,6 @@ p {
     bottom: 74px;
     left: 0;
   }
-}
-
-.status-dot {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  background-color: #46be32;
-  border-radius: 100%;
-  box-shadow: 0 0 0 2px #fff;
-  right: 0;
-  top: 2px;
-  z-index: 2;
 }
 
 .ant-btn {

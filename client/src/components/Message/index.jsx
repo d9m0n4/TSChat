@@ -82,8 +82,10 @@ const Message = ({ isMe, name, text, date, attachments, user, serverMessage, rea
           <div className="message__content">
             {isMe && (
               <span
-                className="message__content-read__status"
-                style={{ backgroundColor: readStatus ? '#46BE32' : '#979797' }}></span>
+                className={classNames(
+                  'message__content-read__status',
+                  readStatus ? 'read' : 'unread',
+                )}></span>
             )}
             {
               <div className="message__content-bubble">

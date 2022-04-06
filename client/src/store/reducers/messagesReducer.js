@@ -30,7 +30,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         items: state.items.map((item) => {
-          if (item.user._id !== payload) {
+          if (item.user._id !== payload.userId && item.dialog === payload.dialogId) {
             item.readStatus = true;
           }
 

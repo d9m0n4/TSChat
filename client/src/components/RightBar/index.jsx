@@ -5,6 +5,7 @@ import UserAvatar from '../Avatar';
 
 import './index.scss';
 import { Popconfirm } from 'antd';
+import OnlineStatus from '../onlineStatus';
 
 const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attachments }) => {
   return (
@@ -65,7 +66,7 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
                   conversation.members.map((item) => (
                     <li key={item.id} className="conversation-member__item">
                       <div className="conversation-member__item__avatar">
-                        {<sup className="status-dot"></sup>}
+                        {<OnlineStatus />}
                         <UserAvatar size={36} name={item.name} src={item.avatar} />
                       </div>
                       <div className="conversation-member__item__name">{item.name}</div>
@@ -82,9 +83,9 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
                               className="rect"
                               d="M1 13L13 1M1 1L13 13"
                               stroke="#979797"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             />
                           </svg>
                         </Popconfirm>

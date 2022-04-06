@@ -12,6 +12,8 @@ import messagesActions from '../store/actions/messagesActions';
 import { CloseCircleTwoTone } from '@ant-design/icons';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 
+import { useTheme } from '../hooks/useTheme';
+
 const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
   const [messageValue, setMessageValue] = useState('');
 
@@ -19,7 +21,9 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
   const [recorder, setRecorder] = useState(null);
 
   const [uploading, setUploading] = useState(false);
-  const [fileList, setFileList] = useState([]);
+  const [currentFiles, setCurrentFiles] = useState([]);
+
+  const { theme, setTheme } = useTheme();
 
   const canvas = useRef();
   const audioResult = useRef();
@@ -38,19 +42,21 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
   const onSendMessage = async () => {
     setUploading(true);
     let result = [];
-    if (fileList.length || messageValue) {
-      if (fileList.length) {
-        for (let i = 0; i < fileList.length; i++) {
-          const file = fileList[i].originFileObj || fileList[i];
+    if (currentFiles.length || messageValue) {
+      if (currentFiles.length) {
+        for (let i = 0; i < currentFiles.length; i++) {
+          const file = currentFiles[i].originFileObj || currentFiles[i];
           const f = await Files.upload(file);
           result.push(f.data.file);
         }
       }
       setMessageValue('');
-      setFileList([]);
+      setCurrentFiles([]);
       setUploading(false);
 
-      if (messageValue || fileList.length > 0) {
+      console.log(currentFiles);
+
+      if (messageValue || currentFiles.length > 0) {
         sendMessage({
           dialogId: dialogId || currentConvId,
           text: messageValue,
@@ -85,10 +91,10 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
   const uploaderProps = {
     onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
+      const index = currentFiles.indexOf(file);
+      const newcurrentFiles = currentFiles.slice();
+      newcurrentFiles.splice(index, 1);
+      setCurrentFiles(newcurrentFiles);
     },
 
     showUploadList: {
@@ -97,11 +103,9 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
     },
 
     onChange: ({ fileList }) => {
-      let files = [];
       fileList.forEach((file) => {
         if (!(file.size / 1024 / 1024 > 5)) {
-          files.push(file);
-          setFileList(files);
+          setCurrentFiles(fileList);
         } else {
           alert('файл больше 5мб');
         }
@@ -124,8 +128,6 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       const imgWindow = window.open(src);
       imgWindow.document.write(image.outerHTML);
     },
-
-    fileList,
   };
 
   window.navigator.getUserMedia =
@@ -227,7 +229,7 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
     recorder.ondataavailable = async (e) => {
       const file = new File([e.data], 'audio', { type: 'audio/wav' });
 
-      setFileList([file]);
+      setCurrentFiles([file]);
       setIsRecording(false);
 
       const ctxResult = audioResult.current.getContext('2d');
@@ -240,27 +242,29 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
       audioResult.current.width = 530;
 
       const drawAudio = async (f) => {
-        const arrB = await f.arrayBuffer();
-        const a = await audioCtx.decodeAudioData(arrB);
-        const b = normalizeData(filterData(a));
+        if (audioResult.current) {
+          const arrB = await f.arrayBuffer();
+          const a = await audioCtx.decodeAudioData(arrB);
+          const b = normalizeData(filterData(a));
 
-        const cw = audioResult.current.width;
-        const ch = audioResult.current.height;
+          const cw = audioResult.current.width;
+          const ch = audioResult.current.height;
 
-        ctxResult.fillStyle = '#E5E5E5';
-        ctxResult.fillRect(0, 0, cw, ch);
+          ctxResult.fillStyle = '#E5E5E5';
+          ctxResult.fillRect(0, 0, cw, ch);
 
-        let bh = 0;
-        let bw = 2;
-        x = 0;
+          let bh = 0;
+          let bw = 2;
+          x = 0;
 
-        for (let i = 0; i < b.length; i++) {
-          bh = b[i] * 100 + 1;
-          ctxResult.fillStyle = '#3A456B';
+          for (let i = 0; i < b.length; i++) {
+            bh = b[i] * 100 + 1;
+            ctxResult.fillStyle = '#3A456B';
 
-          ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, bh * 2);
-          ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, -bh * 2);
-          x += bw;
+            ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, bh * 2);
+            ctxResult.fillRect(-cw + x * 1.5, ch / 2, bw, -bh * 2);
+            x += bw;
+          }
         }
       };
 
@@ -297,6 +301,8 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
   return (
     <ChatInput
+      currentFileList={currentFiles}
+      theme={theme}
       emojiPicker={emojiPicker}
       audioResult={audioResult}
       record={Recording}

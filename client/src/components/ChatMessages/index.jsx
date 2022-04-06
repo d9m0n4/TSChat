@@ -48,27 +48,29 @@ const ChatMessages = ({
       </div>
 
       {currentDialogId || currentConvId ? (
-        <div className="messages__body">
-          <>
-            <div className="messages" ref={scrollRef} onScroll={scrollHandler}>
-              {messages.map((m) => (
-                <Message
-                  key={m._id}
-                  attachments={m.attachments}
-                  isMe={user === m.user._id}
-                  date={m.createdAt}
-                  text={m.text}
-                  name={m.user.name}
-                  user={m.user}
-                  serverMessage={m.server}
-                  readStatus={m.readStatus}
-                />
-              ))}
-              {messages.length > 0 && isTyping && typingUser && <Typing user={typingUser} />}
-            </div>
-            <ChatInputContainer />
-          </>
-        </div>
+        <>
+          <div className="messages__body">
+            <>
+              <div className="messages" ref={scrollRef} onScroll={scrollHandler}>
+                {messages.map((m) => (
+                  <Message
+                    key={m._id}
+                    attachments={m.attachments}
+                    isMe={user === m.user._id}
+                    date={m.createdAt}
+                    text={m.text}
+                    name={m.user.name}
+                    user={m.user}
+                    serverMessage={m.server}
+                    readStatus={m.readStatus}
+                  />
+                ))}
+                {messages.length > 0 && isTyping && typingUser && <Typing user={typingUser} />}
+              </div>
+            </>
+          </div>
+          <ChatInputContainer />
+        </>
       ) : (
         <div className="messages__empty-block">
           <MailOutlined className="empty__icon" />

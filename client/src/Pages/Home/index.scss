@@ -235,10 +235,14 @@
   .ant-modal-content {
     color: var(--app-accent-text);
     background-color: var(--app-background);
+    .ant-modal-close {
+      color: var(--app-button);
+    }
     .ant-modal-header {
       background-color: var(--app-background);
       color: var(--app-sidebar);
-      border-bottom: 1px solid var(--app-leftbar);
+      border-bottom: 1px solid var(--app-border);
+
       .ant-modal-title {
         color: var(--app-accent-text);
       }
@@ -246,15 +250,19 @@
     .ant-modal-body {
       .add-dialog-form-btn {
         button {
-          background: var(--app-leftbar);
+          background: var(--app-button-hover);
           border: var(--app-sidebar);
-          color: var(--app-accent-text);
+          color: var(--app-button-color);
         }
       }
       .ant-input {
-        background-color: var(--app-leftbar);
+        background-color: transparent;
         border: none;
+
         color: var(--app-accent-text);
+        &:focus {
+          box-shadow: none;
+        }
       }
       .add-dialog-form {
         margin-bottom: 16px;
@@ -266,8 +274,15 @@
         .ant-select {
           .ant-select-selector {
             border: none;
+            border-bottom: 1px solid var(--app-border);
             .ant-select-selection-overflow {
               width: 100%;
+              &-item {
+                border-bottom: 1px solid var(--app-border);
+                &-suffix {
+                  border: none;
+                }
+              }
               &-item {
                 width: 100%;
                 .ant-select-selection-item {
@@ -289,9 +304,15 @@
           }
           &-focused {
             .ant-select-selector {
-              border: none !important;
+              border: none;
               box-shadow: none;
+              border-bottom: 1px solid var(--app-border);
             }
+          }
+          .ant-select-item-option-selected:not(.ant-select-item-option-disabled)
+            .ant-select-item-option-state {
+            color: var(--app-accent-text);
+            margin-left: 8px;
           }
         }
         &-btn {
@@ -301,7 +322,9 @@
         }
       }
       .ant-select-selector {
-        background-color: var(--app-sidebar);
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid var(--app-border);
         color: var(--app-accent-text);
         .ant-select-selection-item {
           background-color: var(--app-background);

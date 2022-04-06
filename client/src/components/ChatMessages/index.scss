@@ -35,6 +35,9 @@
     .chat__header-title {
       display: flex;
       align-items: center;
+      .ant-avatar-group .ant-avatar {
+        border: none;
+      }
     }
   }
   .messages__body {
@@ -48,7 +51,7 @@
       padding: 8px 32px 16px 32px;
       color: var(--app-messages-text);
       overflow: auto;
-      height: calc(100% - 103px);
+      height: 100%;
       &::-webkit-scrollbar-track {
         border-radius: 4px;
       }
@@ -62,9 +65,7 @@
       &:hover::-webkit-scrollbar-thumb {
         background: #979797;
       }
-      &::-webkit-scrollbar-button {
-        height: 50px;
-      }
+
       .message {
         margin-bottom: 16px;
       }

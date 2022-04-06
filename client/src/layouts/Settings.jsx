@@ -20,7 +20,7 @@ const Settings = () => {
           onChange={changeTheme}
           className="settings__page-themes__list"
           name="radiogroup"
-          defaultValue={theme}>
+          defaultValue={Number(theme)}>
           <Radio value={1}>
             <div className="settings__page-themes__card">
               <svg
