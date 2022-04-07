@@ -1,19 +1,32 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Auth as AuthPage } from './Pages/Auth/Auth';
 import Home from './Pages/Home/Home';
 import { useEffect } from 'react';
 import authActions from './store/actions/authActions';
 import { useTheme } from './hooks/useTheme';
+import { auth } from './store/selectors';
 
-function App({ isAuth, getCurrentUser }) {
+import { isAuth as d } from './store/selectors';
+import { useActions } from './hooks/useActions';
+
+function App() {
   const { theme, setTheme } = useTheme();
+
+  const { isAuth } = useSelector(auth);
+  const { getCurrentUser } = useActions(authActions);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       getCurrentUser();
     }
   }, [getCurrentUser]);
+
+  const s = useSelector(d);
+
+  useEffect(() => {
+    console.log(s);
+  });
 
   return (
     <div className="App">
@@ -29,4 +42,4 @@ function App({ isAuth, getCurrentUser }) {
   );
 }
 
-export default connect(({ auth }) => ({ isAuth: auth.isAuth }), authActions)(App);
+export default App;

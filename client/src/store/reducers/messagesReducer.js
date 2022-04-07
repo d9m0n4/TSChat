@@ -33,7 +33,6 @@ export default (state = initialState, { type, payload }) => {
           if (item.user._id !== payload.userId && item.dialog === payload.dialogId) {
             item.readStatus = true;
           }
-
           return item;
         }),
       };

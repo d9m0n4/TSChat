@@ -93,7 +93,15 @@ const LeftBarContainer = ({
       return console.log('выберите собеседника');
     }
     Conversations.createConversation({ title: convTitle, members: convUsers });
+
     onHideConvModal();
+    socket.on('CONVERSATION_SET_ITEM', (data) => {
+      history.push(`/conversation/${data._id}`);
+    });
+
+    return () => {
+      socket.removeListener('CONVERSATION_SET_ITEM');
+    };
   };
 
   const onSelect = (value) => {
@@ -112,7 +120,7 @@ const LeftBarContainer = ({
       text: messageValue,
     });
     socket.on('DIALOG:CREATED', (data) => {
-      history.push(data._id);
+      history.push(`/dialogs/${data._id}`);
     });
     setUploading(false);
     hideDialogModal();

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useRef } from 'react';
 
-import { connect } from 'react-redux';
-
 import ChatInput from '../components/ChatInput';
 import socket from '../api/socket';
 
@@ -12,9 +10,13 @@ import messagesActions from '../store/actions/messagesActions';
 import { CloseCircleTwoTone } from '@ant-design/icons';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 
-import { useTheme } from '../hooks/useTheme';
+import { dialogs, auth, conversations } from '../store/selectors';
 
-const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
+import { useTheme } from '../hooks/useTheme';
+import { useActions } from '../hooks/useActions';
+import { useSelector } from 'react-redux';
+
+const ChatInputContainer = () => {
   const [messageValue, setMessageValue] = useState('');
 
   const [isRecording, setIsRecording] = useState(false);
@@ -22,6 +24,12 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
 
   const [uploading, setUploading] = useState(false);
   const [currentFiles, setCurrentFiles] = useState([]);
+
+  const { currentDialogId: dialogId } = useSelector(dialogs);
+  const { currentConversation: currentConvId } = useSelector(conversations);
+  const { user } = useSelector(auth);
+
+  const { sendMessage } = useActions(messagesActions);
 
   const { theme, setTheme } = useTheme();
 
@@ -322,11 +330,4 @@ const ChatInputContainer = ({ dialogId, sendMessage, currentConvId, user }) => {
   );
 };
 
-export default connect(
-  ({ auth, dialogs, conversations }) => ({
-    user: auth.user,
-    dialogId: dialogs.currentDialogId,
-    currentConvId: conversations.currentConvId,
-  }),
-  messagesActions,
-)(ChatInputContainer);
+export default ChatInputContainer;

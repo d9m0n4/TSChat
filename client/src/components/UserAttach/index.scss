@@ -8,13 +8,16 @@
     margin-bottom: 24px;
     &-title {
       font-family: 'Gilroy-Bold';
-      color: rgba(58, 69, 107, 0.5);
+      color: var(--app-accent-text);
     }
     &-icon {
       cursor: pointer;
       .icon {
         width: 16px;
         height: 16px;
+        .path {
+          stroke: var(--app-accent-text);
+        }
       }
     }
   }

@@ -42,8 +42,9 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg">
                       <path
+                        className="path"
                         d="M19 9L12 16L5 9"
-                        stroke="#111827"
+                        stroke="none"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"

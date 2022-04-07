@@ -15,7 +15,6 @@ const AddDialogModal = ({
   title,
   multiple,
   handleChange,
-  footer,
 }) => {
   const options =
     users &&

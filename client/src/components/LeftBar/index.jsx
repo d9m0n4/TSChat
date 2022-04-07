@@ -188,6 +188,7 @@ const Leftbar = ({
                     key={conversation.id}
                     path="conversation"
                     id={conversation.id}
+                    date={conversation.lastMessage.createdAt || new Date()}
                   />
                 ))}
             </div>

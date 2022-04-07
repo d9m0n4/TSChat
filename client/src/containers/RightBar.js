@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import Rightbar from '../components/RightBar';
+import { useSelector } from 'react-redux';
+
+import { dialogs, conversations, files } from '../store/selectors';
+import { useActions } from '../hooks/useActions';
 
 import filesActions from '../store/actions/filesActions';
 
+import Rightbar from '../components/RightBar';
+
 const RightBarContianer = () => {
   const [currentConv, setCurrentConv] = useState();
-  const dispatch = useDispatch();
-  const { currentDialogId, currentPartner } = useSelector((state) => state.dialogs, shallowEqual);
-  const { currentConvId, items: conversations } = useSelector(
-    (state) => state.conversations,
-    shallowEqual,
-  );
-  const { files } = useSelector((state) => state.files, shallowEqual);
+
+  const { getFiles } = useActions(filesActions);
+
+  const { currentDialogId, currentPartner } = useSelector(dialogs);
+  const { currentConvId, items: convItems } = useSelector(conversations);
+  const { files: filesItems } = useSelector(files);
 
   useEffect(() => {
     if (currentPartner && currentDialogId) {
-      dispatch(filesActions.getFiles(currentDialogId));
+      getFiles(currentDialogId);
     }
-  }, [currentDialogId, currentPartner, dispatch]);
+  }, [currentDialogId, currentPartner, getFiles]);
 
   useEffect(() => {
     if (currentConvId) {
-      const currentConv = conversations.find((item) => item.id === currentConvId);
+      const currentConv = convItems.find((item) => item.id === currentConvId);
       setCurrentConv(currentConv);
     }
-  }, [currentConvId, conversations]);
+  }, [currentConvId, convItems]);
 
   return (
     <Rightbar
@@ -34,7 +37,7 @@ const RightBarContianer = () => {
       currentConvId={currentConvId}
       currentDialogId={currentDialogId}
       partner={currentPartner}
-      attachments={files}
+      attachments={filesItems}
     />
   );
 };

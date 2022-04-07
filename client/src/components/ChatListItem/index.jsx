@@ -20,8 +20,10 @@ const ChatListItem = ({
   lastConvMessage,
 }) => {
   const { id: currentUser } = useSelector((state) => state.auth.user);
+
   const lastM = (id, message) => {
-    return id === userId ? `Вы: ${message}` : `${message}`;
+    const currentMessage = message.text ? message.text : 'вложение';
+    return id === userId ? `Вы: ${currentMessage}` : `${currentMessage}`;
   };
 
   return (
@@ -39,21 +41,21 @@ const ChatListItem = ({
         <div className="chats__item-body">
           <div className="chats__item-top">
             <p className="item-name">{type === 'conv' ? title : partner.name}</p>
-            {type === 'conv' ? '' : <span className="item-date">{toDate(date)}</span>}
+            <span className="item-date">{toDate(date)}</span>
           </div>
           {type === 'conv' ? (
             <div className="chats__item-bottom conv">
               {lastConvMessage && (
                 <>
                   <div className="conv__sender">{lastConvMessage.user.name}: </div>
-                  <div className="conv__message">{lastConvMessage.text}</div>
+                  <div className="conv__message">{lastConvMessage.text || 'вложение'}</div>
                 </>
               )}
             </div>
           ) : (
             <div className="chats__item-bottom">
               <div className="item__message">
-                <p>{lastM(currentUser, lastMessage.text)}</p>
+                <p>{lastM(currentUser, lastMessage)}</p>
               </div>
               {!lastMessage.readStatus && <span className="item__status"></span>}
             </div>
