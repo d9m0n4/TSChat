@@ -26,7 +26,7 @@ const ChatInputContainer = () => {
   const [currentFiles, setCurrentFiles] = useState([]);
 
   const { currentDialogId: dialogId } = useSelector(dialogs);
-  const { currentConversation: currentConvId } = useSelector(conversations);
+  const { currentConvId: currentConversationId } = useSelector(conversations);
   const { user } = useSelector(auth);
 
   const { sendMessage } = useActions(messagesActions);
@@ -62,11 +62,11 @@ const ChatInputContainer = () => {
       setCurrentFiles([]);
       setUploading(false);
 
-      console.log(currentFiles);
+      console.log(currentConversationId);
 
       if (messageValue || currentFiles.length > 0) {
         sendMessage({
-          dialogId: dialogId || currentConvId,
+          dialogId: dialogId || currentConversationId,
           text: messageValue,
           attachments: result.map((item) => item._id),
         });
@@ -85,7 +85,7 @@ const ChatInputContainer = () => {
   const handleTyping = (e) => {
     if (!isTyping) {
       setIsTyping(true);
-      socket.emit('TYPING', { dialog: dialogId || currentConvId, user });
+      socket.emit('TYPING', { dialog: dialogId || currentConversationId, user });
       clearTimeout(timeout);
       timeout = setTimeout(timeoutFunction, 3000);
     }

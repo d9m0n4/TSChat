@@ -3,9 +3,10 @@ import React from 'react';
 import UserAttach from '../UserAttach';
 import UserAvatar from '../Avatar';
 
-import './index.scss';
 import { Popconfirm } from 'antd';
 import OnlineStatus from '../onlineStatus';
+
+import './index.scss';
 
 const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attachments }) => {
   return (

@@ -5,7 +5,6 @@ import { Button, Input } from 'antd';
 
 import ChatListItem from '../ChatListItem';
 import AddDialogModal from '../AddDialogModal';
-
 import Loader from '../../components/Loader';
 import TextArea from 'antd/lib/input/TextArea';
 

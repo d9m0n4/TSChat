@@ -2,6 +2,8 @@
 
 .message {
   display: flex;
+  transition: all 1s ease;
+  animation: ainm 0.2s ease-in;
   $self: &;
   &--isme {
     flex-direction: row-reverse;
@@ -165,5 +167,17 @@
     height: 1px;
     background-color: #a4a4a4;
     width: 100%;
+  }
+}
+
+@keyframes ainm {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
   }
 }

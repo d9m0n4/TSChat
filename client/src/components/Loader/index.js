@@ -5,7 +5,7 @@ import './index.scss';
 
 const Loader = () => {
   return (
-    <Space size="middle">
+    <Space className="loader__space" size="middle">
       <Spin size="large" />
     </Space>
   );

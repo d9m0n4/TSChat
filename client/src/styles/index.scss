@@ -60,6 +60,13 @@ button.app-icon {
   transition: background-color 200ms linear;
   transition: color 500ms linear;
   line-height: 1.5;
+  height: 100%;
+}
+
+.loader__space {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
 }
 
 li {

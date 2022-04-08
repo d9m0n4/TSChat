@@ -1,29 +1,34 @@
 import { useEffect, useState, useRef } from 'react';
-import { connect } from 'react-redux';
-import ChatMessages from '../components/ChatMessages';
-import socket from '../api/socket';
-import messagesActions from '../store/actions/messagesActions';
-
-const Messages = ({
-  getMessages,
-  currentDialogId,
-  currentPartner,
-  items,
-  user,
+import { useSelector } from 'react-redux';
+import { useActions } from '../hooks/useActions';
+import {
   dialogs,
-  loader,
-  addMessage,
-  currentConv,
-  currentConvId,
-  updateReadStatus,
-  getMessagesHistory,
-}) => {
+  messages,
+  user,
+  userId,
+  conversations,
+  currentConversation,
+} from '../store/selectors';
+import ChatMessages from '../components/ChatMessages';
+import messagesActions from '../store/actions/messagesActions';
+import socket from '../api/socket';
+
+const Messages = () => {
   const scrollRef = useRef(null);
 
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState();
   const [offset, setOffset] = useState(10);
   const [messagesCount, setMessagesCount] = useState(0);
+
+  const { dialogs: dialogsItems, currentDialogId, currentPartner } = useSelector(dialogs);
+  const { items, loader } = useSelector(messages);
+  const { id } = useSelector(user);
+  const { currentConvId } = useSelector(conversations);
+  const currentConv = useSelector(currentConversation);
+
+  const { getMessages, getMessagesHistory, addMessage, updateReadStatus } =
+    useActions(messagesActions);
 
   const newMessage = (data) => {
     addMessage(data);
@@ -101,13 +106,13 @@ const Messages = ({
   return (
     <ChatMessages
       isTyping={isTyping}
-      user={user}
+      user={id}
       messages={items}
       scrollRef={scrollRef}
       currentDialogId={currentDialogId}
       currentConvId={currentConvId}
       loader={loader}
-      dialogs={dialogs}
+      dialogs={dialogsItems}
       currentPartner={currentPartner && currentPartner}
       currentConv={currentConv}
       typingUser={typingUser}
@@ -116,17 +121,4 @@ const Messages = ({
   );
 };
 
-export default connect(
-  ({ dialogs, messages, auth, conversations }) => ({
-    currentConvId: conversations.currentConvId,
-    currentConv:
-      conversations && conversations.items.find((item) => item.id === conversations.currentConvId),
-    dialogs: dialogs.dialogs,
-    currentDialogId: dialogs.currentDialogId,
-    currentPartner: dialogs.currentPartner,
-    items: messages.items,
-    loader: messages.loader,
-    user: auth.user && auth.user.id,
-  }),
-  { ...messagesActions },
-)(Messages);
+export default Messages;
