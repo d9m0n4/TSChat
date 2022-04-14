@@ -5,8 +5,6 @@ import { useEffect } from 'react';
 import { Auth as AuthPage } from './Pages/Auth/Auth';
 import Home from './Pages/Home/Home';
 
-import Loader from './components/Loader';
-
 import authActions from './store/actions/authActions';
 import { auth } from './store/selectors';
 
@@ -16,7 +14,7 @@ import { useActions } from './hooks/useActions';
 function App() {
   const { theme, setTheme } = useTheme();
 
-  const { isAuth, user } = useSelector(auth);
+  const { isAuth } = useSelector(auth);
   const { getCurrentUser } = useActions(authActions);
 
   useEffect(() => {
@@ -26,22 +24,16 @@ function App() {
   }, [getCurrentUser]);
 
   return (
-    <>
-      {!user ? (
-        <Loader />
-      ) : (
-        <div className="App">
-          <Switch>
-            <Route
-              exact
-              path={['/login', '/registration', '/verify']}
-              render={() => (!isAuth ? <AuthPage /> : <Redirect to="/im" />)}
-            />
-            <Route path="/" render={() => (isAuth ? <Home /> : <Redirect to="/login" />)} />
-          </Switch>
-        </div>
-      )}
-    </>
+    <div className="App">
+      <Switch>
+        <Route
+          exact
+          path={['/login', '/registration', '/verify']}
+          render={() => (!isAuth ? <AuthPage /> : <Redirect to="/im" />)}
+        />
+        <Route path="/" render={() => (isAuth ? <Home /> : <Redirect to="/login" />)} />
+      </Switch>
+    </div>
   );
 }
 

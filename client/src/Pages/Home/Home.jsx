@@ -20,6 +20,7 @@ const Home = ({
   setCurrentConversationId,
   currentConvId,
   userId,
+  user,
 }) => {
   let { pathname } = useLocation();
   const path = 'dialogs';
@@ -55,7 +56,7 @@ const Home = ({
 
   return (
     <>
-      {isLoading ? (
+      {!user ? (
         <Loader />
       ) : (
         <section className="home-page">
@@ -74,6 +75,7 @@ const Home = ({
 export default connect(
   ({ auth, dialogs, conversations }) => ({
     isLoading: auth.isLoading,
+    user: auth.user,
     dialogsItems: dialogs.dialogs,
     conversations: conversations.items,
     currentConvId: conversations.currentConvId,

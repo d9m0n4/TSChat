@@ -143,11 +143,8 @@
       right: 0;
       top: 0;
       z-index: 9;
-      &.read {
-        background-color: var(--app-button-hover);
-      }
       &.unread {
-        background-color: var(--app-button);
+        background-color: var(--app-button-hover);
       }
     }
   }

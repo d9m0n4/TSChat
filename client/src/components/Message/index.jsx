@@ -84,7 +84,7 @@ const Message = ({ isMe, name, text, date, attachments, user, serverMessage, rea
               <span
                 className={classNames(
                   'message__content-read__status',
-                  readStatus ? 'read' : 'unread',
+                  !readStatus && 'unread',
                 )}></span>
             )}
             {
