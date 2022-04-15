@@ -61,7 +61,7 @@
             background-color: var(--app-dialog-active-color);
 
             &-body {
-              color: #fafafa;
+              color: var(--app-dialog-text);
             }
           }
         }

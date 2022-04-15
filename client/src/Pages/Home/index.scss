@@ -85,7 +85,8 @@
     margin-bottom: 32px;
     &__list {
       overflow: auto;
-      height: 100%;
+      height: auto;
+      max-height: 100%;
       padding: 8px;
       display: flex;
       flex-wrap: wrap;
@@ -131,7 +132,7 @@
         }
       }
       .attachments__audio {
-        background-color: var(--app-message-bubble);
+        background: var(--app-partner-bubble);
         max-width: 360px;
         padding: 10px;
         color: #ffffff;
@@ -347,9 +348,9 @@
     color: var(--app-accent-text);
     .form__button {
       align-self: center;
-      background-color: var(--app-sidebar);
+      background-color: var(--app-button-hover);
       border-color: var(--app-background);
-      color: var(--app-accent-text);
+      color: var(--app-button-color);
     }
   }
   .form__item {
@@ -413,6 +414,36 @@
       &-body {
         width: 100%;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .profile__page {
+    display: block;
+    overflow: auto;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile__page {
+    padding: 0;
+    &-user__info {
+      .user__info-item {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile__page {
+    &-attachments__title {
+      font-size: 1rem;
+    }
+    &-attachments__list {
+      justify-content: center;
     }
   }
 }

@@ -48,7 +48,7 @@ const Login = ({
             {errors.password && <span className="error-message">{errors.password}</span>}
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item className="form__button">
             <Button
               disabled={isSubmitting}
               htmlType="submit"

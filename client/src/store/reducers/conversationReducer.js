@@ -2,7 +2,7 @@ const initialState = {
   items: [],
   isLoading: false,
   currentConvId: window.location.pathname.split('/conversation/')[1],
-  currentConversation: null
+  currentConversation: null,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -27,8 +27,8 @@ export default (state = initialState, { type, payload }) => {
     case 'CONVERSATIONS:SET_CURRENT_CONVERSATION':
       return {
         ...state,
-        currentConversation: payload
-      }
+        currentConversation: payload,
+      };
 
     default:
       return state;

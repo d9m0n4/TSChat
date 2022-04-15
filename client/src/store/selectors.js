@@ -9,8 +9,6 @@ export const dialogId = (state) => dialogs(state).currentDialogId;
 
 export const currentConvId = (state) => state.conversations.currentConvId;
 export const conversations = (state) => state.conversations;
-export const currentConversation = (state) =>
-  conversations(state).items.find((item) => item.id === currentConvId(state));
 
 export const files = (state) => state.files;
 

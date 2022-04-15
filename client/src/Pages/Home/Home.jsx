@@ -3,31 +3,30 @@ import './index.scss';
 
 import Sidebar from '../../components/SideBar';
 import Messenger from '../../layouts/Messenger';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Switch, useLocation } from 'react-router';
 import Loader from '../../components/Loader';
 import dialogActions from '../../store/actions/dialogActions';
 import conversationActions from '../../store/actions/conversatiosActions';
 import UserProfile from '../../layouts/UserProfile';
 import Settings from '../../layouts/Settings';
+import { CONVERSATION_PATH, DIALOG_PATH } from '../../constants';
+import { useActions } from '../../hooks/useActions';
+import { conversations, dialogs, auth } from '../../store/selectors';
 
-const Home = ({
-  conversations,
-  setCurrentDialogId,
-  isLoading,
-  setCurrentPartner,
-  dialogsItems,
-  setCurrentConversationId,
-  currentConvId,
-  userId,
-  user,
-}) => {
+const Home = () => {
   let { pathname } = useLocation();
-  const path = 'dialogs';
+
+  const { setCurrentDialogId, setCurrentPartner } = useActions(dialogActions);
+  const { setCurrentConversationId, setCurrentConversation } = useActions(conversationActions);
+
+  const { items: convs, currentConvId } = useSelector(conversations);
+  const { dialogsItems } = useSelector(dialogs);
+  const { user } = useSelector(auth);
 
   useEffect(() => {
-    if (pathname.includes(path)) {
-      const dialogId = pathname.split(`/${path}/`).pop();
+    if (pathname.includes(DIALOG_PATH)) {
+      const dialogId = pathname.split(`/${DIALOG_PATH}/`).pop();
       setCurrentDialogId(dialogId);
       setCurrentConversationId(null);
       if (dialogsItems) {
@@ -36,12 +35,16 @@ const Home = ({
       }
     }
     if (pathname.includes('/im/conversation/')) {
-      const conversationId = pathname.split('/im/conversation/').pop();
+      const conversationId = pathname.split(`/im/${CONVERSATION_PATH}/`).pop();
       setCurrentConversationId(conversationId);
+      if (currentConvId) {
+        let currentConv = convs.filter((item) => item.id === currentConvId)[0];
+        setCurrentConversation(currentConv);
+      }
       setCurrentDialogId(null);
       setCurrentPartner(null);
     }
-    if (!pathname.includes(path)) {
+    if (!pathname.includes(DIALOG_PATH)) {
       setCurrentDialogId(null);
     }
   }, [
@@ -50,8 +53,9 @@ const Home = ({
     setCurrentConversationId,
     dialogsItems,
     setCurrentPartner,
-    conversations,
+    convs,
     currentConvId,
+    setCurrentConversation,
   ]);
 
   return (
@@ -62,7 +66,7 @@ const Home = ({
         <section className="home-page">
           <Sidebar />
           <Switch>
-            <Route path={['/im']} component={Messenger} />
+            <Route path={'/im'} component={Messenger} />
             <Route path={'/profile'} component={UserProfile} />
             <Route path={'/settings'} component={Settings} />
           </Switch>
@@ -72,13 +76,4 @@ const Home = ({
   );
 };
 
-export default connect(
-  ({ auth, dialogs, conversations }) => ({
-    isLoading: auth.isLoading,
-    user: auth.user,
-    dialogsItems: dialogs.dialogs,
-    conversations: conversations.items,
-    currentConvId: conversations.currentConvId,
-  }),
-  { ...dialogActions, ...conversationActions },
-)(Home);
+export default React.memo(Home);

@@ -60,11 +60,8 @@ const ChatInputContainer = () => {
       }
       setMessageValue('');
       setCurrentFiles([]);
-      setUploading(false);
 
-      console.log(currentConversationId);
-
-      if (messageValue || currentFiles.length > 0) {
+      if (messageValue.trim() || currentFiles.length > 0) {
         sendMessage({
           dialogId: dialogId || currentConversationId,
           text: messageValue,
@@ -72,6 +69,7 @@ const ChatInputContainer = () => {
         });
       }
     }
+    setUploading(false);
   };
 
   let timeout = null;
@@ -90,9 +88,8 @@ const ChatInputContainer = () => {
       timeout = setTimeout(timeoutFunction, 3000);
     }
 
-    if (e.keyCode === 13) {
+    if (e.key == 'Enter') {
       e.preventDefault();
-      timeoutFunction();
       onSendMessage();
     }
   };

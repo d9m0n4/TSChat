@@ -7,6 +7,7 @@ import ChatListItem from '../ChatListItem';
 import AddDialogModal from '../AddDialogModal';
 import Loader from '../../components/Loader';
 import TextArea from 'antd/lib/input/TextArea';
+import { CONVERSATION_PATH, DIALOG_PATH } from '../../constants';
 
 const Leftbar = ({
   conversations,
@@ -146,7 +147,7 @@ const Leftbar = ({
                     userId={dialog.lastMessage && dialog.lastMessage.user}
                     partner={dialog.partner}
                     date={dialog.lastMessage.createdAt || new Date()}
-                    path="dialogs"
+                    path={DIALOG_PATH}
                     lastMessage={dialog.lastMessage}
                   />
                 ))
@@ -185,7 +186,7 @@ const Leftbar = ({
                     title={conversation.title}
                     lastConvMessage={conversation.lastMessage}
                     key={conversation.id}
-                    path="conversation"
+                    path={CONVERSATION_PATH}
                     id={conversation.id}
                     date={conversation.lastMessage.createdAt || new Date()}
                   />

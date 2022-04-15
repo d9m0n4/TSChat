@@ -1,14 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions';
-import {
-  dialogs,
-  messages,
-  user,
-  userId,
-  conversations,
-  currentConversation,
-} from '../store/selectors';
+import { dialogs, messages, user, conversations } from '../store/selectors';
 import ChatMessages from '../components/ChatMessages';
 import messagesActions from '../store/actions/messagesActions';
 import socket from '../api/socket';
@@ -24,8 +17,7 @@ const Messages = () => {
   const { dialogs: dialogsItems, currentDialogId, currentPartner } = useSelector(dialogs);
   const { items, loader } = useSelector(messages);
   const { id } = useSelector(user);
-  const { currentConvId } = useSelector(conversations);
-  const currentConv = useSelector(currentConversation);
+  const { currentConvId, currentConversation: currentConv } = useSelector(conversations);
 
   const { getMessages, getMessagesHistory, addMessage, updateReadStatus } =
     useActions(messagesActions);
@@ -49,7 +41,11 @@ const Messages = () => {
         });
       }
     }
-  }, [isTyping, currentDialogId]);
+
+    if (scrollRef.current) {
+      console.log(scrollRef.current.getBoundingClientRect());
+    }
+  }, [isTyping, currentDialogId, currentConvId, items]);
 
   useEffect(() => {
     setOffset(Array.from(items).length);

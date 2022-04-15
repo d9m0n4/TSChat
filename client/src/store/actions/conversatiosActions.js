@@ -1,4 +1,5 @@
-import Conversations from "../../Services/Conversations";
+import openNotification from '../../helpers/notifications/openNotification';
+import Conversations from '../../Services/Conversations';
 
 const conversationsActions = {
   setConversations: (payload) => ({
@@ -10,7 +11,6 @@ const conversationsActions = {
     payload,
   }),
 
-
   setCurrentConversationId: (id) => (dispatch) => {
     dispatch({
       type: 'CONVERSATIONS:SET_CURRENT_CONVERSATION_ID',
@@ -19,26 +19,24 @@ const conversationsActions = {
   },
 
   setCurrentConversation: (currentConversation) => (dispatch) => {
-
     dispatch({
       type: 'CONVERSATIONS:SET_CURRENT_CONVERSATION',
-      payload: currentConversation
-    })
-
+      payload: currentConversation,
+    });
   },
 
   fetchConversations: () => async (dispatch) => {
     dispatch(conversationsActions.setLoading(true));
     try {
-      const { data } = await Conversations.getConversations()
+      const { data } = await Conversations.getConversations();
 
       if (!data) {
-        console.log('error 123');
+        openNotification('error', 'Ошибка', 'Данные не получены', 3);
       }
 
       return dispatch(conversationsActions.setConversations(data));
     } catch (error) {
-      console.log(error);
+      openNotification('error', 'Ошибка', error, 3);
     } finally {
       dispatch(conversationsActions.setLoading(false));
     }

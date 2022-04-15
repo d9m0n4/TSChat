@@ -84,7 +84,7 @@ const Registration = ({
             {errors.password2 && <span className="error-message">{errors.password2}</span>}
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item className="form__button">
             <Button
               disabled={isSubmitting}
               size="large"

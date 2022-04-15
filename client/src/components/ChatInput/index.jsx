@@ -111,7 +111,7 @@ const ChatInput = ({
                   placeholder="Введите сообщение... "
                   autoSize={{ minRows: 1, maxRows: 5 }}
                   value={value}
-                  onKeyUp={handleTyping}
+                  onKeyPress={handleTyping}
                 />
               </div>
             </>

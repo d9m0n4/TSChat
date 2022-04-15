@@ -9,8 +9,6 @@ const Settings = () => {
     setTheme(v.target.value);
   };
 
-  console.log(theme);
-
   return (
     <div className="settings__page">
       <div className="settings__page-title">Настройки</div>
