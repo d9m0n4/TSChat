@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 
 import ChatInput from '../components/ChatInput';
@@ -303,6 +303,11 @@ const ChatInputContainer = () => {
       recorder.stop();
     }
   };
+
+  useEffect(() => {
+    setMessageValue('');
+    setCurrentFiles([]);
+  }, []);
 
   return (
     <ChatInput

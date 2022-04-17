@@ -25,6 +25,7 @@ const messagesActions = {
     } finally {
       dispatch(messagesActions.setLoader(false));
     }
+    console.log(123);
   },
 
   getMessagesCount: (id) => (dispatch) => {

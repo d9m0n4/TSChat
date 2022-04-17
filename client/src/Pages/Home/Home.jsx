@@ -21,7 +21,7 @@ const Home = () => {
   const { setCurrentConversationId, setCurrentConversation } = useActions(conversationActions);
 
   const { items: convs, currentConvId } = useSelector(conversations);
-  const { dialogsItems } = useSelector(dialogs);
+  const { dialogs: dialogsItems } = useSelector(dialogs);
   const { user } = useSelector(auth);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Home = () => {
         setCurrentPartner(partner);
       }
     }
-    if (pathname.includes('/im/conversation/')) {
+    if (pathname.includes(`/im/${CONVERSATION_PATH}/`)) {
       const conversationId = pathname.split(`/im/${CONVERSATION_PATH}/`).pop();
       setCurrentConversationId(conversationId);
       if (currentConvId) {

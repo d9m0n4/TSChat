@@ -14,6 +14,14 @@ const dialogActions = {
     type: 'DIALOG:SET_LOADING',
     payload,
   }),
+  setMessagesCount: (payload) => ({
+    type: 'DIALOG:UPDATE_COUNT',
+    payload,
+  }),
+
+  updateUnreadMessagesCount: (id) => (dispatch) => {
+    dispatch(dialogActions.setMessagesCount(id));
+  },
 
   setCurrentDialogId: (id) => (dispatch) => {
     dispatch({
@@ -28,7 +36,6 @@ const dialogActions = {
   },
 
   fetchDialogs: () => async (dispatch) => {
-
     try {
       const { data } = await Dialogs.fetchDialogs();
 

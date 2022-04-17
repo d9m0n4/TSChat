@@ -6,6 +6,16 @@ class DialogController {
     this.io = io;
   }
 
+  getUnreadMessagesCount = async (id, userId) => {
+    const count = await Message.find({
+      dialog: id,
+      readStatus: false,
+      user: { $ne: userId },
+    }).count();
+    this.io.emit('SERVER:UNREAD_MESSAGES_COUNT', count);
+    return count;
+  };
+
   createDialog = async (req, res) => {
     try {
       const postData = {
@@ -67,34 +77,26 @@ class DialogController {
   getDialogs = async (req, res) => {
     const id = req.user.id;
 
-    Dialog.find({ members: { $in: [id] } })
-      .then((dialogs) => {
-        if (!dialogs) {
-          res.status(404).json({ message: 'диалоги не найдены' });
-        }
-        const data = [];
+    try {
+      const dialogs = await Dialog.find({ members: { $in: [id] } }).populate('members lastMessage');
 
-        for (const dialog of dialogs) {
-          const a = dialog.populate('members lastMessage').then((popd) => {
-            return popd;
-          });
+      const data = [];
 
-          data.push(a);
-        }
+      for (const item of dialogs) {
+        const unreadMessagesCount = await this.getUnreadMessagesCount(item._id, id);
+        const partner = item.members.find((m) => m._id.toString() !== id);
 
-        return Promise.all(data);
-      })
-      .then((d) => {
-        const partners = [];
-
-        d.forEach((item) => {
-          const partner = item.members.find((m) => m._id.toString() !== id);
-          partners.push({ dialogId: item._id, lastMessage: item.lastMessage, partner });
+        data.push({
+          count: unreadMessagesCount,
+          partner,
+          lastMessage: item.lastMessage,
+          dialogId: item._id,
         });
-
-        res.json(partners);
-      })
-      .catch((err) => res.json(err));
+      }
+      res.json(data);
+    } catch (error) {
+      res.json(error);
+    }
   };
 }
 

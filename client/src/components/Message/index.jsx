@@ -116,18 +116,17 @@ const Message = ({ isMe, name, text, date, attachments, user, serverMessage, rea
                   <div className="message__content-bubble__attachments">
                     {attachments &&
                       attachments.map((item) => (
-                        <LazyLoadComponent key={item._id}>
-                          <Image
-                            className="message__image"
-                            preview={{
-                              icons: [],
-                              destroyOnClose: true,
-                              src: `${item.url}`,
-                              mask: <EyeOutlined />,
-                            }}
-                            src={item.thumb}
-                          />
-                        </LazyLoadComponent>
+                        <Image
+                          key={item._id}
+                          className="message__image"
+                          preview={{
+                            icons: [],
+                            destroyOnClose: true,
+                            src: `${item.url}`,
+                            mask: <EyeOutlined />,
+                          }}
+                          src={item.thumb}
+                        />
                       ))}
                   </div>
                 )}

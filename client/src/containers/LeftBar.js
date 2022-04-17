@@ -10,6 +10,7 @@ import { withRouter } from 'react-router';
 import Conversations from '../Services/Conversations';
 import conversationsActions from '../store/actions/conversatiosActions';
 import messagesActions from '../store/actions/messagesActions';
+import { CONVERSATION_PATH, DIALOG_PATH } from '../constants';
 
 const LeftBarContainer = ({
   fetchDialogs,
@@ -19,8 +20,6 @@ const LeftBarContainer = ({
   history,
   fetchConversations,
   updateMessages,
-  messagesItems,
-  getMessagesCount,
 }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
@@ -32,8 +31,6 @@ const LeftBarContainer = ({
   const [inputValue, setInputValue] = useState('');
   const [uploading, setUploading] = useState(false);
   const [filtered, setFilteredDialogs] = useState(items && Array.from(items));
-
-  const [messagesCount, setMessagesCount] = useState(0);
 
   const { items: conversations } = useSelector((state) => state.conversations);
 
@@ -96,7 +93,7 @@ const LeftBarContainer = ({
 
     onHideConvModal();
     socket.on('CONVERSATION_SET_ITEM', (data) => {
-      history.push(`/conversation/${data._id}`);
+      history.push(`/${CONVERSATION_PATH}/${data._id}`);
     });
 
     return () => {
@@ -120,7 +117,7 @@ const LeftBarContainer = ({
       text: messageValue,
     });
     socket.on('DIALOG:CREATED', (data) => {
-      history.push(`/dialogs/${data._id}`);
+      history.push(`/${DIALOG_PATH}/${data._id}`);
     });
     setUploading(false);
     hideDialogModal();
@@ -184,7 +181,6 @@ const LeftBarContainer = ({
       hideModal={hideDialogModal}
       showConvModal={onShowConvModal}
       hideConvModal={onHideConvModal}
-      messagesCount={messagesCount}
     />
   );
 };

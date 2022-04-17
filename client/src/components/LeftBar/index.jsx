@@ -34,7 +34,6 @@ const Leftbar = ({
   showConvModal,
   hideConvModal,
   handleChangeSelect,
-  messagesCount,
 }) => {
   return (
     <>
@@ -149,6 +148,7 @@ const Leftbar = ({
                     date={dialog.lastMessage.createdAt || new Date()}
                     path={DIALOG_PATH}
                     lastMessage={dialog.lastMessage}
+                    unreadCount={dialog.count}
                   />
                 ))
               )}

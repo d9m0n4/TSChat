@@ -6,15 +6,17 @@ import { Auth as AuthPage } from './Pages/Auth/Auth';
 import Home from './Pages/Home/Home';
 
 import authActions from './store/actions/authActions';
-import { auth } from './store/selectors';
+import { auth, dialogs } from './store/selectors';
 
 import { useTheme } from './hooks/useTheme';
 import { useActions } from './hooks/useActions';
+import socket from './api/socket';
 
 function App() {
   const { theme, setTheme } = useTheme();
 
   const { isAuth } = useSelector(auth);
+  const { currentDialogId } = useSelector(dialogs);
   const { getCurrentUser } = useActions(authActions);
 
   useEffect(() => {
@@ -22,6 +24,10 @@ function App() {
       getCurrentUser();
     }
   }, [getCurrentUser]);
+
+  useEffect(() => {
+    socket.emit('CLIENT:GET_MESSAGES_COUNT', currentDialogId);
+  }, [currentDialogId]);
 
   return (
     <div className="App">

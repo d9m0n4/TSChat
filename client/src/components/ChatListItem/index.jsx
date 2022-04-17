@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -18,6 +18,7 @@ const ChatListItem = ({
   path,
   title,
   lastConvMessage,
+  unreadCount,
 }) => {
   const { id: currentUser } = useSelector((state) => state.auth.user);
 
@@ -36,7 +37,7 @@ const ChatListItem = ({
             size={36}
             src={partner && partner.userAvatar}
           />
-          <sub className="messages-count">{0}</sub>
+          {unreadCount > 0 && <sub className="messages-count">{unreadCount}</sub>}
         </div>
         <div className="chats__item-body">
           <div className="chats__item-top">
@@ -57,7 +58,9 @@ const ChatListItem = ({
               <div className="item__message">
                 <p>{lastM(currentUser, lastMessage)}</p>
               </div>
-              {!lastMessage.readStatus && <span className="item__status"></span>}
+              {!lastMessage.readStatus && lastMessage.user === currentUser && (
+                <span className="item__status"></span>
+              )}
             </div>
           )}
         </div>

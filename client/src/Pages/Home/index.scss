@@ -259,6 +259,7 @@
       .ant-input {
         background-color: transparent;
         border: none;
+        border-bottom: 1px solid var(--app-border);
 
         color: var(--app-accent-text);
         &:focus {

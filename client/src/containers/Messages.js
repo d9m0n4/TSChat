@@ -1,10 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions';
 import { dialogs, messages, user, conversations } from '../store/selectors';
 import ChatMessages from '../components/ChatMessages';
 import messagesActions from '../store/actions/messagesActions';
 import socket from '../api/socket';
+import dialogActions from '../store/actions/dialogActions';
 
 const Messages = () => {
   const scrollRef = useRef(null);
@@ -21,6 +22,7 @@ const Messages = () => {
 
   const { getMessages, getMessagesHistory, addMessage, updateReadStatus } =
     useActions(messagesActions);
+  const { updateUnreadMessagesCount } = useActions(dialogActions);
 
   const newMessage = (data) => {
     addMessage(data);
@@ -34,18 +36,11 @@ const Messages = () => {
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollToBottom(scrollRef.current.getBoundingClientRect().bottom);
-      if (isTyping) {
-        scrollRef.current.addEventListener('scroll', (e) => {
-          e.preventDefault();
-        });
-      }
+      setTimeout(() => {
+        scrollToBottom(9999);
+      }, 500);
     }
-
-    if (scrollRef.current) {
-      console.log(scrollRef.current.getBoundingClientRect());
-    }
-  }, [isTyping, currentDialogId, currentConvId, items]);
+  }, [currentConvId, currentDialogId, isTyping]);
 
   useEffect(() => {
     setOffset(Array.from(items).length);
@@ -55,6 +50,7 @@ const Messages = () => {
     if (currentDialogId || currentConvId) {
       getMessages(currentDialogId || currentConvId);
       socket.on('SERVER:CREATE_MESSAGE', newMessage);
+      updateUnreadMessagesCount({ id: currentDialogId || currentConvId, user: user.id });
     }
     return () => {
       socket.removeListener('SERVER:CREATE_MESSAGE');
@@ -92,10 +88,13 @@ const Messages = () => {
   }, [messagesCount]);
 
   const scrollHandler = (e) => {
+    // const observer = new IntersectionObserver();
     if (e.target.scrollTop === 0 && messagesCount > offset) {
       setTimeout(() => {
         getMessagesHistory(currentDialogId || currentConvId, offset);
-      });
+        console.log(e.target.scrollTop);
+      }, 0);
+      console.log(123);
     }
   };
 
@@ -109,10 +108,13 @@ const Messages = () => {
       currentConvId={currentConvId}
       loader={loader}
       dialogs={dialogsItems}
-      currentPartner={currentPartner && currentPartner}
+      currentPartner={currentPartner}
       currentConv={currentConv}
       typingUser={typingUser}
       scrollHandler={scrollHandler}
+      offset={offset}
+      getMessagesHistory={getMessagesHistory}
+      messagesCount={messagesCount}
     />
   );
 };
