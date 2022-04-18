@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions';
 import { dialogs, messages, user, conversations } from '../store/selectors';
@@ -8,12 +8,13 @@ import socket from '../api/socket';
 import dialogActions from '../store/actions/dialogActions';
 
 const Messages = () => {
-  const scrollRef = useRef(null);
+  const scrollBlock = useRef(null);
 
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState();
   const [offset, setOffset] = useState(10);
   const [messagesCount, setMessagesCount] = useState(0);
+  const [scrollBtnActive, setScrollBtnActive] = useState(false);
 
   const { dialogs: dialogsItems, currentDialogId, currentPartner } = useSelector(dialogs);
   const { items, loader } = useSelector(messages);
@@ -28,19 +29,23 @@ const Messages = () => {
     addMessage(data);
   };
 
-  const scrollToBottom = (to) =>
-    scrollRef.current.scrollBy({
-      top: to,
+  const getData = () => {
+    return getMessagesHistory(currentDialogId || currentConvId, offset);
+  };
+
+  const showScrollButton = (e) => {
+    const scrollPosition = Math.floor(
+      (e.target.scrollTop / (e.target.scrollHeight - e.target.clientHeight)) * 100,
+    );
+    scrollPosition < -30 ? setScrollBtnActive(true) : setScrollBtnActive(false);
+  };
+
+  const scrollToBottom = () => {
+    scrollBlock.current.scrollBy({
+      top: scrollBlock.current.scrollHeight,
       behavior: 'smooth',
     });
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      setTimeout(() => {
-        scrollToBottom(9999);
-      }, 500);
-    }
-  }, [currentConvId, currentDialogId, isTyping]);
+  };
 
   useEffect(() => {
     setOffset(Array.from(items).length);
@@ -87,23 +92,11 @@ const Messages = () => {
     };
   }, [messagesCount]);
 
-  const scrollHandler = (e) => {
-    // const observer = new IntersectionObserver();
-    if (e.target.scrollTop === 0 && messagesCount > offset) {
-      setTimeout(() => {
-        getMessagesHistory(currentDialogId || currentConvId, offset);
-        console.log(e.target.scrollTop);
-      }, 0);
-      console.log(123);
-    }
-  };
-
   return (
     <ChatMessages
       isTyping={isTyping}
       user={id}
       messages={items}
-      scrollRef={scrollRef}
       currentDialogId={currentDialogId}
       currentConvId={currentConvId}
       loader={loader}
@@ -111,10 +104,14 @@ const Messages = () => {
       currentPartner={currentPartner}
       currentConv={currentConv}
       typingUser={typingUser}
-      scrollHandler={scrollHandler}
       offset={offset}
       getMessagesHistory={getMessagesHistory}
       messagesCount={messagesCount}
+      getData={getData}
+      showScrollButton={showScrollButton}
+      scrollBtnActive={scrollBtnActive}
+      scrollToBottom={scrollToBottom}
+      scrollBlock={scrollBlock}
     />
   );
 };

@@ -13,6 +13,7 @@
       background-color: var(--app-sidebar);
       padding: 24px 10px;
       height: 80px;
+      min-height: 80px;
       border-bottom: 1px solid var(--app-border);
       transition: background-color 200ms linear;
     }

@@ -9,26 +9,24 @@ import UserAvatar from '../Avatar';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import './index.scss';
+import classNames from 'classnames';
 
 const ChatMessages = ({
   isTyping,
   typingUser,
-  scrollRef,
   messages,
   user,
   currentDialogId,
   currentConvId,
   currentPartner,
   currentConv,
-  scrollHandler,
   loader,
-  getMessagesHistory,
-  offset,
-  messagesCount,
+  showScrollButton,
+  getData,
+  scrollBtnActive,
+  scrollToBottom,
+  scrollBlock,
 }) => {
-  const getData = () => {
-    return getMessagesHistory(currentDialogId || currentConvId, offset);
-  };
   return (
     <>
       <div className="main__content-body__messages">
@@ -58,36 +56,53 @@ const ChatMessages = ({
         {currentDialogId || currentConvId ? (
           <>
             <div className="messages__body">
-              <div className="messages__body-screen">
-                <>
-                  <div id="scrollableDiv" className="messages__list">
-                    <InfiniteScroll
-                      dataLength={messages.length}
-                      next={getData}
-                      hasMore={true}
-                      inverse={true}
-                      scrollableTarget="scrollableDiv">
-                      <div className="messages__container">
-                        {messages.map((m) => (
-                          <Message
-                            key={m._id}
-                            attachments={m.attachments}
-                            isMe={user === m.user._id}
-                            date={m.createdAt}
-                            text={m.text}
-                            name={m.user.name}
-                            user={m.user}
-                            serverMessage={m.server}
-                            readStatus={m.readStatus}
-                          />
-                        ))}
-                      </div>
-                    </InfiniteScroll>
-                  </div>
-                </>
-                <ChatInputContainer />
+              <div
+                className={classNames('scroll__button', scrollBtnActive && 'active')}
+                onClick={scrollToBottom}>
+                <svg
+                  className="svg"
+                  width="16"
+                  height="17"
+                  viewBox="0 0 16 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    className="rect"
+                    d="M15 9L8 16L1 9M15 1L8 8L1 1"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              {loader && <Loader />}
+              <div ref={scrollBlock} className="messages__screen" id="scrollableDiv">
+                <InfiniteScroll
+                  className="messages__container"
+                  dataLength={messages.length}
+                  onScroll={showScrollButton}
+                  next={getData}
+                  inverse={true}
+                  hasMore={true}
+                  scrollableTarget="scrollableDiv">
+                  {messages.map((m) => (
+                    <Message
+                      key={m._id}
+                      attachments={m.attachments}
+                      isMe={user === m.user._id}
+                      date={m.createdAt}
+                      text={m.text}
+                      name={m.user.name}
+                      user={m.user}
+                      serverMessage={m.server}
+                      readStatus={m.readStatus}
+                    />
+                  ))}
+                  {messages.length > 0 && isTyping && typingUser && <Typing user={typingUser} />}
+                </InfiniteScroll>
               </div>
             </div>
+            <ChatInputContainer />
           </>
         ) : (
           <div className="messages__empty-block">
