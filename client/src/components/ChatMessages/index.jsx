@@ -98,7 +98,7 @@ const ChatMessages = ({
                       readStatus={m.readStatus}
                     />
                   ))}
-                  {messages.length > 0 && isTyping && typingUser && <Typing user={typingUser} />}
+                  {messages.length > 0 && isTyping && <Typing />}
                 </InfiniteScroll>
               </div>
             </div>

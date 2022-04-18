@@ -56,6 +56,7 @@ const Messages = () => {
       getMessages(currentDialogId || currentConvId);
       socket.on('SERVER:CREATE_MESSAGE', newMessage);
       updateUnreadMessagesCount({ id: currentDialogId || currentConvId, user: user.id });
+      socket.emit('CLIENT:JOIN_ROOM', { id: currentDialogId || currentConvId });
     }
     return () => {
       socket.removeListener('SERVER:CREATE_MESSAGE');
@@ -64,19 +65,13 @@ const Messages = () => {
   }, [currentDialogId, getMessages, currentConvId]);
 
   useEffect(() => {
-    socket.on('TYPING', (o) => {
-      if (!o) {
-        setIsTyping(false);
-        setTypingUser(null);
-      } else {
-        setIsTyping(true);
-        setTypingUser(o.user);
-      }
+    socket.on('T', (o) => {
+      console.log(o);
     });
     return () => {
-      socket.removeListener('TYPING');
+      socket.removeListener('T');
     };
-  }, [isTyping]);
+  }, [currentDialogId]);
 
   useEffect(() => {
     socket.on('SERVER:UPDATE_READSTATUS', updateReadStatus);

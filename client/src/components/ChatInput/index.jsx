@@ -232,4 +232,4 @@ const ChatInput = ({
   );
 };
 
-export default React.memo(ChatInput);
+export default ChatInput;

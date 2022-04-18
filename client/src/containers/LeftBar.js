@@ -102,7 +102,6 @@ const LeftBarContainer = ({
   };
 
   const onSelect = (value) => {
-    console.log(value);
     setSelectedUserId(value.value);
   };
 

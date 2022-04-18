@@ -72,27 +72,28 @@ const ChatInputContainer = () => {
     setUploading(false);
   };
 
-  let timeout = null;
-  const [isTyping, setIsTyping] = useState(false);
-
-  function timeoutFunction() {
-    socket.emit('TYPING', false);
-    setIsTyping(false);
-  }
-
   const handleTyping = (e) => {
-    if (!isTyping) {
-      setIsTyping(true);
-      socket.emit('TYPING', { dialog: dialogId || currentConversationId, user });
-      clearTimeout(timeout);
-      timeout = setTimeout(timeoutFunction, 3000);
-    }
-
+    socket.emit('TYPING', { user, dialogId });
     if (e.key == 'Enter') {
       e.preventDefault();
       onSendMessage();
     }
+    return () => {
+      socket.removeListener('TYPING');
+    };
   };
+
+  useEffect(() => {
+    socket.on('DIALOGS:SET_DIALOG_ID', (id) => {
+      if (dialogId === id) {
+        console.log('id if defained');
+      }
+    });
+    return () => {
+      socket.removeListener('TYPING');
+      console.log('remove typing');
+    };
+  }, [dialogId]);
 
   const uploaderProps = {
     onRemove: (file) => {

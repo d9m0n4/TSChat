@@ -13,6 +13,7 @@ import Settings from '../../layouts/Settings';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../../constants';
 import { useActions } from '../../hooks/useActions';
 import { conversations, dialogs, auth } from '../../store/selectors';
+import socket from '../../api/socket';
 
 const Home = () => {
   let { pathname } = useLocation();

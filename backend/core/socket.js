@@ -11,6 +11,18 @@ module.exports = (http) => {
   io.on('connection', (socket) => {
     console.log('socket connected');
 
+    socket.on('DIALOGS:SET_DIALOG_ID', (id) => {
+      socket.join(id);
+      socket.broadcast.to(id).emit('JOINED', id);
+      socket.on('TYPING', (obj) => {
+        socket.broadcast.to(id).emit('T', obj);
+      });
+    });
+
+    // socket.on('TYPING', (obj) => {
+
+    // });
+
     socket.on('user:add', (user) => {
       users.push(user.id);
       console.log(users);
