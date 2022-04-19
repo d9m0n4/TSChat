@@ -10,6 +10,14 @@ const conversationsActions = {
     type: 'CONVERSATIONS:SET_LOADING',
     payload,
   }),
+  setMessagesCount: (payload) => ({
+    type: 'CONVERSATIONS:SET_UNREAD_MESSAGES_COUNT',
+    payload,
+  }),
+
+  updateConvUnreadMessagesCount: (obj) => (dispatch) => {
+    dispatch(conversationsActions.setMessagesCount(obj));
+  },
 
   setCurrentConversationId: (id) => (dispatch) => {
     dispatch({

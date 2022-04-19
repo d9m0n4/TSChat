@@ -40,6 +40,19 @@ export default (state = initialState, { type, payload }) => {
           return dialog;
         }),
       };
+    case 'MESSAGES:UPDATE_READSTATUS':
+      return {
+        ...state,
+        dialogs: state.dialogs.map((dialog) => {
+          if (
+            dialog.lastMessage.user._id !== payload.userId &&
+            dialog.dialogId === payload.dialogId
+          ) {
+            dialog.lastMessage.readStatus = true;
+          }
+          return dialog;
+        }),
+      };
 
     default:
       return state;

@@ -6,6 +6,7 @@ import ChatMessages from '../components/ChatMessages';
 import messagesActions from '../store/actions/messagesActions';
 import socket from '../api/socket';
 import dialogActions from '../store/actions/dialogActions';
+import conversationsActions from '../store/actions/conversatiosActions';
 
 const Messages = () => {
   const scrollBlock = useRef(null);
@@ -23,7 +24,8 @@ const Messages = () => {
 
   const { getMessages, getMessagesHistory, addMessage, updateReadStatus } =
     useActions(messagesActions);
-  const { updateUnreadMessagesCount } = useActions(dialogActions);
+  const { updateDialogUnreadMessagesCount } = useActions(dialogActions);
+  const { updateConvUnreadMessagesCount } = useActions(conversationsActions);
 
   const newMessage = (data) => {
     addMessage(data);
@@ -55,20 +57,14 @@ const Messages = () => {
     if (currentDialogId || currentConvId) {
       getMessages(currentDialogId || currentConvId);
       socket.on('SERVER:CREATE_MESSAGE', newMessage);
-      updateUnreadMessagesCount({ id: currentDialogId || currentConvId, user: user.id });
+      updateDialogUnreadMessagesCount({ id: currentDialogId, user: user.id });
+      updateConvUnreadMessagesCount({ id: currentConvId, user: user.id });
     }
     return () => {
       socket.removeListener('SERVER:CREATE_MESSAGE');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, getMessages, currentConvId]);
-
-  useEffect(() => {
-    socket.on('SERVER:UPDATE_READSTATUS', updateReadStatus);
-    return () => {
-      socket.removeListener('SERVER:UPDATE_READSTATUS');
-    };
-  }, [items, currentDialogId, updateReadStatus]);
 
   useEffect(() => {
     socket.on('MESSAGES_GET_COUNT', setMessagesCount);

@@ -4,24 +4,17 @@ import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
 import { connect, useSelector } from 'react-redux';
 
-import dialogActions from '../store/actions/dialogActions';
 import socket from '../api/socket';
 import { withRouter } from 'react-router';
 import Conversations from '../Services/Conversations';
+import dialogActions from '../store/actions/dialogActions';
 import conversationsActions from '../store/actions/conversatiosActions';
 import messagesActions from '../store/actions/messagesActions';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../constants';
 import { conversations, dialogs } from '../store/selectors';
+import { useActions } from '../hooks/useActions';
 
-const LeftBarContainer = ({
-  fetchDialogs,
-  isLoading,
-  items,
-  userId,
-  history,
-  fetchConversations,
-  updateMessages,
-}) => {
+const LeftBarContainer = ({ isLoading, items, userId, history, messagesItems }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -35,6 +28,9 @@ const LeftBarContainer = ({
 
   const { items: currentConversations, currentConvId } = useSelector(conversations);
   const { currentDialogId } = useSelector(dialogs);
+  const { fetchDialogs } = useActions(dialogActions);
+  const { updateMessages, updateReadStatus } = useActions(messagesActions);
+  const { fetchConversations } = useActions(conversationsActions);
 
   const onChangeConvTitle = (e) => {
     setConvTitle(e.target.value);
@@ -156,6 +152,14 @@ const LeftBarContainer = ({
   }, [fetchConversations]);
 
   useEffect(() => {
+    socket.on('SERVER:UPDATE_READSTATUS', updateReadStatus);
+    console.log(323232);
+    return () => {
+      socket.removeListener('SERVER:UPDATE_READSTATUS');
+    };
+  }, [currentDialogId, updateReadStatus, items]);
+
+  useEffect(() => {
     socket.emit('DIALOGS:JOIN', { dialogId: currentDialogId || currentConvId });
     if (!currentDialogId) {
       socket.emit('LEAVE_ROOM', { dialogId: currentDialogId });
@@ -203,14 +207,11 @@ const LeftBarContainer = ({
 };
 
 export default withRouter(
-  connect(
-    ({ dialogs, auth, messages }) => ({
-      items: dialogs.dialogs,
-      currentDialogId: dialogs.currentDialogId,
-      userId: auth.user && auth.user.id,
-      isLoading: dialogs.isLoading,
-      messagesItems: messages.items,
-    }),
-    { ...dialogActions, ...conversationsActions, ...messagesActions },
-  )(LeftBarContainer),
+  connect(({ dialogs, auth, messages }) => ({
+    items: dialogs.dialogs,
+    currentDialogId: dialogs.currentDialogId,
+    userId: auth.user && auth.user.id,
+    isLoading: dialogs.isLoading,
+    messagesItems: messages.items,
+  }))(LeftBarContainer),
 );

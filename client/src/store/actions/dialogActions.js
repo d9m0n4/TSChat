@@ -19,7 +19,7 @@ const dialogActions = {
     payload,
   }),
 
-  updateUnreadMessagesCount: (id) => (dispatch) => {
+  updateDialogUnreadMessagesCount: (id) => (dispatch) => {
     dispatch(dialogActions.setMessagesCount(id));
   },
 

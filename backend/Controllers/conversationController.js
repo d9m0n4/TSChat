@@ -3,11 +3,14 @@ const Message = require('../Models/Message');
 const User = require('../Models/User');
 
 const UserDto = require('../DTOS/user-dto');
+const getUnreadMessagesCount = require('../utils/getUnreadMessagesCount');
 
 class ConversationController {
   constructor(io) {
     this.io = io;
   }
+
+  getmessagesCount = getUnreadMessagesCount;
 
   createConversation = async (req, res) => {
     const currentUser = req.user.id;
@@ -36,6 +39,7 @@ class ConversationController {
             });
 
             message.save().then((m) => {
+              conv.lastMessage = m._id;
               this.io.emit('CONVERSATION_SET_ITEM', conv);
             });
 
@@ -48,32 +52,31 @@ class ConversationController {
 
   getConversations = async (req, res) => {
     const user = req.user.id;
-    await Conversation.find({ members: { $in: [user] } })
+    const userConversations = await Conversation.find({ members: { $in: [user] } })
       .populate(['creator', 'members'])
       .populate({
         path: 'lastMessage',
         populate: {
           path: 'user',
         },
-      })
-      .then((userConversations) => {
-        const userConv = userConversations.map((item) => {
-          const userDto = new UserDto(item.creator);
-          const convMembers = item.members.map((item) => new UserDto(item));
-
-          return {
-            id: item._id,
-            title: item.title,
-            creator: userDto,
-            members: convMembers,
-            lastMessage: item.lastMessage,
-          };
-        });
-        res.status(200).json(userConv);
-      })
-      .catch((e) => {
-        res.json(e);
       });
+    const data = [];
+
+    for (const item of userConversations) {
+      const count = await this.getmessagesCount(item._id, user, Message);
+      const userDto = new UserDto(item.creator);
+      const convMembers = item.members.map((item) => new UserDto(item));
+      data.push({
+        count,
+        id: item._id,
+        title: item.title,
+        creator: userDto,
+        members: convMembers,
+        lastMessage: item.lastMessage,
+      });
+    }
+
+    res.status(200).json(data);
   };
 }
 

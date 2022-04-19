@@ -6,6 +6,7 @@ import './index.scss';
 
 import UserAvatar from '../Avatar';
 import toDate from '../../helpers/ToDate';
+import classNames from 'classnames';
 
 const ChatListItem = ({
   online,
@@ -42,7 +43,7 @@ const ChatListItem = ({
         <div className="chats__item-body">
           <div className="chats__item-top">
             <p className="item-name">{type === 'conv' ? title : partner.name}</p>
-            <span className="item-date">{toDate(date)}</span>
+            {date && <span className="item-date">{toDate(date)}</span>}
           </div>
           {type === 'conv' ? (
             <div className="chats__item-bottom conv">
@@ -60,8 +61,12 @@ const ChatListItem = ({
               <div className="item__message">
                 <p>{lastM(currentUser, lastMessage)}</p>
               </div>
-              {!lastMessage.readStatus && lastMessage.user === currentUser && (
-                <span className="item__status"></span>
+              {lastMessage.user === currentUser && (
+                <span
+                  className={classNames(
+                    'item__status',
+                    !lastMessage.readStatus && 'active',
+                  )}></span>
               )}
             </div>
           )}

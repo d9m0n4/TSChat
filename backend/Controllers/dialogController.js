@@ -1,20 +1,23 @@
 const Dialog = require('../Models/Dialog');
 const Message = require('../Models/Message');
+const getUnreadMessagesCount = require('../utils/getUnreadMessagesCount');
 
 class DialogController {
   constructor(io) {
     this.io = io;
   }
 
-  getUnreadMessagesCount = async (id, userId) => {
-    const count = await Message.find({
-      dialog: id,
-      readStatus: false,
-      user: { $ne: userId },
-    }).count();
-    this.io.emit('SERVER:UNREAD_MESSAGES_COUNT', count);
-    return count;
-  };
+  // getUnreadMessagesCount = async (id, userId) => {
+  //   const count = await Message.find({
+  //     dialog: id,
+  //     readStatus: false,
+  //     user: { $ne: userId },
+  //   }).count();
+  //   this.io.emit('SERVER:UNREAD_MESSAGES_COUNT', count);
+  //   return count;
+  // };
+
+  getmessagesCount = getUnreadMessagesCount;
 
   createDialog = async (req, res) => {
     try {
@@ -83,7 +86,7 @@ class DialogController {
       const data = [];
 
       for (const item of dialogs) {
-        const unreadMessagesCount = await this.getUnreadMessagesCount(item._id, id);
+        const unreadMessagesCount = await this.getmessagesCount(item._id, id, Message);
         const partner = item.members.find((m) => m._id.toString() !== id);
 
         data.push({

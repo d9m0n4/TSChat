@@ -88,11 +88,13 @@
         right: 2px;
         width: 6px;
         height: 6px;
-        background-color: #979797;
         position: absolute;
         border-radius: 50%;
         top: 50%;
         transform: translateY(-50%);
+        &.active {
+          background-color: #979797;
+        }
       }
     }
     .chats__item-bottom.conv {

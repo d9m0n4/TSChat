@@ -35,7 +35,7 @@ const messagesActions = {
     });
   },
 
-  updateReadStatus: (obj) => (dispatch, getState) => {
+  updateReadStatus: (obj) => (dispatch) => {
     dispatch({
       type: 'MESSAGES:UPDATE_READSTATUS',
       payload: obj,

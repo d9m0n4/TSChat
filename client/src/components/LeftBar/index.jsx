@@ -184,11 +184,12 @@ const Leftbar = ({
                   <ChatListItem
                     type="conv"
                     title={conversation.title}
-                    lastConvMessage={conversation.lastMessage}
+                    lastConvMessage={conversation.lastMessage ? conversation.lastMessage : ''}
                     key={conversation.id}
                     path={CONVERSATION_PATH}
                     id={conversation.id}
-                    date={conversation.lastMessage.createdAt || new Date()}
+                    date={conversation.lastMessage ? conversation.lastMessage.createdAt : null}
+                    unreadCount={conversation.count}
                   />
                 ))}
             </div>

@@ -29,6 +29,16 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         currentConversation: payload,
       };
+    case 'CONVERSATIONS:SET_UNREAD_MESSAGES_COUNT':
+      return {
+        ...state,
+        items: state.items.map((item) => {
+          if (item.id === payload.id) {
+            item.count = 0;
+          }
+          return item;
+        }),
+      };
 
     default:
       return state;
