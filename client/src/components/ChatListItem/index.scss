@@ -65,13 +65,13 @@
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      flex-wrap: wrap;
       width: 100%;
       min-width: 0;
       position: relative;
       .item__message {
         display: flex;
-        max-width: 100%;
+        max-width: 95%;
+        overflow: auto;
         p {
           overflow: hidden;
           white-space: nowrap;

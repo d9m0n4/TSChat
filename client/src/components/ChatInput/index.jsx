@@ -28,7 +28,6 @@ const ChatInput = ({
   emojiPicker,
   theme,
 }) => {
-  console.log('rerender');
   return (
     <div className="messages__input-group">
       {!isRecording ? (

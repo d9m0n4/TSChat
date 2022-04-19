@@ -7,7 +7,7 @@ const Typing = ({ user }) => {
   return (
     <div className="typing__message">
       <div className="typing__message-user">
-        {/* <UserAvatar size={36} name={user.name} src={user.avatar}/> */}
+        <UserAvatar size={36} name={user.name} src={user.avatar} />
       </div>
       <span className="typing__message-dot" />
       <span className="typing__message-dot" />

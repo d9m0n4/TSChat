@@ -31,23 +31,25 @@ const ChatMessages = ({
     <>
       <div className="main__content-body__messages">
         <div className="messages__header chat__header">
-          <div className="chat__header-title">
-            {currentPartner && (currentConvId || currentDialogId) ? (
-              <>
-                <div className="messages__header-chat__title">{currentPartner.partner.name}</div>
-                <div className="messages__header-chat__status online" />
-              </>
-            ) : (
-              <Avatar.Group maxCount={2}>
-                {currentConv &&
-                  currentConv.members.map((item) => (
-                    <Tooltip key={item.id} title={item.name} placement="top">
-                      <UserAvatar size={32} src={item.avatar} name={item.name} />
-                    </Tooltip>
-                  ))}
-              </Avatar.Group>
-            )}
-          </div>
+          {(currentConvId || currentDialogId) && (
+            <div className="chat__header-title">
+              {currentPartner ? (
+                <>
+                  <div className="messages__header-chat__title">{currentPartner.partner.name}</div>
+                  <div className="messages__header-chat__status online" />
+                </>
+              ) : (
+                <Avatar.Group maxCount={2}>
+                  {currentConv &&
+                    currentConv.members.map((item) => (
+                      <Tooltip key={item.id} title={item.name} placement="top">
+                        <UserAvatar size={32} src={item.avatar} name={item.name} />
+                      </Tooltip>
+                    ))}
+                </Avatar.Group>
+              )}
+            </div>
+          )}
           <div className="chat__header-btn">
             <span className="active" />
           </div>
@@ -98,11 +100,11 @@ const ChatMessages = ({
                       readStatus={m.readStatus}
                     />
                   ))}
-                  {messages.length > 0 && isTyping && <Typing />}
+                  {messages.length > 0 && isTyping && typingUser && <Typing user={typingUser} />}
                 </InfiniteScroll>
               </div>
             </div>
-            <ChatInputContainer />
+            <ChatInputContainer currentConversationId={currentConvId} />
           </>
         ) : (
           <div className="messages__empty-block">

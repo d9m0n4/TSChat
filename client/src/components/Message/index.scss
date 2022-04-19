@@ -2,11 +2,14 @@
 
 .message {
   display: flex;
+  animation: ainm 0.25s ease-out;
   transition: all 1s ease;
-  animation: ainm 0.2s ease-in;
+  transform-origin: left;
+  transform: scale(1) translateX(0);
   $self: &;
   &--isme {
     flex-direction: row-reverse;
+    transform-origin: right;
     #{$self}__avatar {
       margin-left: 8px;
     }
@@ -16,6 +19,7 @@
         background: var(--app-message-bubble);
         box-shadow: -1px 2px 4px var(--app-message-shadow);
         color: var(--app-accent-text);
+
         .message__audio-progress {
           border-radius: 16px 16px 0 16px;
           background-color: #039be5;
@@ -68,6 +72,10 @@
       flex-wrap: wrap;
       position: relative;
       overflow: hidden;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
 
       p {
         margin: 0;
@@ -170,11 +178,14 @@
 @keyframes ainm {
   0% {
     opacity: 0;
+    transform: scale(0) translateX(0);
   }
   50% {
     opacity: 0.5;
+    transform: scale(0.5) translateX(0);
   }
   100% {
     opacity: 1;
+    transform: scale(1) translateX(0);
   }
 }

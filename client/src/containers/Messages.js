@@ -56,22 +56,12 @@ const Messages = () => {
       getMessages(currentDialogId || currentConvId);
       socket.on('SERVER:CREATE_MESSAGE', newMessage);
       updateUnreadMessagesCount({ id: currentDialogId || currentConvId, user: user.id });
-      socket.emit('CLIENT:JOIN_ROOM', { id: currentDialogId || currentConvId });
     }
     return () => {
       socket.removeListener('SERVER:CREATE_MESSAGE');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDialogId, getMessages, currentConvId]);
-
-  useEffect(() => {
-    socket.on('T', (o) => {
-      console.log(o);
-    });
-    return () => {
-      socket.removeListener('T');
-    };
-  }, [currentDialogId]);
 
   useEffect(() => {
     socket.on('SERVER:UPDATE_READSTATUS', updateReadStatus);
@@ -86,6 +76,20 @@ const Messages = () => {
       socket.removeListener('MESSAGES_GET_COUNT');
     };
   }, [messagesCount]);
+
+  useEffect(() => {
+    socket.on('USER_TYPING', ({ dialogId, isTyping, user }) => {
+      if (dialogId === (currentConvId || currentDialogId)) {
+        setIsTyping(isTyping);
+        setTypingUser(user);
+      }
+    });
+
+    return () => {
+      socket.removeListener('USER_TYPING');
+      setIsTyping(false);
+    };
+  }, [currentConvId, currentDialogId]);
 
   return (
     <ChatMessages

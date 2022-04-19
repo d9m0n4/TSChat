@@ -11,6 +11,7 @@ import Conversations from '../Services/Conversations';
 import conversationsActions from '../store/actions/conversatiosActions';
 import messagesActions from '../store/actions/messagesActions';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../constants';
+import { conversations, dialogs } from '../store/selectors';
 
 const LeftBarContainer = ({
   fetchDialogs,
@@ -32,7 +33,8 @@ const LeftBarContainer = ({
   const [uploading, setUploading] = useState(false);
   const [filtered, setFilteredDialogs] = useState(items && Array.from(items));
 
-  const { items: conversations } = useSelector((state) => state.conversations);
+  const { items: currentConversations, currentConvId } = useSelector(conversations);
+  const { currentDialogId } = useSelector(dialogs);
 
   const onChangeConvTitle = (e) => {
     setConvTitle(e.target.value);
@@ -153,10 +155,26 @@ const LeftBarContainer = ({
     };
   }, [fetchConversations]);
 
+  useEffect(() => {
+    socket.emit('DIALOGS:JOIN', { dialogId: currentDialogId || currentConvId });
+    if (!currentDialogId) {
+      socket.emit('LEAVE_ROOM', { dialogId: currentDialogId });
+    }
+    if (!currentConvId) {
+      socket.emit('LEAVE_ROOM', { dialogId: currentConvId });
+    }
+    return () => {
+      socket.emit('LEAVE_ROOM', { dialogId: currentDialogId || currentConvId });
+      socket.removeListener('DIALOGS:JOIN');
+
+      socket.removeListener('LEAVE_ROOM');
+    };
+  }, [currentDialogId, currentConvId]);
+
   return (
     <Leftbar
       handleChangeSelect={handleChangeSelect}
-      conversations={conversations}
+      conversations={currentConversations}
       convUsers={convUsers}
       userId={userId}
       isLoading={isLoading}

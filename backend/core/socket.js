@@ -11,12 +11,24 @@ module.exports = (http) => {
   io.on('connection', (socket) => {
     console.log('socket connected');
 
-    socket.on('DIALOGS:SET_DIALOG_ID', (id) => {
-      socket.join(id);
-      socket.broadcast.to(id).emit('JOINED', id);
-      socket.on('TYPING', (obj) => {
-        socket.broadcast.to(id).emit('T', obj);
-      });
+    socket.on('DIALOGS:JOIN', ({ dialogId }) => {
+      if (dialogId) {
+        socket.join(dialogId);
+      }
+    });
+    socket.on('LEAVE_ROOM', ({ dialogId }) => {
+      if (dialogId) {
+        socket.leave(dialogId);
+        io.to(dialogId).emit('a new user has left the room');
+      }
+    });
+
+    socket.on('TYPING', (obj) => {
+      if (obj) {
+        socket.broadcast
+          .to(obj.dialogId)
+          .emit('USER_TYPING', { dialogId: obj.dialogId, user: obj.user, isTyping: obj.isTyping });
+      }
     });
 
     // socket.on('TYPING', (obj) => {
