@@ -53,6 +53,17 @@ export default (state = initialState, { type, payload }) => {
           return dialog;
         }),
       };
+    case 'SET_USER_ONLINE':
+      return {
+        ...state,
+        dialogs: state.dialogs.map((dialog) => {
+          console.log(payload.id);
+          if (dialog.partner._id === payload.id) {
+            console.log(payload);
+          }
+          return dialog;
+        }),
+      };
 
     default:
       return state;

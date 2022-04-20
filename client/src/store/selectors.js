@@ -1,7 +1,7 @@
 export const auth = (state) => state.auth;
 
 export const user = (state) => auth(state).user;
-export const userId = (state) => user(state).id;
+export const userId = (state) => auth(state).user.id;
 export const isAuth = (state) => state.auth.isAuth;
 
 export const dialogs = (state) => state.dialogs;

@@ -149,6 +149,7 @@ const Leftbar = ({
                     path={DIALOG_PATH}
                     lastMessage={dialog.lastMessage}
                     unreadCount={dialog.count}
+                    readStatus={dialog.lastMessage.readStatus}
                   />
                 ))
               )}

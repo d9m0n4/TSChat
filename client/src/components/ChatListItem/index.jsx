@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -9,7 +9,6 @@ import toDate from '../../helpers/ToDate';
 import classNames from 'classnames';
 
 const ChatListItem = ({
-  online,
   userId,
   id,
   partner,
@@ -20,6 +19,7 @@ const ChatListItem = ({
   title,
   lastConvMessage,
   unreadCount,
+  readStatus,
 }) => {
   const { id: currentUser } = useSelector((state) => state.auth.user);
 
@@ -32,7 +32,7 @@ const ChatListItem = ({
     <NavLink activeClassName="active" exact to={`/im/${path}/${id}`}>
       <div className="chats__item">
         <div className="chats__item-avatar">
-          {online && <sup className="status-dot" />}
+          {partner && partner.isOnline && <sup className="status-dot" />}
           <UserAvatar
             name={(partner && partner.name) || title}
             size={36}
@@ -62,11 +62,7 @@ const ChatListItem = ({
                 <p>{lastM(currentUser, lastMessage)}</p>
               </div>
               {lastMessage.user === currentUser && (
-                <span
-                  className={classNames(
-                    'item__status',
-                    !lastMessage.readStatus && 'active',
-                  )}></span>
+                <span className={classNames('item__status', !readStatus && 'active')}></span>
               )}
             </div>
           )}

@@ -6,11 +6,12 @@ module.exports = (http) => {
     cors: { origin: 'http://localhost:3000', credentials: true },
   });
 
-  let users = [];
+  const onlineUsers = {};
 
   io.on('connection', (socket) => {
     console.log('socket connected');
 
+    //Typing message block start//
     socket.on('DIALOGS:JOIN', ({ dialogId }) => {
       if (dialogId) {
         socket.join(dialogId);
@@ -30,30 +31,22 @@ module.exports = (http) => {
           .emit('USER_TYPING', { dialogId: obj.dialogId, user: obj.user, isTyping: obj.isTyping });
       }
     });
+    //Typing message block end//
 
-    // socket.on('TYPING', (obj) => {
-
-    // });
-
-    socket.on('user:add', (user) => {
-      users.push(user.id);
-      console.log(users);
+    socket.on('CLIENT:ONLINE', async (data) => {
+      onlineUsers[socket.id] = data.userId;
+      const doc = await User.findOneAndUpdate(
+        {
+          _id: data.userId,
+        },
+        { isOnline: true },
+      );
+      socket.emit('SERVER:SOCKET_ONLINE', { id: doc._id });
     });
 
-    socket.on('dis', (obj) => {
-      users = users.filter((item) => {
-        item !== obj;
-      });
-      console.log(users);
-      console.log('diididididididid');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('disconnect');
-    });
-
-    socket.on('TYPING', (obj) => {
-      socket.broadcast.emit('TYPING', obj);
+    socket.on('disconnect', async () => {
+      const oflineUserId = await onlineUsers[socket.id];
+      console.log(oflineUserId);
     });
   });
 

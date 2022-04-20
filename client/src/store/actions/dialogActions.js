@@ -19,6 +19,13 @@ const dialogActions = {
     payload,
   }),
 
+  setUserOnline: (id) => (dispatch) => {
+    dispatch({
+      type: 'SET_USER_ONLINE',
+      payload: id,
+    });
+  },
+
   updateDialogUnreadMessagesCount: (id) => (dispatch) => {
     dispatch(dialogActions.setMessagesCount(id));
   },

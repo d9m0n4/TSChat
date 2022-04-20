@@ -13,7 +13,6 @@ import Settings from '../../layouts/Settings';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../../constants';
 import { useActions } from '../../hooks/useActions';
 import { conversations, dialogs, auth } from '../../store/selectors';
-import socket from '../../api/socket';
 
 const Home = () => {
   let { pathname } = useLocation();
@@ -23,7 +22,7 @@ const Home = () => {
 
   const { items: convs, currentConvId } = useSelector(conversations);
   const { dialogs: dialogsItems } = useSelector(dialogs);
-  const { user } = useSelector(auth);
+  const { user: currentUser } = useSelector(auth);
 
   useEffect(() => {
     if (pathname.includes(DIALOG_PATH)) {
@@ -61,7 +60,7 @@ const Home = () => {
 
   return (
     <>
-      {!user ? (
+      {!currentUser ? (
         <Loader />
       ) : (
         <section className="home-page">

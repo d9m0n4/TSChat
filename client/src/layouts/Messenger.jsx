@@ -1,27 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Loader from '../components/Loader';
+import socket from '../api/socket';
 import LeftBar from '../containers/LeftBar';
 import Messages from '../containers/Messages';
 import RightBarContainer from '../containers/RightBar';
 
-import { auth } from '../store/selectors';
+import { user } from '../store/selectors';
 
 const Messenger = () => {
-  const { user } = useSelector(auth);
+  const { id } = useSelector(user);
+
+  useEffect(() => {
+    socket.emit('CLIENT:ONLINE', { userId: id });
+
+    return () => {
+      socket.removeListener('CLIENT:ONLINE');
+    };
+  }, [id]);
+
   return (
     <>
-      {!user ? (
-        <Loader />
-      ) : (
-        <div className="main__content">
-          <div className="main__content-body">
-            <LeftBar />
-            <Messages />
-            <RightBarContainer />
-          </div>
+      <div className="main__content">
+        <div className="main__content-body">
+          <LeftBar />
+          <Messages />
+          <RightBarContainer />
         </div>
-      )}
+      </div>
     </>
   );
 };

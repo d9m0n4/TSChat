@@ -10,7 +10,6 @@ import './index.scss';
 import UserAvatar from '../Avatar';
 import toDate from '../../helpers/ToDate';
 import toCurrentTime from '../../helpers/toCurrentTime';
-import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 const Message = ({ isMe, name, text, date, attachments, user, serverMessage, readStatus }) => {
   const [isPlaying, setIsPlaying] = useState(false);
