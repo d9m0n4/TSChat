@@ -96,7 +96,7 @@ const ChatInputContainer = () => {
       timeout = setTimeout(timeoutFunction, 3000);
     }
 
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       e.preventDefault();
       onSendMessage();
     }

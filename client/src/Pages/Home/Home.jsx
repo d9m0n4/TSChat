@@ -12,7 +12,7 @@ import UserProfile from '../../layouts/UserProfile';
 import Settings from '../../layouts/Settings';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../../constants';
 import { useActions } from '../../hooks/useActions';
-import { conversations, dialogs, auth, user } from '../../store/selectors';
+import { conversations, dialogs, auth } from '../../store/selectors';
 import socket from '../../api/socket';
 
 const Home = () => {
@@ -23,7 +23,6 @@ const Home = () => {
 
   const { items: convs, currentConvId } = useSelector(conversations);
   const { dialogs: dialogsItems, currentDialogId } = useSelector(dialogs);
-  const { id } = useSelector(user);
   const { user: currentUser } = useSelector(auth);
 
   useEffect(() => {
@@ -32,8 +31,11 @@ const Home = () => {
       setCurrentDialogId(dialogId);
       setCurrentConversationId(null);
       if (dialogsItems) {
-        let partner = dialogsItems.filter((dialog) => dialog.dialogId === dialogId)[0];
-        setCurrentPartner(partner);
+        for (const dialog of dialogsItems) {
+          if (dialog.dialogId === dialogId) {
+            setCurrentPartner(dialog.partner);
+          }
+        }
       }
     }
     if (pathname.includes(`/im/${CONVERSATION_PATH}/`)) {
@@ -48,6 +50,7 @@ const Home = () => {
     }
     if (!pathname.includes(DIALOG_PATH)) {
       setCurrentDialogId(null);
+      setCurrentPartner(null);
     }
   }, [
     pathname,
@@ -64,13 +67,13 @@ const Home = () => {
     socket.emit('CLIENT:GET_MESSAGES_COUNT', currentDialogId);
   }, [currentDialogId]);
 
-  useEffect(() => {
-    socket.emit('CLIENT:ONLINE', { userId: id });
+  // useEffect(() => {
+  //   socket.emit('CLIENT:ONLINE', { userId: id });
 
-    return () => {
-      socket.removeListener('CLIENT:ONLINE');
-    };
-  }, [id]);
+  //   return () => {
+  //     socket.removeListener('CLIENT:ONLINE');
+  //   };
+  // }, [id]);
 
   useEffect(() => {
     socket.on('SERVER:SOCKET_ONLINE', setUserOnline);
@@ -79,6 +82,7 @@ const Home = () => {
     return () => {
       socket.removeListener('SERVER:SOCKET_ONLINE');
       socket.removeListener('SERVER:SOCKET_OFFLINE');
+      socket.removeListener('CLIENT:ONLINE');
     };
   });
 

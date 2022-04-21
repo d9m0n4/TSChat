@@ -22,8 +22,7 @@ const Messages = () => {
   const { id } = useSelector(user);
   const { currentConvId, currentConversation: currentConv } = useSelector(conversations);
 
-  const { getMessages, getMessagesHistory, addMessage, updateReadStatus } =
-    useActions(messagesActions);
+  const { getMessages, getMessagesHistory, addMessage } = useActions(messagesActions);
   const { updateDialogUnreadMessagesCount } = useActions(dialogActions);
   const { updateConvUnreadMessagesCount } = useActions(conversationsActions);
 

@@ -21,14 +21,17 @@ const authActions = {
   getCurrentUser: () => async (dispatch) => {
     dispatch(authActions.setLoading(true));
     try {
-      const userData = await Auth.CheckUser();
-      if (userData.response && userData.response.data.status === 401) {
-        openNotification('error', 'Ошибка', userData.response.data.message, 3);
+      const data = await Auth.CheckUser();
+
+      if (data.response && data.response.status == 401) {
+        openNotification('error', 'Ошибка', data.response.data.message, 3);
         dispatch(authActions.setAuth(false));
         delete window.localStorage.token;
+        return;
       }
 
-      dispatch(authActions.setUser(userData.data));
+      dispatch(authActions.setUser(data.data));
+      socket.emit('CLIENT:ONLINE', { userId: data.data.id });
     } catch (error) {
       console.log(error);
     } finally {
@@ -47,7 +50,6 @@ const authActions = {
         localStorage.setItem('token', data.tokens.accessToken);
         dispatch(authActions.getCurrentUser());
         dispatch(authActions.setAuth(true));
-        socket.emit('CLIENT:ONLINE', { userId: data.user.id });
       }
 
       return data;
@@ -63,7 +65,7 @@ const authActions = {
     dispatch(authActions.setAuth(false));
     dispatch(authActions.setUser({}));
     localStorage.removeItem('token');
-    socket.disconnect();
+    socket.emit('CLIENT_LOGOUT');
   },
   registration: (payload) => async (dispatch) => {
     return await Auth.Registration(payload);

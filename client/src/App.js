@@ -14,8 +14,6 @@ import { useActions } from './hooks/useActions';
 function App() {
   const { theme, setTheme } = useTheme();
 
-  const { user } = useSelector(auth);
-
   const { isAuth } = useSelector(auth);
   const { getCurrentUser } = useActions(authActions);
 
@@ -33,7 +31,7 @@ function App() {
           path={['/login', '/registration', '/verify']}
           render={() => (!isAuth ? <AuthPage /> : <Redirect to="/im" />)}
         />
-        {user && <Route path="/" render={() => (isAuth ? <Home /> : <Redirect to="/login" />)} />}
+        <Route path="/" render={() => (isAuth ? <Home /> : <Redirect to="/login" />)} />
       </Switch>
     </div>
   );

@@ -20,6 +20,7 @@ const RightBarContianer = () => {
     if (currentPartner && currentDialogId) {
       getFiles(currentDialogId);
     }
+    console.log(currentPartner);
   }, [currentDialogId, currentPartner, getFiles]);
 
   return (

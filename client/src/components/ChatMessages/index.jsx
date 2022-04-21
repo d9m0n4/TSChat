@@ -35,7 +35,7 @@ const ChatMessages = ({
             <div className="chat__header-title">
               {currentPartner ? (
                 <>
-                  <div className="messages__header-chat__title">{currentPartner.partner.name}</div>
+                  <div className="messages__header-chat__title">{currentPartner.name}</div>
                   <div className="messages__header-chat__status online" />
                 </>
               ) : (

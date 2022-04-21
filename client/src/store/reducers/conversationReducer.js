@@ -39,6 +39,20 @@ export default (state = initialState, { type, payload }) => {
           return item;
         }),
       };
+    case 'SET_USER_ONLINE':
+      return {
+        ...state,
+        items: state.items.map((item) => {
+          item.members.map((member) => {
+            if (member.id === payload.id) {
+              member.isOnline = payload.isOnline;
+            }
+            return member;
+          });
+
+          return item;
+        }),
+      };
 
     default:
       return state;

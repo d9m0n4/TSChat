@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import UserAttach from '../UserAttach';
-import UserAvatar from '../Avatar';
-
-import { Popconfirm } from 'antd';
-import OnlineStatus from '../onlineStatus';
 
 import './index.scss';
+import ConversationUser from '../ConversationUser';
+import DialogPartner from '../DialogPartner';
 
 const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attachments }) => {
+  useEffect(() => {
+    console.log(partner);
+  }, [partner]);
   return (
     <>
       {(currentDialogId || currentConvId) && (
@@ -16,21 +17,11 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
           <div className="rightbar__header chat__header"></div>
           {partner ? (
             <div className="rightbar__body rightbar__dialog">
-              <div className="rightbar__dialog-companion__info">
-                <div className="companion__avatar">
-                  <UserAvatar
-                    size={100}
-                    name={partner && partner.partner.name}
-                    src={partner && partner.partner.userAvatar}
-                  />
-                </div>
-                <div className="companion__pers-info">
-                  <div className="companion__name">{partner && partner.partner.name}</div>
-                  <span className="online">
-                    {partner && partner.partner.isOnline ? 'в сети' : 'не в сети'}
-                  </span>
-                </div>
-              </div>
+              <DialogPartner
+                name={partner.name}
+                userAvatar={partner.userAvatar}
+                isOnline={partner.isOnline}
+              />
               <div className="rightbar__dialog-companion__attachs">
                 <div className="attachs__header">
                   <div className="attachs__header-title">Вложения</div>
@@ -66,33 +57,12 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
               <ul className="rightbar__conversation-members">
                 {conversation &&
                   conversation.members.map((item) => (
-                    <li key={item.id} className="conversation-member__item">
-                      <div className="conversation-member__item__avatar">
-                        {<OnlineStatus />}
-                        <UserAvatar size={36} name={item.name} src={item.avatar} />
-                      </div>
-                      <div className="conversation-member__item__name">{item.name}</div>
-                      <div className="conversation-member__item__control">
-                        <Popconfirm placement="left" title="Покинуть беседу?">
-                          <svg
-                            className="icon"
-                            width="10"
-                            height="10"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              className="rect"
-                              d="M1 13L13 1M1 1L13 13"
-                              stroke="#979797"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </Popconfirm>
-                      </div>
-                    </li>
+                    <ConversationUser
+                      key={item.id}
+                      isOnline={item.isOnline}
+                      name={item.name}
+                      avatar={item.avatar}
+                    />
                   ))}
               </ul>
             </div>

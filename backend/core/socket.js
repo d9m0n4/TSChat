@@ -34,7 +34,6 @@ module.exports = (http) => {
     //Typing message block end//
 
     socket.on('CLIENT:ONLINE', async (data) => {
-      console.log(data);
       onlineUsers[socket.id] = data.userId;
       const doc = await User.findOneAndUpdate(
         {
@@ -43,6 +42,19 @@ module.exports = (http) => {
         { isOnline: true },
       );
       io.emit('SERVER:SOCKET_ONLINE', { id: doc._id, isOnline: true });
+      console.log(data);
+    });
+
+    socket.on('CLIENT_LOGOUT', async () => {
+      const oflineUserId = await onlineUsers[socket.id];
+      await User.findOneAndUpdate(
+        {
+          _id: oflineUserId,
+        },
+        { isOnline: false },
+      );
+      console.log('disconnected');
+      io.emit('SERVER:SOCKET_OFFLINE', { id: oflineUserId, isOnline: false });
     });
 
     socket.on('disconnect', async () => {

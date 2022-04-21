@@ -1,4 +1,5 @@
 import socket from '../../api/socket';
+import openNotification from '../../helpers/notifications/openNotification';
 import Dialogs from '../../Services/Dialogs';
 
 const dialogActions = {
@@ -47,7 +48,7 @@ const dialogActions = {
       const { data } = await Dialogs.fetchDialogs();
 
       if (!data) {
-        console.log('error 123');
+        openNotification('error', 'Ошибка', 'Данные не получены', 3);
       }
 
       return dispatch(dialogActions.setDialogs(data));
