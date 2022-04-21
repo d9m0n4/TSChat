@@ -28,7 +28,7 @@ const LeftBarContainer = ({ isLoading, items, userId, history, messagesItems }) 
 
   const { items: currentConversations, currentConvId } = useSelector(conversations);
   const { currentDialogId } = useSelector(dialogs);
-  const { fetchDialogs, setUserOnline } = useActions(dialogActions);
+  const { fetchDialogs } = useActions(dialogActions);
   const { updateMessages, updateReadStatus } = useActions(messagesActions);
   const { fetchConversations } = useActions(conversationsActions);
 
@@ -152,7 +152,6 @@ const LeftBarContainer = ({ isLoading, items, userId, history, messagesItems }) 
 
   useEffect(() => {
     socket.on('SERVER:UPDATE_READSTATUS', updateReadStatus);
-    console.log(323232);
     return () => {
       socket.removeListener('SERVER:UPDATE_READSTATUS');
     };
@@ -173,13 +172,6 @@ const LeftBarContainer = ({ isLoading, items, userId, history, messagesItems }) 
       socket.removeListener('LEAVE_ROOM');
     };
   }, [currentDialogId, currentConvId]);
-
-  useEffect(() => {
-    socket.on('SERVER:SOCKET_ONLINE', setUserOnline);
-    return () => {
-      socket.removeListener('SERVER:SOCKET_ONLINE');
-    };
-  }, [setUserOnline, currentDialogId]);
 
   return (
     <Leftbar

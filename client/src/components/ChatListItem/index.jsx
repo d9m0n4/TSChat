@@ -7,8 +7,10 @@ import './index.scss';
 import UserAvatar from '../Avatar';
 import toDate from '../../helpers/ToDate';
 import classNames from 'classnames';
+import OnlineStatus from '../onlineStatus';
 
 const ChatListItem = ({
+  isOnline,
   userId,
   id,
   partner,
@@ -32,7 +34,7 @@ const ChatListItem = ({
     <NavLink activeClassName="active" exact to={`/im/${path}/${id}`}>
       <div className="chats__item">
         <div className="chats__item-avatar">
-          {partner && partner.isOnline && <sup className="status-dot" />}
+          {isOnline && <OnlineStatus />}
           <UserAvatar
             name={(partner && partner.name) || title}
             size={36}

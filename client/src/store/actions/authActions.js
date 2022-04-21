@@ -28,8 +28,7 @@ const authActions = {
         delete window.localStorage.token;
       }
 
-
-      return dispatch(authActions.setUser(userData.data));
+      dispatch(authActions.setUser(userData.data));
     } catch (error) {
       console.log(error);
     } finally {
@@ -48,8 +47,9 @@ const authActions = {
         localStorage.setItem('token', data.tokens.accessToken);
         dispatch(authActions.getCurrentUser());
         dispatch(authActions.setAuth(true));
+        socket.emit('CLIENT:ONLINE', { userId: data.user.id });
       }
-      socket.emit('login', data.user.id);
+
       return data;
     } catch (err) {
       console.log(err);
@@ -63,7 +63,7 @@ const authActions = {
     dispatch(authActions.setAuth(false));
     dispatch(authActions.setUser({}));
     localStorage.removeItem('token');
-    socket.close();
+    socket.disconnect();
   },
   registration: (payload) => async (dispatch) => {
     return await Auth.Registration(payload);

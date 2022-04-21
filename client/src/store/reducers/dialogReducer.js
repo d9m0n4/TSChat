@@ -44,10 +44,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         dialogs: state.dialogs.map((dialog) => {
-          if (
-            dialog.lastMessage.user._id !== payload.userId &&
-            dialog.dialogId === payload.dialogId
-          ) {
+          if (dialog.lastMessage.user !== payload.userId && dialog.dialogId === payload.dialogId) {
             dialog.lastMessage.readStatus = true;
           }
           return dialog;
@@ -57,9 +54,8 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         dialogs: state.dialogs.map((dialog) => {
-          console.log(payload.id);
           if (dialog.partner._id === payload.id) {
-            console.log(payload);
+            dialog.partner.isOnline = payload.isOnline;
           }
           return dialog;
         }),

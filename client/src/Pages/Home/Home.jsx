@@ -12,16 +12,18 @@ import UserProfile from '../../layouts/UserProfile';
 import Settings from '../../layouts/Settings';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../../constants';
 import { useActions } from '../../hooks/useActions';
-import { conversations, dialogs, auth } from '../../store/selectors';
+import { conversations, dialogs, auth, user } from '../../store/selectors';
+import socket from '../../api/socket';
 
 const Home = () => {
   let { pathname } = useLocation();
 
-  const { setCurrentDialogId, setCurrentPartner } = useActions(dialogActions);
+  const { setCurrentDialogId, setCurrentPartner, setUserOnline } = useActions(dialogActions);
   const { setCurrentConversationId, setCurrentConversation } = useActions(conversationActions);
 
   const { items: convs, currentConvId } = useSelector(conversations);
-  const { dialogs: dialogsItems } = useSelector(dialogs);
+  const { dialogs: dialogsItems, currentDialogId } = useSelector(dialogs);
+  const { id } = useSelector(user);
   const { user: currentUser } = useSelector(auth);
 
   useEffect(() => {
@@ -57,6 +59,28 @@ const Home = () => {
     currentConvId,
     setCurrentConversation,
   ]);
+
+  useEffect(() => {
+    socket.emit('CLIENT:GET_MESSAGES_COUNT', currentDialogId);
+  }, [currentDialogId]);
+
+  useEffect(() => {
+    socket.emit('CLIENT:ONLINE', { userId: id });
+
+    return () => {
+      socket.removeListener('CLIENT:ONLINE');
+    };
+  }, [id]);
+
+  useEffect(() => {
+    socket.on('SERVER:SOCKET_ONLINE', setUserOnline);
+    socket.on('SERVER:SOCKET_OFFLINE', setUserOnline);
+
+    return () => {
+      socket.removeListener('SERVER:SOCKET_ONLINE');
+      socket.removeListener('SERVER:SOCKET_OFFLINE');
+    };
+  });
 
   return (
     <>

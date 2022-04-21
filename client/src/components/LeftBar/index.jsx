@@ -150,6 +150,7 @@ const Leftbar = ({
                     lastMessage={dialog.lastMessage}
                     unreadCount={dialog.count}
                     readStatus={dialog.lastMessage.readStatus}
+                    isOnline={dialog.partner.isOnline}
                   />
                 ))
               )}
