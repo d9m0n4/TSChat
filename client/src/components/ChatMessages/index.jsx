@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import './index.scss';
 import classNames from 'classnames';
+import OnlineStatus from '../onlineStatus';
 
 const ChatMessages = ({
   isTyping,
@@ -36,7 +37,7 @@ const ChatMessages = ({
               {currentPartner ? (
                 <>
                   <div className="messages__header-chat__title">{currentPartner.name}</div>
-                  <div className="messages__header-chat__status online" />
+                  {currentPartner.isOnline && <OnlineStatus />}
                 </>
               ) : (
                 <Avatar.Group maxCount={2}>

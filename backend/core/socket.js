@@ -39,10 +39,9 @@ module.exports = (http) => {
         {
           _id: data.userId,
         },
-        { isOnline: true },
+        { isOnline: true, lastSeen: Date.now() },
       );
       io.emit('SERVER:SOCKET_ONLINE', { id: doc._id, isOnline: true });
-      console.log(data);
     });
 
     socket.on('CLIENT_LOGOUT', async () => {
@@ -51,10 +50,14 @@ module.exports = (http) => {
         {
           _id: oflineUserId,
         },
-        { isOnline: false },
+        { isOnline: false, lastSeen: Date.now() },
       );
       console.log('disconnected');
-      io.emit('SERVER:SOCKET_OFFLINE', { id: oflineUserId, isOnline: false });
+      io.emit('SERVER:SOCKET_OFFLINE', {
+        id: oflineUserId,
+        isOnline: false,
+        lastSeen: new Date(Date.now()).toISOString(),
+      });
     });
 
     socket.on('disconnect', async () => {
@@ -63,10 +66,14 @@ module.exports = (http) => {
         {
           _id: oflineUserId,
         },
-        { isOnline: false },
+        { isOnline: false, lastSeen: Date.now() },
       );
       console.log('disconnected');
-      io.emit('SERVER:SOCKET_OFFLINE', { id: oflineUserId, isOnline: false });
+      io.emit('SERVER:SOCKET_OFFLINE', {
+        id: oflineUserId,
+        isOnline: false,
+        lastSeen: new Date(Date.now()).toISOString(),
+      });
     });
   });
 

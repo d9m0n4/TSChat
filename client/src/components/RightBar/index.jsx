@@ -8,8 +8,8 @@ import DialogPartner from '../DialogPartner';
 
 const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attachments }) => {
   useEffect(() => {
-    console.log(partner);
-  }, [partner]);
+    console.log(conversation);
+  }, [conversation]);
   return (
     <>
       {(currentDialogId || currentConvId) && (
@@ -21,6 +21,7 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
                 name={partner.name}
                 userAvatar={partner.userAvatar}
                 isOnline={partner.isOnline}
+                lastSeen={partner.lastSeen}
               />
               <div className="rightbar__dialog-companion__attachs">
                 <div className="attachs__header">
@@ -54,9 +55,9 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
           ) : (
             <div className="rightbar__body rightbar__conversation">
               <div className="rightbar__conversation-header">Участиники беседы</div>
-              <ul className="rightbar__conversation-members">
-                {conversation &&
-                  conversation.members.map((item) => (
+              {conversation && (
+                <ul className="rightbar__conversation-members">
+                  {conversation.map((item) => (
                     <ConversationUser
                       key={item.id}
                       isOnline={item.isOnline}
@@ -64,7 +65,8 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
                       avatar={item.avatar}
                     />
                   ))}
-              </ul>
+                </ul>
+              )}
             </div>
           )}
         </div>

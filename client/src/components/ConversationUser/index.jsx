@@ -1,12 +1,9 @@
 import { Popconfirm } from 'antd';
-import React, { useEffect } from 'react';
+import React from 'react';
 import UserAvatar from '../Avatar';
 import OnlineStatus from '../onlineStatus';
 
 const ConversationUser = ({ isOnline, name, avatar }) => {
-  useEffect(() => {
-    console.log('isOnline', isOnline);
-  }, [isOnline]);
   return (
     <li className="conversation-member__item">
       <div className="conversation-member__item__avatar">

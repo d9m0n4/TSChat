@@ -35,8 +35,16 @@
     .chat__header-title {
       display: flex;
       align-items: center;
+      position: relative;
+      padding: 0 16px;
       .ant-avatar-group .ant-avatar {
         border: none;
+      }
+      .status-dot {
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
       }
     }
   }

@@ -56,6 +56,7 @@ export default (state = initialState, { type, payload }) => {
         dialogs: state.dialogs.map((dialog) => {
           if (dialog.partner._id === payload.id) {
             dialog.partner.isOnline = payload.isOnline;
+            dialog.partner.lastSeen = payload.lastSeen;
           }
           return dialog;
         }),

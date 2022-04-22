@@ -29,7 +29,7 @@ const UserSchema = new Schema({
   },
   birthday: { type: Date },
   isOnline: { type: Boolean, default: false },
-  lastSeen: { type: Date, default: Date.now() },
+  lastSeen: { type: Date },
 });
 
 module.exports = model('User', UserSchema);

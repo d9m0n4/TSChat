@@ -58,7 +58,7 @@
       &-body {
         a.active {
           .chats__item {
-            background-color: var(--app-dialog-active-color);
+            background: var(--app-partner-bubble);
 
             &-body {
               color: var(--app-dialog-text);
