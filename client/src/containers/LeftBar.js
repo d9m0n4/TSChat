@@ -14,7 +14,7 @@ import { CONVERSATION_PATH, DIALOG_PATH } from '../constants';
 import { conversations, dialogs } from '../store/selectors';
 import { useActions } from '../hooks/useActions';
 
-const LeftBarContainer = ({ isLoading, items, userId, history, messagesItems }) => {
+const LeftBarContainer = ({ isLoading, items, userId, history }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -91,7 +91,7 @@ const LeftBarContainer = ({ isLoading, items, userId, history, messagesItems }) 
 
     onHideConvModal();
     socket.on('CONVERSATION_SET_ITEM', (data) => {
-      history.push(`/${CONVERSATION_PATH}/${data._id}`);
+      history.push(`im/${CONVERSATION_PATH}/${data._id}`);
     });
 
     return () => {
@@ -114,7 +114,7 @@ const LeftBarContainer = ({ isLoading, items, userId, history, messagesItems }) 
       text: messageValue,
     });
     socket.on('DIALOG:CREATED', (data) => {
-      history.push(`/${DIALOG_PATH}/${data._id}`);
+      history.push(`im/${DIALOG_PATH}/${data._id}`);
     });
     setUploading(false);
     hideDialogModal();

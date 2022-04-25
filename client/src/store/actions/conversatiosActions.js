@@ -14,6 +14,24 @@ const conversationsActions = {
     type: 'CONVERSATIONS:SET_UNREAD_MESSAGES_COUNT',
     payload,
   }),
+  setConversationAfterLeaving: (payload) => ({
+    type: 'UPDATE_CONVERSATION_AFTER_LEAVING',
+    payload,
+  }),
+
+  leaveConversation: (obj) => async (dispatch) => {
+    try {
+      const { data } = await Conversations.leaveConversation(obj);
+
+      openNotification('warning', 'Не возможно покинуть беседу!', data.message);
+
+      console.log(data);
+
+      dispatch(conversationsActions.setConversationAfterLeaving(data));
+    } catch (error) {
+      openNotification('error', error, 'error');
+    }
+  },
 
   updateConvUnreadMessagesCount: (obj) => (dispatch) => {
     dispatch(conversationsActions.setMessagesCount(obj));
@@ -37,7 +55,6 @@ const conversationsActions = {
     dispatch(conversationsActions.setLoading(true));
     try {
       const { data } = await Conversations.getConversations();
-
       if (!data) {
         openNotification('error', 'Ошибка', 'Данные не получены', 3);
       }

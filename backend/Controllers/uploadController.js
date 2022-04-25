@@ -79,32 +79,39 @@ class UploadFilesController {
     const dialogId = req.query.id;
     const currentUserId = req.user.id;
 
-    Dialog.findById(dialogId)
-      .populate('members')
-      .exec((err, result) => {
-        if (err) {
-          return res.json(err);
-        }
-        const partners = result.members;
-        const { _id } = partners.find((item) => item._id.toString() !== currentUserId);
-        const partnerId = _id.toString();
-        Message.find({ dialog: dialogId })
-          .select(['attachments', 'user'])
-          .populate('attachments')
-          .exec((err, result) => {
-            if (err) {
-              return res.json(err);
-            }
+    try {
+      Dialog.findById(dialogId)
+        .populate('members')
+        .exec((err, result) => {
+          if (err) {
+            return res.json(err);
+          }
+          const partners = result.members;
+          const { _id } = partners.find((item) => item._id.toString() !== currentUserId);
+          const partnerId = _id.toString();
+          Message.find({ dialog: dialogId })
+            .select(['attachments', 'user'])
+            .populate('attachments')
+            .exec((err, result) => {
+              if (err) {
+                return res.json(err);
+              }
 
-            const partnerMessages = result
-              .filter((item) => item.attachments.length)
-              .filter((item) => item.user == partnerId)
-              .map((item) => item.attachments)
-              .flat();
+              const partnerMessages = result
+                .filter((item) => item.attachments.length)
+                .filter((item) => item.user == partnerId)
+                .map((item) => item.attachments)
+                .flat();
 
-            res.status(200).json(partnerMessages);
-          });
+              res.status(200).json(partnerMessages);
+            });
+        });
+    } catch (error) {
+      res.status(500).json({
+        message: 'Server Error' + Error,
+        status: 500,
       });
+    }
   };
 }
 

@@ -67,14 +67,6 @@ const Home = () => {
     socket.emit('CLIENT:GET_MESSAGES_COUNT', currentDialogId);
   }, [currentDialogId]);
 
-  // useEffect(() => {
-  //   socket.emit('CLIENT:ONLINE', { userId: id });
-
-  //   return () => {
-  //     socket.removeListener('CLIENT:ONLINE');
-  //   };
-  // }, [id]);
-
   useEffect(() => {
     socket.on('SERVER:SOCKET_ONLINE', setUserOnline);
     socket.on('SERVER:SOCKET_OFFLINE', setUserOnline);
@@ -84,7 +76,7 @@ const Home = () => {
       socket.removeListener('SERVER:SOCKET_OFFLINE');
       socket.removeListener('CLIENT:ONLINE');
     };
-  });
+  }, [setUserOnline]);
 
   return (
     <>
@@ -104,4 +96,4 @@ const Home = () => {
   );
 };
 
-export default React.memo(Home);
+export default Home;

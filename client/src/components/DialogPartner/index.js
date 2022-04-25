@@ -4,7 +4,6 @@ import toDate from '../../helpers/ToDate';
 import classNames from 'classnames';
 
 const DialogPartner = ({ name, userAvatar, isOnline, lastSeen }) => {
-  console.log(lastSeen);
   return (
     <div className="rightbar__dialog-companion__info">
       <div className="companion__avatar">

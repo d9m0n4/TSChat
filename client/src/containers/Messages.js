@@ -27,6 +27,7 @@ const Messages = () => {
   const { updateConvUnreadMessagesCount } = useActions(conversationsActions);
 
   const newMessage = (data) => {
+    console.log(data);
     addMessage(data);
   };
 

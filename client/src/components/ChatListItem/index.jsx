@@ -51,7 +51,9 @@ const ChatListItem = ({
             <div className="chats__item-bottom conv">
               {lastConvMessage && (
                 <>
-                  <div className="conv__sender">{lastConvMessage.user.name}: </div>
+                  <div className="conv__sender">
+                    {lastConvMessage.user ? lastConvMessage.user.name : ''}:{' '}
+                  </div>
                   <div className="item__message">
                     <p>{lastConvMessage.text || 'вложение'}</p>
                   </div>

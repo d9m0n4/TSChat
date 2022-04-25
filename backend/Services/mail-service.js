@@ -15,18 +15,22 @@ class SendMail {
   }
 
   async sendActivationLink(to, link) {
-    this.transporter.sendMail({
-      from: process.env.SMTP_LOGIN,
-      to,
-      subject: 'Активация Аккаунта на TSChat',
-      text: `${to} активируйте аккаунт`,
-      html: `
-        <div>
-          <h1>Активация аккаунта на TsChat</h1>
-          <p>Для активации перейдите по ссылке ${process.env.SERVER_URL}/api/activate/${link}</p>
-        </div>
-      `,
-    });
+    try {
+      this.transporter.sendMail({
+        from: process.env.SMTP_LOGIN,
+        to,
+        subject: 'Активация Аккаунта на TSChat',
+        text: `${to} активируйте аккаунт`,
+        html: `
+          <div>
+            <h1>Активация аккаунта на TsChat</h1>
+            <p>Для активации перейдите по ссылке ${process.env.SERVER_URL}/api/activate/${link}</p>
+          </div>
+        `,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }
 

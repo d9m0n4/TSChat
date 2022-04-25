@@ -47,6 +47,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+
       .rightbar__conversation-header {
         padding: 16px;
         font-family: Gilroy-Medium;
@@ -57,34 +58,42 @@
         }
       }
 
+      .rightbar__conversation-creator {
+        .conversation-member__item {
+          &__name {
+            border-bottom: 2px solid var(--app-border);
+          }
+        }
+      }
+
       .rightbar__conversation-members {
         height: 100%;
         overflow: auto;
-        .conversation-member__item {
+      }
+      .conversation-member__item {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        height: 64px;
+        &__name {
+          margin-left: 8px;
+          flex: 1;
+          border-bottom: 1px solid var(--app-border);
+          height: 100%;
           display: flex;
           align-items: center;
-          padding: 8px;
-          height: 64px;
-          &__name {
-            margin-left: 8px;
-            flex: 1;
-            border-bottom: 1px solid var(--app-border);
-            height: 100%;
-            display: flex;
-            align-items: center;
-            font-family: Gilroy-Medium;
-          }
-          &__avatar {
-            position: relative;
-          }
-          &__control {
-            .icon {
-              cursor: pointer;
-              &:hover {
-                .rect {
-                  stroke: var(--app-button-hover);
-                  transition: all 0.3s ease-in-out;
-                }
+          font-family: Gilroy-Medium;
+        }
+        &__avatar {
+          position: relative;
+        }
+        &__control {
+          .icon {
+            cursor: pointer;
+            &:hover {
+              .rect {
+                stroke: var(--app-button-hover);
+                transition: all 0.3s ease-in-out;
               }
             }
           }

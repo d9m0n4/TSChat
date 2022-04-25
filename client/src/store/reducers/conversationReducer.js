@@ -52,6 +52,17 @@ export default (state = initialState, { type, payload }) => {
           return item;
         }),
       };
+    case 'UPDATE_CONVERSATION_AFTER_LEAVING':
+      return {
+        ...state,
+        items: state.items.map((item) => {
+          if (item.id === payload.id) {
+            item.members = payload.members;
+            item.lastMessage = payload.lastMessage;
+          }
+          return item;
+        }),
+      };
 
     default:
       return state;

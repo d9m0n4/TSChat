@@ -7,6 +7,9 @@ class Conversations {
   getConversations = async () => {
     return await API.get(`/conversations/`);
   };
+  leaveConversation = async (payload) => {
+    return API.post('/conversations/leave', payload);
+  };
 }
 
 export default new Conversations();

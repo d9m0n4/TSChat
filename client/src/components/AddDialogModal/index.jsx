@@ -29,7 +29,9 @@ const AddDialogModal = ({
             <UserAvatar size={24} name={u.name} src={u.userAvatar} />
             <span className="modal__result-col__name">{u.name}</span>
           </div>
-          <span className="modal__result-col__status">онлайн</span>
+          <span className={`modal__result-col__status ${u.isOnline && 'online'} `}>
+            {u.isOnline ? 'в сети' : 'не в сети'}
+          </span>
         </Select.Option>
       ));
 

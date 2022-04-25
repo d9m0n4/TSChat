@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
-
-import UserAttach from '../UserAttach';
+import React from 'react';
 
 import './index.scss';
-import ConversationUser from '../ConversationUser';
-import DialogPartner from '../DialogPartner';
 
-const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attachments }) => {
-  useEffect(() => {
-    console.log(conversation);
-  }, [conversation]);
+import UserAttach from '../UserAttach';
+import DialogPartner from '../DialogPartner';
+import ConversationUser from '../ConversationUser';
+
+const Rightbar = ({
+  currentDialogId,
+  currentConvId,
+  conversation,
+  partner,
+  attachments,
+  currentUserId,
+}) => {
   return (
     <>
       {(currentDialogId || currentConvId) && (
@@ -53,21 +57,47 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
               </div>
             </div>
           ) : (
-            <div className="rightbar__body rightbar__conversation">
-              <div className="rightbar__conversation-header">Участиники беседы</div>
+            <>
               {conversation && (
-                <ul className="rightbar__conversation-members">
-                  {conversation.map((item) => (
-                    <ConversationUser
-                      key={item.id}
-                      isOnline={item.isOnline}
-                      name={item.name}
-                      avatar={item.avatar}
-                    />
-                  ))}
-                </ul>
+                <div className="rightbar__body rightbar__conversation">
+                  <>
+                    <div className="rightbar__conversation-header">Участиники беседы</div>
+                    {conversation.creator && (
+                      <div className="rightbar__conversation-creator">
+                        <ConversationUser
+                          isOnline={conversation.creator.isOnline}
+                          name={conversation.creator.name}
+                          avatar={conversation.creator.avatar}
+                          currentUserId={currentUserId}
+                          userId={conversation.creator.id}
+                          currentConvId={currentConvId}
+                          id={conversation.creator.id}
+                        />
+                      </div>
+                    )}
+                    {
+                      <ul className="rightbar__conversation-members">
+                        {conversation.members
+                          .filter((member) => member.id !== conversation.creator.id)
+                          .map((item) => (
+                            <ConversationUser
+                              key={item.id}
+                              isOnline={item.isOnline}
+                              name={item.name}
+                              avatar={item.avatar}
+                              userId={item.id}
+                              currentUserId={currentUserId}
+                              creator={conversation.creator.id}
+                              currentConvId={currentConvId}
+                              id={item.id}
+                            />
+                          ))}
+                      </ul>
+                    }
+                  </>
+                </div>
               )}
-            </div>
+            </>
           )}
         </div>
       )}
@@ -75,4 +105,4 @@ const Rightbar = ({ currentDialogId, currentConvId, conversation, partner, attac
   );
 };
 
-export default React.memo(Rightbar);
+export default Rightbar;

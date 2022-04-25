@@ -40,6 +40,7 @@ class ConversationController {
 
             message.save().then((m) => {
               conv.lastMessage = m._id;
+              conv.save();
               this.io.emit('CONVERSATION_SET_ITEM', conv);
             });
 
@@ -77,6 +78,80 @@ class ConversationController {
     }
 
     res.status(200).json(data);
+  };
+
+  leaveConversation = async (req, res) => {
+    const currentUser = req.user.id;
+    const leavingUser = req.body.user;
+    const currentConv = req.body.convId;
+
+    if (!req.body) {
+      res.status(404).json({
+        message: 'not found',
+        status: 404,
+      });
+    }
+
+    Conversation.findById(currentConv)
+      .populate(['creator', 'members'])
+      .populate({
+        path: 'lastMessage',
+        populate: {
+          path: 'user',
+        },
+      })
+      .then((conversation) => {
+        try {
+          const creatorId = conversation.creator._id.toString();
+
+          const creatorDto = new UserDto(conversation.creator);
+          const leftUser = conversation.members.find((item) => item._id.toString() === leavingUser);
+          if (creatorId === currentUser && creatorId !== leavingUser) {
+            conversation.members.pull({ _id: leavingUser });
+
+            conversation.save().then((conv) => {
+              const message = new Message({
+                user: creatorDto.id,
+                dialog: conv._id,
+                text: `Пользователь ${leftUser.name}
+               исключен из беседы`,
+                server: true,
+              });
+
+              message.save().then((m) => {
+                conv.lastMessage = m._id;
+                conv.save();
+                this.io.emit('SERVER:CONV_CHANGED', conv);
+              });
+              this.io.emit('SERVER:CREATE_MESSAGE', message);
+              res.status(200);
+            });
+          }
+          if (creatorId === leavingUser) {
+            const remainingMembers = conversation.members.filter(
+              (item) => item._id.toString() !== creatorId,
+            );
+            if (remainingMembers.length) {
+              res.status(200).json({
+                message: 'Вы не можете покинуть беседу, пока в ней есть другие участники!',
+                status: 200,
+              });
+            } else {
+              conversation.members.pull({ _id: leavingUser });
+              conversation.save();
+              this.io.emit('SERVER:CONV_CHANGED', conversation);
+            }
+          }
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({
+            message: error,
+            status: 500,
+          });
+        }
+      });
+
+    res.status(200);
   };
 }
 

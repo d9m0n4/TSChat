@@ -1,3 +1,4 @@
+import socket from '../../api/socket';
 import Messages from '../../Services/Messages';
 
 const messagesActions = {
@@ -73,8 +74,11 @@ const messagesActions = {
       dispatch(messagesActions.setLoader(false));
     }
   },
-  sendMessage: (postData) => (dispatch) => {
+  sendMessage: (postData) => (dispatch, getState) => {
     try {
+      const { auth } = getState();
+      const { user } = auth;
+      socket.emit('CLIENT:ONLINE', { userId: user.id });
       return Messages.createMessge(postData);
     } catch (error) {
       console.log(error);

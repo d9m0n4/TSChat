@@ -14,6 +14,7 @@
   .messages-input__send {
     display: flex;
     align-items: center;
+    margin-left: 8px;
   }
 
   .textfield {
@@ -55,7 +56,10 @@
       color: var(--app-accent-text);
     }
     &__status {
-      color: #46be32;
+      color: var(--app-border);
+      &.online {
+        color: #46be32;
+      }
     }
   }
 }
