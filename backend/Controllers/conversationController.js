@@ -53,31 +53,38 @@ class ConversationController {
 
   getConversations = async (req, res) => {
     const user = req.user.id;
-    const userConversations = await Conversation.find({ members: { $in: [user] } })
-      .populate(['creator', 'members'])
-      .populate({
-        path: 'lastMessage',
-        populate: {
-          path: 'user',
-        },
-      });
-    const data = [];
+    try {
+      const userConversations = await Conversation.find({ members: { $in: [user] } })
+        .populate(['creator', 'members'])
+        .populate({
+          path: 'lastMessage',
+          populate: {
+            path: 'user',
+          },
+        });
+      const data = [];
 
-    for (const item of userConversations) {
-      const count = await this.getmessagesCount(item._id, user, Message);
-      const userDto = new UserDto(item.creator);
-      const convMembers = item.members.map((item) => new UserDto(item));
-      data.push({
-        count,
-        id: item._id,
-        title: item.title,
-        creator: userDto,
-        members: convMembers,
-        lastMessage: item.lastMessage,
+      for (const item of userConversations) {
+        const count = await this.getmessagesCount(item._id, user, Message);
+        const userDto = new UserDto(item.creator);
+        const convMembers = item.members.map((item) => new UserDto(item));
+        data.push({
+          count,
+          id: item._id,
+          title: item.title,
+          creator: userDto,
+          members: convMembers,
+          lastMessage: item.lastMessage,
+        });
+      }
+
+      res.status(200).json(data);
+    } catch (error) {
+      res.json({
+        message: 'Messages not found',
+        status: 500,
       });
     }
-
-    res.status(200).json(data);
   };
 
   leaveConversation = async (req, res) => {
@@ -92,66 +99,101 @@ class ConversationController {
       });
     }
 
-    Conversation.findById(currentConv)
-      .populate(['creator', 'members'])
-      .populate({
-        path: 'lastMessage',
-        populate: {
-          path: 'user',
-        },
-      })
-      .then((conversation) => {
-        try {
-          const creatorId = conversation.creator._id.toString();
+    try {
+      Conversation.findById(currentConv)
+        .populate(['creator', 'members'])
+        .populate({
+          path: 'lastMessage',
+          populate: {
+            path: 'user',
+          },
+        })
+        .then((conversation) => {
+          try {
+            const creatorId = conversation.creator._id.toString();
 
-          const creatorDto = new UserDto(conversation.creator);
-          const leftUser = conversation.members.find((item) => item._id.toString() === leavingUser);
-          if (creatorId === currentUser && creatorId !== leavingUser) {
-            conversation.members.pull({ _id: leavingUser });
+            const creatorDto = new UserDto(conversation.creator);
+            const leftUser = conversation.members.find(
+              (item) => item._id.toString() === leavingUser,
+            );
+            if (creatorId === currentUser && creatorId !== leavingUser) {
+              conversation.members.pull({ _id: leavingUser });
 
-            conversation.save().then((conv) => {
-              const message = new Message({
-                user: creatorDto.id,
-                dialog: conv._id,
-                text: `Пользователь ${leftUser.name}
+              conversation.save().then((conv) => {
+                const message = new Message({
+                  user: creatorDto.id,
+                  dialog: conv._id,
+                  text: `Пользователь ${leftUser ? leftUser.name : ''}
                исключен из беседы`,
-                server: true,
-              });
+                  server: true,
+                });
 
-              message.save().then((m) => {
-                conv.lastMessage = m._id;
-                conv.save();
-                this.io.emit('SERVER:CONV_CHANGED', conv);
+                message.save().then((m) => {
+                  conv.lastMessage = m._id;
+                  conv.save();
+                  this.io.emit('SERVER:CONV_CHANGED', conv);
+                });
+                this.io.emit('SERVER:CREATE_MESSAGE', message);
+                res.status(200);
               });
-              this.io.emit('SERVER:CREATE_MESSAGE', message);
-              res.status(200);
+            }
+            if (creatorId === leavingUser) {
+              const remainingMembers = conversation.members.filter(
+                (item) => item._id.toString() !== creatorId,
+              );
+              if (remainingMembers.length) {
+                res.status(200).json({
+                  message: 'Вы не можете покинуть беседу, пока в ней есть другие участники!',
+                  status: 200,
+                });
+              } else {
+                // conversation.members.pull({ _id: leavingUser });
+                // conversation.save();
+                conversation.remove();
+                Message.deleteMany({ dialog: currentConv }, (err) => {
+                  res.json(err);
+                });
+                this.io.emit('SERVER:CONV_CHANGED', null);
+              }
+            }
+            if (currentUser !== creatorId && leavingUser !== creatorId) {
+              console.log(currentUser !== creatorId, leavingUser !== creatorId);
+              conversation.members.pull({ _id: leavingUser });
+              conversation.save().then((conv) => {
+                const message = new Message({
+                  user: creatorDto.id,
+                  dialog: conv._id,
+                  text: `Пользователь ${leftUser ? leftUser.name : ''}
+               покинул беседу.`,
+                  server: true,
+                });
+
+                message.save().then((m) => {
+                  conv.lastMessage = m._id;
+                  conv.save();
+                  this.io.emit('SERVER:CONV_CHANGED', conv);
+                });
+                this.io.emit('SERVER:CREATE_MESSAGE', message);
+                res.status(200);
+              });
+            }
+          } catch (error) {
+            console.log(error);
+            res.status(500).json({
+              message: error,
+              status: 500,
             });
           }
-          if (creatorId === leavingUser) {
-            const remainingMembers = conversation.members.filter(
-              (item) => item._id.toString() !== creatorId,
-            );
-            if (remainingMembers.length) {
-              res.status(200).json({
-                message: 'Вы не можете покинуть беседу, пока в ней есть другие участники!',
-                status: 200,
-              });
-            } else {
-              conversation.members.pull({ _id: leavingUser });
-              conversation.save();
-              this.io.emit('SERVER:CONV_CHANGED', conversation);
-            }
-          }
-        } catch (error) {
-          console.log(error);
-          res.status(500).json({
-            message: error,
-            status: 500,
-          });
-        }
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    res.status(200);
+      res.status(200);
+    } catch (error) {
+      res.json(error);
+      console.log(error);
+    }
   };
 }
 

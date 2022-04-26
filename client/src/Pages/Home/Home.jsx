@@ -52,6 +52,10 @@ const Home = () => {
       setCurrentDialogId(null);
       setCurrentPartner(null);
     }
+    if (!pathname.includes(CONVERSATION_PATH)) {
+      setCurrentConversation(null);
+      setCurrentConversationId(null);
+    }
   }, [
     pathname,
     setCurrentDialogId,

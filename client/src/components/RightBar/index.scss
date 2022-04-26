@@ -48,13 +48,22 @@
       flex-direction: column;
       overflow: hidden;
 
-      .rightbar__conversation-header {
-        padding: 16px;
-        font-family: Gilroy-Medium;
-        text-align: center;
-        h3 {
+      .rightbar__conversation {
+        &-header {
+          padding: 16px;
+          font-family: Gilroy-Medium;
           text-align: center;
-          font-family: Gilroy-Bold;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        &-add__btn {
+          display: flex;
+          .ant-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
         }
       }
 

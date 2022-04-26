@@ -3,7 +3,7 @@ import React from 'react';
 import { useActions } from '../../hooks/useActions';
 import conversationsActions from '../../store/actions/conversatiosActions';
 
-const LeaveConv = ({ title, currentConvId, currentUserId, id }) => {
+const LeaveConv = ({ title, currentConvId, id }) => {
   const { leaveConversation } = useActions(conversationsActions);
 
   const leaveConv = () => {

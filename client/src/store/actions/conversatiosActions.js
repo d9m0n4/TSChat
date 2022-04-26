@@ -23,13 +23,16 @@ const conversationsActions = {
     try {
       const { data } = await Conversations.leaveConversation(obj);
 
-      openNotification('warning', 'Не возможно покинуть беседу!', data.message);
+      if (data) {
+        openNotification('warning', 'Не возможно покинуть беседу!', data.message);
+      }
 
       console.log(data);
 
       dispatch(conversationsActions.setConversationAfterLeaving(data));
     } catch (error) {
-      openNotification('error', error, 'error');
+      openNotification('info', 'error', 'error');
+      console.log(error);
     }
   },
 
@@ -54,12 +57,12 @@ const conversationsActions = {
   fetchConversations: () => async (dispatch) => {
     dispatch(conversationsActions.setLoading(true));
     try {
-      const { data } = await Conversations.getConversations();
+      const data = await Conversations.getConversations();
       if (!data) {
         openNotification('error', 'Ошибка', 'Данные не получены', 3);
       }
 
-      return dispatch(conversationsActions.setConversations(data));
+      return dispatch(conversationsActions.setConversations(data.data));
     } catch (error) {
       openNotification('error', 'Ошибка', error, 3);
     } finally {

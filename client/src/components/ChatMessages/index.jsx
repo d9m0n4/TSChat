@@ -56,7 +56,7 @@ const ChatMessages = ({
           </div>
         </div>
 
-        {currentDialogId || currentConvId ? (
+        {currentDialogId || (currentConvId && currentConv) ? (
           <>
             <div className="messages__body">
               <div

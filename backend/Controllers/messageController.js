@@ -8,15 +8,19 @@ class MessagesController {
     this.io = io;
   }
 
-  updateReadStatus = (dialogId, userId, res) => {
-    Message.updateMany({ dialog: dialogId, user: { $ne: userId } }, { $set: { readStatus: true } })
-      .then(() => this.io.emit('SERVER:UPDATE_READSTATUS', { userId, dialogId }))
-      .catch((err) =>
-        res.status(500).json({
-          message: err,
-        }),
+  updateReadStatus = async (dialogId, userId, res) => {
+    try {
+      await Message.updateMany(
+        { dialog: dialogId, user: { $ne: userId } },
+        { $set: { readStatus: true } },
       );
+
+      this.io.emit('SERVER:UPDATE_READSTATUS', { userId, dialogId });
+    } catch (error) {
+      console.log('updateMessagesStatus', error);
+    }
   };
+
   getMessagesCount = async (id) => {
     const count = await Message.find({ dialog: id }).count();
     this.io.emit('MESSAGES_GET_COUNT', count);
@@ -81,19 +85,20 @@ class MessagesController {
       .sort({ createdAt: -1 })
       .limit(10)
       .lean()
-      .exec((err, messages) => {
-        if (err) {
-          return res.status(404).json({
-            message: 'messages not found',
-          });
-        }
-
+      .then((messages) => {
         // const userDto = new UserDto();
         // // const mappedMessages = messages.map((item) => userDto(item.user));
 
         // console.log(mappedMessages);
         this.getMessagesCount(id);
-        res.json(messages);
+        res.status(200).json(messages);
+      })
+      .catch((err) => {
+        res.status(404).json({
+          message: 'messages not found',
+          err: err,
+          status: 404,
+        });
       });
   };
 

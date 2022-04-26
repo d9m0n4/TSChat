@@ -5,6 +5,9 @@ import './index.scss';
 import UserAttach from '../UserAttach';
 import DialogPartner from '../DialogPartner';
 import ConversationUser from '../ConversationUser';
+import OpenModalButton from '../OpenModalButton';
+import AddDialogModal from '../AddDialogModal';
+import { Button, Input } from 'antd';
 
 const Rightbar = ({
   currentDialogId,
@@ -13,9 +16,28 @@ const Rightbar = ({
   partner,
   attachments,
   currentUserId,
+  convUsers,
+  showModal,
+  hideModal,
+  visibleModal,
 }) => {
   return (
     <>
+      <AddDialogModal
+        userId={currentUserId}
+        title="Создать беседу"
+        users={convUsers}
+        // onSearch={onSearch}
+        multiple={true}
+        close={hideModal}
+        visible={visibleModal}
+        // handleChange={handleChangeSelect}
+      >
+        <Input required={true} value={conversation.title} />
+        <div className="add-dialog-form-btn">
+          <Button shape="round">Добавить</Button>
+        </div>
+      </AddDialogModal>
       {(currentDialogId || currentConvId) && (
         <div className="main__content-body__rightbar">
           <div className="rightbar__header chat__header"></div>
@@ -61,7 +83,12 @@ const Rightbar = ({
               {conversation && (
                 <div className="rightbar__body rightbar__conversation">
                   <>
-                    <div className="rightbar__conversation-header">Участиники беседы</div>
+                    <div className="rightbar__conversation-header">
+                      <div className="rightbar__conversation-header-title">Участиники беседы</div>
+                      <div className="rightbar__conversation-add__btn">
+                        <OpenModalButton fn={showModal} />
+                      </div>
+                    </div>
                     {conversation.creator && (
                       <div className="rightbar__conversation-creator">
                         <ConversationUser
@@ -105,4 +132,4 @@ const Rightbar = ({
   );
 };
 
-export default Rightbar;
+export default React.memo(Rightbar);
