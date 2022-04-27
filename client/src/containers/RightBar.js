@@ -9,6 +9,7 @@ import filesActions from '../store/actions/filesActions';
 import dialogActions from '../store/actions/dialogActions';
 
 import Rightbar from '../components/RightBar';
+import Users from '../Services/Users';
 
 const RightBarContianer = () => {
   const { getFiles } = useActions(filesActions);
@@ -20,7 +21,7 @@ const RightBarContianer = () => {
   const convMembers = useSelector(currentConversation);
   const { files: filesItems } = useSelector(files);
 
-  const [users, setUsers] = useState(convMembers);
+  const [users, setUsers] = useState();
   const [visibleModal, setVisibleModal] = useState(false);
 
   const showModal = () => {
@@ -31,12 +32,13 @@ const RightBarContianer = () => {
     setVisibleModal(false);
   };
 
-  useEffect(() => {
-    if (convMembers) {
-      setUsers(convMembers.members);
-      console.log(users);
-    }
-  }, [convMembers, users]);
+  const onSearch = async (value) => {
+    console.log(value, convMembers.members);
+    const members = convMembers.members.map((item) => item.id);
+    await Users.updateConvUsers({ value, members }).then(({ data }) => {
+      setUsers(data);
+    });
+  };
 
   useEffect(() => {
     if (currentPartner && currentDialogId) {
@@ -65,6 +67,7 @@ const RightBarContianer = () => {
       showModal={showModal}
       hideModal={hideModal}
       visibleModal={visibleModal}
+      onSearch={onSearch}
     />
   );
 };

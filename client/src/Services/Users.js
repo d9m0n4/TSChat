@@ -8,6 +8,9 @@ class Users {
   updateUser = async (data) => {
     return await API.patch(`/user`, data);
   };
+  updateConvUsers = async (obj) => {
+    return await API.post(`/users/conv/`, obj);
+  };
 }
 
 export default new Users();

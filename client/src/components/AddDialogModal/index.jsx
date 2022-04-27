@@ -21,12 +21,12 @@ const AddDialogModal = ({
     users.length &&
     users
       .filter((user) => {
-        return user._id !== userId;
+        return user.id !== userId;
       })
       .map((u) => (
-        <Select.Option className="modal__result-col" key={u._id}>
+        <Select.Option className="modal__result-col" key={u.id}>
           <div className="modal__result-col__name">
-            <UserAvatar size={24} name={u.name} src={u.userAvatar} />
+            <UserAvatar size={24} name={u.name} src={u.avatar} />
             <span className="modal__result-col__name">{u.name}</span>
           </div>
           <span className={`modal__result-col__status ${u.isOnline && 'online'} `}>

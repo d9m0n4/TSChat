@@ -160,7 +160,7 @@ class UserController {
   };
   async getUsers(req, res) {
     const userId = req.user.id;
-    console.log(userId);
+
     if (!userId) {
       res.status(404).json('user not found');
     }
@@ -177,7 +177,9 @@ class UserController {
       });
     }
 
-    res.json(users);
+    const fUsers = users.map((user) => new UserDto(user));
+
+    res.json(fUsers);
   }
   updateUser = async (req, res) => {
     const data = req.body;
@@ -197,6 +199,15 @@ class UserController {
     }
     this.io.emit('getCurrentUser', doc);
     res.status(200).json('success');
+  };
+
+  updateUsersConv = async (req, res) => {
+    const value = req.body.value;
+    const members = req.body.members;
+
+    const users = await User.find({ name: new RegExp(value, 'i'), _id: { $nin: members } });
+    const fUsers = users.map((user) => new UserDto(user));
+    res.json(fUsers);
   };
 }
 

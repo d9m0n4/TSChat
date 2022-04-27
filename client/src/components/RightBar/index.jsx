@@ -20,6 +20,7 @@ const Rightbar = ({
   showModal,
   hideModal,
   visibleModal,
+  onSearch,
 }) => {
   return (
     <>
@@ -27,13 +28,13 @@ const Rightbar = ({
         userId={currentUserId}
         title="Создать беседу"
         users={convUsers}
-        // onSearch={onSearch}
+        onSearch={onSearch}
         multiple={true}
         close={hideModal}
         visible={visibleModal}
         // handleChange={handleChangeSelect}
       >
-        <Input required={true} value={conversation.title} />
+        <Input required={true} value={0} />
         <div className="add-dialog-form-btn">
           <Button shape="round">Добавить</Button>
         </div>
