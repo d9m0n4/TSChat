@@ -169,7 +169,7 @@ const ChatInput = ({
           <div className="emoji-picker" ref={emojiPicker}>
             {visiblePicker && (
               <Picker
-                theme={theme == 2 ? 'dark' : 'light'}
+                theme={theme == (4 || 3) ? 'dark' : 'light'}
                 enableFrequentEmojiSort={true}
                 perLine={6}
                 set="apple"

@@ -10,6 +10,7 @@ import { auth } from './store/selectors';
 
 import { useTheme } from './hooks/useTheme';
 import { useActions } from './hooks/useActions';
+import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 
 function App() {
   const { theme, setTheme } = useTheme();
@@ -24,16 +25,18 @@ function App() {
   }, [getCurrentUser]);
 
   return (
-    <div className="App">
-      <Switch>
-        <Route
-          exact
-          path={['/login', '/registration', '/verify']}
-          render={() => (!isAuth ? <AuthPage /> : <Redirect to="/im" />)}
-        />
-        <Route path="/" render={() => (isAuth ? <Home /> : <Redirect to="/login" />)} />
-      </Switch>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+        <Switch>
+          <Route
+            exact
+            path={['/login', '/registration', '/verify']}
+            render={() => (!isAuth ? <AuthPage /> : <Redirect to="/im" />)}
+          />
+          <Route path="/" render={() => (isAuth ? <Home /> : <Redirect to="/login" />)} />
+        </Switch>
+      </div>
+    </ErrorBoundary>
   );
 }
 

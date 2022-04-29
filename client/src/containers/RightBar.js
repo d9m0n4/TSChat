@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { dialogs, conversations, files, user, currentConversation } from '../store/selectors';
+import {
+  dialogs,
+  conversations,
+  files,
+  user,
+  currentConversation,
+  isShown,
+} from '../store/selectors';
 import { useActions } from '../hooks/useActions';
 
 import filesActions from '../store/actions/filesActions';
@@ -10,6 +17,7 @@ import dialogActions from '../store/actions/dialogActions';
 
 import Rightbar from '../components/RightBar';
 import Users from '../Services/Users';
+import Conversations from '../Services/Conversations';
 
 const RightBarContianer = () => {
   const { getFiles } = useActions(filesActions);
@@ -20,9 +28,11 @@ const RightBarContianer = () => {
   const { id: currentUserId } = useSelector(user);
   const convMembers = useSelector(currentConversation);
   const { files: filesItems } = useSelector(files);
+  const { active } = useSelector(isShown);
 
   const [users, setUsers] = useState();
   const [visibleModal, setVisibleModal] = useState(false);
+  const [convUsers, setConvUsers] = useState();
 
   const showModal = () => {
     setVisibleModal(true);
@@ -30,14 +40,33 @@ const RightBarContianer = () => {
 
   const hideModal = () => {
     setVisibleModal(false);
+    setUsers(null);
   };
 
   const onSearch = async (value) => {
     console.log(value, convMembers.members);
     const members = convMembers.members.map((item) => item.id);
-    await Users.updateConvUsers({ value, members }).then(({ data }) => {
-      setUsers(data);
-    });
+    await Users.updateConvUsers({ value, members })
+      .then(({ data }) => {
+        setUsers(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleChangeSelect = (v) => {
+    console.log(v);
+    const a = [];
+    for (let i = 0; i < v.length; i++) {
+      a.push(v[i].value);
+    }
+    setConvUsers(a);
+  };
+
+  const updateConversation = () => {
+    Conversations.updateConversation({ id: currentConvId, users: convUsers });
+    hideModal();
   };
 
   useEffect(() => {
@@ -68,6 +97,9 @@ const RightBarContianer = () => {
       hideModal={hideModal}
       visibleModal={visibleModal}
       onSearch={onSearch}
+      handleChangeSelect={handleChangeSelect}
+      updateConversation={updateConversation}
+      isShown={active}
     />
   );
 };

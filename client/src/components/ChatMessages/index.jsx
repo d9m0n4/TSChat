@@ -27,6 +27,8 @@ const ChatMessages = ({
   scrollBtnActive,
   scrollToBottom,
   scrollBlock,
+  setShown,
+  rightBarActive,
 }) => {
   return (
     <>
@@ -51,9 +53,11 @@ const ChatMessages = ({
               )}
             </div>
           )}
-          <div className="chat__header-btn">
-            <span className="active" />
-          </div>
+          {(currentConv || currentPartner) && (
+            <div className="chat__header-btn" onClick={setShown}>
+              <span className={rightBarActive && 'active'} />
+            </div>
+          )}
         </div>
 
         {currentDialogId || (currentConvId && currentConv) ? (

@@ -47,7 +47,7 @@ button.app-icon {
   .icon {
     &:hover {
       .rect {
-        stroke: #276aa5;
+        stroke: var(--app-button-hover);
         transition: all 0.3s ease-in-out;
       }
     }
@@ -61,6 +61,7 @@ button.app-icon {
   transition: color 500ms linear;
   line-height: 1.5;
   height: 100%;
+  overflow: hidden;
 }
 
 .loader__space {

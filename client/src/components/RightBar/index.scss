@@ -3,6 +3,7 @@
   background-color: var(--app-sidebar);
   display: flex;
   flex-direction: column;
+  animation: ainm 0.25s ease-in-out;
 
   .rightbar__header {
     display: flex;
@@ -50,7 +51,7 @@
 
       .rightbar__conversation {
         &-header {
-          padding: 16px;
+          padding: 16px 4px;
           font-family: Gilroy-Medium;
           text-align: center;
           display: flex;
@@ -63,6 +64,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 0;
           }
         }
       }
@@ -112,15 +114,35 @@
   }
 }
 
+@keyframes ainm {
+  0% {
+    opacity: 0;
+    right: -500px;
+  }
+  25% {
+    opacity: 0.2;
+    right: -450px;
+  }
+  50% {
+    opacity: 0.4;
+    right: -350px;
+  }
+  75% {
+    opacity: 0.6;
+    right: -250px;
+  }
+  100% {
+    opacity: 1;
+    right: 0px;
+  }
+}
+
 @media screen and (max-width: 1025px) {
   .main__content-body__rightbar {
     position: absolute;
-    display: none;
+    right: 0;
     height: 100%;
     z-index: 9;
-    transition: all 0.5s ease;
-    &.active {
-      right: 0;
-    }
+    transition: all 0.25s ease;
   }
 }

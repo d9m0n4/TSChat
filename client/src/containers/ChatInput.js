@@ -317,7 +317,7 @@ const ChatInputContainer = () => {
       setMessageValue('');
       setCurrentFiles([]);
     };
-  }, [dialogId]);
+  }, [dialogId, currentConversationId]);
 
   return (
     <ChatInput

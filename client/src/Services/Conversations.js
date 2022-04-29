@@ -10,6 +10,9 @@ class Conversations {
   leaveConversation = async (payload) => {
     return API.post('/conversations/leave', payload);
   };
+  updateConversation = async (payload) => {
+    return API.post('/conversations/add', payload);
+  };
 }
 
 export default new Conversations();

@@ -134,7 +134,10 @@ class ConversationController {
                   this.io.emit('SERVER:CONV_CHANGED', conv);
                 });
                 this.io.emit('SERVER:CREATE_MESSAGE', message);
-                res.status(200);
+                res.status(200).json({
+                  message: 'Пользователь исключен из беседы',
+                  status: 200,
+                });
               });
             }
             if (creatorId === leavingUser) {
@@ -177,6 +180,7 @@ class ConversationController {
                 res.status(200);
               });
             }
+            res.status(200);
           } catch (error) {
             console.log(error);
             res.status(500).json({
@@ -192,6 +196,43 @@ class ConversationController {
       res.status(200);
     } catch (error) {
       res.json(error);
+      console.log(error);
+    }
+  };
+  addUsersToConversation = async (req, res) => {
+    const currentConv = req.body.id;
+    const convMembers = req.body.users;
+    const currentUser = req.user;
+
+    try {
+      const conversation = await Conversation.findById(currentConv);
+      if (conversation.creator._id.toString() === currentUser.id) {
+        if (!convMembers) {
+          return res.json({
+            message: 'not FOUND',
+          });
+        }
+        conversation.members.push({ $each: convMembers });
+
+        conversation.save().then((conv) => {
+          const message = new Message({
+            user: currentUser.id,
+            dialog: conv._id,
+            text: `Пользователь 
+         присоединился к беседе`,
+            server: true,
+          });
+
+          message.save().then((m) => {
+            conv.lastMessage = m._id;
+            conv.save();
+            this.io.emit('SERVER:CONV_CHANGED', conv);
+          });
+          this.io.emit('SERVER:CREATE_MESSAGE', message);
+          res.status(200);
+        });
+      }
+    } catch (error) {
       console.log(error);
     }
   };

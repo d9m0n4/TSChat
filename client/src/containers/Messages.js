@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions';
-import { dialogs, messages, user, conversations } from '../store/selectors';
+import { dialogs, messages, user, conversations, isShown } from '../store/selectors';
 import ChatMessages from '../components/ChatMessages';
 import messagesActions from '../store/actions/messagesActions';
 import socket from '../api/socket';
 import dialogActions from '../store/actions/dialogActions';
 import conversationsActions from '../store/actions/conversatiosActions';
+import rightBarActions from '../store/actions/rightbar';
 
 const Messages = () => {
   const scrollBlock = useRef(null);
@@ -20,14 +21,20 @@ const Messages = () => {
   const { dialogs: dialogsItems, currentDialogId, currentPartner } = useSelector(dialogs);
   const { items, loader } = useSelector(messages);
   const { id } = useSelector(user);
+  const { active } = useSelector(isShown);
   const { currentConvId, currentConversation: currentConv } = useSelector(conversations);
 
   const { getMessages, getMessagesHistory, addMessage } = useActions(messagesActions);
   const { updateDialogUnreadMessagesCount } = useActions(dialogActions);
   const { updateConvUnreadMessagesCount } = useActions(conversationsActions);
+  const { setIsShown } = useActions(rightBarActions);
+
+  const setShown = () => {
+    console.log(active);
+    return setIsShown(!active);
+  };
 
   const newMessage = (data) => {
-    console.log(data);
     addMessage(data);
   };
 
@@ -107,6 +114,8 @@ const Messages = () => {
       scrollBtnActive={scrollBtnActive}
       scrollToBottom={scrollToBottom}
       scrollBlock={scrollBlock}
+      setShown={setShown}
+      rightBarActive={active}
     />
   );
 };

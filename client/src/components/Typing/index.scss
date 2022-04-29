@@ -9,7 +9,7 @@
     height: 8px;
     width: 8px;
     border-radius: 50%;
-    background: #276aa5;
+    background: var(--app-button-hover);
     display: inline-block;
     margin-right: 4px;
     animation: 0.8s typingAnimation infinite ease-out 0.1s;

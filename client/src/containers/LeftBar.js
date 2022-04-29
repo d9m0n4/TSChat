@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Leftbar from '../components/LeftBar';
 import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import socket from '../api/socket';
 import { withRouter } from 'react-router';
@@ -11,10 +11,14 @@ import dialogActions from '../store/actions/dialogActions';
 import conversationsActions from '../store/actions/conversatiosActions';
 import messagesActions from '../store/actions/messagesActions';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../constants';
-import { conversations, dialogs } from '../store/selectors';
+import { conversations, dialogs, auth } from '../store/selectors';
 import { useActions } from '../hooks/useActions';
 
-const LeftBarContainer = ({ isLoading, items, userId, history }) => {
+const LeftBarContainer = ({ history }) => {
+  const { items: currentConversations, currentConvId } = useSelector(conversations);
+  const { currentDialogId, isLoading, dialogs: items } = useSelector(dialogs);
+  const { user } = useSelector(auth);
+
   const [dialogVisible, setDialogVisible] = useState(false);
   const [convVisible, setConvVisible] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -26,8 +30,6 @@ const LeftBarContainer = ({ isLoading, items, userId, history }) => {
   const [uploading, setUploading] = useState(false);
   const [filtered, setFilteredDialogs] = useState(items && Array.from(items));
 
-  const { items: currentConversations, currentConvId } = useSelector(conversations);
-  const { currentDialogId } = useSelector(dialogs);
   const { fetchDialogs } = useActions(dialogActions);
   const { updateMessages, updateReadStatus } = useActions(messagesActions);
   const { fetchConversations } = useActions(conversationsActions);
@@ -91,7 +93,7 @@ const LeftBarContainer = ({ isLoading, items, userId, history }) => {
 
     onHideConvModal();
     socket.on('CONVERSATION_SET_ITEM', (data) => {
-      history.push(`im/${CONVERSATION_PATH}/${data._id}`);
+      history.push(`/im/${CONVERSATION_PATH}/${data._id}`);
     });
 
     return () => {
@@ -114,7 +116,7 @@ const LeftBarContainer = ({ isLoading, items, userId, history }) => {
       text: messageValue,
     });
     socket.on('DIALOG:CREATED', (data) => {
-      history.push(`im/${DIALOG_PATH}/${data._id}`);
+      history.push(`/im/${DIALOG_PATH}/${data._id}`);
     });
     setUploading(false);
     hideDialogModal();
@@ -178,7 +180,7 @@ const LeftBarContainer = ({ isLoading, items, userId, history }) => {
       handleChangeSelect={handleChangeSelect}
       conversations={currentConversations}
       convUsers={convUsers}
-      userId={userId}
+      userId={user && user.id}
       isLoading={isLoading}
       uploading={uploading}
       inputValue={inputValue}
@@ -204,12 +206,4 @@ const LeftBarContainer = ({ isLoading, items, userId, history }) => {
   );
 };
 
-export default withRouter(
-  connect(({ dialogs, auth, messages }) => ({
-    items: dialogs.dialogs,
-    currentDialogId: dialogs.currentDialogId,
-    userId: auth.user && auth.user.id,
-    isLoading: dialogs.isLoading,
-    messagesItems: messages.items,
-  }))(LeftBarContainer),
-);
+export default withRouter(LeftBarContainer);

@@ -2,7 +2,7 @@
   position: absolute;
   width: 6px;
   height: 6px;
-  background-color: #46be32;
+  background-color: var(--app-online-status);
   border-radius: 100%;
   box-shadow: 0 0 0 2px var(--app-sidebar);
   right: 0;

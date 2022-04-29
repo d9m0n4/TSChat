@@ -205,9 +205,13 @@ class UserController {
     const value = req.body.value;
     const members = req.body.members;
 
-    const users = await User.find({ name: new RegExp(value, 'i'), _id: { $nin: members } });
-    const fUsers = users.map((user) => new UserDto(user));
-    res.json(fUsers);
+    try {
+      const users = await User.find({ name: new RegExp(value, 'i'), _id: { $nin: members } });
+      const fUsers = users.map((user) => new UserDto(user));
+      res.json(fUsers);
+    } catch (error) {
+      res.json(error);
+    }
   };
 }
 

@@ -78,9 +78,38 @@ const Settings = () => {
                 viewBox="0 0 155 90"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg">
+                <rect width="155" height="90" rx="8" fill="#fafafa" />
+                <rect x="67" y="52" width="64" height="14" rx="2" fill="#F3F6F9" />
+                <rect x="24" y="24" width="65" height="14" rx="2" fill="#FFBE59" />
+              </svg>
+            </div>
+          </Radio>
+
+          <Radio value={3}>
+            <div className="settings__page-themes__card">
+              <svg
+                width="155"
+                height="90"
+                viewBox="0 0 155 90"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <rect width="155" height="90" rx="8" fill="#292F40" />
                 <rect x="67" y="52" width="64" height="14" rx="2" fill="#474747" />
                 <rect x="24" y="24" width="65" height="14" rx="2" fill="#424C6D" />
+              </svg>
+            </div>
+          </Radio>
+          <Radio value={4}>
+            <div className="settings__page-themes__card">
+              <svg
+                width="155"
+                height="90"
+                viewBox="0 0 155 90"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect width="155" height="90" rx="8" fill="#221619" />
+                <rect x="67" y="52" width="64" height="14" rx="2" fill="#482735" />
+                <rect x="24" y="24" width="65" height="14" rx="2" fill="#e32d72" />
               </svg>
             </div>
           </Radio>

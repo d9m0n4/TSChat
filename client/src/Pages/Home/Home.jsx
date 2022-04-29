@@ -4,7 +4,7 @@ import './index.scss';
 import Sidebar from '../../components/SideBar';
 import Messenger from '../../layouts/Messenger';
 import { useSelector } from 'react-redux';
-import { Route, Switch, useLocation } from 'react-router';
+import { Route, Switch, useHistory, useLocation } from 'react-router';
 import Loader from '../../components/Loader';
 import dialogActions from '../../store/actions/dialogActions';
 import conversationActions from '../../store/actions/conversatiosActions';
@@ -16,12 +16,13 @@ import { conversations, dialogs, auth } from '../../store/selectors';
 import socket from '../../api/socket';
 
 const Home = () => {
+  let history = useHistory();
   let { pathname } = useLocation();
 
   const { setCurrentDialogId, setCurrentPartner, setUserOnline } = useActions(dialogActions);
   const { setCurrentConversationId, setCurrentConversation } = useActions(conversationActions);
 
-  const { items: convs, currentConvId } = useSelector(conversations);
+  const { items: convs, currentConvId, currentConversation: currentC } = useSelector(conversations);
   const { dialogs: dialogsItems, currentDialogId } = useSelector(dialogs);
   const { user: currentUser } = useSelector(auth);
 
@@ -80,7 +81,7 @@ const Home = () => {
       socket.removeListener('SERVER:SOCKET_OFFLINE');
       socket.removeListener('CLIENT:ONLINE');
     };
-  }, [setUserOnline]);
+  });
 
   return (
     <>

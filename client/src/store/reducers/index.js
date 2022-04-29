@@ -4,6 +4,7 @@ import dialogReducer from './dialogReducer';
 import filesReducer from './filesReducer';
 import messagesReducer from './messagesReducer';
 import conversationReducer from './conversationReducer';
+import rightBar from './rightBar';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   conversations: conversationReducer,
   messages: messagesReducer,
   files: filesReducer,
+  rightBar: rightBar,
 });

@@ -15,3 +15,5 @@ export const currentConvId = (state) => state.conversations.currentConvId;
 export const files = (state) => state.files;
 
 export const messages = (state) => state.messages;
+
+export const isShown = (state) => state.rightBar;

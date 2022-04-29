@@ -1,5 +1,5 @@
 const initialState = {
-  active: false,
+  active: true,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

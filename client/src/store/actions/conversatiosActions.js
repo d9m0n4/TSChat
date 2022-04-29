@@ -25,9 +25,9 @@ const conversationsActions = {
 
       if (data) {
         openNotification('warning', 'Не возможно покинуть беседу!', data.message);
+      } else {
+        console.log(123123123123123123123123123123);
       }
-
-      console.log(data);
 
       dispatch(conversationsActions.setConversationAfterLeaving(data));
     } catch (error) {
