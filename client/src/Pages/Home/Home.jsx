@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import './index.scss';
 
 import Sidebar from '../../components/SideBar';
-import Messenger from '../../layouts/Messenger';
+
 import { useSelector } from 'react-redux';
 import { Route, Switch, useHistory, useLocation } from 'react-router';
 import Loader from '../../components/Loader';
 import dialogActions from '../../store/actions/dialogActions';
 import conversationActions from '../../store/actions/conversatiosActions';
-import UserProfile from '../../layouts/UserProfile';
-import Settings from '../../layouts/Settings';
+import UserProfile from './screens/UserProfile';
+import Messenger from './screens/Messenger';
+import Settings from './screens/Settings';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../../constants';
 import { useActions } from '../../hooks/useActions';
 import { conversations, dialogs, auth } from '../../store/selectors';

@@ -24,7 +24,7 @@ const conversationsActions = {
       const { data } = await Conversations.leaveConversation(obj);
 
       if (data) {
-        openNotification('warning', 'Не возможно покинуть беседу!', data.message);
+        openNotification('warning', 'Внимание!', data.message);
       } else {
         console.log(123123123123123123123123123123);
       }

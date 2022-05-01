@@ -1,10 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router = require('./Routes/index');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { createServer } = require('http');
 const createSocket = require('./core/socket');
+const router = require('./core/routes');
 
 require('dotenv').config();
 

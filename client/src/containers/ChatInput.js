@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useRef } from 'react';
+import { useSelector } from 'react-redux';
 
-import ChatInput from '../components/ChatInput';
 import socket from '../api/socket';
 
 import Files from '../Services/Files';
+
 import messagesActions from '../store/actions/messagesActions';
-
-import { CloseCircleTwoTone } from '@ant-design/icons';
-import { useOutsideClick } from '../hooks/useOutsideClick';
-
 import { dialogs, auth, conversations } from '../store/selectors';
 
+import { useOutsideClick } from '../hooks/useOutsideClick';
 import { useTheme } from '../hooks/useTheme';
 import { useActions } from '../hooks/useActions';
-import { useSelector } from 'react-redux';
+
+import openNotification from '../helpers/notifications/openNotification';
+
+import ChatInput from '../components/ChatInput';
+
+import { CloseCircleTwoTone } from '@ant-design/icons';
 
 const ChatInputContainer = () => {
   const [messageValue, setMessageValue] = useState('');
@@ -120,7 +123,7 @@ const ChatInputContainer = () => {
         if (!(file.size / 1024 / 1024 > 5)) {
           setCurrentFiles(fileList);
         } else {
-          alert('файл больше 5мб');
+          openNotification('warning', 'Внимание!', 'Размер одного файла не должен превышать 5Мб!');
         }
       });
     },
@@ -162,7 +165,14 @@ const ChatInputContainer = () => {
           onRecording(stream);
         })
         .catch((e) => {
-          console.dir(e);
+          if (e.code === 8) {
+            openNotification(
+              'error',
+              'Ошибка',
+              'Устройство записи не обнаружено, пожалуйста подключите микрофон!',
+              3,
+            );
+          }
         });
     } else {
       console.log('userMedia not');

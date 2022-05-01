@@ -1,7 +1,7 @@
 import React from 'react';
-import LeftBar from '../containers/LeftBar';
-import Messages from '../containers/Messages';
-import RightBarContainer from '../containers/RightBar';
+import LeftBar from '../../../containers/LeftBar';
+import Messages from '../../../containers/Messages';
+import RightBarContainer from '../../../containers/RightBar';
 
 const Messenger = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Radio } from 'antd';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from '../../../hooks/useTheme';
 
 const Settings = () => {
   const { theme, setTheme } = useTheme();

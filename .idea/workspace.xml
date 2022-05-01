@@ -2,21 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/api/socket.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/core/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_03_2022_10_36_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_03_2022_10_36__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/core/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Pages/Auth/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Auth/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ChatMessages/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChatMessages/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Message/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Message/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Routes/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Pages/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ChatInput/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChatInput/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/onlineStatus/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/OnlineStatus/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/onlineStatus/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/OnlineStatus/index.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/containers/ChatInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/ChatInput.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/LeftBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/LeftBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/Messages.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/core/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/core/socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/actions/authActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/actions/dialogActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/actions/dialogActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/_vars.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/_vars.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/layouts/Messenger.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/screens/Messenger.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/layouts/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/screens/Settings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/screens/UserProfile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/actions/conversatiosActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/actions/conversatiosActions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +51,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/core" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\VDCH\Documents\projects\TSChat\node_modules\prettier" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -59,6 +60,8 @@
       <recent name="C:\Users\Иван\WebstormProjects\TSChat\client\src\core" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\VDCH\Documents\projects\TSChat\backend\core" />
+      <recent name="C:\Users\VDCH\Documents\projects\TSChat\client\src\Pages\Home\Screens" />
       <recent name="C:\Users\Иван\WebstormProjects\TSChat\client\src\api" />
       <recent name="C:\Users\VDCH\Documents\projects\TSChat\client\src\assets" />
     </key>
@@ -84,6 +87,7 @@
       <workItem from="1647171001632" duration="297000" />
       <workItem from="1647177642609" duration="4226000" />
       <workItem from="1647198825580" duration="3627000" />
+      <workItem from="1651418219080" duration="1193000" />
     </task>
     <task id="LOCAL-00001" summary="анимация набора сообщение собеседником">
       <created>1647100563894</created>

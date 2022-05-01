@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UserAvatar from '../components/Avatar';
+import UserAvatar from '../../../components/Avatar';
 
 import locale from 'antd/es/date-picker/locale/ru_RU';
 
@@ -11,14 +11,14 @@ import Form from 'antd/lib/form/Form';
 import { useEffect } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { Formik } from 'formik';
-import socket from '../api/socket';
+import socket from '../../../api/socket';
 
-import authActions from '../store/actions/authActions';
-import Messages from '../Services/Messages';
-import Files from '../Services/Files';
-import Users from '../Services/Users';
+import authActions from '../../../store/actions/authActions';
+import Messages from '../../../Services/Messages';
+import Files from '../../../Services/Files';
+import Users from '../../../Services/Users';
 
-import formatDate from '../helpers/formateDate';
+import formatDate from '../../../helpers/formateDate';
 
 import moment from 'moment';
 

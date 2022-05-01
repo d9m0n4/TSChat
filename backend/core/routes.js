@@ -7,7 +7,7 @@ const ConversationController = require('../Controllers/conversationController');
 const Router = require('express').Router;
 const router = new Router();
 
-const uploader = require('../core/multer');
+const uploader = require('./multer');
 
 const CheckToken = require('../Middlewares/CheckToken');
 
