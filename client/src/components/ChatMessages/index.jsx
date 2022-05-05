@@ -10,7 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import './index.scss';
 import classNames from 'classnames';
-import OnlineStatus from '../onlineStatus';
+import OnlineStatus from '../OnlineStatus/';
 
 const ChatMessages = ({
   isTyping,
@@ -29,6 +29,7 @@ const ChatMessages = ({
   scrollBlock,
   setShown,
   rightBarActive,
+  messageRef,
 }) => {
   return (
     <>
@@ -55,7 +56,7 @@ const ChatMessages = ({
           )}
           {(currentConv || currentPartner) && (
             <div className="chat__header-btn" onClick={setShown}>
-              <span className={rightBarActive && 'active'} />
+              <span className={rightBarActive ? 'active' : undefined} />
             </div>
           )}
         </div>
@@ -83,7 +84,7 @@ const ChatMessages = ({
                 </svg>
               </div>
               {loader && <Loader />}
-              <div ref={scrollBlock} className="messages__screen" id="scrollableDiv">
+              <div className="messages__screen" id="scrollableDiv" ref={scrollBlock}>
                 <InfiniteScroll
                   className="messages__container"
                   dataLength={messages.length}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import UserAvatar from '../Avatar';
 import LeaveConv from '../LeaveConversation';
-import OnlineStatus from '../onlineStatus';
+import OnlineStatus from '../OnlineStatus';
 
 const ConversationUser = ({
   isOnline,

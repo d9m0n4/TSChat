@@ -8,9 +8,11 @@ import socket from '../api/socket';
 import dialogActions from '../store/actions/dialogActions';
 import conversationsActions from '../store/actions/conversatiosActions';
 import rightBarActions from '../store/actions/rightbar';
+import { observeMessage, observeMessge, observer } from '../helpers/intersectionObserver';
 
 const Messages = () => {
   const scrollBlock = useRef(null);
+  const messageRef = useRef(null);
 
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState();
@@ -30,7 +32,6 @@ const Messages = () => {
   const { setIsShown } = useActions(rightBarActions);
 
   const setShown = () => {
-    console.log(active);
     return setIsShown(!active);
   };
 
@@ -55,6 +56,12 @@ const Messages = () => {
       behavior: 'smooth',
     });
   };
+
+  useEffect(() => {
+    if (messageRef.current) {
+      observeMessge().observer.observe(messageRef.current);
+    }
+  }, [items]);
 
   useEffect(() => {
     setOffset(Array.from(items).length);
@@ -116,6 +123,7 @@ const Messages = () => {
       scrollBlock={scrollBlock}
       setShown={setShown}
       rightBarActive={active}
+      messageRef={messageRef}
     />
   );
 };
