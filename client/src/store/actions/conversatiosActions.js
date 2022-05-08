@@ -19,22 +19,22 @@ const conversationsActions = {
     payload,
   }),
 
-  leaveConversation: (obj) => async (dispatch) => {
-    try {
-      const { data } = await Conversations.leaveConversation(obj);
+  // leaveConversation: (obj) => async (dispatch) => {
+  //   try {
+  //     const { data } = await Conversations.leaveConversation(obj);
 
-      if (data) {
-        openNotification('warning', 'Внимание!', data.message);
-      } else {
-        console.log(123123123123123123123123123123);
-      }
+  //     if (data) {
+  //       openNotification('warning', 'Внимание!', data.message);
+  //     } else {
+  //       console.log(123123123123123123123123123123);
+  //     }
 
-      dispatch(conversationsActions.setConversationAfterLeaving(data));
-    } catch (error) {
-      openNotification('info', 'error', 'error');
-      console.log(error);
-    }
-  },
+  //     dispatch(conversationsActions.setConversationAfterLeaving(data));
+  //   } catch (error) {
+  //     openNotification('info', 'error', 'error');
+  //     console.log(error);
+  //   }
+  // },
 
   updateConvUnreadMessagesCount: (obj) => (dispatch) => {
     dispatch(conversationsActions.setMessagesCount(obj));

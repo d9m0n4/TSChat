@@ -1,0 +1,74 @@
+.rightbar__dialog-companion__attachs {
+  overflow: hidden;
+  padding: 32px 0;
+  .attachs__header {
+    display: flex;
+    padding: 0 10px;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    &-title {
+      font-family: 'Gilroy-Bold';
+      color: var(--app-accent-text);
+    }
+    &-icon {
+      cursor: pointer;
+      .icon {
+        width: 16px;
+        height: 16px;
+        .path {
+          stroke: var(--app-accent-text);
+        }
+      }
+    }
+  }
+  .attachs__list {
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10px;
+      align-items: center;
+      &:hover {
+        background-color: var(--app-leftbar);
+      }
+      &__prevIcon {
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+        display: flex;
+        img {
+          object-fit: contain;
+          width: 100%;
+        }
+      }
+      &__body {
+        font-size: 12px;
+        flex: 1;
+        padding: 0 8px;
+        overflow: hidden;
+        .item__body-top {
+          width: 100%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+        .item__body-bottom {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+      &__download {
+        width: 24px;
+        display: flex;
+        #rect {
+          stroke: var(--app-button);
+        }
+        &:hover {
+          cursor: pointer;
+          #rect {
+            stroke: var(--app-button-hover);
+          }
+        }
+      }
+    }
+  }
+}

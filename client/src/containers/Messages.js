@@ -2,13 +2,12 @@ import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useActions } from '../hooks/useActions';
 import { dialogs, messages, user, conversations, isShown } from '../store/selectors';
-import ChatMessages from '../components/ChatMessages';
+import ChatMessages from '../components/Layout/ChatMessages';
 import messagesActions from '../store/actions/messagesActions';
 import socket from '../api/socket';
 import dialogActions from '../store/actions/dialogActions';
 import conversationsActions from '../store/actions/conversatiosActions';
 import rightBarActions from '../store/actions/rightbar';
-import { observeMessage, observeMessge, observer } from '../helpers/intersectionObserver';
 
 const Messages = () => {
   const scrollBlock = useRef(null);
@@ -56,12 +55,6 @@ const Messages = () => {
       behavior: 'smooth',
     });
   };
-
-  useEffect(() => {
-    if (messageRef.current) {
-      observeMessge().observer.observe(messageRef.current);
-    }
-  }, [items]);
 
   useEffect(() => {
     setOffset(Array.from(items).length);

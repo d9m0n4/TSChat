@@ -1,7 +1,7 @@
 const initialState = {
   items: [],
   isLoading: false,
-  currentConvId: window.location.pathname.split('/conversation/')[1],
+  currentConvId: null,
   currentConversation: null,
 };
 

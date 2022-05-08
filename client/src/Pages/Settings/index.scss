@@ -1,0 +1,34 @@
+.settings__page {
+  width: 100%;
+  padding: 32px 48px;
+  background-color: var(--app-leftbar);
+  transition: background-color 200ms linear;
+  &-title {
+    text-align: center;
+    font-family: 'Gilroy-Medium', serif;
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  &-themes {
+    background: var(--app-block);
+    border-radius: 8px;
+    padding: 16px;
+    &__title {
+      text-align: center;
+      font-size: 18px;
+      font-family: 'Gilroy-Medium', serif;
+    }
+    .ant-radio-group {
+      display: flex;
+    }
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      .ant-radio-wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+    }
+  }
+}

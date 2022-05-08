@@ -6,7 +6,8 @@ const colorFromStr = (str, o) => {
     }
     const color = (hash & 0x00ffffff).toString(16).toUpperCase();
 
-    return '00000'.substring(0, 6 - color.length) + color;
+    const currentColor = '00000'.substring(0, 5 - color.length) + color;
+    return currentColor;
   }
 };
 

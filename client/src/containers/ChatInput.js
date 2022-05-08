@@ -15,7 +15,7 @@ import { useActions } from '../hooks/useActions';
 
 import openNotification from '../helpers/notifications/openNotification';
 
-import ChatInput from '../components/ChatInput';
+import ChatInput from '../components/Layout/ChatInput';
 
 import { CloseCircleTwoTone } from '@ant-design/icons';
 
@@ -34,7 +34,7 @@ const ChatInputContainer = () => {
 
   const { sendMessage } = useActions(messagesActions);
 
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   const canvas = useRef();
   const audioResult = useRef();

@@ -23,7 +23,7 @@ const authActions = {
     try {
       const data = await Auth.CheckUser();
 
-      if (data.response && data.response.status == 401) {
+      if (data.response && data.response.status === 401) {
         openNotification('error', 'Ошибка', data.response.data.message, 3);
         dispatch(authActions.setAuth(false));
         delete window.localStorage.token;

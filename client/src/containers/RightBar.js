@@ -15,7 +15,7 @@ import { useActions } from '../hooks/useActions';
 import filesActions from '../store/actions/filesActions';
 import dialogActions from '../store/actions/dialogActions';
 
-import Rightbar from '../components/RightBar';
+import Rightbar from '../components/Layout/RightBar';
 import Users from '../Services/Users';
 import Conversations from '../Services/Conversations';
 

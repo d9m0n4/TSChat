@@ -1,0 +1,17 @@
+.notFound__page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: var(--app-accent-text);
+  .ant-result-image {
+    margin: 0;
+  }
+  .ant-result-title {
+    color: var(--app-accent-text);
+  }
+  .ant-result-subtitle {
+    color: var(--app-accent-text);
+  }
+}

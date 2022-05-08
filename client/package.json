@@ -15,6 +15,7 @@
     "date-fns": "^2.27.0",
     "emoji-mart": "^3.0.1",
     "emoji-picker-react": "^3.5.0",
+    "file-saver": "^2.0.5",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "mic-recorder-to-mp3": "^2.2.2",

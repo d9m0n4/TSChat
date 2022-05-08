@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Leftbar from '../components/LeftBar';
+import { withRouter } from 'react-router';
+import Leftbar from '../components/Layout/LeftBar';
 import Dialogs from '../Services/Dialogs';
 import User from '../Services/Users';
 import { useSelector } from 'react-redux';
 
 import socket from '../api/socket';
-import { withRouter } from 'react-router';
 import Conversations from '../Services/Conversations';
 import dialogActions from '../store/actions/dialogActions';
 import conversationsActions from '../store/actions/conversatiosActions';
@@ -13,6 +13,7 @@ import messagesActions from '../store/actions/messagesActions';
 import { CONVERSATION_PATH, DIALOG_PATH } from '../constants';
 import { conversations, dialogs, auth } from '../store/selectors';
 import { useActions } from '../hooks/useActions';
+import openNotification from '../helpers/notifications/openNotification';
 
 const LeftBarContainer = ({ history }) => {
   const { items: currentConversations, currentConvId } = useSelector(conversations);
@@ -87,7 +88,7 @@ const LeftBarContainer = ({ history }) => {
 
   const onCreateConv = () => {
     if (!convUsers.length) {
-      return console.log('выберите собеседника');
+      return openNotification('warning', 'Внимание', 'Выберите собеседника!', 3);
     }
     Conversations.createConversation({ title: convTitle, members: convUsers });
 

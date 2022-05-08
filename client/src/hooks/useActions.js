@@ -11,6 +11,7 @@ export const useActions = (actions, deps) => {
       }
       return bindActionCreators(actions, dispatch);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     deps ? [dispatch, ...deps] : [dispatch],
   );
 };
