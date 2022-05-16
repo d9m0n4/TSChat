@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Auth from './layouts/Auth/Auth';
 import Home from './layouts/Main/Home';
 
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from './components/Shared/ErrorBoundary';
 
 import authActions from './store/actions/authActions';
 import { auth } from './store/selectors';

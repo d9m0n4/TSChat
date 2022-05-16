@@ -28,6 +28,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 1px 1px 1px var(--app-sidebar);
     }
   }
   &-body {
@@ -42,8 +43,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .item-name {
         font-size: 14px;
+        max-width: 110px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-family: 'Gilroy-Bold', serif;
         margin: 0;
       }
@@ -73,6 +80,7 @@
       .conv__sender {
         font-family: Gilroy-Medium;
         margin-right: 4px;
+        white-space: nowrap;
       }
       .item__status {
         right: 2px;

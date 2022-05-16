@@ -11,9 +11,9 @@ const UserAvatar = ({ name, size, src, id }) => {
       src={src}
       style={
         !src && {
-          background: `linear-gradient(135deg, #${colorFromStr(name, 5)} 0%, #${colorFromStr(
+          background: `linear-gradient(135deg, #${colorFromStr(name, 6)} 0%, #${colorFromStr(
             name,
-            4,
+            5,
           )} 96.52%)`,
           fontWeight: '600',
         }
