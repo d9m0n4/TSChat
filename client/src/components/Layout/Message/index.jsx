@@ -30,16 +30,9 @@ const Message = ({ isMe, name, text, date, attachments, user, serverMessage, rea
 
   useEffect(() => {
     if (audioRef.current !== null) {
-      audioRef.current.addEventListener('canplay', (e) => {
-        console.log(e.target.duration);
-        if (e.target.duration === Infinity) {
-          console.log(e.target.duration, e.target);
-        }
-      });
       audioRef.current.addEventListener(
         'playing',
         () => {
-          console.log('playing');
           setIsPlaying(true);
         },
         false,
@@ -47,13 +40,11 @@ const Message = ({ isMe, name, text, date, attachments, user, serverMessage, rea
       audioRef.current.addEventListener(
         'pause',
         () => {
-          console.log('pause');
           setIsPlaying(false);
         },
         false,
       );
       audioRef.current.addEventListener('ended', (e) => {
-        console.log('end');
         setIsPlaying(false);
         setDuration(0);
         setCurrentTime(e.target.currentTime);

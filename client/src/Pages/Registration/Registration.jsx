@@ -19,11 +19,7 @@ const Registration = ({
         <span>Пройдите регистрацию, чтобы войти в чат</span>
       </div>
       <div className="form-content">
-        <Form
-          onFinish={handleSubmit}
-          onFinishFailed={(e) => console.log(e)}
-          name="normal_login"
-          className="login-form">
+        <Form onFinish={handleSubmit} name="normal_login" className="login-form">
           <Form.Item hasFeedback validateStatus={checkField('email', touched, errors)}>
             <Input
               required={true}

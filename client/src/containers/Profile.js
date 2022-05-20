@@ -78,7 +78,6 @@ function Profile() {
       audioRef.current.addEventListener(
         'playing',
         () => {
-          console.log('playing');
           setIsPlaying(true);
         },
         false,
@@ -86,13 +85,11 @@ function Profile() {
       audioRef.current.addEventListener(
         'pause',
         () => {
-          console.log('pause');
           setIsPlaying(false);
         },
         false,
       );
       audioRef.current.addEventListener('ended', (e) => {
-        console.log('end');
         setIsPlaying(false);
       });
     }

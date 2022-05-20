@@ -175,7 +175,7 @@ const ChatInputContainer = () => {
           }
         });
     } else {
-      console.log('userMedia not');
+      openNotification('error', 'Ошибка', 'Разрешите использовать устройство записи!', 3);
     }
   };
 

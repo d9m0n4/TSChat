@@ -44,7 +44,6 @@ const RightBarContianer = () => {
   };
 
   const onSearch = async (value) => {
-    console.log(value, convMembers.members);
     const members = convMembers.members.map((item) => item.id);
     await Users.updateConvUsers({ value, members })
       .then(({ data }) => {
@@ -56,7 +55,6 @@ const RightBarContianer = () => {
   };
 
   const handleChangeSelect = (v) => {
-    console.log(v);
     const a = [];
     for (let i = 0; i < v.length; i++) {
       a.push(v[i].value);

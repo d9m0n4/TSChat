@@ -160,7 +160,6 @@ class ConversationController {
               }
             }
             if (currentUser !== creatorId && leavingUser !== creatorId) {
-              console.log(currentUser !== creatorId, leavingUser !== creatorId);
               conversation.members.pull({ _id: leavingUser });
               conversation.save().then((conv) => {
                 const message = new Message({
@@ -184,7 +183,6 @@ class ConversationController {
             }
             res.status(200);
           } catch (error) {
-            console.log(error);
             res.status(500).json({
               message: error,
               status: 500,
