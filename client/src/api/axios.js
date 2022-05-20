@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BASE_URL = 'http://localhost:8000/api';
+export const BASE_URL = 'https://shielded-sands-09042.herokuapp.com/api';
 
 const API = axios.create({
   withCredentials: true,
