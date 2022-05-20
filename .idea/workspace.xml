@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/core/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_03_2022_10_36_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_03_2022_10_36__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Routes/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/Pages/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ChatInput/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChatInput/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/onlineStatus/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/OnlineStatus/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/onlineStatus/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/OnlineStatus/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/containers/ChatInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/containers/ChatInput.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/Messenger.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/screens/Messenger.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/screens/Settings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/layouts/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/Pages/Home/screens/UserProfile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/actions/conversatiosActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/actions/conversatiosActions.js" afterDir="false" />
-    </list>
+    <list default="true" id="91e0eb65-82b5-4bad-bbb6-e3ed7f8aabd3" name="Changes" comment="анимация набора сообщение собеседником" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +71,7 @@
       <workItem from="1647171001632" duration="297000" />
       <workItem from="1647177642609" duration="4226000" />
       <workItem from="1647198825580" duration="3627000" />
-      <workItem from="1651418219080" duration="1193000" />
+      <workItem from="1651418219080" duration="1364000" />
     </task>
     <task id="LOCAL-00001" summary="анимация набора сообщение собеседником">
       <created>1647100563894</created>

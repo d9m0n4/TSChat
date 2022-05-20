@@ -177,7 +177,9 @@ class ConversationController {
                   this.io.emit('SERVER:CONV_CHANGED', conv);
                 });
                 this.io.emit('SERVER:CREATE_MESSAGE', message);
-                res.status(200);
+                res.status(200).json({
+                  message: 'Вы покинули беседу',
+                });
               });
             }
             res.status(200);

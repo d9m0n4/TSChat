@@ -3,7 +3,7 @@ const User = require('../Models/User');
 
 module.exports = (http) => {
   const io = socket(http, {
-    cors: { origin: 'http://localhost:3000', credentials: true },
+    cors: { origin: ['http://localhost:3000', 'http://192.168.0.14:3000'], credentials: true },
   });
 
   const onlineUsers = {};
