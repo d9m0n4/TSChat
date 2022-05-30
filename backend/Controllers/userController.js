@@ -148,7 +148,7 @@ class UserController {
   }
   getCurrentUser = async (req, res) => {
     if (!req.user) {
-      res.status(403).json({ message: 'Пользователь не авторизован' });
+      return res.status(403).json({ message: 'Пользователь не авторизован' });
     }
     const user = await User.findById(req.user.id).populate('userAvatar');
 
