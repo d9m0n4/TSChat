@@ -224,6 +224,19 @@
 }
 
 @media screen and (max-width: 640px) {
+  .home__page {
+    flex-direction: column-reverse;
+    
+  }
+  .sidebar {
+    flex-direction: row;
+    &__navigation {
+      flex-direction: row;
+    }
+  }
+  .sidebar__navigation .nav-group {
+  display:flex;
+  }
   .profile__page {
     padding: 0;
     &-user__info {
@@ -232,11 +245,6 @@
         align-items: center;
       }
     }
-  }
-}
-
-@media screen and (max-width: 640px) {
-  .profile__page {
     &-attachments__title {
       font-size: 1rem;
     }
@@ -244,4 +252,6 @@
       justify-content: center;
     }
   }
+  }
 }
+
