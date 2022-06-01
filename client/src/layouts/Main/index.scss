@@ -230,6 +230,9 @@
   }
   .sidebar {
     flex-direction: row;
+    justify-content: center;
+    height: auto;
+    width: 100%;
     &__navigation {
       flex-direction: row;
     }
