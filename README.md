@@ -5,6 +5,12 @@
   Регистрация через email с активацией аккаунта.</p>
   
   **[Демо](https://tschat94.vercel.app)**
+  
+  **Демо аккаунт:**
+  
+  *Логин: admin@admin.ru*
+  
+  *Пароль: Admin123*
 
 <img src="https://github.com/d9m0n4/TSChat/blob/8d435eeb73488ded3542daa3396725f7b1468238/readme/2022-05-16_15-15-40.png" />
 
