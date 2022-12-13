@@ -14,4 +14,4 @@ class userService {
   }
 }
 
-export default new userService();
+module.exports = new userService();
