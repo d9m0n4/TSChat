@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BASE_URL = 'https://shielded-sands-09042.herokuapp.com/api';
+export const BASE_URL = 'tschat-production.up.railway.app';
 
 const API = axios.create({
   withCredentials: true,
