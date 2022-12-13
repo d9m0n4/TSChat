@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-const socket = io('tschat-production.up.railway.app/', {
+const socket = io('https://tschat-production.up.railway.app/api', {
 withCredentials: true});
 
 export default socket;
