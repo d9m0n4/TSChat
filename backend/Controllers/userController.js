@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const UserDto = require('../DTOS/user-dto');
 const { validationResult } = require('express-validator');
+const { default: userService } = require('../Services/userService');
 require('dotenv').config();
 
 class UserController {
@@ -61,19 +62,13 @@ class UserController {
     }
   }
   async activationAccaunt(req, res) {
-    const link = req.params.activationLink;
-    
-    console.log(link)
-    const user = await User.findOne({ activationLink: link });
-    console.log(user)
-    if (!user) {
-      return res.json('Некорректная ссылка активации');
+    try {
+      const link = req.params.activationLink;
+      await userService.activateUser(link);
+      return res.redirect(process.env.CLIENT_URL);
+    } catch (error) {
+      res.json(error);
     }
-
-    user.isActivated = true;
-
-    await user.save();
-    res.redirect(process.env.CLIENT_URL);
   }
   login = async (req, res) => {
     const { email, password } = req.body;
