@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: ['https://tschat94.vercel.app/', 'https://tsc-hat-d9m0n4.vercel.app'],
+    origin: ['https://tschat94.vercel.app', 'https://tsc-hat-d9m0n4.vercel.app'],
   }),
 );
 const io = createSocket(http);
