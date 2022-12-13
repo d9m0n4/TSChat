@@ -14,7 +14,7 @@ class SendMail {
     });
   }
 
-  async sendActivationLink(to, link) {
+  async sendActivationLink(to, activationLink) {
     try {
       this.transporter.sendMail({
         from: process.env.SMTP_LOGIN,
@@ -24,7 +24,7 @@ class SendMail {
         html: `
           <div>
             <h1>Активация аккаунта на TsChat</h1>
-            <p>Для активации перейдите по ссылке ${process.env.SERVER_URL}/api/activate/${link}</p>
+            <p>Для активации перейдите по ссылке ${process.env.SERVER_URL}/api/activate/${activationLink}</p>
           </div>
         `,
       });
