@@ -61,7 +61,7 @@ class UserController {
     }
   }
   async activationAccaunt(req, res) {
-    const link = req.params.link;
+    const link = req.params.activationLink;
     
     console.log(link)
     const user = await User.findOne({ activationLink: link });
