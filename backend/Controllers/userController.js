@@ -73,7 +73,7 @@ class UserController {
     user.isActivated = true;
 
     await user.save();
-    res.redirect(process.env.CLIENT_URL);
+    
   }
   login = async (req, res) => {
     const { email, password } = req.body;
