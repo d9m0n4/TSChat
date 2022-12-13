@@ -62,10 +62,10 @@ class UserController {
   }
   async activationAccaunt(req, res) {
     const link = req.params.link;
-    console.log(link, req.params)
+    
 
     const user = await User.findOne({ activationLink: link });
-
+    console.log(user)
     if (!user) {
       throw new Error('Некорректная ссылка активации');
     }
