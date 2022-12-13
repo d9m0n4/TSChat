@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BASE_URL = 'tschat-production.up.railway.app';
+export const BASE_URL = 'https://tschat-production.up.railway.app/api';
 
 const API = axios.create({
   withCredentials: true,
