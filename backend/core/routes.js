@@ -29,7 +29,7 @@ const Routes = (io) => {
   router.post('/login', UserCtrl.login);
   router.post('/logout', UserCtrl.logout);
   router.get('/refresh', UserCtrl.refresh);
-  router.get('/activate/:link', UserCtrl.activationAccaunt);
+  router.get('/activate/:activationLink', UserCtrl.activationAccaunt);
   router.get('/getAllUsers', CheckToken, UserCtrl.getAllUsers);
   router.get('/getCurrentUser', CheckToken, UserCtrl.getCurrentUser);
   router.get('/user/find', CheckToken, UserCtrl.findUser);
