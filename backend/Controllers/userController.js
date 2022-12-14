@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const UserDto = require('../DTOS/user-dto');
 const { validationResult } = require('express-validator');
-const { default: userService } = require('../Services/userService');
+const userService = require('../Services/userService');
 require('dotenv').config();
 
 class UserController {
