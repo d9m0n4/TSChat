@@ -67,6 +67,7 @@ class UserController {
       await userService.activateUser(link);
       return res.redirect(process.env.CLIENT_URL);
     } catch (error) {
+      console.log(error);
       res.json(error);
     }
   }
