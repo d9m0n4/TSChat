@@ -3,7 +3,7 @@ const User = require('../Models/User');
 class userService {
   async activateUser(link) {
     const user = await User.findOne({ activationLink: link });
-    console.log(user);
+    console.log(link);
     if (!user) {
       throw new Error('Некорректная ссылка активации');
     }
