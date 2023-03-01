@@ -22,12 +22,12 @@ const io = createSocket(http);
 app.use(cookieParser());
 app.use('/api', router(io));
 
-const start = () => {
+const start = async () => {
   try {
     http.listen(process.env.PORT, () => {
       console.log(`server has been started on port ${process.env.PORT}`);
     });
-    mongoose.connect(
+    await mongoose.connect(
       process.env.DBURL,
       {
         bufferCommands: true,
